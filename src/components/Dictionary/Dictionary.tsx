@@ -8,9 +8,9 @@ import './Dictionary.scss';
 type Props = ConnectedProps<typeof connector>;
 
 const Dictionary: React.FC<Props> = (props: Props) => {
-  useEffect(() => {
-    props.fetchDictionary();
-  }, []);
+	useEffect(() => {
+		props.fetchDictionary();
+	}, []);
 
   const renderWords = () => props.dictionary.words
     .map((word: IWord) => (
@@ -30,7 +30,7 @@ const Dictionary: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: IAppState) => ({
-  dictionary: state.dictionary,
+	dictionary: state.dictionary,
 });
 
 function mapDispatchToProps(dispatch: any) {

@@ -4,13 +4,13 @@ import Footer from '../Footer';
 import Header from '../Header';
 
 const MainPage: React.FC = () => (
-  <>
-    <Header />
-    <main>
-      <Link to="/dictionary">Dictionary</Link>
-    </main>
-    <Footer />
-  </>
+	<>
+		<Header />
+		<main>
+			<Link to="/dictionary">Dictionary</Link>
+		</main>
+		<Footer />
+	</>
 );
 
 export default MainPage;

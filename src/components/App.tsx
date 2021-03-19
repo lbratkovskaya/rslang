@@ -8,23 +8,23 @@ import { IAppState } from '../store/types';
 type Props = ConnectedProps<typeof connector>;
 
 const App: React.FC<Props> = () => (
-  <HashRouter>
-    <Switch>
-      <Route path="/dictionary">
-        <Dictionary />
-      </Route>
-      <Route path="/">
-        <MainPage />
-      </Route>
-    </Switch>
-  </HashRouter>
+	<HashRouter>
+		<Switch>
+			<Route path="/dictionary">
+				<Dictionary />
+			</Route>
+			<Route path="/">
+				<MainPage />
+			</Route>
+		</Switch>
+	</HashRouter>
 );
 
 const mapStateToProps = (state: IAppState) => ({
-  isLoggedIn: state.isLoggedIn,
-  isRegistered: state.isRegistred,
-  userName: state.userName,
-  userImage: state.userImage,
+	isLoggedIn: state.isLoggedIn,
+	isRegistered: state.isRegistred,
+	userName: state.userName,
+	userImage: state.userImage,
 });
 
 const connector = connect(mapStateToProps);

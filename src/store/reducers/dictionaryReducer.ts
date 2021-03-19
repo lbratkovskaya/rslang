@@ -1,10 +1,10 @@
 import { DictionaryActionTypes, IDictionary, IDictionaryAction } from '../types';
 
 const initialState: IDictionary = {
-  words: [],
-  wordsActual: [],
-  wordsDifficult: [],
-  wordsLearned: [],
+	words: [],
+	wordsActual: [],
+	wordsDifficult: [],
+	wordsLearned: [],
 };
 
 export default function dictionaryReducer(state: IDictionary = initialState,
