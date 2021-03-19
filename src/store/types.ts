@@ -1,7 +1,7 @@
 export interface IWord {
   id: string,
-  group: 0,
-  page: 0,
+  group: number,
+  page: number,
   word: string,
   image: string,
   audio: string,
