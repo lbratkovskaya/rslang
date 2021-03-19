@@ -29,18 +29,11 @@ module.exports = (env, options) => {
         },
         {
           test: /\.css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader',
-          ],
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
           test: /\.scss$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader',
-            'sass-loader',
-          ],
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
         },
         {
           test: /\.ts(x)?$/,
@@ -62,17 +55,11 @@ module.exports = (env, options) => {
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin(),
       new CopyWebpackPlugin({
-        patterns: [
-          { from: 'src/assets', to: 'assets' },
-        ],
+        patterns: [{ from: 'src/assets', to: 'assets' }],
       }),
     ],
     resolve: {
-      extensions: [
-        '.tsx',
-        '.ts',
-        '.js',
-      ],
+      extensions: ['.tsx', '.ts', '.js'],
     },
   };
   return config;

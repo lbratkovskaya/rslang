@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Typography } from '@material-ui/core';
-import {
-  fetchDictionary,
-  fetchDictionarySuccess,
-  testWord,
-} from '../../store/actions/dictionaryActions';
-import { IAppState } from '../../store/types';
+import { fetchDictionary } from '../../store/actions/dictionaryActions';
+import { IAppState, IWord } from '../../store/types';
 import './Dictionary.scss';
 
 type Props = ConnectedProps<typeof connector>;
@@ -16,14 +12,19 @@ const Dictionary: React.FC<Props> = (props: Props) => {
     props.fetchDictionary();
   }, []);
 
+  const renderWords = () => props.dictionary.words
+    .map((word: IWord) => (
+      <Typography className="testClass">
+        {word.textMeaningTranslate}
+      </Typography>
+    ));
+
   return (
     <>
       <Typography variant="h5">
         Dictionary
       </Typography>
-      <Typography className="testClass">
-        {props.dictionary.words[0]?.textMeaningTranslate}
-      </Typography>
+      {renderWords()}
     </>
   );
 };
@@ -34,8 +35,7 @@ const mapStateToProps = (state: IAppState) => ({
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    // fetchDictionary: () => dispatch(fetchDictionary()), // why error here ?
-    fetchDictionary: () => dispatch(fetchDictionarySuccess([testWord])),
+    fetchDictionary: () => dispatch(fetchDictionary()),
   };
 }
 
