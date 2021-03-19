@@ -1,4 +1,4 @@
-import { IDictionary, IDictionaryAction } from '../types';
+import { DictionaryActionTypes, IDictionary, IDictionaryAction } from '../types';
 
 const initialState: IDictionary = {
   words: [],
@@ -10,11 +10,11 @@ const initialState: IDictionary = {
 export default function dictionaryReducer(state: IDictionary = initialState,
   action: IDictionaryAction) {
   switch (action.type) {
-    case 'FETCH_DICTIONARY_START':
+    case DictionaryActionTypes.FETCH_START:
       return { ...state, isLoading: true };
-    case 'FETCH_DICTIONARY_SUCCESS':
+    case DictionaryActionTypes.FETCH_SUCCESS:
       return { ...state, isLoading: false, words: action.payload.words };
-    case 'FETCH_DICTIONARY_ERROR':
+    case DictionaryActionTypes.FETCH_ERROR:
       return { ...state, isLoading: false, error: action.payload.error };
     default:
       return state;

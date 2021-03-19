@@ -30,13 +30,14 @@ export interface IAppState {
   userImage?: string,
 }
 
-type DictionaryActions =
-  'FETCH_DICTIONARY_START' |
-  'FETCH_DICTIONARY_SUCCESS' |
-  'FETCH_DICTIONARY_ERROR'
+export enum DictionaryActionTypes {
+  FETCH_START = 'FETCH_DICTIONARY_START',
+  FETCH_SUCCESS = 'FETCH_DICTIONARY_SUCCESS',
+  FETCH_ERROR = 'FETCH_DICTIONARY_ERROR',
+}
 
 export interface IDictionaryAction {
-  type: DictionaryActions,
+  type: DictionaryActionTypes,
   payload: {
     words: IWord[],
     isLoading: boolean,

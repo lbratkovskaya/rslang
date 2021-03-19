@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { IWord } from '../types';
+import { DictionaryActionTypes, IWord } from '../types';
 
 export const testWord: IWord = {
   id: '5e9f5ee35eb9e72bc21af4b2',
@@ -20,20 +20,20 @@ export const testWord: IWord = {
 
 export function fetchDictionaryStart() {
   return {
-    type: 'FETCH_DICTIONARY_START',
+    type: DictionaryActionTypes.FETCH_START,
   };
 }
 
 export function fetchDictionarySuccess(words: IWord[]) {
   return {
-    type: 'FETCH_DICTIONARY_SUCCESS',
+    type: DictionaryActionTypes.FETCH_SUCCESS,
     payload: { words },
   };
 }
 
 export function fetchDictionaryError(error: Error) {
   return {
-    type: 'FETCH_DICTIONARY_ERROR',
+    type: DictionaryActionTypes.FETCH_ERROR,
     payload: { error },
   };
 }

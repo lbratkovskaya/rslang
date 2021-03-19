@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import { IAppState } from '../store/types';
 import Dictionary from './Dictionary';
 import MainPage from './MainPage';
+import { IAppState } from '../store/types';
 
 type Props = ConnectedProps<typeof connector>;
 
