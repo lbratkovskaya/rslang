@@ -1,7 +1,7 @@
 export interface IWord {
   id: string;
-  group: 0;
-  page: 0;
+  group: number;
+  page: number;
   word: string;
   image: string;
   audio: string;
@@ -37,10 +37,10 @@ export enum DictionaryActionTypes {
 }
 
 export interface IDictionaryAction {
-  type: DictionaryActionTypes,
+  type: DictionaryActionTypes;
   payload: {
-    words: IWord[],
-    isLoading: boolean,
-    error: Error,
-  }
+    words: IWord[];
+    isLoading: boolean;
+    error: Error;
+  };
 }
