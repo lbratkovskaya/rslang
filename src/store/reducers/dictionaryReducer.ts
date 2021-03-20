@@ -7,8 +7,10 @@ const initialState: IDictionary = {
   wordsLearned: [],
 };
 
-export default function dictionaryReducer(state: IDictionary = initialState,
-  action: IDictionaryAction) {
+export default function dictionaryReducer(
+  state: IDictionary = initialState,
+  action: IDictionaryAction
+) {
   switch (action.type) {
     case DictionaryActionTypes.FETCH_START:
       return { ...state, isLoading: true };

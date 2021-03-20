@@ -1,33 +1,33 @@
 export interface IWord {
-  id: string,
-  group: number,
-  page: number,
-  word: string,
-  image: string,
-  audio: string,
-  audioMeaning: string,
-  audioExample: string,
-  textMeaning: string,
-  textExample: string,
-  transcription: string,
-  wordTranslate: string,
-  textMeaningTranslate: string,
-  textExampleTranslate: string,
+  id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  wordTranslate: string;
+  textMeaningTranslate: string;
+  textExampleTranslate: string;
 }
 
 export interface IDictionary {
-  words: IWord[],
-  wordsActual: IWord[],
-  wordsDifficult: IWord[],
-  wordsLearned: IWord[],
+  words: IWord[];
+  wordsActual: IWord[];
+  wordsDifficult: IWord[];
+  wordsLearned: IWord[];
 }
 
 export interface IAppState {
-  dictionary: IDictionary,
-  isLoggedIn?: boolean,
-  isRegistred?: boolean,
-  userName?: string,
-  userImage?: string,
+  dictionary: IDictionary;
+  isLoggedIn?: boolean;
+  isRegistred?: boolean;
+  userName?: string;
+  userImage?: string;
 }
 
 export enum DictionaryActionTypes {
@@ -37,10 +37,10 @@ export enum DictionaryActionTypes {
 }
 
 export interface IDictionaryAction {
-  type: DictionaryActionTypes,
+  type: DictionaryActionTypes;
   payload: {
-    words: IWord[],
-    isLoading: boolean,
-    error: Error,
-  }
+    words: IWord[];
+    isLoading: boolean;
+    error: Error;
+  };
 }
