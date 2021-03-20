@@ -14,7 +14,7 @@ const Dictionary: React.FC<Props> = (props: Props) => {
 
   const renderWords = () => props.dictionary.words
     .map((word: IWord) => (
-      <Typography className="testClass">
+      <Typography className="testClass" key={word.word}>
         {word.textMeaningTranslate}
       </Typography>
     ));
@@ -33,11 +33,9 @@ const mapStateToProps = (state: IAppState) => ({
   dictionary: state.dictionary,
 });
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    fetchDictionary: () => dispatch(fetchDictionary()),
-  };
-}
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchDictionary: () => dispatch(fetchDictionary()),
+});
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
