@@ -4,6 +4,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dictionary from './Dictionary';
 import MainPage from './MainPage';
 import { IAppState } from '../store/types';
+import './App.scss';
 
 type Props = ConnectedProps<typeof connector>;
 
