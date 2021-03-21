@@ -4,6 +4,10 @@ import { Author } from './types';
 import './Footer.scss';
 
 const Footer: React.FC = () => {
+  const URL = {
+    github: 'https://github.com/',
+    rsschool: 'https://rs.school/',
+  };
   const authors: Author[] = [
     { name: 'Larisa Arkaeva', githubName: 'lbratkovskaya' },
     { name: 'Maxim Chernov', githubName: 'blackymax' },
@@ -17,9 +21,9 @@ const Footer: React.FC = () => {
     const [firstName, surname] = author.name.split(' ');
 
     return (
-      <Typography>
+      <Typography key={author.githubName}>
         <Link
-          href={`https://github.com/${author.githubName}`}
+          href={`${URL.github}${author.githubName}`}
           target="_blank"
           rel="noreferrer"
           className="github-link">
@@ -35,7 +39,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="footer">
-      <a className="rsschool" href="https://rs.school/" target="_blank" rel="noreferrer">
+      <a className="rsschool" href={URL.rsschool} target="_blank" rel="noreferrer">
         {' '}
       </a>
       {renderAuthors}
