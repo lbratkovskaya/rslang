@@ -1,4 +1,4 @@
-import { DictionaryActionTypes, IDictionary, IDictionaryAction } from '../types';
+import { DictionaryActionTypes, IDictionary, IDictionaryAction } from '../../types';
 
 const initialState: IDictionary = {
   words: [],

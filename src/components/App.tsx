@@ -1,16 +1,19 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dictionary from './Dictionary';
 import MainPage from './MainPage';
-import { IAppState } from '../store/types';
-import './App.scss';
+import SignInPage from './SignInPage';
+import SignUpPage from './SignUpPage';
 
-type Props = ConnectedProps<typeof connector>;
-
-const App: React.FC<Props> = () => (
+const App: React.FC = () => (
   <HashRouter>
     <Switch>
+      <Route path="/sign-in">
+        <SignInPage />
+      </Route>
+      <Route path="/sign-up">
+        <SignUpPage />
+      </Route>
       <Route path="/dictionary">
         <Dictionary />
       </Route>
@@ -21,13 +24,4 @@ const App: React.FC<Props> = () => (
   </HashRouter>
 );
 
-const mapStateToProps = (state: IAppState) => ({
-  isLoggedIn: state.isLoggedIn,
-  isRegistered: state.isRegistred,
-  userName: state.userName,
-  userImage: state.userImage,
-});
-
-const connector = connect(mapStateToProps);
-
-export default connector(App);
+export default App;

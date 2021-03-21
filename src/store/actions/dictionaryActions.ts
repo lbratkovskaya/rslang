@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import backendUrl from '../../consts';
 import { DictionaryActionTypes, IWord } from '../types';
 
 export function fetchDictionaryStart() {
@@ -23,7 +24,7 @@ export function fetchDictionaryError(error: Error) {
 
 export function fetchDictionary() {
   return async (dispatch: Dispatch) => {
-    const apiURL = 'https://react-learnwords-example.herokuapp.com/words';
+    const apiURL = `${backendUrl}/words`;
     dispatch(fetchDictionaryStart());
     try {
       const res = await fetch(apiURL);

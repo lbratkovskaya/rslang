@@ -1,3 +1,13 @@
+import { IAppState } from './reducers/appReducer/types';
+import { IUserState } from './reducers/userReducer/types';
+
+export interface ICombinedState {
+  // по сути здесь останется только этот интерфейс, который будем дописывать по мере необходимости
+  dictionary: IDictionary;
+  user: IUserState;
+  app: IAppState;
+}
+
 export interface IWord {
   id: string;
   group: number;
@@ -20,14 +30,6 @@ export interface IDictionary {
   wordsActual: IWord[];
   wordsDifficult: IWord[];
   wordsLearned: IWord[];
-}
-
-export interface IAppState {
-  dictionary: IDictionary;
-  isLoggedIn?: boolean;
-  isRegistred?: boolean;
-  userName?: string;
-  userImage?: string;
 }
 
 export enum DictionaryActionTypes {
