@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Typography } from '@material-ui/core';
+import Header from '../Header';
+import Footer from '../Footer';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { IAppState, IWord } from '../../store/types';
 import './Dictionary.scss';
@@ -12,8 +14,8 @@ const Dictionary: React.FC<Props> = (props: Props) => {
     props.fetchDictionary();
   }, []);
 
-  const renderWords = () => props.dictionary.words
-    .map((word: IWord) => (
+  const renderWords = () =>
+    props.dictionary.words.map((word: IWord) => (
       <Typography className="testClass" key={word.word}>
         {word.textMeaningTranslate}
       </Typography>
@@ -21,10 +23,12 @@ const Dictionary: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <Typography variant="h5">
-        Dictionary
-      </Typography>
-      {renderWords()}
+      <Header />
+      <main>
+        <Typography variant="h5">Dictionary</Typography>
+        {renderWords()}
+      </main>
+      <Footer />
     </>
   );
 };
