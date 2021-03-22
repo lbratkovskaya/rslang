@@ -13,13 +13,10 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { ICombinedState } from '../../store/types';
-import { 
-  SET_FAILED_ATTEMPT,
-  SET_IS_REGISTRED 
-} from '../../store/actionTypes';
-import { signUpUser } from '../../store/actions/userAuthActions';
 import ModalWindow from '../ModalWindow/ModalWindow';
+import { signUpUser } from '../../store/actions/userAuthActions';
+import { SET_FAILED_ATTEMPT, SET_IS_REGISTRED } from '../../store/actionTypes';
+import { ICombinedState } from '../../store/types';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -58,6 +55,7 @@ const useStyles = makeStyles(() => ({
   },
   link: {
     color: 'blue',
+    marginLeft: '8px',
     textDecoration: 'none',
     '&:hover': {
       border: 'none',
@@ -79,15 +77,15 @@ const SignUpPage: React.FC = () => {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [passwordMissmatch, setPasswordMissmatch] = React.useState(false);
+  const [passwordMismatch, setPasswordMissmatch] = React.useState(false);
   const [passwordTooShort, setPasswordTooShort] = React.useState(false);
   const [emailInvalid, setEmailInvalid] = React.useState(false);
   const [userNameEmpty, setUserNameEmpty] = React.useState(false);
   const [userEmailEmpty, setUserEmailEmpty] = React.useState(false);
   const [userImageToUpload, setUserImageToUpload] = React.useState<string | ArrayBuffer>();
   const [open, setOpen] = React.useState(false);
-  const handleCloseModalWindow = () => {setOpen(false)};
-  const handleShowModalWindow = () => {setOpen(true)};
+  const handleCloseModalWindow = () => setOpen(false);
+  const handleShowModalWindow = () => setOpen(true);
 
   const isRegistred = useSelector((state: ICombinedState) => state.user.isRegistred);
   const isFailedAttempt = useSelector((state: ICombinedState) => state.user.failedAttempt);
@@ -108,7 +106,7 @@ const SignUpPage: React.FC = () => {
     history.push('/sign-in');
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!userName.length) {
       setUserNameEmpty(true);
@@ -125,6 +123,28 @@ const SignUpPage: React.FC = () => {
     }
   };
 
+  const setUserImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      event.currentTarget.files &&
+      event.currentTarget.files.length &&
+      event.currentTarget.files[0].type.startsWith('image')
+    ) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.currentTarget.files[0]);
+      reader.onloadend = () => {
+        if (reader.result) {
+          setUserImageToUpload(reader.result);
+        }
+      };
+    } else if (
+      event.currentTarget.files &&
+      event.currentTarget.files.length &&
+      !event.currentTarget.files[0].type.startsWith('image')
+    ) {
+      handleShowModalWindow();
+    }
+  };
+
   React.useEffect(() => {
     if (isRegistred) {
       handleClose();
@@ -133,9 +153,9 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div>
-      <ModalWindow 
-        text='Выбран некорректный файл. Пожалуйста, выберите изображение.' 
-        open={open} 
+      <ModalWindow
+        text="Выбран некорректный файл. Пожалуйста, выберите изображение."
+        open={open}
         handleClose={handleCloseModalWindow}
       />
       <Container className={classes.container} component="main" maxWidth="xs">
@@ -148,25 +168,7 @@ const SignUpPage: React.FC = () => {
               multiple
               type="file"
               style={{ display: 'none' }}
-              onChange={(event) => {
-                if (
-                  event.currentTarget.files &&
-                  event.currentTarget.files.length &&
-                  event.currentTarget.files[0].type.startsWith('image')
-                ) {
-                  const reader = new FileReader();
-                  reader.readAsDataURL(event.currentTarget.files[0]);
-                  reader.onloadend = () => {
-                    if (reader.result) {
-                      setUserImageToUpload(reader.result);
-                    }
-                  };
-                } else if (event.currentTarget.files &&
-                  event.currentTarget.files.length &&
-                  !event.currentTarget.files[0].type.startsWith('image')) {
-                    handleShowModalWindow()
-                }
-              }}
+              onChange={setUserImage}
             />
             <label htmlFor="contained-button-file">
               {userImageToUpload === undefined ? (
@@ -254,8 +256,8 @@ const SignUpPage: React.FC = () => {
                   name="повторите пароль"
                   label="повторите пароль"
                   type="password"
-                  error={passwordMissmatch}
-                  helperText={passwordMissmatch && 'пароли не совпадают'}
+                  error={passwordMismatch}
+                  helperText={passwordMismatch && 'пароли не совпадают'}
                   id="повторите_пароль"
                   autoComplete="повторите пароль"
                   onChange={(event) => {
@@ -281,9 +283,12 @@ const SignUpPage: React.FC = () => {
             )}
             <Grid container justify="flex-end">
               <Grid item>
-                <Link to="/sign-in" className={classes.link}>
-                  Уже есть аккаунт? Войти
-                </Link>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Уже есть аккаунт?
+                  <Link to="/sign-in" className={classes.link}>
+                    Войти
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </form>

@@ -11,16 +11,16 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import { ICombinedState } from '../../store/types';
-import { SET_FAILED_ATTEMPT } from '../../store/actionTypes';
 import { signInUser } from '../../store/actions/userAuthActions';
+import { SET_FAILED_ATTEMPT } from '../../store/actionTypes';
+import { ICombinedState } from '../../store/types';
 
 const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: '#fff',
+    marginTop: '64px',
   },
   paper: {
-    marginTop: '64px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -36,6 +36,7 @@ const useStyles = makeStyles(() => ({
   link: {
     color: 'blue',
     textDecoration: 'none',
+    marginLeft: '8px',
     '&:hover': {
       border: 'none',
       outline: 'none',
@@ -66,7 +67,26 @@ const SignInPage: React.FC = () => {
     history.push('/');
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const clearUserName = () => {
+    setUserNameEmpty(false);
+    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+  };
+
+  const clearPassword = () => {
+    setPasswordEmpty(false);
+    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+  };
+
+  let passwordHelperText = '';
+  if (passwordEmpty && !isFailedAttempt) {
+    passwordHelperText = 'введите пароль';
+  } else if (!passwordEmpty && isFailedAttempt) {
+    passwordHelperText = 'неверный email или пароль';
+  }
+
+  const emailHelperText = userNameEmpty && !isFailedAttempt ? 'введите email' : '';
+
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!userName.length) {
       setUserNameEmpty(true);
@@ -84,85 +104,71 @@ const SignInPage: React.FC = () => {
   }, [isLoggedIn]);
 
   return (
-    <div>
-      <Container className={classes.container} component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Вход
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
+    <Container className={classes.container} component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Вход
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="email"
+            name="email"
+            autoComplete="email"
+            error={userNameEmpty || isFailedAttempt}
+            helperText={emailHelperText}
+            onChange={(event) => {
+              setUserName(event.currentTarget.value);
+            }}
+            onFocus={clearUserName}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="пароль"
+            label="пароль"
+            type="password"
+            id="пароль"
+            autoComplete="пароль"
+            error={passwordEmpty || isFailedAttempt}
+            helperText={passwordHelperText}
+            onChange={(event) => {
+              setPassword(event.currentTarget.value);
+            }}
+            onFocus={clearPassword}
+          />
+          {isLoading ? (
+            <CircularProgress className={classes.spinner} />
+          ) : (
+            <Button
+              type="submit"
               fullWidth
-              id="email"
-              label="email"
-              name="email"
-              autoComplete="email"
-              error={userNameEmpty || isFailedAttempt}
-              helperText={(userNameEmpty && 'введите email') || (isFailedAttempt && '')}
-              onChange={(event) => {
-                setUserName(event.currentTarget.value);
-              }}
-              onFocus={() => {
-                setUserNameEmpty(false);
-                dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
-              }}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="пароль"
-              label="пароль"
-              type="password"
-              id="пароль"
-              autoComplete="пароль"
-              error={passwordEmpty || isFailedAttempt}
-              helperText={
-                (passwordEmpty && 'введите пароль') ||
-                (isFailedAttempt && 'неверный email или пароль')
-              }
-              onChange={(event) => {
-                setPassword(event.currentTarget.value);
-              }}
-              onFocus={() => {
-                setPasswordEmpty(false);
-                dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
-              }}
-            />
-            {isLoading ? (
-              <CircularProgress className={classes.spinner} />
-            ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}>
-                Вход
-              </Button>
-            )}
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link
-                  to="/sign-up"
-                  className={classes.link}
-                  onClick={() => {
-                    // props.handleClose();
-                    // props.handleShowSignUpForm();
-                  }}>
-                  Еще нет аккаунта? Зарегистрируйтесь
+              variant="contained"
+              color="primary"
+              className={classes.submit}>
+              Вход
+            </Button>
+          )}
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Еще нет аккаунта?
+                <Link to="/sign-up" className={classes.link}>
+                  Зарегистрируйтесь
                 </Link>
-              </Grid>
+              </Typography>
             </Grid>
-          </form>
-        </div>
-      </Container>
-    </div>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 

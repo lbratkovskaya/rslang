@@ -58,8 +58,11 @@ export const signUpUser = (
     if (response.status === 200) {
       dispatch({ type: SET_IS_REGISTRED, isRegistred: true });
       dispatch({ type: SET_IS_LOADING, isLoading: false });
-    } else {
+    } else if (response.status === 417) {
       dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: true });
+      dispatch({ type: SET_IS_LOADING, isLoading: false });
+    } else {
+      dispatch({ type: SET_IS_REGISTRED, isRegistred: true });
       dispatch({ type: SET_IS_LOADING, isLoading: false });
     }
   });

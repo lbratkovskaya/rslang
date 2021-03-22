@@ -1,6 +1,6 @@
-import { DictionaryActionTypes, IDictionary, IDictionaryAction } from '../../types';
+import { DictionaryActionTypes, IDictionaryState, IDictionaryAction } from '../../types';
 
-const initialState: IDictionary = {
+const initialState: IDictionaryState = {
   words: [],
   wordsActual: [],
   wordsDifficult: [],
@@ -8,7 +8,7 @@ const initialState: IDictionary = {
 };
 
 export default function dictionaryReducer(
-  state: IDictionary = initialState,
+  state: IDictionaryState = initialState,
   action: IDictionaryAction
 ) {
   switch (action.type) {

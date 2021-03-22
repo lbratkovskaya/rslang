@@ -4,6 +4,7 @@ import Dictionary from './Dictionary';
 import MainPage from './MainPage';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
+import './App.scss';
 
 const App: React.FC = () => (
   <HashRouter>

@@ -3,7 +3,7 @@ import { IUserState } from './reducers/userReducer/types';
 
 export interface ICombinedState {
   // по сути здесь останется только этот интерфейс, который будем дописывать по мере необходимости
-  dictionary: IDictionary;
+  dictionary: IDictionaryState;
   user: IUserState;
   app: IAppState;
 }
@@ -25,7 +25,7 @@ export interface IWord {
   textExampleTranslate: string;
 }
 
-export interface IDictionary {
+export interface IDictionaryState {
   words: IWord[];
   wordsActual: IWord[];
   wordsDifficult: IWord[];
