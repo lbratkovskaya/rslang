@@ -1,22 +1,26 @@
 import React, { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles, Typography } from '@material-ui/core';
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { ICombinedState, IWord } from '../../store/types';
-import './Dictionary.scss';
+import styles from './styles';
 
-type Props = ConnectedProps<typeof connector>;
+const Dictionary: React.FC = () => {
+  const dictionary = useSelector((state: ICombinedState) => state.dictionary);
+  const dispatch = useDispatch();
+  const classes = makeStyles(() => styles)();
 
-const Dictionary: React.FC<Props> = (props: Props) => {
+  const getDictionary = () => dispatch(fetchDictionary());
+
   useEffect(() => {
-    props.fetchDictionary();
+    getDictionary();
   }, []);
 
   const renderWords = () =>
-    props.dictionary.words.map((word: IWord) => (
-      <Typography className="testClass" key={word.word}>
+    dictionary.words.map((word: IWord) => (
+      <Typography className={classes.text} key={word.word}>
         {word.textMeaningTranslate}
       </Typography>
     ));
@@ -33,14 +37,4 @@ const Dictionary: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: ICombinedState) => ({
-  dictionary: state.dictionary,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  fetchDictionary: () => dispatch(fetchDictionary()),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(Dictionary);
+export default Dictionary;

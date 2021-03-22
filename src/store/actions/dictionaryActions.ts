@@ -2,36 +2,27 @@ import { Dispatch } from 'redux';
 import backendUrl from '../../consts';
 import { DictionaryActionTypes, IWord } from '../types';
 
-export function fetchDictionaryStart() {
-  return {
-    type: DictionaryActionTypes.FETCH_START,
-  };
-}
+export const fetchDictionaryStart = () => ({
+  type: DictionaryActionTypes.FETCH_START,
+});
 
-export function fetchDictionarySuccess(words: IWord[]) {
-  return {
-    type: DictionaryActionTypes.FETCH_SUCCESS,
-    payload: { words },
-  };
-}
+export const fetchDictionarySuccess = (words: IWord[]) => ({
+  type: DictionaryActionTypes.FETCH_SUCCESS,
+  payload: { words },
+});
 
-export function fetchDictionaryError(error: Error) {
-  return {
-    type: DictionaryActionTypes.FETCH_ERROR,
-    payload: { error },
-  };
-}
+export const fetchDictionaryError = (error: Error) => ({
+  type: DictionaryActionTypes.FETCH_ERROR,
+  payload: { error },
+});
 
-export function fetchDictionary() {
-  return async (dispatch: Dispatch) => {
-    const apiURL = `${backendUrl}/words`;
-    dispatch(fetchDictionaryStart());
-    try {
-      const res = await fetch(apiURL);
-      const words = await res.json();
-      dispatch(fetchDictionarySuccess(words));
-    } catch (e) {
-      dispatch(fetchDictionaryError(e));
-    }
-  };
-}
+export const fetchDictionary = () => async (dispatch: Dispatch) => {
+  dispatch(fetchDictionaryStart());
+  try {
+    const res = await fetch(`${backendUrl}/words`);
+    const words = await res.json();
+    dispatch(fetchDictionarySuccess(words));
+  } catch (e) {
+    dispatch(fetchDictionaryError(e));
+  }
+};
