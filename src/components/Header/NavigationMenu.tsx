@@ -1,132 +1,13 @@
-import React, { RefObject, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Menu, MenuItem, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton } from '@material-ui/core';
 import { ArrowDropDown, MoreVert } from '@material-ui/icons';
+import MobileNavMenu from './MobileNavMenu';
+import NavSubMenu from './NavSubMenu';
 import { menuItems, mobileMenuId } from './navMenuData';
-import { IMenuItem, MobileNavMenuProps, NavSubMenuProps } from './types';
 import useStyles from './styles';
 
-/* ===========common methods============ */
-const generateRefToRefObject = (
-  refsObject: RefObject<{ [key: string]: HTMLDivElement }>,
-  element: HTMLDivElement,
-  menuItem: IMenuItem
-): { [key: string]: HTMLDivElement } =>
-  Object.assign(refsObject.current, { [menuItem.id]: element });
-
-const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
-  const { anchor, id, isOpen, items, onMenuClose } = props;
-
-  const subMenuClasses = useStyles();
-
-  const renderItems = (): JSX.Element[] =>
-    items?.map((item) => (
-      <MenuItem className={subMenuClasses.navSubMenuItem} key={item.label} onClick={onMenuClose}>
-        {item.withLink ? <Link to={item.linkAddress}>{item.label}</Link> : item.label}
-      </MenuItem>
-    ));
-
-  return (
-    <Menu
-      anchorEl={anchor}
-      getContentAnchorEl={null}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      id={id}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isOpen}
-      onClose={onMenuClose}>
-      {items && renderItems()}
-    </Menu>
-  );
-};
-
-const renderMenuItem = (
-  refsObject: RefObject<{ [key: string]: HTMLDivElement }>,
-  menuItem: IMenuItem,
-  itemClassName: string,
-  subMenuOpenId: string,
-  setSubMenuOpenId: (id: string) => void,
-  handleMenuClose: () => void
-): JSX.Element => {
-  const buttonClickEventHandler = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setSubMenuOpenId(menuItem.subMenuId || '');
-  };
-
-  return (
-    <div
-      key={menuItem.id}
-      className={itemClassName}
-      ref={(element: HTMLDivElement) => generateRefToRefObject(refsObject, element, menuItem)}>
-      <Link to={{ pathname: menuItem.linkAddress }}>{menuItem.label}</Link>
-      {menuItem.withSubMenu && (
-        <>
-          <IconButton
-            aria-label={menuItem.label}
-            aria-controls={menuItem.subMenuId}
-            aria-haspopup="true"
-            onClick={buttonClickEventHandler}>
-            <ArrowDropDown />
-          </IconButton>
-          <NavSubMenu
-            anchor={refsObject.current![menuItem.id]}
-            id={menuItem.subMenuId!}
-            isOpen={subMenuOpenId === menuItem.subMenuId}
-            items={menuItem.subMenuItems!}
-            onMenuClose={handleMenuClose}
-          />
-        </>
-      )}
-    </div>
-  );
-};
-
-export const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) => {
-  const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
-
-  const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});
-
-  const handleSubMenuClose = (): void => {
-    setTimeout(() => setSubMenuOpenId('none'), 0);
-  };
-
-  const { anchor, isOpen, items, onMenuClose } = props;
-
-  const mobileClasses = useStyles();
-
-  const renderItems = (): JSX.Element[] =>
-    items?.map((menuItem: IMenuItem) => {
-      return (
-        <MenuItem key={menuItem.id} onClick={onMenuClose}>
-          {renderMenuItem(
-            refsObject,
-            menuItem,
-            mobileClasses.navMenuItem,
-            subMenuOpenId,
-            setSubMenuOpenId,
-            handleSubMenuClose
-          )}
-        </MenuItem>
-      );
-    });
-
-  return (
-    <Menu
-      anchorEl={anchor}
-      getContentAnchorEl={null}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      id="menu-auth"
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isOpen}
-      onClose={onMenuClose}>
-      {items && renderItems()}
-    </Menu>
-  );
-};
-
-export const NavigationMenu: React.FC = () => {
+const NavigationMenu: React.FC = () => {
   const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -202,3 +83,5 @@ export const NavigationMenu: React.FC = () => {
     </AppBar>
   );
 };
+
+export default NavigationMenu;

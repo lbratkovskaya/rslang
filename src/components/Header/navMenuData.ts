@@ -1,8 +1,7 @@
 import { IMenuItem, ISubMenuItem } from './types';
 
 const gamesId = 'miniGames';
-const sectionsId = 'sections';
-const teamsId = 'teams';
+const sectionsId = 'wordBook';
 export const mobileMenuId = 'mobileMenu';
 
 export const gamesItems: ISubMenuItem[] = [
@@ -32,59 +31,63 @@ export const sectionsItems: ISubMenuItem[] = [
   {
     label: 'Red Section',
     withLink: true,
-    linkAddress: '/sections/red',
+    linkAddress: '/wordBook/red',
   },
   {
     label: 'Yellow Section',
     withLink: true,
-    linkAddress: '/sections/yellow',
+    linkAddress: '/wordBook/yellow',
   },
   {
     label: 'Orange Section',
     withLink: true,
-    linkAddress: '/sections/orange',
+    linkAddress: '/wordBook/orange',
   },
   {
     label: 'Green Section',
     withLink: true,
-    linkAddress: '/sections/green',
+    linkAddress: '/wordBook/green',
   },
   {
     label: 'Blue Section',
     withLink: true,
-    linkAddress: '/sections/blue',
+    linkAddress: '/wordBook/blue',
   },
   {
     label: 'Purple Section',
     withLink: true,
-    linkAddress: '/sections/purple',
+    linkAddress: '/wordBook/purple',
+  },
+  {
+    label: 'My Dictionary',
+    withLink: true,
+    linkAddress: '/dictionary',
+  },
+  {
+    label: 'Settings',
+    withLink: true,
+    linkAddress: '/settings',
   },
 ];
 
-export const teamsItems: ISubMenuItem[] = [
+export const teamsItems = [
   {
     label: 'Larisa Arkaeva',
-    withLink: false,
   },
   {
     label: 'Antonina Tregubova',
-    withLink: false,
   },
   {
     label: 'Alexey Teterin',
-    withLink: false,
   },
   {
     label: 'Aliaxei Latypau',
-    withLink: false,
   },
   {
     label: 'Maxim Chernov',
-    withLink: false,
   },
   {
     label: 'Nick Gurinovicha',
-    withLink: false,
   },
 ];
 
@@ -96,6 +99,15 @@ export const menuItems: IMenuItem[] = [
     withSubMenu: false,
   },
   {
+    id: 'wordBook',
+    linkAddress: '/wordBook',
+    label: 'Wordbook',
+    withSubMenu: true,
+    ariaControlsId: sectionsId,
+    subMenuId: 'wordBook',
+    subMenuItems: sectionsItems,
+  },
+  {
     id: 'games',
     linkAddress: '/games',
     label: 'Mini-games',
@@ -104,35 +116,10 @@ export const menuItems: IMenuItem[] = [
     subMenuId: 'gamesMenu',
     subMenuItems: gamesItems,
   },
-
-  {
-    id: 'sections',
-    linkAddress: '/sections',
-    label: 'Sections',
-    withSubMenu: true,
-    ariaControlsId: sectionsId,
-    subMenuId: 'sectionsMenu',
-    subMenuItems: sectionsItems,
-  },
   {
     id: 'statistics',
     linkAddress: '/statistics',
     label: 'Statistics',
     withSubMenu: false,
-  },
-  {
-    id: 'settings',
-    linkAddress: '/settings',
-    label: 'Settings',
-    withSubMenu: false,
-  },
-  {
-    id: 'teams',
-    linkAddress: '/teams',
-    label: 'Teams',
-    withSubMenu: true,
-    ariaControlsId: teamsId,
-    subMenuId: 'teamsMenu',
-    subMenuItems: teamsItems,
   },
 ];
