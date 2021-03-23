@@ -4,21 +4,22 @@ import { AppBar, Menu, MenuItem, Toolbar, IconButton } from '@material-ui/core';
 import { ArrowDropDown, MoreVert } from '@material-ui/icons';
 import { menuItems, mobileMenuId } from './navMenuData';
 import { IMenuItem, MobileNavMenuProps, NavSubMenuProps } from './types';
-import useStyles from './classes';
+import useStyles from './styles';
 
 /* ===========common methods============ */
 const generateRefToRefObject = (
   refsObject: RefObject<{ [key: string]: HTMLDivElement }>,
   element: HTMLDivElement,
   menuItem: IMenuItem
-) => Object.assign(refsObject.current, { [menuItem.id]: element });
+): { [key: string]: HTMLDivElement } =>
+  Object.assign(refsObject.current, { [menuItem.id]: element });
 
 const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
   const { anchor, id, isOpen, items, onMenuClose } = props;
 
   const subMenuClasses = useStyles();
 
-  const renderItems = () =>
+  const renderItems = (): JSX.Element[] =>
     items?.map((item) => (
       <MenuItem className={subMenuClasses.navSubMenuItem} key={item.label} onClick={onMenuClose}>
         {item.withLink ? <Link to={item.linkAddress}>{item.label}</Link> : item.label}
@@ -47,7 +48,7 @@ const renderMenuItem = (
   subMenuOpenId: string,
   setSubMenuOpenId: (id: string) => void,
   handleMenuClose: () => void
-) => {
+): JSX.Element => {
   const buttonClickEventHandler = (event: React.MouseEvent) => {
     event.stopPropagation();
     setSubMenuOpenId(menuItem.subMenuId || '');
@@ -86,7 +87,7 @@ export const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenu
 
   const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});
 
-  const handleSubMenuClose = () => {
+  const handleSubMenuClose = (): void => {
     setTimeout(() => setSubMenuOpenId('none'), 0);
   };
 
@@ -94,7 +95,7 @@ export const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenu
 
   const mobileClasses = useStyles();
 
-  const renderItems = () =>
+  const renderItems = (): JSX.Element[] =>
     items?.map((menuItem: IMenuItem) => {
       return (
         <MenuItem key={menuItem.id} onClick={onMenuClose}>
@@ -134,19 +135,19 @@ export const NavigationMenu: React.FC = () => {
 
   const classes = useStyles();
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (): void => {
     setSubMenuOpenId('none');
   };
 
-  const handleMobileMenuClose = () => {
+  const handleMobileMenuClose = (): void => {
     setMobileMenuOpen(false);
   };
 
-  const handleMobileMenuOpen = () => {
+  const handleMobileMenuOpen = (): void => {
     setMobileMenuOpen(true);
   };
 
-  const renderMenuItems = () =>
+  const renderMenuItems = (): JSX.Element[] =>
     menuItems.map((menuItem) => {
       const getRef = (element: HTMLDivElement) =>
         Object.assign(refsObject.current, { [menuItem.id]: element });
