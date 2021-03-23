@@ -4,69 +4,18 @@ import { Link, useHistory } from 'react-router-dom';
 import {
   Avatar,
   Button,
+  CircularProgress,
+  Container,
   CssBaseline,
   TextField,
   Grid,
   Typography,
-  Container,
-  makeStyles,
-  CircularProgress,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { signUpUser } from '../../store/actions/userAuthActions';
-import { SET_FAILED_ATTEMPT, SET_IS_REGISTRED } from '../../store/actionTypes';
-import { ICombinedState } from '../../store/types';
-
-const useStyles = makeStyles(() => ({
-  container: {
-    backgroundColor: '#fff',
-  },
-  paper: {
-    marginTop: '64px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '24px 0',
-  },
-  avatar: {
-    marginBottom: '8px',
-    cursor: 'pointer',
-    transition: '0.5s ease',
-    '&:hover': {
-      transform: 'scale(1.2)',
-      transition: '0.5s ease',
-    },
-  },
-  pointer: {
-    cursor: 'pointer',
-  },
-  userImage: {
-    backgroundColor: '#fff',
-    borderColor: '#fff',
-    cursor: 'pointer',
-  },
-  form: {
-    width: '100%',
-    marginTop: '24px',
-  },
-  submit: {
-    margin: '24px 0 16px 0',
-  },
-  link: {
-    color: 'blue',
-    marginLeft: '8px',
-    textDecoration: 'none',
-    '&:hover': {
-      border: 'none',
-      outline: 'none',
-      textDecoration: 'underline',
-    },
-  },
-  spinner: {
-    margin: '15px 0px',
-  },
-}));
+import { IAppState, UserActionTypes } from '../../store/types';
+import { useStyles } from './styles';
 
 const SignUpPage: React.FC = () => {
   const classes = useStyles();
@@ -87,9 +36,9 @@ const SignUpPage: React.FC = () => {
   const handleCloseModalWindow = () => setOpen(false);
   const handleShowModalWindow = () => setOpen(true);
 
-  const isRegistred = useSelector((state: ICombinedState) => state.user.isRegistred);
-  const isFailedAttempt = useSelector((state: ICombinedState) => state.user.failedAttempt);
-  const isLoading = useSelector((state: ICombinedState) => state.app.isLoading);
+  const isRegistred = useSelector((state: IAppState) => state.user.isRegistred);
+  const isFailedAttempt = useSelector((state: IAppState) => state.user.failedAttempt);
+  const isLoading = useSelector((state: IAppState) => state.user.isLoading);
 
   const handleClose = () => {
     setEmailInvalid(false);
@@ -101,8 +50,8 @@ const SignUpPage: React.FC = () => {
     setUserEmail('');
     setPassword('');
     setConfirmPassword('');
-    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
-    dispatch({ type: SET_IS_REGISTRED, isRegistred: false });
+    dispatch({ type: UserActionTypes.SET_FAILED_ATTEMPT, failedAttempt: false });
+    dispatch({ type: UserActionTypes.SET_IS_REGISTRED, isRegistred: false });
     history.push('/sign-in');
   };
 
@@ -190,7 +139,7 @@ const SignUpPage: React.FC = () => {
                   helperText={userNameEmpty && 'введите имя'}
                   onChange={(event) => {
                     setUserName(event.currentTarget.value);
-                    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+                    dispatch({ type: UserActionTypes.SET_FAILED_ATTEMPT, failedAttempt: false });
                   }}
                   onFocus={() => {
                     setUserNameEmpty(false);
