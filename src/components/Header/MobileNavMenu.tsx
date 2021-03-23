@@ -5,15 +5,15 @@ import { IMenuItem, MobileNavMenuProps } from './types';
 import useStyles from './styles';
 
 const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) => {
-  const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
+  const { anchor, isOpen, items, onMenuClose } = props;
+
+  const [subMenuOpenId, setSubMenuOpenId] = useState('');
 
   const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});
 
   const handleSubMenuClose = (): void => {
     setTimeout(() => setSubMenuOpenId('none'), 0);
   };
-
-  const { anchor, isOpen, items, onMenuClose } = props;
 
   const mobileClasses = useStyles();
 

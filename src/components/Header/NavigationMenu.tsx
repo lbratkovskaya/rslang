@@ -8,7 +8,7 @@ import { menuItems, mobileMenuId } from './navMenuData';
 import useStyles from './styles';
 
 const NavigationMenu: React.FC = () => {
-  const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
+  const [subMenuOpenId, setSubMenuOpenId] = useState('');
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});

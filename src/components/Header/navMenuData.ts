@@ -4,7 +4,7 @@ const gamesId = 'miniGames';
 const sectionsId = 'wordBook';
 export const mobileMenuId = 'mobileMenu';
 
-export const gamesItems: ISubMenuItem[] = [
+export const gamesItems: Array<ISubMenuItem> = [
   {
     label: 'Savanna',
     withLink: true,
@@ -27,7 +27,7 @@ export const gamesItems: ISubMenuItem[] = [
   },
 ];
 
-export const sectionsItems: ISubMenuItem[] = [
+export const sectionsItems: Array<ISubMenuItem> = [
   {
     label: 'Red Section',
     withLink: true,
@@ -70,28 +70,7 @@ export const sectionsItems: ISubMenuItem[] = [
   },
 ];
 
-export const teamsItems = [
-  {
-    label: 'Larisa Arkaeva',
-  },
-  {
-    label: 'Antonina Tregubova',
-  },
-  {
-    label: 'Alexey Teterin',
-  },
-  {
-    label: 'Aliaxei Latypau',
-  },
-  {
-    label: 'Maxim Chernov',
-  },
-  {
-    label: 'Nick Gurinovicha',
-  },
-];
-
-export const menuItems: IMenuItem[] = [
+export const menuItems: Array<IMenuItem> = [
   {
     id: 'study',
     linkAddress: '/study',
