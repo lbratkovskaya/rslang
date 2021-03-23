@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
-import { IAppState, IWord } from '../../store/types';
+import { ICombinedState, IWord } from '../../store/types';
 import './Dictionary.scss';
 
 type Props = ConnectedProps<typeof connector>;
@@ -33,7 +33,7 @@ const Dictionary: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: ICombinedState) => ({
   dictionary: state.dictionary,
 });
 
