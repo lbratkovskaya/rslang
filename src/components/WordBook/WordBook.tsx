@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Typography } from '@material-ui/core';
 import Header from '../Header';
 import Footer from '../Footer';
-import { fetchDictionary } from '../../store/actions/dictionaryActions';
+import { fetchWords } from '../../store/actions/wordBookActions';
 import { ICombinedState, IWord } from '../../store/types';
 import styles from './styles';
 
-const Dictionary: React.FC = () => {
-  const dictionary = useSelector((state: ICombinedState) => state.dictionary);
+const WordBook: React.FC = () => {
+  const dictionary = useSelector((state: ICombinedState) => state.wordBook);
   const dispatch = useDispatch();
   const classes = makeStyles(() => styles)();
 
-  const getDictionary = () => dispatch(fetchDictionary());
+  const getWords = () => dispatch(fetchWords());
 
   useEffect(() => {
-    getDictionary();
+    getWords();
   }, []);
 
   const renderWords = () =>
@@ -29,7 +29,7 @@ const Dictionary: React.FC = () => {
     <>
       <Header />
       <main>
-        <Typography variant="h5">Dictionary</Typography>
+        <Typography variant="h5">WordBook</Typography>
         {renderWords()}
       </main>
       <Footer />
@@ -37,4 +37,4 @@ const Dictionary: React.FC = () => {
   );
 };
 
-export default Dictionary;
+export default WordBook;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import Dictionary from './Dictionary';
+import WordBook from './WordBook';
 import MainPage from './MainPage';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
@@ -15,8 +15,8 @@ const App: React.FC = () => (
       <Route path="/sign-up">
         <SignUpPage />
       </Route>
-      <Route path="/dictionary">
-        <Dictionary />
+      <Route path="/wordbook">
+        <WordBook />
       </Route>
       <Route path="/">
         <MainPage />

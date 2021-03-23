@@ -2,7 +2,7 @@ import { IAppState } from './reducers/appReducer/types';
 import { IUserState } from './reducers/userReducer/types';
 
 export interface ICombinedState {
-  dictionary: IDictionaryState;
+  wordBook: IWordBookState;
   user: IUserState;
   app: IAppState;
 }
@@ -24,21 +24,19 @@ export interface IWord {
   textExampleTranslate: string;
 }
 
-export interface IDictionaryState {
+export interface IWordBookState {
+  isLoading: boolean;
   words: IWord[];
-  wordsActual: IWord[];
-  wordsDifficult: IWord[];
-  wordsLearned: IWord[];
 }
 
-export enum DictionaryActionTypes {
-  FETCH_START = 'FETCH_DICTIONARY_START',
-  FETCH_SUCCESS = 'FETCH_DICTIONARY_SUCCESS',
-  FETCH_ERROR = 'FETCH_DICTIONARY_ERROR',
+export enum WordBookActionTypes {
+  FETCH_START = 'FETCH_WORDS_START',
+  FETCH_SUCCESS = 'FETCH_WORDS_SUCCESS',
+  FETCH_ERROR = 'FETCH_WORDS_ERROR',
 }
 
-export interface IDictionaryAction {
-  type: DictionaryActionTypes;
+export interface IWordBookAction {
+  type: WordBookActionTypes;
   payload: {
     words: IWord[];
     isLoading: boolean;

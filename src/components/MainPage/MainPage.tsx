@@ -7,7 +7,7 @@ const MainPage: React.FC = () => (
   <>
     <Header />
     <main>
-      <Link to="/dictionary">Dictionary</Link>
+      <Link to="/wordbook">WordBook</Link>
       <br />
       <Link to="/sign-in">Вход</Link>
       <br />
