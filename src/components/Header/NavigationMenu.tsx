@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Avatar } from '@material-ui/core';
 import { ArrowDropDown, MoreVert } from '@material-ui/icons';
 import MobileNavMenu from './MobileNavMenu';
 import NavSubMenu from './NavSubMenu';
@@ -60,14 +60,19 @@ const NavigationMenu: React.FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
+        <Link to="/" className={classes.mainLogo}>
+          <Avatar src="/assets/favicon.svg" title="RS Lang App" className={classes.mainLogoPic} />
+        </Link>
         <div className={classes.sectionDesktop}>{renderMenuItems()}</div>
         <div className={classes.sectionMobile} ref={mobileMenuRef}>
           <IconButton
             aria-label="show more"
             aria-controls={mobileMenuId}
             aria-haspopup="true"
-            onClick={handleMobileMenuOpen}
-            color="inherit">
+            className={classes.mobileMenuButton}
+            color="inherit"
+            edge="end"
+            onClick={handleMobileMenuOpen}>
             <MoreVert />
           </IconButton>
           {isMobileMenuOpen && (

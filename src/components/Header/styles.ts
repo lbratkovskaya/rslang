@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     sectionDesktop: {
       display: 'none',
       width: '100%',
+      marginLeft: '20px',
       flexDirection: 'row',
       justifyContent: 'space-between',
       [theme.breakpoints.up('md')]: {
@@ -67,6 +68,23 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
       },
+    },
+    mainLogo: {
+      width: '80px',
+      minWidth: '80px',
+      height: '80px',
+      marginRight: 'auto',
+    },
+    mainLogoPic: {
+      width: '100%',
+      height: '100%',
+      borderRadius: '0',
+      '& svg': {
+        color: 'aqua',
+      },
+    },
+    mobileMenuButton: {
+      color: '#333333',
     },
   })
 );
