@@ -1,12 +1,7 @@
-import { IUserState, IUserAction } from './types';
-import {
-  SET_FAILED_ATTEMPT,
-  SET_IS_LOGGED_IN,
-  SET_IS_REGISTRED,
-  SET_USER_DATA,
-} from '../../actionTypes';
+import { IUserState, IUserAction, UserActionTypes } from '../../types';
 
 const initialState: IUserState = {
+  isLoading: false,
   isLoggedIn: false,
   isRegistred: false,
   failedAttempt: false,
@@ -21,14 +16,16 @@ const initialState: IUserState = {
 
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {
   switch (action.type) {
-    case SET_USER_DATA:
+    case UserActionTypes.SET_USER_DATA:
       return { ...state, data: action.data };
-    case SET_FAILED_ATTEMPT:
+    case UserActionTypes.SET_FAILED_ATTEMPT:
       return { ...state, failedAttempt: action.failedAttempt };
-    case SET_IS_LOGGED_IN:
+    case UserActionTypes.SET_IS_LOGGED_IN:
       return { ...state, isLoggedIn: action.isLoggedIn };
-    case SET_IS_REGISTRED:
+    case UserActionTypes.SET_IS_REGISTRED:
       return { ...state, isRegistred: action.isRegistred };
+    case UserActionTypes.SET_IS_LOADING:
+      return { ...state, isLoading: action.isLoading };
     default:
       return state;
   }
