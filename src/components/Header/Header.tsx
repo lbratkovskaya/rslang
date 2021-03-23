@@ -2,9 +2,7 @@ import React from 'react';
 import NavigationMenu from './NavigationMenu';
 
 const Header: React.FC = () => (
-  <header>
-    <NavigationMenu />
-  </header>
+  <NavigationMenu />
 );
 
 export default Header;

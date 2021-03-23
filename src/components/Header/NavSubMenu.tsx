@@ -9,6 +9,7 @@ import { NavSubMenuProps } from './types';
 const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
   const {
     anchor,
+    id,
     isOpen,
     items,
     onMenuClose,
@@ -30,8 +31,9 @@ const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
   return (
     <Menu
       anchorEl={anchor}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id="menu-auth"
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      id={id}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isOpen}

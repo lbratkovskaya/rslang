@@ -5,13 +5,13 @@ import {
   Theme,
   createStyles,
   makeStyles,
-  ButtonBase,
   IconButton,
 } from '@material-ui/core';
-import { MoreVert } from '@material-ui/icons';
+import { ArrowDropDown, MoreVert } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import NavSubMenu from './NavSubMenu';
-import { IMenuItem } from './types';
+import { ISubMenuItem } from './types';
+import MobileNavMenu from './MobileNavMenu';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   grow: {
@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   sectionDesktop: {
     display: 'none',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
@@ -51,14 +54,25 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       display: 'none',
     },
   },
+  navMenuItem: {
+    padding: '6px',
+    display: 'flex',
+    alignItems: 'center',
+    '& a': {
+      textDecoration: 'none',
+    },
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    },
+  },
 }));
 
 const NavigationMenu: React.FC = () => {
   const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const gamesRef = useRef<HTMLSpanElement>(null);
-  const sectionsRef = useRef<HTMLSpanElement>(null);
-  const teamsRef = useRef<HTMLSpanElement>(null);
+
+  const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const classes = useStyles();
 
@@ -74,7 +88,7 @@ const NavigationMenu: React.FC = () => {
     setMobileMenuOpen(true);
   };
 
-  const gamesItems: IMenuItem[] = [
+  const gamesItems: ISubMenuItem[] = [
     {
       label: 'Savanna',
       withLink: true,
@@ -97,7 +111,7 @@ const NavigationMenu: React.FC = () => {
     },
   ];
 
-  const sectionsItems: IMenuItem[] = [
+  const sectionsItems: ISubMenuItem[] = [
     {
       label: 'Red Section',
       withLink: true,
@@ -130,71 +144,108 @@ const NavigationMenu: React.FC = () => {
     },
   ];
 
+  const teamsItems: ISubMenuItem[] = [
+    {
+      label: 'Larisa Arkaeva',
+      withLink: true,
+      linkAddress: 'https://github.com/lbratkovskaya',
+    },
+  ];
+
   const gamesId = 'miniGames';
   const sectionsId = 'sections';
   const teamsId = 'teams';
   const mobileMenuId = '';
 
+  const menuItems = [
+    {
+      id: 'study',
+      linkAddress: '/study',
+      label: 'Time to Study',
+      withSubMenu: false,
+    },
+    {
+      id: 'games',
+      linkAddress: '/games',
+      label: 'Mini-games',
+      withSubMenu: true,
+      ariaControlsId: gamesId,
+      subMenuId: 'gamesMenu',
+      subMenuItems: gamesItems,
+    },
+
+    {
+      id: 'sections',
+      linkAddress: '/sections',
+      label: 'Sections',
+      withSubMenu: true,
+      ariaControlsId: sectionsId,
+      subMenuId: 'sectionsMenu',
+      subMenuItems: sectionsItems,
+    },
+    {
+      id: 'statistics',
+      linkAddress: '/statistics',
+      label: 'Statistics',
+      withSubMenu: false,
+    },
+    {
+      id: 'settings',
+      linkAddress: '/settings',
+      label: 'Settings',
+      withSubMenu: false,
+    },
+    {
+      id: 'teams',
+      linkAddress: '/teams',
+      label: 'Teams',
+      withSubMenu: true,
+      ariaControlsId: teamsId,
+      subMenuId: 'teamsMenu',
+      subMenuItems: teamsItems,
+    },
+  ];
+
+  const renderMenuItems = () => menuItems.map((menuItem) => {
+    const getRef = (element: HTMLDivElement) => Object.assign(
+      refsObject.current,
+      { [menuItem.id]: element },
+    );
+    return (
+      <div key={menuItem.id} className={classes.navMenuItem} ref={getRef}>
+        <Link to={menuItem.linkAddress}>{menuItem.label}</Link>
+        {
+          menuItem.withSubMenu && (
+            <>
+              <IconButton
+                aria-label={menuItem.label}
+                aria-controls={menuItem.subMenuId}
+                aria-haspopup="true"
+                onClick={() => setSubMenuOpenId(menuItem.subMenuId || '')}
+              >
+                <ArrowDropDown />
+              </IconButton>
+              <NavSubMenu
+                anchor={refsObject.current[menuItem.id]}
+                id={menuItem.subMenuId!}
+                isOpen={subMenuOpenId === menuItem.subMenuId}
+                items={menuItem.subMenuItems!}
+                onMenuClose={handleMenuClose}
+              />
+            </>
+          )
+        }
+      </div>
+    );
+  });
+
   return (
     <AppBar position="static">
       <Toolbar>
         <div className={classes.sectionDesktop}>
-          <div>
-            <Link to="/study">Time to Study</Link>
-          </div>
-          <ButtonBase
-            aria-label="Mini-games"
-            aria-controls={gamesId}
-            aria-haspopup="true"
-            onClick={() => setSubMenuOpenId('gamesMenu')}
-          >
-            <span ref={gamesRef}>Mini-Games</span>
-            <NavSubMenu
-              anchor={gamesRef.current}
-              id={gamesId}
-              isOpen={subMenuOpenId === 'gamesMenu'}
-              items={gamesItems}
-              onMenuClose={handleMenuClose}
-            />
-          </ButtonBase>
-          <ButtonBase
-            aria-label="Sections"
-            aria-controls={sectionsId}
-            aria-haspopup="true"
-            onClick={() => setSubMenuOpenId('sectionsMenu')}
-          >
-            <span ref={sectionsRef}>Sections</span>
-            <NavSubMenu
-              anchor={sectionsRef.current}
-              id={sectionsId}
-              isOpen={subMenuOpenId === 'sectionsMenu'}
-              items={sectionsItems}
-              onMenuClose={handleMenuClose}
-            />
-          </ButtonBase>
-          <div>
-            <Link to="/statistics">Statistics</Link>
-          </div>
-          <div>
-            <Link to="/settings">Settings</Link>
-          </div>
-          <ButtonBase
-            aria-label="Teams"
-            aria-controls={teamsId}
-            aria-haspopup="true"
-            onClick={() => setSubMenuOpenId('teamsMenu')}
-          >
-            <span ref={teamsRef}>Teams</span>
-            <NavSubMenu
-              anchor={teamsRef.current}
-              id={sectionsId}
-              isOpen={subMenuOpenId === 'teamsMenu'}
-              items={sectionsItems}
-              onMenuClose={handleMenuClose}
-            />
-          </ButtonBase>
+          {renderMenuItems()}
         </div>
-        <div className={classes.sectionMobile}>
+        <div className={classes.sectionMobile} ref={mobileMenuRef}>
           <IconButton
             aria-label="show more"
             aria-controls={mobileMenuId}
@@ -204,7 +255,15 @@ const NavigationMenu: React.FC = () => {
           >
             <MoreVert />
           </IconButton>
-          {isMobileMenuOpen && <div />}
+          {isMobileMenuOpen
+            && (
+              <MobileNavMenu
+                anchor={mobileMenuRef.current}
+                isOpen={isMobileMenuOpen}
+                items={menuItems}
+                onMenuClose={() => setMobileMenuOpen(false)}
+              />
+            )}
         </div>
       </Toolbar>
     </AppBar>
