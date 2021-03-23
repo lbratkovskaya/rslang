@@ -124,23 +124,17 @@ const SignUpPage: React.FC = () => {
   };
 
   const setUserImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      event.currentTarget.files &&
-      event.currentTarget.files.length &&
-      event.currentTarget.files[0].type.startsWith('image')
-    ) {
+    const { files } = event.currentTarget;
+    const isFileReceived = files && files.length;
+    const isImage = files![0].type.startsWith('image');
+
+    if (isFileReceived && isImage) {
       const reader = new FileReader();
-      reader.readAsDataURL(event.currentTarget.files[0]);
-      reader.onloadend = () => {
-        if (reader.result) {
-          setUserImageToUpload(reader.result);
-        }
-      };
-    } else if (
-      event.currentTarget.files &&
-      event.currentTarget.files.length &&
-      !event.currentTarget.files[0].type.startsWith('image')
-    ) {
+      reader.readAsDataURL(files![0]);
+      reader.onloadend = () => (reader.result ? setUserImageToUpload(reader.result) : null);
+    }
+
+    if (isFileReceived && !isImage) {
       handleShowModalWindow();
     }
   };

@@ -2,7 +2,6 @@ import { IAppState } from './reducers/appReducer/types';
 import { IUserState } from './reducers/userReducer/types';
 
 export interface ICombinedState {
-  // по сути здесь останется только этот интерфейс, который будем дописывать по мере необходимости
   dictionary: IDictionaryState;
   user: IUserState;
   app: IAppState;
