@@ -8,6 +8,7 @@ export const mobileMenuId = 'mobileMenu';
 export const logoPath = '../../assets/favicon.svg';
 
 
+
 const gamesTitles = Array.from(Object.keys(GAMES));
 
 
