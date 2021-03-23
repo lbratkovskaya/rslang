@@ -4,6 +4,8 @@ import Footer from '../Footer';
 import Header from '../Header';
 import useStyles from './styles';
 
+
+
 const MainPage: React.FC = () => {
   const classes = useStyles();
 

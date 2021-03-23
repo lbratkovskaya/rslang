@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import AudioCallingPage from './AudioCallingPage';
 import WordBook from './WordBook';
 import MainPage from './MainPage';
 import GameSavannah from './GameSavannah';
@@ -34,6 +36,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.games.memory} component={MemoryGame} />
                 <Route path={ROUTES.dictionary} component={UserDictionary} />
                 <Route path={ROUTES.games.savannah} component={GameSavannah} />
+                <Route path={ROUTES.games.audio} component={AudioCallingPage} />
                 <Route path={ROUTES.study} component={RandomPage} />
                 <Route path={ROUTES.settings} component={Settings} />
                 <Route exact path={ROUTES.root} component={MainPage} />

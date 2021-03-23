@@ -35,10 +35,6 @@ const SavannahStartWindow: React.FC = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    getWords(group, page);
-  }, [group, page]);
-
   const handleChange = (value: string | number): void => {
     setSelectLevel(Number(value));
   };
@@ -51,13 +47,17 @@ const SavannahStartWindow: React.FC = () => {
       setSelectRound(randomPage);
       onReduceArrayWords(wordBook?.words);
     }
-
+    getWords(group, page);
     startGame(true);
   };
 
   const handleSwitchLang = (checked: boolean): void => {
     switchLanguage(checked);
   };
+
+  useEffect(() => {
+    getWords(group, page);
+  }, [group, page]);
 
   return (
     <>

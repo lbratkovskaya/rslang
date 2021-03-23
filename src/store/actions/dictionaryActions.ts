@@ -38,6 +38,11 @@ const getDifficulty = (word: IWord): string => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.difficulty) || 'easy';
 };
 
+export const sendWordsToLearning = (words: IWord[]) => ({
+  type: DictionaryActionTypes.SEND_WORDS,
+  payload: { learningWords: words },
+});
+
 const startDictLoading = () => ({
   type: DictionaryActionTypes.DICT_IS_LOADING,
   payload: { isLoading: true },
