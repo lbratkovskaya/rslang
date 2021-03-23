@@ -1,73 +1,120 @@
-import React, { useRef, useState } from 'react';
+import React, {
+  RefObject,
+  useRef,
+  useState,
+} from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
+  Menu,
+  MenuItem,
   Toolbar,
-  Theme,
-  createStyles,
-  makeStyles,
   IconButton,
 } from '@material-ui/core';
 import { ArrowDropDown, MoreVert } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
-import NavSubMenu from './NavSubMenu';
-import { ISubMenuItem } from './types';
-import MobileNavMenu from './MobileNavMenu';
+import { menuItems, mobileMenuId } from './navMenuData';
+import {
+  IMenuItem,
+  MobileNavMenuProps,
+  NavSubMenuProps,
+} from './types';
+import useStyles from './classes';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-  navMenuItem: {
-    padding: '6px',
-    display: 'flex',
-    alignItems: 'center',
-    '& a': {
-      textDecoration: 'none',
-    },
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)',
-    },
-  },
-}));
+/* ===========common methods============ */
+const generateRefToRefObject = (
+  refsObject: RefObject<{ [key: string]: HTMLDivElement }>,
+  element: HTMLDivElement,
+  menuItem: IMenuItem,
+) => Object.assign(
+  refsObject.current,
+  { [menuItem.id]: element },
+);
 
-const NavigationMenu: React.FC = () => {
+const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
+  const {
+    anchor,
+    id,
+    isOpen,
+    items,
+    onMenuClose,
+  } = props;
+
+  const subMenuClasses = useStyles();
+
+  const renderItems = () => items?.map((item) => (
+    <MenuItem
+      className={subMenuClasses.navSubMenuItem}
+      key={item.label}
+      onClick={onMenuClose}
+    >
+      {
+        item.withLink
+          ? <Link to={item.linkAddress}>{item.label}</Link>
+          : item.label
+      }
+    </MenuItem>
+  ));
+
+  return (
+    <Menu
+      anchorEl={anchor}
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      id={id}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isOpen}
+      onClose={onMenuClose}
+    >
+      {items && renderItems()}
+    </Menu>
+  );
+};
+
+const renderMenuItem = (
+  refsObject: RefObject<{ [key: string]: HTMLDivElement }> = { current: {} = {} },
+  menuItem: IMenuItem,
+  itemClassName: string,
+  subMenuOpenId: string,
+  setSubMenuOpenId: (id: string) => void,
+  handleMenuClose: () => void,
+) => {
+  const buttonClickEventHandler = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setSubMenuOpenId(menuItem.subMenuId || '');
+  };
+
+  return (<div
+    key={menuItem.id}
+    className={itemClassName}
+    ref={(element: HTMLDivElement) =>
+      generateRefToRefObject(refsObject, element, menuItem)}
+  >
+    <Link to={{ pathname: menuItem.linkAddress }}>{menuItem.label}</Link>
+    {menuItem.withSubMenu && (
+      <>
+        <IconButton
+          aria-label={menuItem.label}
+          aria-controls={menuItem.subMenuId}
+          aria-haspopup="true"
+          onClick={buttonClickEventHandler}
+        >
+          <ArrowDropDown />
+        </IconButton>
+        <NavSubMenu
+          anchor={refsObject.current![menuItem.id]}
+          id={menuItem.subMenuId!}
+          isOpen={subMenuOpenId === menuItem.subMenuId}
+          items={menuItem.subMenuItems!}
+          onMenuClose={handleMenuClose}
+        />
+      </>
+    )
+    }
+  </div >);
+}
+
+export const NavigationMenu: React.FC = () => {
   const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -76,165 +123,43 @@ const NavigationMenu: React.FC = () => {
 
   const classes = useStyles();
 
-  // const handleMobileMenuClose = () => {
-  //   setMobileMenuOpen(false);
-  // };
-
   const handleMenuClose = () => {
-    setTimeout(() => setSubMenuOpenId('none'), 0);
+    setSubMenuOpenId('none');
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMenuOpen(false);
   };
 
   const handleMobileMenuOpen = () => {
     setMobileMenuOpen(true);
   };
 
-  const gamesItems: ISubMenuItem[] = [
-    {
-      label: 'Savanna',
-      withLink: true,
-      linkAddress: '/games/savanna',
-    },
-    {
-      label: 'AudioCall',
-      withLink: true,
-      linkAddress: '/games/audio',
-    },
-    {
-      label: 'Sprint',
-      withLink: true,
-      linkAddress: '/games/sprint',
-    },
-    {
-      label: 'Memory Game',
-      withLink: true,
-      linkAddress: '/games/memory',
-    },
-  ];
-
-  const sectionsItems: ISubMenuItem[] = [
-    {
-      label: 'Red Section',
-      withLink: true,
-      linkAddress: '/sections/red',
-    },
-    {
-      label: 'Yellow Section',
-      withLink: true,
-      linkAddress: '/sections/yellow',
-    },
-    {
-      label: 'Orange Section',
-      withLink: true,
-      linkAddress: '/sections/orange',
-    },
-    {
-      label: 'Green Section',
-      withLink: true,
-      linkAddress: '/sections/green',
-    },
-    {
-      label: 'Blue Section',
-      withLink: true,
-      linkAddress: '/sections/blue',
-    },
-    {
-      label: 'Purple Section',
-      withLink: true,
-      linkAddress: '/sections/purple',
-    },
-  ];
-
-  const teamsItems: ISubMenuItem[] = [
-    {
-      label: 'Larisa Arkaeva',
-      withLink: true,
-      linkAddress: 'https://github.com/lbratkovskaya',
-    },
-  ];
-
-  const gamesId = 'miniGames';
-  const sectionsId = 'sections';
-  const teamsId = 'teams';
-  const mobileMenuId = '';
-
-  const menuItems = [
-    {
-      id: 'study',
-      linkAddress: '/study',
-      label: 'Time to Study',
-      withSubMenu: false,
-    },
-    {
-      id: 'games',
-      linkAddress: '/games',
-      label: 'Mini-games',
-      withSubMenu: true,
-      ariaControlsId: gamesId,
-      subMenuId: 'gamesMenu',
-      subMenuItems: gamesItems,
-    },
-
-    {
-      id: 'sections',
-      linkAddress: '/sections',
-      label: 'Sections',
-      withSubMenu: true,
-      ariaControlsId: sectionsId,
-      subMenuId: 'sectionsMenu',
-      subMenuItems: sectionsItems,
-    },
-    {
-      id: 'statistics',
-      linkAddress: '/statistics',
-      label: 'Statistics',
-      withSubMenu: false,
-    },
-    {
-      id: 'settings',
-      linkAddress: '/settings',
-      label: 'Settings',
-      withSubMenu: false,
-    },
-    {
-      id: 'teams',
-      linkAddress: '/teams',
-      label: 'Teams',
-      withSubMenu: true,
-      ariaControlsId: teamsId,
-      subMenuId: 'teamsMenu',
-      subMenuItems: teamsItems,
-    },
-  ];
-
   const renderMenuItems = () => menuItems.map((menuItem) => {
-    const getRef = (element: HTMLDivElement) => Object.assign(
-      refsObject.current,
-      { [menuItem.id]: element },
-    );
+    const getRef = (element: HTMLDivElement) =>
+      Object.assign(refsObject.current, { [menuItem.id]: element });
     return (
       <div key={menuItem.id} className={classes.navMenuItem} ref={getRef}>
         <Link to={menuItem.linkAddress}>{menuItem.label}</Link>
-        {
-          menuItem.withSubMenu && (
-            <>
-              <IconButton
-                aria-label={menuItem.label}
-                aria-controls={menuItem.subMenuId}
-                aria-haspopup="true"
-                onClick={() => setSubMenuOpenId(menuItem.subMenuId || '')}
-              >
-                <ArrowDropDown />
-              </IconButton>
-              <NavSubMenu
-                anchor={refsObject.current[menuItem.id]}
-                id={menuItem.subMenuId!}
-                isOpen={subMenuOpenId === menuItem.subMenuId}
-                items={menuItem.subMenuItems!}
-                onMenuClose={handleMenuClose}
-              />
-            </>
-          )
-        }
+        {menuItem.withSubMenu && (
+          <>
+            <IconButton
+              aria-label={menuItem.label}
+              aria-controls={menuItem.subMenuId}
+              aria-haspopup="true"
+              onClick={() => setSubMenuOpenId(menuItem.subMenuId || '')}
+            >
+              <ArrowDropDown />
+            </IconButton>
+            <NavSubMenu
+              anchor={refsObject.current[menuItem.id]}
+              id={menuItem.subMenuId!}
+              isOpen={subMenuOpenId === menuItem.subMenuId}
+              items={menuItem.subMenuItems!}
+              onMenuClose={handleMenuClose}
+            />
+          </>
+        )}
       </div>
     );
   });
@@ -261,7 +186,7 @@ const NavigationMenu: React.FC = () => {
                 anchor={mobileMenuRef.current}
                 isOpen={isMobileMenuOpen}
                 items={menuItems}
-                onMenuClose={() => setMobileMenuOpen(false)}
+                onMenuClose={handleMobileMenuClose}
               />
             )}
         </div>
@@ -271,4 +196,54 @@ const NavigationMenu: React.FC = () => {
   );
 };
 
-export default NavigationMenu;
+export const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) => {
+  const [subMenuOpenId, setSubMenuOpenId] = useState<string>('');
+
+  const refsObject = useRef<{ [key: string]: HTMLDivElement }>({});
+
+  const handleSubMenuClose = () => {
+    setTimeout(() => setSubMenuOpenId('none'), 0);
+  };
+
+  const {
+    anchor,
+    isOpen,
+    items,
+    onMenuClose,
+  } = props;
+
+  const mobileClasses = useStyles();
+
+  const renderItems = () => items?.map((menuItem: IMenuItem) => {
+    return (
+      <MenuItem
+        key={menuItem.id}
+        onClick={onMenuClose}
+      >
+        {renderMenuItem(
+          refsObject,
+          menuItem,
+          mobileClasses.navMenuItem,
+          subMenuOpenId,
+          setSubMenuOpenId,
+          handleSubMenuClose
+        )}
+      </MenuItem>
+    );
+  });
+
+  return (
+    <Menu
+      anchorEl={anchor}
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      id="menu-auth"
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isOpen}
+      onClose={onMenuClose}
+    >
+      {items && renderItems()}
+    </Menu>
+  );
+};
