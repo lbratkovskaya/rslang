@@ -1,105 +1,121 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect } from 'react';
-import { HashRouter, Link, Route, Switch, useLocation } from 'react-router-dom';
+import React, { ChangeEvent, useEffect } from 'react';
+import { HashRouter, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles, Typography, Breadcrumbs, Chip } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchWords, setGroup, setPage } from '../../store/actions/wordBookActions';
-import routes, { IRoute } from './routes';
+import groups from './constants';
 import { IAppState, IWord } from '../../store/types';
-import styles from './styles';
+import { IGroup } from './types';
+import useStyles from './styles';
 
 const WordBook: React.FC = () => {
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const location = useLocation();
-  const { group, page } = wordBook;
+  const { activeGroup, activePage } = wordBook;
   const dispatch = useDispatch();
-  const classes = makeStyles(() => styles)();
+  const classes = useStyles();
 
-  const getWords = () => dispatch(fetchWords(group, page));
+  const isRootLocation = location.pathname === '/wordBook';
 
-  const handleGroupSelect = (e: SyntheticEvent, index: number): void => {
-    dispatch(setGroup(index));
-  };
+  const getWords = () => dispatch(fetchWords(activeGroup, activePage));
 
   const handlePageSelect = (e: ChangeEvent<unknown>, newPage: number): void => {
     dispatch(setPage(newPage - 1));
   };
 
-  const renderWords = (): Array<JSX.Element> =>
-    wordBook.words.map((word: IWord) => (
-      <Typography className={classes.text} key={word.word}>
-        {word.word}
-      </Typography>
-    ));
+  const setMainBackground = () => {
+    const currentRoute = groups.find((group: IGroup) => group.linkAddress === location.pathname)!;
+    const background = currentRoute?.background || '#fafafa';
+    return { background };
+  };
 
-  const renderBreadcrumbs = routes.map((route: IRoute, index) => {
-    const isActive = location.pathname === route.linkAddress;
-    const style = {
-      color: 'white',
-      backgroundColor: route.color,
-    };
+  const WelcomeMessage = () => <div className={classes.welcome}>Select section to study</div>;
+
+  const PaginationPanel = (): JSX.Element => (
+    <Pagination
+      count={30}
+      page={activePage + 1}
+      variant="outlined"
+      className={classes.pagination}
+      onChange={handlePageSelect}
+      showFirstButton
+      showLastButton
+    />
+  );
+
+  const BreadcrumbsPanel = (): JSX.Element => (
+    <Breadcrumbs aria-label="breadcrumb" separator="•" className={classes.breadcrumbs}>
+      {groups.map((group: IGroup) => {
+        const isActive = location.pathname === group.linkAddress;
+        const style = {
+          color: 'white',
+          backgroundColor: group.color,
+        };
+
+        return (
+          <Chip
+            key={group.linkAddress}
+            component="a"
+            href={`#${group.linkAddress}`}
+            variant="outlined"
+            clickable
+            label={group.label}
+            style={isActive ? style : {}}
+          />
+        );
+      })}
+    </Breadcrumbs>
+  );
+
+  const renderWords = () => {
+    const opacity = wordBook.isLoading ? 0.35 : 1;
 
     return (
-      <Link to={route.linkAddress} key={route.label} className={classes.breadcrumb}>
-        <Chip
-          onClick={(e: SyntheticEvent) => handleGroupSelect(e, index)}
-          component="span"
-          variant="outlined"
-          clickable
-          label={route.label}
-          style={isActive ? style : {}}
-          disabled={!!isActive}
-        />
-      </Link>
+      <div className={classes.words} style={{ opacity }}>
+        {wordBook.words.map((word: IWord) => (
+          <Typography className={classes.text} key={word.word}>
+            {word.word}
+          </Typography>
+        ))}
+      </div>
     );
-  });
+  };
 
-  const renderGroups = routes.map((route: IRoute) => (
-    <Switch key={route.linkAddress}>
-      <Route path={route.linkAddress}>{renderWords()}</Route>
-    </Switch>
-  ));
+  const GroupsContent = (): JSX.Element => (
+    <>
+      {groups.map((group: IGroup) => (
+        <Switch key={group.linkAddress}>
+          <Route path={group.linkAddress}>{renderWords}</Route>
+        </Switch>
+      ))}
+    </>
+  );
 
   useEffect(() => {
-    const routeIndex = routes.findIndex((route: IRoute) => route.linkAddress === location.pathname);
+    const routeIndex = groups.findIndex((route: IGroup) => route.linkAddress === location.pathname);
     dispatch(setGroup(routeIndex));
   }, [location]);
 
   useEffect(() => {
     getWords();
-  }, [page, group]);
-
-  const getMainStyle = () => {
-    const currentRoute = routes.find((route: IRoute) => route.linkAddress === location.pathname)!;
-    const background = currentRoute?.background || '#fafafa';
-
-    return { background };
-  };
+  }, [activePage, activeGroup]);
 
   return (
     <>
       <Header />
-      <main style={getMainStyle()}>
+      <main className={classes.main} style={setMainBackground()}>
         <HashRouter>
           <Typography variant="h4">WordBook</Typography>
           <Switch>
             <Route path="/wordBook">
-              <Breadcrumbs aria-label="breadcrumb" separator="•">
-                {renderBreadcrumbs}
-              </Breadcrumbs>
+              <BreadcrumbsPanel />
             </Route>
           </Switch>
-          {renderGroups}
-          <Pagination
-            count={30}
-            page={page + 1}
-            variant="outlined"
-            onChange={handlePageSelect}
-            showFirstButton
-            showLastButton
-          />
+          <GroupsContent />
+          {isRootLocation ? <WelcomeMessage /> : <PaginationPanel />}
         </HashRouter>
       </main>
       <Footer />

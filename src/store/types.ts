@@ -56,8 +56,8 @@ export interface IWord {
 export interface IWordBookState {
   isLoading: boolean;
   words: IWord[];
-  group: number;
-  page: number;
+  activeGroup: number;
+  activePage: number;
 }
 
 export enum WordBookActionTypes {
@@ -74,7 +74,7 @@ export interface IWordBookAction {
     words: IWord[];
     isLoading: boolean;
     error: Error;
-    group: number;
-    page: number;
+    activeGroup: number;
+    activePage: number;
   };
 }

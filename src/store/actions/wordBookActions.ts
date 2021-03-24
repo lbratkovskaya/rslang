@@ -19,12 +19,12 @@ export const fetchWordsError = (error: Error) => ({
 
 export const setGroup = (group: number) => ({
   type: WordBookActionTypes.SET_GROUP,
-  payload: { group },
+  payload: { activeGroup: group },
 });
 
 export const setPage = (page: number) => ({
   type: WordBookActionTypes.SET_PAGE,
-  payload: { page },
+  payload: { activePage: page },
 });
 
 export const fetchWords = (group: number = 0, page: number = 0) => async (dispatch: Dispatch) => {

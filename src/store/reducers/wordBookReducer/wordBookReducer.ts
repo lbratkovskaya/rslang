@@ -3,8 +3,8 @@ import { WordBookActionTypes, IWordBookState, IWordBookAction } from '../../type
 const initialState: IWordBookState = {
   isLoading: false,
   words: [],
-  group: 0,
-  page: 0,
+  activeGroup: 0,
+  activePage: 0,
 };
 
 const wordBookReducer = (state: IWordBookState = initialState, action: IWordBookAction) => {
@@ -16,9 +16,9 @@ const wordBookReducer = (state: IWordBookState = initialState, action: IWordBook
     case WordBookActionTypes.FETCH_ERROR:
       return { ...state, isLoading: false, error: action.payload.error };
     case WordBookActionTypes.SET_GROUP:
-      return { ...state, group: action.payload.group };
+      return { ...state, activeGroup: action.payload.activeGroup };
     case WordBookActionTypes.SET_PAGE:
-      return { ...state, page: action.payload.page };
+      return { ...state, activePage: action.payload.activePage };
     default:
       return state;
   }
