@@ -86,6 +86,10 @@ const useStyles = makeStyles((theme: Theme) =>
     mobileMenuButton: {
       color: '#333333',
     },
+    circle: {
+      height: '25px',
+      width: '25px',
+    },
   })
 );
 

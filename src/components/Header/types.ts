@@ -27,3 +27,10 @@ export type IMenuItem = {
   subMenuId?: string;
   subMenuItems?: ISubMenuItem[];
 };
+
+export interface CurrentUserSubMenuProps {
+  anchor: HTMLElement;
+  isOpen: boolean;
+  menuId: string;
+  handleMenuClose: () => void;
+}
