@@ -56,12 +56,16 @@ export interface IWord {
 export interface IWordBookState {
   isLoading: boolean;
   words: IWord[];
+  group: number;
+  page: number;
 }
 
 export enum WordBookActionTypes {
   FETCH_START = 'FETCH_WORDS_START',
   FETCH_SUCCESS = 'FETCH_WORDS_SUCCESS',
   FETCH_ERROR = 'FETCH_WORDS_ERROR',
+  SET_GROUP = 'SET_GROUP',
+  SET_PAGE = 'SET_PAGE',
 }
 
 export interface IWordBookAction {
@@ -70,5 +74,7 @@ export interface IWordBookAction {
     words: IWord[];
     isLoading: boolean;
     error: Error;
+    group: number;
+    page: number;
   };
 }

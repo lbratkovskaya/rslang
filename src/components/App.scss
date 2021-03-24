@@ -10,4 +10,5 @@ main {
   z-index: 1;
   background: $color-main-bg;
   box-shadow: 0 12px 12px $color-main-shadow;
+  transition: background 0.5s;
 }

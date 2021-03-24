@@ -17,6 +17,16 @@ export const fetchWordsError = (error: Error) => ({
   payload: { error, isLoading: false },
 });
 
+export const setGroup = (group: number) => ({
+  type: WordBookActionTypes.SET_GROUP,
+  payload: { group },
+});
+
+export const setPage = (page: number) => ({
+  type: WordBookActionTypes.SET_PAGE,
+  payload: { page },
+});
+
 export const fetchWords = (group: number = 0, page: number = 0) => async (dispatch: Dispatch) => {
   const url = `${backendUrl}/words/?group=${group}&page=${page}`;
 
