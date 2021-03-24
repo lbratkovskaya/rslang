@@ -17,6 +17,7 @@ import useStyles, { transitionStyles } from './styles';
 
 const WordBook: React.FC = () => {
   const dispatch = useDispatch();
+
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const location = useLocation();
   const { activeGroup } = wordBook;

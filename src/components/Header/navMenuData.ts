@@ -6,9 +6,9 @@ export const mobileMenuId = 'mobileMenu';
 
 export const gamesItems: Array<ISubMenuItem> = [
   {
-    label: 'Savanna',
+    label: 'Savannah',
     withLink: true,
-    linkAddress: '/games/savanna',
+    linkAddress: '/games/savannah',
   },
   {
     label: 'AudioCall',
