@@ -3,14 +3,14 @@ import { HashRouter, Link, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useLocalStorageState from 'use-local-storage-state';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { ArrowUpward } from '@material-ui/icons';
+import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { ROUTES } from '../../consts';
-import GROUPS from './constants';
+import WORDBOOK_GROUPS from './constants';
 import { IAppState, IWord } from '../../store/types';
 import { IGroup } from './types';
 import useStyles from './styles';
@@ -32,22 +32,24 @@ const WordBook: React.FC = () => {
   };
 
   const setMainBackground = () => {
-    const currentRoute = GROUPS.find((group: IGroup) => group.linkAddress === location.pathname)!;
-    const background = currentRoute?.background || '#fafafa';
-    const borderColor = currentRoute?.color || 'darkgray';
+    const currentGroup = WORDBOOK_GROUPS.find(
+      (group: IGroup) => group.linkAddress === location.pathname
+    )!;
+    const background = currentGroup?.background || '#fafafa';
+    const borderColor = currentGroup?.color || 'darkgray';
     return { background, borderColor };
   };
 
-  const WelcomeMessage = () => (
+  const WelcomeMessage = (): JSX.Element => (
     <div className={classes.welcome}>
       <Typography variant="h5" color="textSecondary" className={classes.welcomeText}>
-        Select section to study <ArrowUpwardIcon />
+        Select section to study <ArrowUpward />
       </Typography>
       <div className={classes.welcomeImg} />
     </div>
   );
 
-  const PaginationPanel = (): JSX.Element => (
+  const PaginationPanel = () => (
     <Pagination
       count={30}
       page={activePage + 1}
@@ -59,7 +61,7 @@ const WordBook: React.FC = () => {
   const BreadcrumbsPanel = (): JSX.Element => (
     <Breadcrumbs aria-label="breadcrumb" separator="" className={classes.breadcrumbs}>
       <Typography variant="body1">Sections:</Typography>
-      {GROUPS.map((group: IGroup) => {
+      {WORDBOOK_GROUPS.map((group: IGroup) => {
         const isActive = location.pathname === group.linkAddress;
         const style = {
           color: 'white',
@@ -94,7 +96,7 @@ const WordBook: React.FC = () => {
 
     return (
       <>
-        {GROUPS.map((group: IGroup) => (
+        {WORDBOOK_GROUPS.map((group: IGroup) => (
           <Switch key={group.linkAddress}>
             <Route path={group.linkAddress}>{renderWordCards}</Route>
           </Switch>
@@ -104,7 +106,9 @@ const WordBook: React.FC = () => {
   };
 
   useEffect(() => {
-    const routeIndex = GROUPS.findIndex((group: IGroup) => group.linkAddress === location.pathname);
+    const routeIndex = WORDBOOK_GROUPS.findIndex(
+      (group: IGroup) => group.linkAddress === location.pathname
+    );
     dispatch(setGroup(routeIndex));
   }, [location]);
 

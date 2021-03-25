@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
 const COLORS = {
-  secondaryText: 'rgba(0,0,0,0.35)',
+  secondaryText: 'rgba(0, 0, 0, 0.35)',
 };
 
 const useStyles = makeStyles((theme: Theme) =>

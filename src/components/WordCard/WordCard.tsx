@@ -1,8 +1,7 @@
 import React from 'react';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
-import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
-import DoneIcon from '@material-ui/icons/Done';
+import { Done, VolumeUpRounded } from '@material-ui/icons';
 import backendUrl from '../../consts';
 import { IWordCardProps } from './types';
 import useStyles from './styles';
@@ -25,7 +24,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word }: IWordCardProps) => {
       </Typography>
       <Typography className={classes.transcription}>
         {` ${word.transcription} `}
-        <VolumeUpRoundedIcon className={classes.icon} />
+        <VolumeUpRounded className={classes.icon} />
       </Typography>
       <Typography variant="body2">Meaning: {Parser(word.textMeaning)}</Typography>
       <Typography variant="body2" color="textSecondary" className={classes.secondary}>
@@ -39,7 +38,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word }: IWordCardProps) => {
         className={classes.button}
         variant="outlined"
         size="small"
-        deleteIcon={<DoneIcon />}
+        deleteIcon={<Done />}
         clickable
         label="В сложные"
       />
@@ -47,7 +46,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word }: IWordCardProps) => {
         className={classes.button}
         variant="outlined"
         size="small"
-        deleteIcon={<DoneIcon />}
+        deleteIcon={<Done />}
         clickable
         label="В изученные"
       />

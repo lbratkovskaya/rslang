@@ -1,7 +1,7 @@
 import { ROUTES } from '../../consts';
 import { COLORS, IGroup } from './types';
 
-const GROUPS: Array<IGroup> = [
+const WORDBOOK_GROUPS: Array<IGroup> = [
   {
     label: 'Red',
     linkAddress: ROUTES.wordBook.red,
@@ -40,4 +40,4 @@ const GROUPS: Array<IGroup> = [
   },
 ];
 
-export default GROUPS;
+export default WORDBOOK_GROUPS;
