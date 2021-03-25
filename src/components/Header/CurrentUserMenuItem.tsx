@@ -37,7 +37,7 @@ const CurrentUserMenuItem: React.FC = () => {
   };
 
   return (
-    <div className={classes.navMenuItem} ref={userAuthMenuRef}>
+    <div className={classes.navMenuItemInner} ref={userAuthMenuRef} style={{ width: 'auto' }}>
       <IconButton
         edge="end"
         aria-label="account of current user"

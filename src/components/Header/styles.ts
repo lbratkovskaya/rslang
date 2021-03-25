@@ -44,26 +44,33 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     navMenuItem: {
-      padding: '6px',
+      padding: 0,
+      fontSize: '1.7rem',
+    },
+    navMenuItemInner: {
+      padding: '12px 22px',
       display: 'flex',
       alignItems: 'center',
-      fontSize: '1.7rem',
-      '& a': {
-        textDecoration: 'none',
-        color: '#333333',
-      },
+      width: '100%',
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
       },
+      '& a': {
+        textDecoration: 'none',
+        color: '#333333',
+        width: '100%',
+      },
     },
     navSubMenuItem: {
-      padding: '10px',
+      padding: 0,
       display: 'flex',
       alignItems: 'center',
       fontSize: '1.2rem',
       '& a': {
         textDecoration: 'none',
         color: '#333333',
+        padding: '10px',
+        width: '100%',
       },
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',

@@ -34,7 +34,7 @@ const NavigationMenu: React.FC = () => {
       const getRef = (element: HTMLDivElement) =>
         Object.assign(refsObject.current, { [menuItem.id]: element });
       return (
-        <div key={menuItem.id} className={classes.navMenuItem} ref={getRef}>
+        <div key={menuItem.id} className={classes.navMenuItemInner} ref={getRef}>
           <Link to={menuItem.linkAddress}>{menuItem.label}</Link>
           {menuItem.withSubMenu && (
             <>

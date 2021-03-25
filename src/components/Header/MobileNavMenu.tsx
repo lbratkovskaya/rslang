@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Menu, MenuItem, IconButton } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import CurrentUserSubMenu from './CurrentUserSubMenu';
-import { IAppState } from '../../store/types';
 import { renderMenuItem } from './commonMethods';
+import { IAppState } from '../../store/types';
 import { IMenuItem, MobileNavMenuProps } from './types';
 import useStyles from './styles';
 
@@ -26,11 +26,11 @@ const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) 
   const renderItems = (): JSX.Element[] =>
     items?.map((menuItem: IMenuItem) => {
       return (
-        <MenuItem key={menuItem.id} onClick={onMenuClose}>
+        <MenuItem key={menuItem.id} onClick={onMenuClose} className={mobileClasses.navMenuItem}>
           {renderMenuItem(
             refsObject,
             menuItem,
-            mobileClasses.navMenuItem,
+            mobileClasses.navMenuItemInner,
             subMenuOpenId,
             setSubMenuOpenId,
             handleSubMenuClose
@@ -51,8 +51,8 @@ const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) 
       onClose={onMenuClose}>
       {items && renderItems()}
 
-      <MenuItem key="userAuth">
-        <div key={authId} className={mobileClasses.navMenuItem} ref={authRef}>
+      <MenuItem key="userAuth" className={mobileClasses.navMenuItem}>
+        <div key={authId} className={mobileClasses.navMenuItemInner} ref={authRef}>
           Вход/Регистрация
           <IconButton
             aria-label="Вход/Регистрация"
