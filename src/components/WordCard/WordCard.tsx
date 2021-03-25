@@ -2,7 +2,7 @@ import React from 'react';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded } from '@material-ui/icons';
-import backendUrl from '../../consts';
+import backendUrl from '../../constants';
 import { IWordCardProps } from './types';
 import useStyles from './styles';
 

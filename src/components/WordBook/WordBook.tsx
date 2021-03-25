@@ -9,10 +9,8 @@ import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
-import { ROUTES } from '../../consts';
-import WORDBOOK_GROUPS from './constants';
+import { WORDBOOK_GROUPS, ROUTES, IGroup } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
-import { IGroup } from './types';
 import useStyles from './styles';
 
 const WordBook: React.FC = () => {

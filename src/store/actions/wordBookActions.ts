@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import backendUrl from '../../consts';
+import backendUrl from '../../constants';
 import { WordBookActionTypes, IWord } from '../types';
 
 export const fetchWordsStart = () => ({

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import backendUrl from '../../consts';
+import backendUrl from '../../constants';
 import { IUserData, UserActionTypes } from '../types';
 
 export const setFailedAttempt = (failedAttempt: boolean) => ({
