@@ -53,7 +53,7 @@ const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) 
 
       <MenuItem key="userAuth" className={mobileClasses.navMenuItem}>
         <div key={authId} className={mobileClasses.navMenuItemInner} ref={authRef}>
-          Вход/Регистрация
+          <span>Вход/Регистрация</span>
           <IconButton
             aria-label="Вход/Регистрация"
             aria-controls={authId}

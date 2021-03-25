@@ -45,20 +45,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     navMenuItem: {
       padding: 0,
+      display: 'flex',
+      alignItems: 'center',
       fontSize: '1.7rem',
+      '& a': {
+        width: '100%',
+        padding: '6px',
+        textDecoration: 'none',
+        color: '#333333',
+      },
     },
     navMenuItemInner: {
-      padding: '12px 22px',
       display: 'flex',
+      padding: 0,
       alignItems: 'center',
       width: '100%',
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
       },
-      '& a': {
+      '& > a, & > span': {
+        width: '100%',
+        padding: '12px 22px',
         textDecoration: 'none',
         color: '#333333',
-        width: '100%',
       },
     },
     navSubMenuItem: {
