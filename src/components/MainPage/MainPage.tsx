@@ -8,10 +8,6 @@ const MainPage: React.FC = () => (
     <Header />
     <main>
       <Link to="/wordbook">WordBook</Link>
-      <br />
-      <Link to="/sign-in">Вход</Link>
-      <br />
-      <Link to="/sign-up">Регистрация</Link>
     </main>
     <Footer />
   </>
