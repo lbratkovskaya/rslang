@@ -3,18 +3,20 @@ export interface IAppState {
   user: IUserState;
 }
 
+export interface IUserData {
+  userId: string;
+  name: string;
+  image: string;
+  token: string;
+  refreshToken: string;
+}
+
 export interface IUserState {
   isLoading: boolean;
   isLoggedIn: boolean;
   isRegistred: boolean;
   failedAttempt: boolean;
-  data: {
-    userId: string;
-    name: string;
-    image: string;
-    token: string;
-    refreshToken: string;
-  };
+  data: IUserData;
 }
 
 export enum UserActionTypes {
@@ -31,13 +33,7 @@ export interface IUserAction {
   isLoggedIn?: boolean;
   isRegistred?: boolean;
   failedAttempt?: boolean;
-  data?: {
-    token: string;
-    refreshToken: string;
-    userId: string;
-    name: string;
-    image: string;
-  };
+  data?: IUserData;
 }
 
 export interface IWord {

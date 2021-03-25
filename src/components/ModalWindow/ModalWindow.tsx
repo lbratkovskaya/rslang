@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Backdrop, Fade } from '@material-ui/core';
 import { modalTimeout } from '../../consts';
 import { IModalProps } from './types';
-import { useStyles } from './styles';
+import useStyles from './styles';
 
 const ModalWindow: React.FC<IModalProps> = (props: IModalProps) => {
   const styles = useStyles();

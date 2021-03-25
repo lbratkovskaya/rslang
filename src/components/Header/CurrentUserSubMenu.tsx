@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@material-ui/core';
-import { ICombinedState } from '../../store/types';
+import { setIsLoggedIn } from '../../store/actions/userAuthActions';
+import { IAppState } from '../../store/types';
 import { CurrentUserSubMenuProps } from './types';
 import useStyles from './styles';
 
+
 const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUserSubMenuProps) => {
   const { anchor, isOpen, menuId, handleMenuClose } = props;
-  const isLoggedIn = useSelector((state: ICombinedState) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const dispatch = useDispatch();
 
   const authClasses = useStyles();
@@ -17,7 +19,7 @@ const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUse
     <MenuItem
       className={authClasses.navSubMenuItem}
       onClick={() => {
-        dispatch({ type: 'LOGGED_IN', payload: { isLoggedIn: false } });
+        dispatch(setIsLoggedIn(false));
         handleMenuClose();
       }}>
       Выход

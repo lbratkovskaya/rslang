@@ -10,9 +10,9 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import { signInUser } from '../../store/actions/userAuthActions';
-import { IAppState, UserActionTypes } from '../../store/types';
-import { useStyles } from './styles';
+import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
+import { IAppState } from '../../store/types';
+import useStyles from './styles';
 
 const SignInPage: React.FC = () => {
   const styles = useStyles();
@@ -29,18 +29,18 @@ const SignInPage: React.FC = () => {
 
   const handleClose = () => {
     setPasswordEmpty(false);
-    dispatch({ type: UserActionTypes.SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
     history.push('/');
   };
 
   const clearUserName = () => {
     setUserNameEmpty(false);
-    dispatch({ type: UserActionTypes.SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
   };
 
   const clearPassword = () => {
     setPasswordEmpty(false);
-    dispatch({ type: UserActionTypes.SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
   };
 
   let passwordHelperText = '';

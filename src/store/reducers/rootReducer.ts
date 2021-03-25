@@ -5,5 +5,4 @@ import userReducer from './userReducer/userReducer';
 export default combineReducers({
   wordBook: wordBookReducer,
   user: userReducer,
-  // ...other reducers
 });

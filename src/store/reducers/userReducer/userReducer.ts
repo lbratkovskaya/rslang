@@ -1,17 +1,19 @@
-import { IUserState, IUserAction, UserActionTypes } from '../../types';
+import { IUserState, IUserAction, UserActionTypes, IUserData } from '../../types';
+
+const initialUserData: IUserData = {
+  userId: '',
+  name: '',
+  image: '',
+  token: '',
+  refreshToken: '',
+}
 
 const initialState: IUserState = {
   isLoading: false,
   isLoggedIn: false,
   isRegistred: false,
   failedAttempt: false,
-  data: {
-    userId: '',
-    name: '',
-    image: '',
-    token: '',
-    refreshToken: '',
-  },
+  data: initialUserData,
 };
 
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {

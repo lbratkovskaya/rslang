@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar, IconButton } from '@material-ui/core';
 import CurrentUserSubMenu from './CurrentUserSubMenu';
-import { ICombinedState } from '../../store/types';
+import { IAppState } from '../../store/types';
 import useStyles from './styles';
 
 const CurrentUserMenuItem: React.FC = () => {
-  const isLoggedIn = useSelector((state: ICombinedState) => state.user.isLoggedIn);
-  const userName = useSelector((state: ICombinedState) => state.user.data.name);
-  const userImage = useSelector((state: ICombinedState) => state.user.data.image);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
+  const userName = useSelector((state: IAppState) => state.user.data.name);
+  const userImage = useSelector((state: IAppState) => state.user.data.image);
   const userAuthMenuRef = useRef<HTMLDivElement>(null);
 
   const classes = useStyles();
