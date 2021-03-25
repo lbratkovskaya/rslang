@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'url(../../assets/wordBook_welcome.svg) center no-repeat',
       backgroundSize: 'contain',
       flexGrow: 1,
+      marginBottom: theme.spacing(4),
     },
     words: {
       display: 'flex',

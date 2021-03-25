@@ -9,7 +9,8 @@ import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
-import groups from './constants';
+import { ROUTES } from '../../consts';
+import GROUPS from './constants';
 import { IAppState, IWord } from '../../store/types';
 import { IGroup } from './types';
 import useStyles from './styles';
@@ -31,7 +32,7 @@ const WordBook: React.FC = () => {
   };
 
   const setMainBackground = () => {
-    const currentRoute = groups.find((group: IGroup) => group.linkAddress === location.pathname)!;
+    const currentRoute = GROUPS.find((group: IGroup) => group.linkAddress === location.pathname)!;
     const background = currentRoute?.background || '#fafafa';
     const borderColor = currentRoute?.color || 'darkgray';
     return { background, borderColor };
@@ -58,7 +59,7 @@ const WordBook: React.FC = () => {
   const BreadcrumbsPanel = (): JSX.Element => (
     <Breadcrumbs aria-label="breadcrumb" separator="" className={classes.breadcrumbs}>
       <Typography variant="body1">Sections:</Typography>
-      {groups.map((group: IGroup) => {
+      {GROUPS.map((group: IGroup) => {
         const isActive = location.pathname === group.linkAddress;
         const style = {
           color: 'white',
@@ -93,7 +94,7 @@ const WordBook: React.FC = () => {
 
     return (
       <>
-        {groups.map((group: IGroup) => (
+        {GROUPS.map((group: IGroup) => (
           <Switch key={group.linkAddress}>
             <Route path={group.linkAddress}>{renderWordCards}</Route>
           </Switch>
@@ -103,7 +104,7 @@ const WordBook: React.FC = () => {
   };
 
   useEffect(() => {
-    const routeIndex = groups.findIndex((route: IGroup) => route.linkAddress === location.pathname);
+    const routeIndex = GROUPS.findIndex((group: IGroup) => group.linkAddress === location.pathname);
     dispatch(setGroup(routeIndex));
   }, [location]);
 
@@ -118,7 +119,7 @@ const WordBook: React.FC = () => {
         <HashRouter>
           <Typography variant="h5">WordBook</Typography>
           <Switch>
-            <Route path="/wordBook/">
+            <Route path={ROUTES.wordBook.root}>
               <BreadcrumbsPanel />
             </Route>
           </Switch>

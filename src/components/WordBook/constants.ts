@@ -1,42 +1,43 @@
+import { ROUTES } from '../../consts';
 import { COLORS, IGroup } from './types';
 
-const groups: Array<IGroup> = [
+const GROUPS: Array<IGroup> = [
   {
     label: 'Red',
-    linkAddress: '/wordBook/red',
+    linkAddress: ROUTES.wordBook.red,
     color: COLORS.RED,
     background: COLORS.BG_RED,
   },
   {
     label: 'Yellow',
-    linkAddress: '/wordBook/yellow',
+    linkAddress: ROUTES.wordBook.yellow,
     color: COLORS.YELLOW,
     background: COLORS.BG_YELLOW,
   },
   {
     label: 'Orange',
-    linkAddress: '/wordBook/orange',
+    linkAddress: ROUTES.wordBook.orange,
     color: COLORS.ORANGE,
     background: COLORS.BG_ORANGE,
   },
   {
     label: 'Green',
-    linkAddress: '/wordBook/green',
+    linkAddress: ROUTES.wordBook.green,
     color: COLORS.GREEN,
     background: COLORS.BG_GREEN,
   },
   {
     label: 'Blue',
-    linkAddress: '/wordBook/blue',
+    linkAddress: ROUTES.wordBook.blue,
     color: COLORS.BLUE,
     background: COLORS.BG_BLUE,
   },
   {
     label: 'Purple',
-    linkAddress: '/wordBook/purple',
+    linkAddress: ROUTES.wordBook.purple,
     color: COLORS.PURPLE,
     background: COLORS.BG_PURPLE,
   },
 ];
 
-export default groups;
+export default GROUPS;
