@@ -31,6 +31,18 @@ const useStyles = makeStyles(() => ({
   spinner: {
     margin: '15px 0px',
   },
+  button_wrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  cancel: {
+    marginRight: '15px',
+    marginTop: '8px',
+  },
+  link_button: {
+    textDecoration: 'none',
+  },
 }));
 
 export default useStyles;

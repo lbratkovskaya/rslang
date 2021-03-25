@@ -113,14 +113,16 @@ const SignInPage: React.FC = () => {
           {isLoading ? (
             <CircularProgress className={styles.spinner} />
           ) : (
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={styles.submit}>
-              Вход
-            </Button>
+            <div className={styles.button_wrapper}>
+              <Link to="/" className={styles.link_button}>
+                <Button type="submit" variant="contained" color="default" className={styles.cancel}>
+                  Отмена
+                </Button>
+              </Link>
+              <Button type="submit" variant="contained" color="primary" className={styles.submit}>
+                Вход
+              </Button>
+            </div>
           )}
           <Grid container justify="flex-end">
             <Grid item>
