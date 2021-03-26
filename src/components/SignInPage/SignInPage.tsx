@@ -70,73 +70,73 @@ const SignInPage: React.FC = () => {
   }, [isLoggedIn]);
 
   return (
-    <Container className={styles.container} component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={styles.paper}>
-        <Typography component="h1" variant="h5">
-          Вход
-        </Typography>
-        <form className={styles.form} noValidate onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="email"
-            name="email"
-            autoComplete="email"
-            error={userNameEmpty || isFailedAttempt}
-            helperText={emailHelperText}
-            onChange={(event) => {
-              setUserName(event.currentTarget.value);
-            }}
-            onFocus={clearUserName}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="пароль"
-            label="пароль"
-            type="password"
-            id="пароль"
-            autoComplete="пароль"
-            error={passwordEmpty || isFailedAttempt}
-            helperText={passwordHelperText}
-            onChange={(event) => {
-              setPassword(event.currentTarget.value);
-            }}
-            onFocus={clearPassword}
-          />
-          {isLoading ? (
-            <CircularProgress className={styles.spinner} />
-          ) : (
-            <div className={styles.button_wrapper}>
-              <Link to="/" className={styles.link_button}>
-                <Button type="button" variant="contained" color="default" className={styles.cancel}>
-                  Отмена
-                </Button>
-              </Link>
-              <Button type="submit" variant="contained" color="primary" className={styles.submit}>
+    <div>
+      <Container className={styles.container} component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={styles.paper}>
+          <Typography component="h1" variant="h5">
+            Вход
+          </Typography>
+          <form className={styles.form} noValidate onSubmit={handleSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              error={userNameEmpty || isFailedAttempt}
+              helperText={emailHelperText}
+              onChange={(event) => {
+                setUserName(event.currentTarget.value);
+              }}
+              onFocus={clearUserName}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="пароль"
+              label="пароль"
+              type="password"
+              id="пароль"
+              autoComplete="пароль"
+              error={passwordEmpty || isFailedAttempt}
+              helperText={passwordHelperText}
+              onChange={(event) => {
+                setPassword(event.currentTarget.value);
+              }}
+              onFocus={clearPassword}
+            />
+            {isLoading ? (
+              <CircularProgress className={styles.spinner} />
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={styles.submit}>
                 Вход
               </Button>
-            </div>
-          )}
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Еще нет аккаунта?
-                <Link to="/sign-up" className={styles.link}>
-                  Зарегистрируйтесь
-                </Link>
-              </Typography>
+            )}
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Еще нет аккаунта?
+                  <Link to="/sign-up" className={styles.link}>
+                    Зарегистрируйтесь
+                  </Link>
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 };
 

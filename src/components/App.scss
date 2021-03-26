@@ -11,3 +11,16 @@ main {
   background: $color-main-bg;
   box-shadow: 0 12px 12px $color-main-shadow;
 }
+
+.page-exit {
+  display: none;
+}
+
+.page-enter {
+  opacity: 0.2;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: all 600ms ease-out;
+}

@@ -87,4 +87,9 @@ export interface IGroup {
 
 export const modalTimeout = 1000;
 
+export const timeout = 1000;
+
+export const enterTimeout = 400;
+export const exitTimeout = 200;
+
 export default backendUrl;

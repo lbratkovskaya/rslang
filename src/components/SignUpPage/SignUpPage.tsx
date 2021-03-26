@@ -178,7 +178,7 @@ const SignUpPage: React.FC = () => {
                   name="пароль"
                   label="пароль"
                   type="password"
-                  id="пароль"
+                  id="password"
                   error={passwordTooShort}
                   helperText={passwordTooShort && 'пароль должен быть длиннее 8 символов'}
                   autoComplete="пароль"
@@ -201,7 +201,7 @@ const SignUpPage: React.FC = () => {
                   type="password"
                   error={passwordMismatch}
                   helperText={passwordMismatch && 'пароли не совпадают'}
-                  id="повторите_пароль"
+                  id="confirm_password"
                   autoComplete="повторите пароль"
                   onChange={(event) => {
                     setConfirmPassword(event.currentTarget.value);
