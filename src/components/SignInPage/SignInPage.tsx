@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
-  makeStyles,
   Button,
   CssBaseline,
   TextField,
@@ -11,45 +10,12 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import { signInUser } from '../../store/actions/userAuthActions';
-import { SET_FAILED_ATTEMPT } from '../../store/actionTypes';
-import { ICombinedState } from '../../store/types';
-
-const useStyles = makeStyles(() => ({
-  container: {
-    backgroundColor: '#fff',
-    marginTop: '64px',
-  },
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '24px 0',
-  },
-  form: {
-    width: '100%',
-    marginTop: '8px',
-  },
-  submit: {
-    margin: '24px 0 16px 0',
-  },
-  link: {
-    color: 'blue',
-    textDecoration: 'none',
-    marginLeft: '8px',
-    '&:hover': {
-      border: 'none',
-      outline: 'none',
-      textDecoration: 'underline',
-    },
-  },
-  spinner: {
-    margin: '15px 0px',
-  },
-}));
+import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
+import { IAppState } from '../../store/types';
+import useStyles from './styles';
 
 const SignInPage: React.FC = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -57,24 +23,24 @@ const SignInPage: React.FC = () => {
   const [password, setPassword] = React.useState('');
   const [userNameEmpty, setUserNameEmpty] = React.useState(false);
   const [passwordEmpty, setPasswordEmpty] = React.useState(false);
-  const isLoggedIn = useSelector((state: ICombinedState) => state.user.isLoggedIn);
-  const isFailedAttempt = useSelector((state: ICombinedState) => state.user.failedAttempt);
-  const isLoading = useSelector((state: ICombinedState) => state.app.isLoading);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
+  const isFailedAttempt = useSelector((state: IAppState) => state.user.failedAttempt);
+  const isLoading = useSelector((state: IAppState) => state.user.isLoading);
 
   const handleClose = () => {
     setPasswordEmpty(false);
-    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
     history.push('/');
   };
 
   const clearUserName = () => {
     setUserNameEmpty(false);
-    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
   };
 
   const clearPassword = () => {
     setPasswordEmpty(false);
-    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+    setFailedAttempt(false);
   };
 
   let passwordHelperText = '';
@@ -104,13 +70,13 @@ const SignInPage: React.FC = () => {
   }, [isLoggedIn]);
 
   return (
-    <Container className={classes.container} component="main" maxWidth="xs">
+    <Container className={styles.container} component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <div className={styles.paper}>
         <Typography component="h1" variant="h5">
           Вход
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={styles.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -145,14 +111,14 @@ const SignInPage: React.FC = () => {
             onFocus={clearPassword}
           />
           {isLoading ? (
-            <CircularProgress className={classes.spinner} />
+            <CircularProgress className={styles.spinner} />
           ) : (
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}>
+              className={styles.submit}>
               Вход
             </Button>
           )}
@@ -160,7 +126,7 @@ const SignInPage: React.FC = () => {
             <Grid item>
               <Typography variant="body2" color="textSecondary" component="p">
                 Еще нет аккаунта?
-                <Link to="/sign-up" className={classes.link}>
+                <Link to="/sign-up" className={styles.link}>
                   Зарегистрируйтесь
                 </Link>
               </Typography>

@@ -4,11 +4,11 @@ import { makeStyles, Typography } from '@material-ui/core';
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchWords } from '../../store/actions/wordBookActions';
-import { ICombinedState, IWord } from '../../store/types';
+import { IAppState, IWord } from '../../store/types';
 import styles from './styles';
 
 const WordBook: React.FC = () => {
-  const dictionary = useSelector((state: ICombinedState) => state.wordBook);
+  const dictionary = useSelector((state: IAppState) => state.wordBook);
   const dispatch = useDispatch();
   const classes = makeStyles(() => styles)();
 

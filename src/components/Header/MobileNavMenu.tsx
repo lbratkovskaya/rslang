@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { Menu, MenuItem, IconButton } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import CurrentUserSubMenu from './CurrentUserSubMenu';
-import { ICombinedState } from '../../store/types';
+import { IAppState } from '../../store/types';
 import { renderMenuItem } from './commonMethods';
 import { IMenuItem, MobileNavMenuProps } from './types';
 import useStyles from './styles';
 
 const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) => {
   const { anchor, isOpen, items, onMenuClose } = props;
-  const isLoggedIn = useSelector((state: ICombinedState) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const authId = !isLoggedIn ? 'menu-auth' : 'menu-logOut';
   const [subMenuOpenId, setSubMenuOpenId] = useState('');
 

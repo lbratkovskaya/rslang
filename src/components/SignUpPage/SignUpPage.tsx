@@ -4,72 +4,25 @@ import { Link, useHistory } from 'react-router-dom';
 import {
   Avatar,
   Button,
+  CircularProgress,
+  Container,
   CssBaseline,
   TextField,
   Grid,
   Typography,
-  Container,
-  makeStyles,
-  CircularProgress,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ModalWindow from '../ModalWindow/ModalWindow';
-import { signUpUser } from '../../store/actions/userAuthActions';
-import { SET_FAILED_ATTEMPT, SET_IS_REGISTRED } from '../../store/actionTypes';
-import { ICombinedState } from '../../store/types';
-
-const useStyles = makeStyles(() => ({
-  container: {
-    backgroundColor: '#fff',
-  },
-  paper: {
-    marginTop: '64px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '24px 0',
-  },
-  avatar: {
-    marginBottom: '8px',
-    cursor: 'pointer',
-    transition: '0.5s ease',
-    '&:hover': {
-      transform: 'scale(1.2)',
-      transition: '0.5s ease',
-    },
-  },
-  pointer: {
-    cursor: 'pointer',
-  },
-  userImage: {
-    backgroundColor: '#fff',
-    borderColor: '#fff',
-    cursor: 'pointer',
-  },
-  form: {
-    width: '100%',
-    marginTop: '24px',
-  },
-  submit: {
-    margin: '24px 0 16px 0',
-  },
-  link: {
-    color: 'blue',
-    marginLeft: '8px',
-    textDecoration: 'none',
-    '&:hover': {
-      border: 'none',
-      outline: 'none',
-      textDecoration: 'underline',
-    },
-  },
-  spinner: {
-    margin: '15px 0px',
-  },
-}));
+import { 
+  signUpUser,
+  setFailedAttempt,
+  setIsRegistred
+} from '../../store/actions/userAuthActions';
+import { IAppState } from '../../store/types';
+import useStyles from './styles';
 
 const SignUpPage: React.FC = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -87,9 +40,9 @@ const SignUpPage: React.FC = () => {
   const handleCloseModalWindow = () => setOpen(false);
   const handleShowModalWindow = () => setOpen(true);
 
-  const isRegistred = useSelector((state: ICombinedState) => state.user.isRegistred);
-  const isFailedAttempt = useSelector((state: ICombinedState) => state.user.failedAttempt);
-  const isLoading = useSelector((state: ICombinedState) => state.app.isLoading);
+  const isRegistred = useSelector((state: IAppState) => state.user.isRegistred);
+  const isFailedAttempt = useSelector((state: IAppState) => state.user.failedAttempt);
+  const isLoading = useSelector((state: IAppState) => state.user.isLoading);
 
   const handleClose = () => {
     setEmailInvalid(false);
@@ -101,8 +54,8 @@ const SignUpPage: React.FC = () => {
     setUserEmail('');
     setPassword('');
     setConfirmPassword('');
-    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
-    dispatch({ type: SET_IS_REGISTRED, isRegistred: false });
+    dispatch(setFailedAttempt(false));
+    dispatch(setIsRegistred(false));
     history.push('/sign-in');
   };
 
@@ -152,10 +105,10 @@ const SignUpPage: React.FC = () => {
         open={open}
         handleClose={handleCloseModalWindow}
       />
-      <Container className={classes.container} component="main" maxWidth="xs">
+      <Container className={styles.container} component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+        <div className={styles.paper}>
+          <Avatar className={styles.avatar}>
             <input
               accept="image/*"
               id="contained-button-file"
@@ -166,16 +119,16 @@ const SignUpPage: React.FC = () => {
             />
             <label htmlFor="contained-button-file">
               {userImageToUpload === undefined ? (
-                <LockOutlinedIcon className={classes.pointer} />
+                <LockOutlinedIcon className={styles.pointer} />
               ) : (
-                <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
+                <Avatar className={styles.userImage} src={userImageToUpload.toString()} />
               )}
             </label>
           </Avatar>
           <Typography component="h1" variant="h5">
             Регистрация
           </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <form className={styles.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -190,7 +143,7 @@ const SignUpPage: React.FC = () => {
                   helperText={userNameEmpty && 'введите имя'}
                   onChange={(event) => {
                     setUserName(event.currentTarget.value);
-                    dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: false });
+                    dispatch(setFailedAttempt(false));
                   }}
                   onFocus={() => {
                     setUserNameEmpty(false);
@@ -264,14 +217,14 @@ const SignUpPage: React.FC = () => {
               </Grid>
             </Grid>
             {isLoading ? (
-              <CircularProgress className={classes.spinner} />
+              <CircularProgress className={styles.spinner} />
             ) : (
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={classes.submit}>
+                className={styles.submit}>
                 Регистрация
               </Button>
             )}
@@ -279,7 +232,7 @@ const SignUpPage: React.FC = () => {
               <Grid item>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Уже есть аккаунт?
-                  <Link to="/sign-in" className={classes.link}>
+                  <Link to="/sign-in" className={styles.link}>
                     Войти
                   </Link>
                 </Typography>

@@ -1,15 +1,34 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../consts';
-import {
-  SET_FAILED_ATTEMPT,
-  SET_IS_LOADING,
-  SET_IS_LOGGED_IN,
-  SET_IS_REGISTRED,
-  SET_USER_DATA,
-} from '../actionTypes';
+import { IUserData, UserActionTypes } from '../types';
+
+export const setFailedAttempt = (failedAttempt: boolean) => ({
+  type: UserActionTypes.SET_FAILED_ATTEMPT,
+  failedAttempt,
+});
+
+export const setIsLoggedIn = (isLoggedIn: boolean) => ({
+  type: UserActionTypes.SET_IS_LOGGED_IN,
+  isLoggedIn,
+});
+
+export const setIsUserLoading = (isLoading: boolean) => ({
+  type: UserActionTypes.SET_IS_LOADING,
+  isLoading,
+});
+
+export const setUserData = (data: IUserData) => ({
+  type: UserActionTypes.SET_USER_DATA,
+  data,
+});
+
+export const setIsRegistred = (isRegistred: boolean) => ({
+  type: UserActionTypes.SET_IS_REGISTRED,
+  isRegistred,
+});
 
 export const signInUser = (email: string, password: string) => (dispatch: Dispatch) => {
-  dispatch({ type: SET_IS_LOADING, isLoading: true });
+  dispatch(setIsUserLoading(true));
   fetch(`${backendUrl}/signin`, {
     method: 'POST',
     cache: 'no-cache',
@@ -21,14 +40,14 @@ export const signInUser = (email: string, password: string) => (dispatch: Dispat
     referrerPolicy: 'no-referrer',
   }).then((response) => {
     if (response.status === 200) {
-      dispatch({ type: SET_IS_LOGGED_IN, isLoggedIn: true });
-      dispatch({ type: SET_IS_LOADING, isLoading: false });
+      dispatch(setIsLoggedIn(true));
+      dispatch(setIsUserLoading(false));
       response.json().then((result) => {
-        dispatch({ type: SET_USER_DATA, data: result });
+        setUserData(result);
       });
     } else {
-      dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: true });
-      dispatch({ type: SET_IS_LOADING, isLoading: false });
+      dispatch(setFailedAttempt(true));
+      dispatch(setIsUserLoading(false));
     }
   });
 };
@@ -39,7 +58,7 @@ export const signUpUser = (
   password: string,
   image: ArrayBuffer | string | undefined
 ) => (dispatch: Dispatch) => {
-  dispatch({ type: SET_IS_LOADING, isLoading: true });
+  dispatch(setIsUserLoading(true));
   fetch(`${backendUrl}/users`, {
     method: 'POST',
     cache: 'no-cache',
@@ -56,14 +75,14 @@ export const signUpUser = (
     referrerPolicy: 'no-referrer',
   }).then((response) => {
     if (response.status === 200) {
-      dispatch({ type: SET_IS_REGISTRED, isRegistred: true });
-      dispatch({ type: SET_IS_LOADING, isLoading: false });
+      dispatch(setIsRegistred(true));
+      dispatch(setIsUserLoading(false));
     } else if (response.status === 417) {
-      dispatch({ type: SET_FAILED_ATTEMPT, failedAttempt: true });
-      dispatch({ type: SET_IS_LOADING, isLoading: false });
+      dispatch(setFailedAttempt(true));
+      dispatch(setIsUserLoading(false));
     } else {
-      dispatch({ type: SET_IS_REGISTRED, isRegistred: true });
-      dispatch({ type: SET_IS_LOADING, isLoading: false });
+      dispatch(setIsRegistred(true));
+      dispatch(setIsUserLoading(false));
     }
   });
 };
