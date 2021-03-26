@@ -44,26 +44,42 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     navMenuItem: {
-      padding: '6px',
+      padding: 0,
       display: 'flex',
       alignItems: 'center',
       fontSize: '1.7rem',
       '& a': {
+        width: '100%',
+        padding: '6px',
         textDecoration: 'none',
         color: '#333333',
       },
+    },
+    navMenuItemInner: {
+      display: 'flex',
+      padding: 0,
+      alignItems: 'center',
+      width: '100%',
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
       },
+      '& > a, & > span': {
+        width: '100%',
+        padding: '12px 22px',
+        textDecoration: 'none',
+        color: '#333333',
+      },
     },
     navSubMenuItem: {
-      padding: '10px',
+      padding: 0,
       display: 'flex',
       alignItems: 'center',
       fontSize: '1.2rem',
       '& a': {
         textDecoration: 'none',
         color: '#333333',
+        padding: '10px',
+        width: '100%',
       },
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
