@@ -91,6 +91,11 @@ export const APPEAR_DURATION = 600;
 export const APPEAR_STYLE = {
   transition: `opacity ${APPEAR_DURATION}ms, transform ${APPEAR_DURATION}ms`,
 };
+
 export const WORDCARD_APPEAR_GAP = 85;
+export const timeout = 1000;
+
+export const enterTimeout = 400;
+export const exitTimeout = 200;
 
 export default backendUrl;

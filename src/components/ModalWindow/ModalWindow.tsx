@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Backdrop, Fade } from '@material-ui/core';
-import { modalTimeout } from '../../constants';
+import { timeout } from '../../constants';
 import { IModalProps } from './types';
 import useStyles from './styles';
 
@@ -17,7 +17,7 @@ const ModalWindow: React.FC<IModalProps> = (props: IModalProps) => {
         onClose={props.handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        BackdropProps={{ timeout: modalTimeout }}>
+        BackdropProps={{ timeout: timeout }}>
         <Fade in={props.open}>
           <div className={styles.paper}>
             <p id="transition-modal-description">{props.text}</p>
