@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Backdrop, Fade } from '@material-ui/core';
-import { modalTimeout } from '../../consts';
+import { modalTimeout } from '../../constants';
 import { IModalProps } from './types';
 import useStyles from './styles';
 

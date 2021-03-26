@@ -15,7 +15,7 @@ const App: React.FC = () => (
       <Route path="/sign-up">
         <SignUpPage />
       </Route>
-      <Route path="/wordbook">
+      <Route path="/wordBook">
         <WordBook />
       </Route>
       <Route path="/">
