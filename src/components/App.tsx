@@ -15,26 +15,24 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <Route
-        render={(routeProps) => {
-          return (
-            <TransitionGroup component={null}>
-              <CSSTransition
-                key={routeProps.location.pathname}
-                timeout={timeout}
-                classNames="page"
-                mountOnEnter
-                unmountOnExit>
-                <Switch location={routeProps.location}>
-                  <Route path="/sign-in" component={SignInPage} />
-                  <Route path="/sign-up" component={SignUpPage} />
-                  <Route path="/wordbook" component={WordBook} />
-                  <Route path="/dictionary" component={UserDictionary} />
-                  <Route exact path="/" component={MainPage} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          );
-        }}
+        render={(routeProps) => (
+          <TransitionGroup component={null}>
+            <CSSTransition
+              key={routeProps.location.key}
+              timeout={timeout}
+              classNames="page"
+              mountOnEnter
+              unmountOnExit>
+              <Switch location={routeProps.location}>
+                <Route path="/sign-in" component={SignInPage} />
+                <Route path="/sign-up" component={SignUpPage} />
+                <Route path="/wordbook" component={WordBook} />
+                <Route path="/dictionary" component={UserDictionary} />
+                <Route exact path="/" component={MainPage} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
       />
     </HashRouter>
   );
