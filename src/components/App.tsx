@@ -14,25 +14,23 @@ const App: React.FC = () => {
   return (
     <Router>
       <Route
-        render={(routeProps) => {
-          return (
-            <TransitionGroup component={null}>
-              <CSSTransition
-                key={routeProps.location.key}
-                timeout={timeout}
-                classNames="page"
-                mountOnEnter
-                unmountOnExit>
-                <Switch location={routeProps.location}>
-                  <Route path="/sign-in" component={SignInPage} />
-                  <Route path="/sign-up" component={SignUpPage} />
-                  <Route path="/wordbook" component={WordBook} />
-                  <Route exact path="/" component={MainPage} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          );
-        }}
+        render={(routeProps) => (
+          <TransitionGroup component={null}>
+            <CSSTransition
+              key={routeProps.location.key}
+              timeout={timeout}
+              classNames="page"
+              mountOnEnter
+              unmountOnExit>
+              <Switch location={routeProps.location}>
+                <Route path="/sign-in" component={SignInPage} />
+                <Route path="/sign-up" component={SignUpPage} />
+                <Route path="/wordbook" component={WordBook} />
+                <Route exact path="/" component={MainPage} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
       />
     </Router>
   );
