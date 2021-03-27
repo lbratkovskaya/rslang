@@ -115,7 +115,7 @@ const SignInPage: React.FC = () => {
           ) : (
             <div className={styles.button_wrapper}>
               <Link to="/" className={styles.link_button}>
-                <Button type="submit" variant="contained" color="default" className={styles.cancel}>
+                <Button type="button" variant="contained" color="default" className={styles.cancel}>
                   Отмена
                 </Button>
               </Link>

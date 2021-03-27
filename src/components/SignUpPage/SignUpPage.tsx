@@ -218,7 +218,7 @@ const SignUpPage: React.FC = () => {
               <div className={styles.button_wrapper}>
                 <Link to="/" className={styles.link_button}>
                   <Button
-                    type="submit"
+                    type="button"
                     variant="contained"
                     color="default"
                     className={styles.cancel}>
