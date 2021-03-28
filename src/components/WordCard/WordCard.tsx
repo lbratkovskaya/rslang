@@ -3,13 +3,16 @@ import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 import backendUrl, { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
 import { IWordCardProps } from './types';
 import useStyles from './styles';
+import { IAppState } from '../../store/types';
 
 const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
+  const { isLoading } = useSelector((state: IAppState) => state.wordBook);
 
   const transitionStyles: { [key: string]: {} } = {
     entering: { opacity: 0 },
@@ -29,7 +32,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted} timeout={APPEAR_DURATION}>
+    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION}>
       {(state: TransitionStatus) => (
         <Card className={classes.card} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
           <img
