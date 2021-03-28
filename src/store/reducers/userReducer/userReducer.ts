@@ -6,7 +6,7 @@ const initialUserData: IUserData = {
   image: '',
   token: '',
   refreshToken: '',
-}
+};
 
 const initialState: IUserState = {
   isLoading: false,

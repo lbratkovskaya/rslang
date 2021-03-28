@@ -13,11 +13,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ModalWindow from '../ModalWindow/ModalWindow';
-import { 
-  signUpUser,
-  setFailedAttempt,
-  setIsRegistred
-} from '../../store/actions/userAuthActions';
+import { signUpUser, setFailedAttempt, setIsRegistred } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
 
@@ -219,14 +215,20 @@ const SignUpPage: React.FC = () => {
             {isLoading ? (
               <CircularProgress className={styles.spinner} />
             ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={styles.submit}>
-                Регистрация
-              </Button>
+              <div className={styles.button_wrapper}>
+                <Link to="/" className={styles.link_button}>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="default"
+                    className={styles.cancel}>
+                    Отмена
+                  </Button>
+                </Link>
+                <Button type="submit" variant="contained" color="primary" className={styles.submit}>
+                  Регистрация
+                </Button>
+              </div>
             )}
             <Grid container justify="flex-end">
               <Grid item>

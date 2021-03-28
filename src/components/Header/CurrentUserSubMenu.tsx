@@ -7,7 +7,6 @@ import { IAppState } from '../../store/types';
 import { CurrentUserSubMenuProps } from './types';
 import useStyles from './styles';
 
-
 const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUserSubMenuProps) => {
   const { anchor, isOpen, menuId, handleMenuClose } = props;
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
