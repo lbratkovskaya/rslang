@@ -13,6 +13,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
   const { isLoading } = useSelector((state: IAppState) => state.wordBook);
+  const [isImageReady, setImageIsReady] = useState(false);
 
   const transitionStyles: { [key: string]: {} } = {
     entering: { opacity: 0 },
@@ -21,9 +22,16 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     exited: { opacity: 0 },
   };
 
+  const preloadImage = (): void => {
+    const img = new Image();
+    img.onload = (): void => setImageIsReady(true);
+    img.src = `${backendUrl}/${word.image}`;
+  };
+
   useEffect(() => {
     const delay = WORDCARD_APPEAR_GAP * index + 250;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
+    preloadImage();
 
     return () => {
       clearTimeout(cardAppearTimeout);
@@ -41,6 +49,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
             width={240}
             height={160}
             className={classes.image}
+            style={isImageReady ? { opacity: 1 } : {}}
           />
           <Typography className={classes.word}>
             {`${word.word} — `}

@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { APPEAR_DURATION } from '../../constants';
 
 const COLORS = {
   secondaryText: 'rgba(0, 0, 0, 0.35)',
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) =>
       float: 'right',
       marginLeft: theme.spacing(1),
       borderRadius: theme.spacing(1) / 2,
+      opacity: 0,
+      transition: `opacity ${APPEAR_DURATION}ms`,
     },
   })
 );
