@@ -3,7 +3,7 @@ import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded } from '@material-ui/icons';
-import backendUrl, { WORDCARD_APPEAR_DURATION, WORDCARD_APPEAR_GAP } from '../../constants';
+import backendUrl, { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
 import { IWordCardProps } from './types';
 import useStyles from './styles';
 
@@ -12,7 +12,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const [isMounted, setIsMounted] = useState(false);
 
   const transitionStyles: { [key: string]: {} } = {
-    entering: { opacity: 1, transition: `opacity ${WORDCARD_APPEAR_DURATION}ms` },
+    entering: { opacity: 0 },
     entered: { opacity: 1 },
   };
 
@@ -27,9 +27,9 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted} timeout={WORDCARD_APPEAR_DURATION}>
+    <Transition in={isMounted} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
-        <Card className={classes.card} style={{ ...transitionStyles[state] }}>
+        <Card className={classes.card} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
           <img
             src={`${backendUrl}/${word.image}`}
             alt={word.word}

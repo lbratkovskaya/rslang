@@ -87,7 +87,10 @@ export interface IGroup {
 
 export const modalTimeout = 1000;
 
-export const WORDCARD_APPEAR_DURATION = 600;
+export const APPEAR_DURATION = 600;
+export const APPEAR_STYLE = {
+  transition: `opacity ${APPEAR_DURATION}ms, transform ${APPEAR_DURATION}ms`,
+};
 export const WORDCARD_APPEAR_GAP = 125;
 
 export default backendUrl;

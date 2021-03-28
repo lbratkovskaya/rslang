@@ -5,11 +5,12 @@ import useLocalStorageState from 'use-local-storage-state';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Pagination } from '@material-ui/lab';
+import { Transition, TransitionStatus } from 'react-transition-group';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
-import { WORDBOOK_GROUPS, IGroup } from '../../constants';
+import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles from './styles';
 
@@ -21,7 +22,7 @@ const WordBook: React.FC = () => {
   const [activePage, setActivePage] = useLocalStorageState('activePage', 0);
   const classes = useStyles();
 
-  const isRootLocation = location.pathname.match(/(\/wordBook)[/]*$/);
+  const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
 
   const getWords = () => dispatch(fetchWords(activeGroup, activePage));
 
@@ -38,13 +39,22 @@ const WordBook: React.FC = () => {
     return { background, borderColor };
   };
 
+  const transitionStyles: { [key: string]: {} } = {
+    entering: { opacity: 0, transform: 'translateY(20%)' },
+    entered: { opacity: 1, transform: 'translateY(0)' },
+  };
+
   const WelcomeMessage = (): JSX.Element => (
-    <div className={classes.welcome}>
-      <Typography variant="h5" color="textSecondary" className={classes.welcomeText}>
-        Select section to study <ArrowUpward />
-      </Typography>
-      <div className={classes.welcomeImg} />
-    </div>
+    <Transition in appear timeout={APPEAR_DURATION}>
+      {(state: TransitionStatus) => (
+        <div className={classes.welcome} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
+          <Typography variant="h5" color="textSecondary" className={classes.welcomeText}>
+            Select section to study <ArrowUpward />
+          </Typography>
+          <div className={classes.welcomeImg} />
+        </div>
+      )}
+    </Transition>
   );
 
   const PaginationPanel = () => (
