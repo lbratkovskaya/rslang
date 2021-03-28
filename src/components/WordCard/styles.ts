@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
       minWidth: 450,
       textAlign: 'left',
+      opacity: 0,
     },
     word: {
       textTransform: 'capitalize',

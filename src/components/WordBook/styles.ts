@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       flexWrap: 'wrap',
       justifyContent: 'center',
-      transition: 'opacity 0.25s',
     },
     text: {},
     breadcrumbs: {

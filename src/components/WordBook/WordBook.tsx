@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { HashRouter, Link, Route, Switch, useLocation } from 'react-router-dom';
+import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useLocalStorageState from 'use-local-storage-state';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
@@ -9,7 +9,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
-import { WORDBOOK_GROUPS, ROUTES, IGroup } from '../../constants';
+import { WORDBOOK_GROUPS, IGroup } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles from './styles';
 
@@ -82,12 +82,10 @@ const WordBook: React.FC = () => {
   );
 
   const GroupsContent = (): JSX.Element => {
-    const opacity = wordBook.isLoading ? 0 : 1;
-
     const renderWordCards = () => (
-      <div className={classes.words} style={{ opacity }}>
-        {wordBook.words.map((word: IWord) => (
-          <WordCard word={word} key={word.word} />
+      <div className={classes.words}>
+        {wordBook.words.map((word: IWord, index: number) => (
+          <WordCard word={word} key={word.word} index={index} />
         ))}
       </div>
     );
@@ -118,17 +116,11 @@ const WordBook: React.FC = () => {
     <>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <HashRouter>
-          <Typography variant="h5">WordBook</Typography>
-          <Switch>
-            <Route path={ROUTES.wordBook.root}>
-              <BreadcrumbsPanel />
-            </Route>
-          </Switch>
-          {!isRootLocation && <PaginationPanel />}
-          <GroupsContent />
-          {isRootLocation ? <WelcomeMessage /> : <PaginationPanel />}
-        </HashRouter>
+        <Typography variant="h5">WordBook</Typography>
+        <BreadcrumbsPanel />
+        {!isRootLocation && <PaginationPanel />}
+        <GroupsContent />
+        {isRootLocation ? <WelcomeMessage /> : <PaginationPanel />}
       </main>
       <Footer />
     </>
