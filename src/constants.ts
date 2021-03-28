@@ -41,37 +41,37 @@ export enum COLORS {
 
 export const WORDBOOK_GROUPS: Array<IGroup> = [
   {
-    label: 'Red',
+    label: 'Красный',
     linkAddress: ROUTES.wordBook.red,
     color: COLORS.RED,
     background: COLORS.BG_RED,
   },
   {
-    label: 'Yellow',
+    label: 'Жёлтый',
     linkAddress: ROUTES.wordBook.yellow,
     color: COLORS.YELLOW,
     background: COLORS.BG_YELLOW,
   },
   {
-    label: 'Orange',
+    label: 'Оранжевый',
     linkAddress: ROUTES.wordBook.orange,
     color: COLORS.ORANGE,
     background: COLORS.BG_ORANGE,
   },
   {
-    label: 'Green',
+    label: 'Зелёный',
     linkAddress: ROUTES.wordBook.green,
     color: COLORS.GREEN,
     background: COLORS.BG_GREEN,
   },
   {
-    label: 'Blue',
+    label: 'Синий',
     linkAddress: ROUTES.wordBook.blue,
     color: COLORS.BLUE,
     background: COLORS.BG_BLUE,
   },
   {
-    label: 'Purple',
+    label: 'Фиолетовый',
     linkAddress: ROUTES.wordBook.purple,
     color: COLORS.PURPLE,
     background: COLORS.BG_PURPLE,

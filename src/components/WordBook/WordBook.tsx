@@ -49,7 +49,7 @@ const WordBook: React.FC = () => {
       {(state: TransitionStatus) => (
         <div className={classes.welcome} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
           <Typography variant="h5" color="textSecondary" className={classes.welcomeText}>
-            Select section to study <ArrowUpward />
+            Выберите раздел учебника <ArrowUpward />
           </Typography>
           <div className={classes.welcomeImg} />
         </div>
@@ -68,7 +68,7 @@ const WordBook: React.FC = () => {
 
   const BreadcrumbsPanel = (): JSX.Element => (
     <Breadcrumbs aria-label="breadcrumb" separator="" className={classes.breadcrumbs}>
-      <Typography variant="body1">Sections:</Typography>
+      <Typography variant="body1">Разделы:</Typography>
       {WORDBOOK_GROUPS.map((group: IGroup) => {
         const isActive = location.pathname === group.linkAddress;
         const style = {
@@ -126,7 +126,7 @@ const WordBook: React.FC = () => {
     <>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">WordBook</Typography>
+        <Typography variant="h5">Учебник</Typography>
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
         <GroupsContent />
