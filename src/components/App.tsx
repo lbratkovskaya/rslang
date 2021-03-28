@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import WordBook from './WordBook';
 import MainPage from './MainPage';
 import GameSavannah from './GameSavannah';
+import MemoryGame from './MemoryGame';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import Settings from './Settings';

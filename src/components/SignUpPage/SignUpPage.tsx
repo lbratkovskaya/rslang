@@ -12,6 +12,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Header from '../Header';
+import Footer from '../Footer';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { signUpUser, setFailedAttempt, setIsRegistred } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
@@ -97,6 +99,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div>
+      <Header/>
       <ModalWindow
         text="Выбран некорректный файл. Пожалуйста, выберите изображение."
         open={open}
@@ -244,6 +247,7 @@ const SignUpPage: React.FC = () => {
           </form>
         </div>
       </Container>
+      <Footer/>
     </div>
   );
 };

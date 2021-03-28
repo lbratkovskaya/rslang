@@ -10,6 +10,8 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
+import Footer from '../Footer';
+import Header from '../Header';
 import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
@@ -76,6 +78,7 @@ const SignInPage: React.FC = () => {
 
   return (
     <div>
+      <Header/>
       <Container className={styles.container} component="main" maxWidth="xs">
         <CssBaseline />
         <div className={styles.paper}>
@@ -119,14 +122,16 @@ const SignInPage: React.FC = () => {
             {isLoading ? (
               <CircularProgress className={styles.spinner} />
             ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={styles.submit}>
-                Вход
-              </Button>
+              <div className={styles.button_wrapper}>
+                <Link to="/" className={styles.link_button}>
+                  <Button type="button" variant="contained" color="default" className={styles.cancel}>
+                    Отмена
+                  </Button>
+                </Link>
+                <Button type="submit" variant="contained" color="primary" className={styles.submit}>
+                  Вход
+                </Button>
+              </div>
             )}
             <Grid container justify="flex-end">
               <Grid item>
@@ -141,6 +146,7 @@ const SignInPage: React.FC = () => {
           </form>
         </div>
       </Container>
+      <Footer/>
     </div>
   );
 };
