@@ -9,12 +9,12 @@ export const fetchWordsStart = () => ({
 
 export const fetchWordsSuccess = (words: Array<IWord>) => ({
   type: WordBookActionTypes.FETCH_SUCCESS,
-  payload: { words, isLoading: false },
+  payload: { words },
 });
 
 export const fetchWordsError = (error: Error) => ({
   type: WordBookActionTypes.FETCH_ERROR,
-  payload: { error, isLoading: false },
+  payload: { error },
 });
 
 export const setGroup = (group: number) => ({

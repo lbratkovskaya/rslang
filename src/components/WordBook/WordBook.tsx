@@ -27,7 +27,9 @@ const WordBook: React.FC = () => {
   const getWords = () => dispatch(fetchWords(activeGroup, activePage));
 
   const handlePageSelect = (e: ChangeEvent<unknown>, newPage: number): void => {
-    setActivePage(newPage - 1);
+    const targetPageIndex = newPage - 1;
+    if (activePage === targetPageIndex) return;
+    setActivePage(targetPageIndex);
   };
 
   const setMainBackground = () => {
@@ -120,6 +122,7 @@ const WordBook: React.FC = () => {
 
   useEffect(() => {
     getWords();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [activePage, activeGroup]);
 
   return (

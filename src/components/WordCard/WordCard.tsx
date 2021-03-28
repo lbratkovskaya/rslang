@@ -14,6 +14,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const transitionStyles: { [key: string]: {} } = {
     entering: { opacity: 0 },
     entered: { opacity: 1 },
+    exiting: { opacity: 1 },
+    exited: { opacity: 0 },
   };
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted} timeout={APPEAR_DURATION} unmountOnExit>
+    <Transition in={isMounted} timeout={APPEAR_DURATION}>
       {(state: TransitionStatus) => (
         <Card className={classes.card} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
           <img

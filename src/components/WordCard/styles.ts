@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
       minWidth: 450,
       textAlign: 'left',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        maxWidth: 600,
+      },
     },
     word: {
       textTransform: 'capitalize',

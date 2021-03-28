@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
       borderLeft: 'dashed 6px darkgray',
       transition: 'background 0.5s, border 0.5s',
     },
-    sectionName: {},
     welcome: {
       maxWidth: '100%',
       width: '60vw',
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: 'wrap',
       justifyContent: 'center',
     },
-    text: {},
     breadcrumbs: {
       margin: theme.spacing(1),
       color: 'black',
