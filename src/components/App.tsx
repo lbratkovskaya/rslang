@@ -5,6 +5,7 @@ import MainPage from './MainPage';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import './App.scss';
+import UserDictionary from './UserDictionary/UserDictionary';
 
 const App: React.FC = () => (
   <HashRouter>
@@ -17,6 +18,9 @@ const App: React.FC = () => (
       </Route>
       <Route path="/wordBook">
         <WordBook />
+      </Route>
+      <Route path="/dictionary">
+        <UserDictionary />
       </Route>
       <Route path="/">
         <MainPage />
