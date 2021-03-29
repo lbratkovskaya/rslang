@@ -5,31 +5,32 @@ const useStyles = makeStyles((theme: Theme) =>
     main: {
       minHeight: '95vh',
       padding: theme.spacing(2),
+      boxSizing: 'border-box',
       borderLeft: 'dashed 6px darkgray',
       transition: 'background 0.5s, border 0.5s',
     },
-    sectionName: {},
     welcome: {
       maxWidth: '100%',
-      width: '50vw',
+      width: '60vw',
       display: 'flex',
       flexDirection: 'column',
       flexGrow: 1,
-      flex: '5% 95%',
       alignItems: 'center',
+      justifyContent: 'center',
     },
     welcomeText: {
-      lineHeight: 4,
+      margin: '1rem 0 3rem 0',
       whiteSpace: 'nowrap',
     },
     welcomeImg: {
-      width: '50vw',
+      width: '60vw',
+      height: '40vw',
       maxWidth: 600,
       minWidth: 300,
+      maxHeight: 400,
       background: 'url(../../assets/wordBook_welcome.svg) center no-repeat',
       backgroundSize: 'contain',
-      flexGrow: 1,
-      marginBottom: theme.spacing(4),
+      marginBottom: theme.spacing(12),
     },
     words: {
       display: 'flex',
@@ -37,9 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       flexWrap: 'wrap',
       justifyContent: 'center',
-      transition: 'opacity 0.25s',
     },
-    text: {},
     breadcrumbs: {
       margin: theme.spacing(1),
       color: 'black',
@@ -62,5 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+export const transitionStyles: { [key: string]: {} } = {
+  entering: { opacity: 0, transform: 'translateY(20%)' },
+  entered: { opacity: 1, transform: 'translateY(0)' },
+};
 
 export default useStyles;
