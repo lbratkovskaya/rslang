@@ -23,7 +23,7 @@ export const setUserData = (data: IUserData) => ({
 });
 
 export const setIsRegistred = (isRegistred: boolean) => ({
-  type: UserActionTypes.SET_IS_REGISTRED,
+  type: UserActionTypes.SET_IS_REGISTERED,
   isRegistred,
 });
 
@@ -40,10 +40,10 @@ export const signInUser = (email: string, password: string) => (dispatch: Dispat
     referrerPolicy: 'no-referrer',
   }).then((response) => {
     if (response.status === 200) {
-      dispatch(setIsLoggedIn(true));
-      dispatch(setIsUserLoading(false));
       response.json().then((result) => {
-        setUserData(result);
+        dispatch(setUserData(result));
+        dispatch(setIsLoggedIn(true));
+        dispatch(setIsUserLoading(false));
       });
     } else {
       dispatch(setFailedAttempt(true));
