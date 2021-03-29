@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import { useSelector } from 'react-redux';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
 import backendUrl, {
   APPEAR_DURATION,
   APPEAR_STYLE,
   WORDBOOK_GROUPS,
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
-import { IWordCardProps } from './types';
-import useStyles from './styles';
 import { IAppState } from '../../store/types';
+import { IWordCardProps } from './types';
+import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
 const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
   const classes = useStyles();
@@ -25,11 +25,10 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const highlightStyle = { color: WORDBOOK_GROUPS[activeGroup].color };
 
-  const transitionStyles: { [key: string]: {} } = {
-    entering: { opacity: 0 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 1 },
-    exited: { opacity: 0 },
+  const textStyle = {
+    word: playingAudioIndex === 0 ? highlightStyle : {},
+    meaning: playingAudioIndex === 1 ? highlightStyle : {},
+    example: playingAudioIndex === 2 ? highlightStyle : {},
   };
 
   const preloadImage = (): void => {
@@ -44,6 +43,17 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     audio.src = `${backendUrl}/${src}`;
     audio.play();
   };
+
+  const renderButton = (label: string) => (
+    <Chip
+      className={classes.button}
+      variant="outlined"
+      size="small"
+      deleteIcon={<Done />}
+      clickable
+      label={label}
+    />
+  );
 
   const handleAudioClick = () => {
     playAudio(word.audio, 0);
@@ -77,12 +87,6 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     };
   }, []);
 
-  const textStyle = {
-    word: playingAudioIndex === 0 ? highlightStyle : {},
-    meaning: playingAudioIndex === 1 ? highlightStyle : {},
-    example: playingAudioIndex === 2 ? highlightStyle : {},
-  };
-
   return (
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION}>
       {(state: TransitionStatus) => (
@@ -90,8 +94,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           <img
             src={`${backendUrl}/${word.image}`}
             alt={word.word}
-            width={240}
-            height={160}
+            width={defaultImageSize.width}
+            height={defaultImageSize.height}
             className={classes.image}
             style={isImageReady ? { opacity: 1 } : {}}
           />
@@ -123,22 +127,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           <Typography variant="body2" color="textSecondary" className={classes.secondary}>
             (Пример: {Parser(word.textExampleTranslate)})
           </Typography>
-          <Chip
-            className={classes.button}
-            variant="outlined"
-            size="small"
-            deleteIcon={<Done />}
-            clickable
-            label="В сложные"
-          />
-          <Chip
-            className={classes.button}
-            variant="outlined"
-            size="small"
-            deleteIcon={<Done />}
-            clickable
-            label="В изученные"
-          />
+          {renderButton('В сложные')}
+          {renderButton('В изученные')}
         </Card>
       )}
     </Transition>

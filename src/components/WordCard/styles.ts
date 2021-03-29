@@ -57,4 +57,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+export const transitionStyles: { [key: string]: {} } = {
+  entering: { opacity: 0 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 1 },
+  exited: { opacity: 0 },
+};
+
+export const defaultImageSize = {
+  width: 240,
+  height: 160,
+};
+
 export default useStyles;

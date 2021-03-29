@@ -12,7 +12,7 @@ import WordCard from '../WordCard';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
-import useStyles from './styles';
+import useStyles, { transitionStyles } from './styles';
 
 const WordBook: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,11 +39,6 @@ const WordBook: React.FC = () => {
     const background = currentGroup?.background || '#fafafa';
     const borderColor = currentGroup?.color || 'darkgray';
     return { background, borderColor };
-  };
-
-  const transitionStyles: { [key: string]: {} } = {
-    entering: { opacity: 0, transform: 'translateY(20%)' },
-    entered: { opacity: 1, transform: 'translateY(0)' },
   };
 
   const WelcomeMessage = (): JSX.Element => (

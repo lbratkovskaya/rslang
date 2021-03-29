@@ -62,4 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+export const transitionStyles: { [key: string]: {} } = {
+  entering: { opacity: 0, transform: 'translateY(20%)' },
+  entered: { opacity: 1, transform: 'translateY(0)' },
+};
+
 export default useStyles;
