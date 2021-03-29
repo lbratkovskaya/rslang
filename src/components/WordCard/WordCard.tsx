@@ -76,7 +76,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   };
 
   useEffect(() => {
-    const delay = WORDCARD_APPEAR_GAP * index + 250;
+    const delay = WORDCARD_APPEAR_GAP * index;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
     preloadImage();
 
