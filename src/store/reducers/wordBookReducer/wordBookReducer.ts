@@ -1,10 +1,14 @@
 import { WordBookActionTypes, IWordBookState, IWordBookAction } from '../../types';
 
+const savedSettings = JSON.parse(localStorage.getItem('wordBookSettings')!);
+
 const initialState: IWordBookState = {
   isLoading: false,
   words: [],
   activeGroup: -1,
   activePage: -1,
+  showTranslate: savedSettings?.showTranslate || true,
+  showButtons: savedSettings?.showButtons || true,
 };
 
 const wordBookReducer = (state: IWordBookState = initialState, action: IWordBookAction) => {
@@ -19,6 +23,8 @@ const wordBookReducer = (state: IWordBookState = initialState, action: IWordBook
       return { ...state, activeGroup: action.payload.activeGroup };
     case WordBookActionTypes.SET_PAGE:
       return { ...state, activePage: action.payload.activePage };
+    case WordBookActionTypes.SET_SHOW_TRANSLATE:
+      return { ...state, showTranslate: action.payload.showTranslate };
     default:
       return state;
   }

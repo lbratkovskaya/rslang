@@ -14,6 +14,7 @@ import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
+import SettingsPopover from '../SettingsPopover/SettingsPopover';
 
 const useActivePage = createLocalStorageStateHook('activePage', 0);
 
@@ -112,6 +113,10 @@ const WordBook: React.FC = () => {
     );
   };
 
+  const saveSettingsToLocalStorage = () => {
+    // TODO
+  };
+
   useEffect(() => {
     const routeIndex = WORDBOOK_GROUPS.findIndex(
       (group: IGroup) => group.linkAddress === location.pathname
@@ -128,12 +133,21 @@ const WordBook: React.FC = () => {
     wordBook.words.forEach((word) => dispatch(addWordToGamesStore(word)));
   }, [wordBook.words]);
 
+  useEffect(() => {
+    return () => {
+      saveSettingsToLocalStorage();
+    };
+  }, []);
+
   return (
     // we need to have an empty parent component on every page for smooth transition animation
     <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">Учебник</Typography>
+        <Typography variant="h5">
+          Учебник
+          <SettingsPopover />
+        </Typography>
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
         <GroupsContent />

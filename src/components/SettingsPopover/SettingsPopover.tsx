@@ -1,0 +1,84 @@
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Popover, Typography, Switch } from '@material-ui/core';
+import { Settings } from '@material-ui/icons';
+import { IAppState } from '../../store/types';
+import useStyles from './styles';
+import { setShowTranslate } from '../../store/actions/wordBookActions';
+
+const SettingsPopover: React.FC<any> = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleShowTranslateChange = () => {
+    console.log('change show translate');
+    dispatch(setShowTranslate(!showTranslate));
+  };
+
+  const handleShowButtonsChange = () => {
+    console.log('change btn show');
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'settings-popover' : undefined;
+
+  return (
+    <div>
+      <Settings
+        aria-describedby={id}
+        onClick={handleClick}
+        className={classes.settingsButton}
+        color="action"
+      />
+      <Popover
+        id={id}
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}>
+        <Typography variant="h6" className={classes.title}>
+          Настройки
+        </Typography>
+        <Typography className={classes.typography}>
+          Показывать перевод на русский язык:
+          <Switch
+            checked={showTranslate}
+            onChange={handleShowTranslateChange}
+            color="primary"
+            name="checkedB"
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+          />
+        </Typography>
+        <Typography className={classes.typography}>
+          Показывать кнопки:
+          <Switch
+            checked={showButtons}
+            onChange={handleShowButtonsChange}
+            color="primary"
+            name="checkedB"
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+          />
+        </Typography>
+      </Popover>
+    </div>
+  );
+};
+
+export default SettingsPopover;
