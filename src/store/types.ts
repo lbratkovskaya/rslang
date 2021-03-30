@@ -1,7 +1,7 @@
 export interface IAppState {
   wordBook: IWordBookState;
   user: IUserState;
-  dictionary: IDictionaryState;
+  userDictionary: IDictionaryState;
 }
 
 export interface IUserData {
@@ -86,6 +86,8 @@ export interface IUserWord extends IWord {
     difficulty: string;
     optional: {
       deleted: boolean;
+      successHeats: number;
+      errorHeats: number;
       [key: string]: any;
     };
   };

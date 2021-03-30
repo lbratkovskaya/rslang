@@ -6,5 +6,5 @@ import dictionaryReducer from './dictionaryReducer/dictionaryReducer';
 export default combineReducers({
   wordBook: wordBookReducer,
   user: userReducer,
-  dictionary: dictionaryReducer,
+  userDictionary: dictionaryReducer,
 });

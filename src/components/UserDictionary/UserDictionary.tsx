@@ -10,7 +10,7 @@ import useStyles from './styles';
 const UserDictionary: React.FC = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: IAppState) => state.user);
-  const dictionary = useSelector((state: IAppState) => state.dictionary);
+  const dictionary = useSelector((state: IAppState) => state.userDictionary);
   const getWords = () => dispatch(fetchDictionary(currentUser.data));
 
   const classes = useStyles();
