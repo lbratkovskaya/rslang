@@ -109,9 +109,9 @@ const SavannahGamePlay: React.FC = () => {
   );
 
   const renderFallingWords = () => {
-    const classAnimate = !animate ? classes.savannahWordFall : ' ';
+    const classAnimate = !animate ? ` ${classes.savannahWordFall}` : '';
     return (
-      <span className={`${classes.fallenWord} ${classAnimate}`} onAnimationEnd={handleAnimationEnd}>
+      <span className={`${classes.fallenWord}${classAnimate}`} onAnimationEnd={handleAnimationEnd}>
         {savannahData.isEng
           ? savannahData?.words?.[startWord]?.word
           : savannahData?.words?.[startWord]?.translate}
@@ -122,7 +122,7 @@ const SavannahGamePlay: React.FC = () => {
   if (!isEndGame) {
     const isRenderingFallingWords =
       savannahData.words && savannahData.words.length - 1 > 0 && !animate;
-    const isFooterImgAnimation = !animate ? classes.footerImgAnimate : ' ';
+    const isFooterImgAnimation = !animate ? ` ${classes.footerImgAnimate}` : '';
     return (
       <>
         <div className={classes.savannahHeader}>
@@ -133,7 +133,7 @@ const SavannahGamePlay: React.FC = () => {
         {renderChooseWord}
         <div className={classes.savannahFooter}>
           <img
-            className={`${classes.footerImg} ${isFooterImgAnimation}`}
+            className={`${classes.footerImg}${isFooterImgAnimation}`}
             src={!isCorrectAnswer ? SAVANNAH.sadImg : SAVANNAH.winkImg}
             alt=""
           />

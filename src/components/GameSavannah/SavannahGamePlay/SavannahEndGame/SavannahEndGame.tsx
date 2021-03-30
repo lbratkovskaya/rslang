@@ -25,11 +25,11 @@ import useStyles from '../../styles';
 const SavannahEndGame: React.FC = () => {
   const dispatch = useDispatch();
   const savannahData = useSelector((state: IAppState) => state.savannah);
-  const dictionaryWords = useSelector((state: IAppState) => state.wordBook);
+  const wordBook = useSelector((state: IAppState) => state.wordBook);
   const onRandomLevel = (level: number) => dispatch(selectLevel(level));
   const onRandomRound = (round: number) => dispatch(selectRound(round));
-  const getDictionary = (group: number, page: number) => dispatch(fetchWords(group, page));
-  const onReduceArrayWords = (wordsArray: IWord[]) => dispatch(reduceArrayWords(wordsArray));
+  const getWords = (group: number, page: number) => dispatch(fetchWords(group, page));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
 
   const [isRestart, setIsRestart] = useState(false);
 
@@ -37,14 +37,14 @@ const SavannahEndGame: React.FC = () => {
   const page: number = Math.floor(Math.random() * SELECT_ROUNDS.amount);
 
   useEffect(() => {
-    getDictionary(group, page);
+    getWords(group, page);
   }, []);
 
   const handleNewGame = () => {
     onRandomLevel(group);
     onRandomRound(page);
     setIsRestart(true);
-    onReduceArrayWords(dictionaryWords?.words);
+    onReduceArrayWords(wordBook?.words);
   };
 
   const classes = useStyles();

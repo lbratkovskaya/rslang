@@ -20,11 +20,11 @@ const SavannahStartWindow: React.FC = () => {
   const setSelectLevel = (level: number) => dispatch(selectLevel(level));
   const setSelectRound = (round: number) => dispatch(selectRound(round));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
-  const getDictionary = (groups: number, pages: number) => dispatch(fetchWords(groups, pages));
-  const onReduceArrayWords = (wordsArray: IWord[]) => dispatch(reduceArrayWords(wordsArray));
+  const getWords = (groups: number, pages: number) => dispatch(fetchWords(groups, pages));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
   const switchLanguage = (isLang: boolean) => dispatch(switchLang(isLang));
   const savannahData = useSelector((state: IAppState) => state.savannah);
-  const getDictionaryWords = useSelector((state: IAppState) => state.wordBook);
+  const wordBook = useSelector((state: IAppState) => state.wordBook);
 
   const page: number = savannahData.round;
   const group: number = savannahData.level;
@@ -32,16 +32,16 @@ const SavannahStartWindow: React.FC = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    getDictionary(group, page);
+    getWords(group, page);
   }, [group, page]);
 
   const handleChange = (value: string | number) => {
     setSelectLevel(Number(value));
   };
   const handleStartGame = () => {
-    const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount + 1);
+    const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount + 1) % SELECT_ROUNDS.amount;
     setSelectRound(randomPage);
-    onReduceArrayWords(getDictionaryWords?.words);
+    onReduceArrayWords(wordBook?.words);
     startGame(true);
   };
 

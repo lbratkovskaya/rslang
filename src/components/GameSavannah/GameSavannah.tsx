@@ -13,7 +13,7 @@ const GameSavannah: React.FC = () => {
   const [fullSize, setFullSize] = useState(false);
   const classes = useStyles();
   const handle = useFullScreenHandle();
-  const fullScreenClass = fullSize ? classes.wrapperFull : classes.wrapperNotFull;
+  const fullScreenClass = fullSize ? ` ${classes.wrapperFull}` : ` ${classes.wrapperNotFull}`;
 
   const handleFullSize = () => {
     setFullSize(!fullSize);
@@ -22,7 +22,7 @@ const GameSavannah: React.FC = () => {
 
   const gameComponent = (
     <>
-      <div className={`${classes.savannahWrapper} ${fullScreenClass}`}>
+      <div className={`${classes.savannahWrapper}${fullScreenClass}`}>
         {!savannahData.isStartGame ? <SavannahStartWindow /> : <SavannahGamePlay />}
       </div>
       <FullScreenBtn changeScreen={handleFullSize} />
