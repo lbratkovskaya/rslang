@@ -98,4 +98,6 @@ export const timeout = 1000;
 export const enterTimeout = 400;
 export const exitTimeout = 200;
 
+export const GAMES_WORDS_MAX_AMOUNT = 40;
+
 export default backendUrl;

@@ -3,8 +3,8 @@ import { WordBookActionTypes, IWordBookState, IWordBookAction } from '../../type
 const initialState: IWordBookState = {
   isLoading: false,
   words: [],
-  activeGroup: 0,
-  activePage: 0,
+  activeGroup: -1,
+  activePage: -1,
 };
 
 const wordBookReducer = (state: IWordBookState = initialState, action: IWordBookAction) => {

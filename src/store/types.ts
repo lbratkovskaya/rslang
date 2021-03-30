@@ -2,6 +2,7 @@ export interface IAppState {
   wordBook: IWordBookState;
   user: IUserState;
   userDictionary: IDictionaryState;
+  games: IGamesState;
 }
 
 export interface IUserData {
@@ -117,5 +118,25 @@ export interface IDictionaryAction {
     difficultWords: Array<IWord>;
     deletedWords: Array<IWord>;
     error: Error;
+  };
+}
+
+export interface IGamesState {
+  words: Array<IWord>;
+  games: {
+    // savannah: ISavannahState,
+    // audioCalling: IAudioCallingState;
+  };
+}
+
+export enum GamesActionTypes {
+  ADD_WORD = 'ADD_WORD',
+  DELETE_WORD = 'DELETE_WORD',
+}
+
+export interface IGamesAction {
+  type: GamesActionTypes;
+  payload: {
+    words: IWord[];
   };
 }
