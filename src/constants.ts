@@ -85,8 +85,8 @@ export const SAVANNAH = {
     'https://www.pixelstalk.net/wp-content/uploads/images2/Animal-Backgrounds-Free-Download.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
-  audioTrue: '../../../assets/audio/savannah-true.mp3',
-  audioFalse: '../../../assets/audio/savannah-false.mp3',
+  audioCorrect: '../../../assets/audio/savannah-true.mp3',
+  audioIncorrect: '../../../assets/audio/savannah-false.mp3',
 };
 
 export interface IGroup {

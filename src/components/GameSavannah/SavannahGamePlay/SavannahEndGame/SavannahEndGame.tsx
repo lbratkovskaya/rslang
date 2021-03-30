@@ -55,9 +55,9 @@ const SavannahEndGame: React.FC = () => {
         <TableCell>{element?.word}</TableCell>
         <TableCell align="right">
           {condition ? (
-            <Done className={classes.trueAnswer} />
+            <Done className={classes.correctAnswer} />
           ) : (
-            <Clear className={classes.falsAnswer} />
+            <Clear className={classes.incorrectAnswer} />
           )}
         </TableCell>
       </TableRow>

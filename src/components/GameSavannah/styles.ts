@@ -139,7 +139,6 @@ const useStyles = makeStyles((theme) =>
     footerImgAnimate: {
       animation: `$smile 2s linear forwards`,
     },
-
     savannahSwitcher: {
       padding: '1rem',
     },
@@ -153,10 +152,10 @@ const useStyles = makeStyles((theme) =>
       paddingLeft: 20,
       paddingRight: 20,
     },
-    falsAnswer: {
+    incorrectAnswer: {
       color: 'red',
     },
-    trueAnswer: {
+    correctAnswer: {
       color: 'green',
     },
     savannahWordFall: {

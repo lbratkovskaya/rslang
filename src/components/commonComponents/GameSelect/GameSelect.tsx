@@ -8,8 +8,8 @@ const GameSelect: React.FC<IGameSelectProps> = (props: IGameSelectProps) => {
   const classes = useStyles();
   const createArrayFromNumber = (number: number) => Array.from(Array(number).keys());
   const changePropsArray = (arr: Array<IGroup>) => arr.map((el: IGroup) => el.label);
-  const renderOption = (value: any) => {
-    const editedValue = Number.isInteger(value) ? value + 1 : value;
+  const renderOption = (value: string | number) => {
+    const editedValue = Number.isInteger(value) ? Number(value) + 1 : value;
     return (
       <option value={editedValue} key={editedValue}>
         {editedValue}

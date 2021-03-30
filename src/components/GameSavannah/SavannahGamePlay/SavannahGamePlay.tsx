@@ -18,9 +18,9 @@ const SavannahGamePlay: React.FC = () => {
 
   const [animate, setAnimate] = useState(false);
   const [isEndGame, setIsEndGame] = useState(false);
-  const [filteredArr, setFilteredArr] = useState([] as any);
+  const [filteredArr, setFilteredArr] = useState([] as Array<ISavannahWord>);
   const [startWord, setStartWord] = useState(0);
-  const [isTrueAnswer, setIsTrueAnswer] = useState(false);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [health, setHealth] = useState(SAVANNAH.health);
   const currentWord = savannahData.isEng
     ? savannahData?.words?.[startWord]?.word
@@ -55,7 +55,7 @@ const SavannahGamePlay: React.FC = () => {
   };
 
   const handleAnimationEnd = () => {
-    onAudioPlay(SAVANNAH.audioFalse);
+    onAudioPlay(SAVANNAH.audioIncorrect);
     setAnimate(true);
     setStartWord(startWord + 1);
     setHealth(health - 1);
@@ -65,11 +65,11 @@ const SavannahGamePlay: React.FC = () => {
     const { name } = e.currentTarget;
     const matchCheck = currentWord.toLocaleLowerCase() === name.toLocaleLowerCase();
     if (matchCheck) {
-      onAudioPlay(SAVANNAH.audioTrue);
-      setIsTrueAnswer(true);
+      onAudioPlay(SAVANNAH.audioCorrect);
+      setIsCorrectAnswer(true);
       answer(savannahData.words, currentWord, true);
     } else {
-      onAudioPlay(SAVANNAH.audioFalse);
+      onAudioPlay(SAVANNAH.audioIncorrect);
       setHealth(health - 1);
     }
     setStartWord(startWord + 1);
@@ -88,7 +88,7 @@ const SavannahGamePlay: React.FC = () => {
   const renderHealth = (
     <div>
       {Array.from(Array(health).keys()).map((el: number) => (
-        <Favorite color="secondary" key={el} />
+        <Favorite color="secondary" key={el.toString()} />
       ))}
     </div>
   );
@@ -134,7 +134,7 @@ const SavannahGamePlay: React.FC = () => {
         <div className={classes.savannahFooter}>
           <img
             className={`${classes.footerImg} ${isFooterImgAnimation}`}
-            src={!isTrueAnswer ? SAVANNAH.sadImg : SAVANNAH.winkImg}
+            src={!isCorrectAnswer ? SAVANNAH.sadImg : SAVANNAH.winkImg}
             alt=""
           />
         </div>

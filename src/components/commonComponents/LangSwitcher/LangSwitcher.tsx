@@ -12,7 +12,7 @@ const LangSwitcher: React.FC<ILangSwitchProps> = (props: ILangSwitchProps) => {
   return (
     <div className={classes.switchLangWrapper}>
       <Typography variant="subtitle2" gutterBottom>
-        Выберите язык падающих слов
+        Язык загадываемых слов
       </Typography>
       <FormControlLabel
         control={
