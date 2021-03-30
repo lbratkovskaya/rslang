@@ -99,7 +99,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       <ModalWindow
         text="Выбран некорректный файл. Пожалуйста, выберите изображение."
         open={open}
@@ -247,7 +247,7 @@ const SignUpPage: React.FC = () => {
           </form>
         </div>
       </Container>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

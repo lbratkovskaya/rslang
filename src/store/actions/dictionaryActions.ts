@@ -100,7 +100,7 @@ const sendUserWord = (
   const fetchUserId = userData.userId;
   const userToken = userData.token;
   // eslint-disable-next-line no-underscore-dangle
-  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word)._id}`;
+  const url = `${backendUrl}/users/${fetchUserId}/words/${word._id || (<IUserWord>word)._id}`;
   const method = isNew ? 'POST' : 'PUT';
 
   const successHeats = getSuccessHeats(word);

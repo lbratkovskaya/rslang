@@ -4,7 +4,9 @@
 // }
 
 export interface ICardProps {
-  image?: string,
-  word?: string,
-  type: string,
+  id?: string;
+  value?: string;
+  type: string;
+  isOpen: boolean;
+  disabled: boolean;
 }

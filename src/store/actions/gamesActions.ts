@@ -8,7 +8,6 @@ export const addWordToGamesStore = (word: IWord) => {
   const isAddedBefore = actualWords.find((el) => el.word === word.word);
 
   if (!isAddedBefore) actualWords.push(word);
-
   if (isMaxAmount) actualWords.shift();
 
   return {

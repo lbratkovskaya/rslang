@@ -78,7 +78,7 @@ const SignInPage: React.FC = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       <Container className={styles.container} component="main" maxWidth="xs">
         <CssBaseline />
         <div className={styles.paper}>
@@ -124,7 +124,11 @@ const SignInPage: React.FC = () => {
             ) : (
               <div className={styles.button_wrapper}>
                 <Link to="/" className={styles.link_button}>
-                  <Button type="button" variant="contained" color="default" className={styles.cancel}>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="default"
+                    className={styles.cancel}>
                     Отмена
                   </Button>
                 </Link>
@@ -146,7 +150,7 @@ const SignInPage: React.FC = () => {
           </form>
         </div>
       </Container>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -1,26 +1,14 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../constants';
-import { MemoryGameTypes } from '../reducers/memoryGameReducer/types';
+import { IMemoryGameCard, MemoryGameTypes } from '../reducers/memoryGameReducer/types';
 import { IWord } from '../types';
 
-export const setIsGameStarted = (isStarted: boolean) => ({
+export const startGame = () => ({
   type: MemoryGameTypes.START_GAME,
-  isStarted,
 });
 
-// export const setLivesQuantity = (lives: number) => ({
-//   type: MemoryGameTypes.SET_LIVES_QUANTITY,
-//   lives: lives,
-// });
-
-export const setWords = (words: Array<IWord>) => ({
-  type: MemoryGameTypes.SET_WORDS,
-  words,
-});
-
-export const setGameSize = (size: number) => ({
-  type: MemoryGameTypes.SET_GAME_SIZE,
-  size,
+export const stopGame = () => ({
+  type: MemoryGameTypes.STOP_GAME,
 });
 
 export const setError = (error: boolean) => ({
@@ -33,17 +21,49 @@ export const setIsLoading = (isLoading: boolean) => ({
   isLoading,
 });
 
-export const fetchMemoryGameWords = (gameSize: number = 6) => (dispatch: Dispatch) => {
+export const setGameField = (field: Array<IMemoryGameCard>) => ({
+  type: MemoryGameTypes.SET_GAME_FIELD,
+  field,
+});
+
+export const showGameCard = (newCard: IMemoryGameCard) => ({
+  type: MemoryGameTypes.UPDATE_GAME_CARD,
+  newCard,
+});
+
+export const hideClickedCards = () => ({
+  type: MemoryGameTypes.HIDE_CLICKED_CARDS,
+});
+
+export const disableClickedCards = () => ({
+  type: MemoryGameTypes.DISABLE_CLICKED_CARDS,
+});
+
+const createCards = (words: Array<IWord>) => {
+  let result: Array<IMemoryGameCard> = [];
+  if (words && words.length) {
+    const row = words.map((element) => {
+      return [
+        { type: 'image', isOpen: false, disabled: false, value: element.image, id: element._id },
+        { type: 'text', isOpen: false, disabled: false, value: element.word, id: element._id },
+      ];
+    });
+    result = row.reduce((a, b) => a.concat(b)).sort(() => Math.random() - 0.5);
+  }
+  return result;
+};
+
+export const initiateGameField = (gameSize: number) => (dispatch: Dispatch) => {
   const url = `${backendUrl}/words/?random=true&count=${gameSize}`;
 
   fetch(url).then((res) => {
     try {
       if (res.status === 200) {
         res.json().then((body) => {
-          dispatch(setWords(body));
+          dispatch(setGameField(createCards(body)));
         });
       }
-    } catch(e) {
+    } catch (e) {
       dispatch(setError(true));
     }
   });

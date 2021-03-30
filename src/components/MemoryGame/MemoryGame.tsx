@@ -1,58 +1,65 @@
 import React, { useEffect } from 'react';
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  CssBaseline,
-  Container,
-} from '@material-ui/core';
-// import { IMemoryGameProps } from './types';
-import useStyles from './styles';
+import { Button, CssBaseline } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import useStyles from './styles';
 import { IAppState } from '../../store/types';
-import { fetchMemoryGameWords, setIsGameStarted, setWords } from '../../store/actions/memoryGameActions'
+import { initiateGameField, startGame, stopGame } from '../../store/actions/memoryGameActions';
 import GameCard from './GameCard';
-import backendUrl from '../../constants';
 import Header from '../Header';
-import { shuffle } from '../../controller/utils';
+import ModalWindow from '../ModalWindow';
 
 const MemoryGame: React.FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const words = useSelector((state: IAppState) => state.memoryGame.words);
-  const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted)
-  const getWords = () => dispatch(fetchMemoryGameWords());
-  useEffect(() => { getWords() }, []);
-  shuffle(words)
+  const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
+  const field = useSelector((state: IAppState) => state.memoryGame.field);
+  const [open, setOpen] = React.useState(false);
+
+  const handleStartGame = () => {
+    dispatch(initiateGameField(2));
+    dispatch(startGame());
+  };
+
+  useEffect(() => {
+    if (field && field.length && isGameStarted) {
+      const allCardsAreDisabled = field.every((card) => card.disabled === true);
+      if (allCardsAreDisabled === true) {
+        dispatch(stopGame());
+        handleShowModalWindow();
+      }
+    }
+  });
+
+  const handleShowModalWindow = () => setOpen(true)
+
+  const handleCloseModalWindow = () => setOpen(false)
 
   return (
     <div>
-      <Header/>
+      <Header />
+      <ModalWindow text={'Congratulations! You are won!!!'} open={open} handleClose={handleCloseModalWindow}/>
       <div className={styles.gameWrapper}>
         <CssBaseline />
         <div className={styles.controlsWrapper}>
-        <Button
-          type="button"
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            dispatch(setWords(words))
-            dispatch(setIsGameStarted(true))
-          }}>
-          Старт
-        </Button>
+          <Button type="button" variant="contained" color="primary" onClick={handleStartGame}>
+            Старт
+          </Button>
         </div>
         <div className={styles.cardsWrapper}>
-        { isGameStarted && words.map(word => 
-          <GameCard type="image" image={`${backendUrl}/${word.image}`}/> 
-        ) }
-        { isGameStarted && words.map(word => 
-          <GameCard type="text" word={word.word}/> 
-        ) }
+          {isGameStarted &&
+            field.map((card) => {
+              /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+              return (
+                <GameCard
+                  type={card.type}
+                  value={card.value}
+                  key={`${card.id}_${card.type}`}
+                  id={`${card.id}_${card.type}`}
+                  isOpen={card.isOpen}
+                  disabled={card.disabled}
+                />
+              );
+            })}
         </div>
       </div>
     </div>

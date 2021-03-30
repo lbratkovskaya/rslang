@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+// import { red200 } from 'material-ui/styles/colors';
 
 const useStyles = makeStyles(() => ({
   // root: {
@@ -15,6 +16,14 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
   },
+  sheet: {
+    backgroundColor: 'red',
+    width: '22%',
+    height: '28%',
+  },
+  imageNone: {
+    opacity: '0',
+  },
   image: {
     width: '100%',
     height: 'calc(width * 0.6666)',
@@ -26,7 +35,7 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     width: '100vw',
     padding: '2%',
-    height: 'calc(100vh - 80px)'
+    height: 'calc(100vh - 80px)',
   },
   controlsWrapper: {
     display: 'flex',
@@ -40,7 +49,7 @@ const useStyles = makeStyles(() => ({
     height: '75vh',
     flexWrap: 'wrap',
     marginBottom: '3vh',
-    paddingTop: '3vh'
+    paddingTop: '3vh',
   },
   card: {
     width: '22%',
@@ -61,8 +70,11 @@ const useStyles = makeStyles(() => ({
   text: {
     maxWidth: '100%',
     fontSize: '2vw',
-    margin: '0 1%'
-  }
+    margin: '0 1%',
+  },
+  textNone: {
+    fontSize: '0',
+  },
 }));
 
 export default useStyles;
