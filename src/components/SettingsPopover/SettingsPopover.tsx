@@ -9,13 +9,13 @@ import useStyles from './styles';
 const SettingsPopover: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
 
   const open = Boolean(anchorEl);
   const id = open ? 'settings-popover' : undefined;
 
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.SyntheticEvent) => {
     setAnchorEl(event.currentTarget);
   };
 

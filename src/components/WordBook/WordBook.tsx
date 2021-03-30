@@ -9,7 +9,7 @@ import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
-import SettingsPopover from '../SettingsPopover/SettingsPopover';
+import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
