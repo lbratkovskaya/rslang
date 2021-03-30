@@ -121,7 +121,8 @@ const WordBook: React.FC = () => {
   }, [activePage, activeGroup]);
 
   return (
-    <>
+    // we need to have an empty parent component on every page for smooth transition animation
+    <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
         <Typography variant="h5">Учебник</Typography>
@@ -131,7 +132,7 @@ const WordBook: React.FC = () => {
         {isRootLocation ? <WelcomeMessage /> : <PaginationPanel />}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
