@@ -1,6 +1,7 @@
 export interface IAppState {
   wordBook: IWordBookState;
   user: IUserState;
+  userDictionary: IDictionaryState;
 }
 
 export interface IUserData {
@@ -23,7 +24,7 @@ export enum UserActionTypes {
   SET_USER_DATA = 'USER/SET_USER_DATA',
   SET_FAILED_ATTEMPT = 'USER/SET_FAILED_ATTEMPT',
   SET_IS_LOGGED_IN = 'USER/SET_IS_LOGGED_IN',
-  SET_IS_REGISTRED = 'USER/SET_IS_REGISTRE',
+  SET_IS_REGISTERED = 'USER/SET_IS_REGISTERED',
   SET_IS_LOADING = 'USER/SET_IS_LOADING',
 }
 
@@ -71,10 +72,50 @@ export enum WordBookActionTypes {
 export interface IWordBookAction {
   type: WordBookActionTypes;
   payload: {
-    words: IWord[];
+    words: Array<IWord>;
     isLoading: boolean;
     error: Error;
     activeGroup: number;
     activePage: number;
+  };
+}
+
+export interface IUserWord extends IWord {
+  _id?: string;
+  userWord?: {
+    difficulty: string;
+    optional: {
+      deleted: boolean;
+      successHeats: number;
+      errorHeats: number;
+      [key: string]: any;
+    };
+  };
+}
+
+export interface IDictionaryState {
+  isLoading: boolean;
+  easyWords: Array<IWord>;
+  difficultWords: Array<IWord>;
+  deletedWords: Array<IWord>;
+}
+
+export enum DictionaryActionTypes {
+  DICT_IS_LOADING = 'DICT_IS_LOADING',
+  FETCH_SUCCESS = 'FETCH_DICT_SUCCESS',
+  FETCH_ERROR = 'FETCH_DICT_ERROR',
+  SET_WORD_EASY = 'SET_WORD_EASY',
+  SET_WORD_HARD = 'SET_WORD_HARD',
+  SET_WORD_DELETED = 'SET_WORD_DELETED',
+}
+
+export interface IDictionaryAction {
+  type: DictionaryActionTypes;
+  payload: {
+    allWords: Array<IWord>;
+    easyWords: Array<IWord>;
+    difficultWords: Array<IWord>;
+    deletedWords: Array<IWord>;
+    error: Error;
   };
 }

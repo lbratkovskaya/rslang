@@ -24,7 +24,7 @@ export default function userReducer(state: IUserState = initialState, action: IU
       return { ...state, failedAttempt: action.failedAttempt };
     case UserActionTypes.SET_IS_LOGGED_IN:
       return { ...state, isLoggedIn: action.isLoggedIn };
-    case UserActionTypes.SET_IS_REGISTRED:
+    case UserActionTypes.SET_IS_REGISTERED:
       return { ...state, isRegistred: action.isRegistred };
     case UserActionTypes.SET_IS_LOADING:
       return { ...state, isLoading: action.isLoading };

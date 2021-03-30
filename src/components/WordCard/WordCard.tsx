@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
+import { setUserWordEasy, setUserWordHard } from '../../store/actions/dictionaryActions';
 import backendUrl, {
   APPEAR_DURATION,
   APPEAR_STYLE,
@@ -18,6 +19,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
   const { isLoading } = useSelector((state: IAppState) => state.wordBook);
+  const { data: userData } = useSelector((state: IAppState) => state.user);
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -44,7 +46,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     audio.play();
   };
 
-  const renderButton = (label: string) => (
+  const renderButton = (label: string, clickHandler: () => void) => (
     <Chip
       className={classes.button}
       variant="outlined"
@@ -52,6 +54,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
       deleteIcon={<Done />}
       clickable
       label={label}
+      onClick={clickHandler}
     />
   );
 
@@ -127,8 +130,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           <Typography variant="body2" color="textSecondary" className={classes.secondary}>
             (Пример: {Parser(word.textExampleTranslate)})
           </Typography>
-          {renderButton('В сложные')}
-          {renderButton('В изученные')}
+          {renderButton('В сложные', () => setUserWordHard(word, userData))}
+          {renderButton('В изученные', () => setUserWordEasy(word, userData))}
         </Card>
       )}
     </Transition>
