@@ -8,6 +8,6 @@ export interface IWordCardProps {
 export interface IWordCardButton {
   label: string;
   altLabel: string;
-  onClick?: any;
+  onClick?: () => void;
   param?: boolean;
 }
