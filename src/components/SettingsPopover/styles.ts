@@ -3,10 +3,10 @@ import { createStyles, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
-      padding: '0.5rem 0',
+      padding: '0.5rem 1rem',
     },
     typography: {
-      padding: '0 0.5rem',
+      padding: '0 0 0 0.5rem',
       textAlign: 'right',
     },
     settingsButton: {

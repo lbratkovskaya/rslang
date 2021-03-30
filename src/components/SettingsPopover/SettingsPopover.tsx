@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Popover, Typography, Switch } from '@material-ui/core';
+import { Popover, Typography, Tooltip, Checkbox } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
 import { IAppState } from '../../store/types';
@@ -33,12 +33,14 @@ const SettingsPopover: React.FC = () => {
 
   return (
     <div>
-      <Settings
-        aria-describedby={id}
-        onClick={handleClick}
-        className={classes.settingsButton}
-        color="action"
-      />
+      <Tooltip title="Настройки">
+        <Settings
+          aria-describedby={id}
+          onClick={handleClick}
+          className={classes.settingsButton}
+          color="action"
+        />
+      </Tooltip>
       <Popover
         id={id}
         open={Boolean(anchorEl)}
@@ -52,27 +54,25 @@ const SettingsPopover: React.FC = () => {
           vertical: 'top',
           horizontal: 'center',
         }}>
-        <Typography variant="h6" className={classes.title}>
-          Настройки
+        <Typography variant="subtitle2" className={classes.title}>
+          Отображать на карточках:
         </Typography>
-        <Typography className={classes.typography}>
-          Показывать перевод на русский язык:
-          <Switch
+        <Typography variant="overline" className={classes.typography}>
+          Переводы
+          <Checkbox
             checked={showTranslate}
             onChange={handleShowTranslateChange}
-            color="primary"
-            // name="checkedB"
+            size="small"
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
         </Typography>
-        <Typography className={classes.typography}>
-          Показывать кнопки:
-          <Switch
+        <Typography variant="overline" className={classes.typography}>
+          Кнопки
+          <Checkbox
             checked={showButtons}
             onChange={handleShowButtonsChange}
-            color="primary"
-            // name="checkedB"
-            inputProps={{ 'aria-label': 'primary checkbox' }}
+            size="small"
+            inputProps={{ 'aria-label': 'checkbox with small size' }}
           />
         </Typography>
       </Popover>
