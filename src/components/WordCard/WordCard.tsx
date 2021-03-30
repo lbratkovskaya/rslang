@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
-import { Typography, Card, Chip } from '@material-ui/core';
+import { Typography, Card, Chip, useTheme } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
 import { setUserWordDeleted, setUserWordHard } from '../../store/actions/dictionaryActions';
 import { deleteWordFromGamesStore } from '../../store/actions/gamesActions';
@@ -28,13 +28,20 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const dispatch = useDispatch();
   const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const [isDeleted, setIsDeleted] = useState(false);
-
-  const highlightStyle = { color: WORDBOOK_GROUPS[activeGroup].color };
+  const [isDifficult, setIsDifficult] = useState(false);
+  const { color } = WORDBOOK_GROUPS[activeGroup];
+  const highlightStyle = { color };
+  const theme = useTheme();
+  const colorOfDifficult = theme.palette.secondary.main;
 
   const textStyle = {
     word: playingAudioIndex === 0 ? highlightStyle : {},
     meaning: playingAudioIndex === 1 ? highlightStyle : {},
     example: playingAudioIndex === 2 ? highlightStyle : {},
+  };
+
+  const difficultStyle = {
+    filter: isDifficult ? `drop-shadow(0 0 3px ${colorOfDifficult})` : '',
   };
 
   const preloadImage = (): void => {
@@ -50,15 +57,22 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     audio.play();
   };
 
-  const renderButton = (label: string, clickHandler: () => void) => (
+  const renderButton = (
+    label: string,
+    altLabel: string,
+    clickHandler: () => void,
+    param?: boolean
+  ) => (
     <Chip
       className={classes.button}
-      variant="outlined"
+      variant={param ? 'default' : 'outlined'}
+      color={param ? 'secondary' : 'default'}
       size="small"
-      deleteIcon={<Done />}
+      deleteIcon={param ? <Done /> : <></>}
       clickable
-      label={label}
+      label={param ? altLabel : label}
       onClick={clickHandler}
+      onDelete={clickHandler} // necessary for deleteIcon to be rendered
     />
   );
 
@@ -84,6 +98,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
 
   const handleAddToDifficult = () => {
     dispatch(setUserWordHard(word, userData));
+    if (isDifficult) setIsDifficult(false);
+    else setIsDifficult(true);
   };
 
   const handleDelete = () => {
@@ -111,50 +127,53 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   return (
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
-        <>
-          {!isDeleted && (
-            <Card className={classes.card} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
-              <img
-                src={`${backendUrl}/${word.image}`}
-                alt={word.word}
-                width={defaultImageSize.width}
-                height={defaultImageSize.height}
-                className={classes.image}
-                style={isImageReady ? { opacity: 1 } : {}}
-              />
-              <Typography className={classes.word}>
-                <span style={textStyle.word}>{word.word}</span>
-                {' — '}
-                <span className={classes.wordTranslate}>{word.wordTranslate}</span>
-              </Typography>
-              <Typography className={classes.transcription}>
-                {` ${word.transcription} `}
-                <VolumeUpRounded
-                  onClick={handleAudioClick}
-                  color={isAudioPlaying ? 'disabled' : 'action'}
-                  className={classes.icon}
-                />
-                {isAudioPlaying && (
-                  <StopRounded onClick={handleStopClick} color="error" className={classes.icon} />
-                )}
-              </Typography>
-              <Typography variant="body2">
-                Meaning: <span style={textStyle.meaning}>{Parser(word.textMeaning)}</span>
-              </Typography>
-              <Typography variant="body2" color="textSecondary" className={classes.secondary}>
-                (Значение: {Parser(word.textMeaningTranslate)})
-              </Typography>
-              <Typography variant="body2">
-                Example: <span style={textStyle.example}>{Parser(word.textExample)}</span>
-              </Typography>
-              <Typography variant="body2" color="textSecondary" className={classes.secondary}>
-                (Пример: {Parser(word.textExampleTranslate)})
-              </Typography>
-              {renderButton('В сложные', handleAddToDifficult)}
-              {renderButton('В изученные', handleDelete)}
-            </Card>
+        <Card
+          className={classes.card}
+          style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
+          <img
+            src={`${backendUrl}/${word.image}`}
+            alt={word.word}
+            width={defaultImageSize.width}
+            height={defaultImageSize.height}
+            className={classes.image}
+            style={isImageReady ? { opacity: 1 } : {}}
+          />
+          <Typography className={classes.word}>
+            <span style={textStyle.word}>{word.word}</span>
+            {' — '}
+            <span className={classes.wordTranslate}>{word.wordTranslate}</span>
+          </Typography>
+          <Typography className={classes.transcription}>
+            {` ${word.transcription} `}
+            <VolumeUpRounded
+              onClick={handleAudioClick}
+              color={isAudioPlaying ? 'disabled' : 'action'}
+              className={classes.icon}
+            />
+            {isAudioPlaying && (
+              <StopRounded onClick={handleStopClick} color="error" className={classes.icon} />
+            )}
+          </Typography>
+          <Typography variant="body2">
+            Meaning: <span style={textStyle.meaning}>{Parser(word.textMeaning)}</span>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" className={classes.secondary}>
+            (Значение: {Parser(word.textMeaningTranslate)})
+          </Typography>
+          <Typography variant="body2">
+            Example: <span style={textStyle.example}>{Parser(word.textExample)}</span>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" className={classes.secondary}>
+            (Пример: {Parser(word.textExampleTranslate)})
+          </Typography>
+          {renderButton(
+            'Добавить в сложные',
+            'Добавлено в сложные',
+            handleAddToDifficult,
+            isDifficult
           )}
-        </>
+          {renderButton('В удалённые', 'Удалено', handleDelete, isDeleted)}
+        </Card>
       )}
     </Transition>
   );
