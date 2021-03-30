@@ -146,7 +146,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
               className={classes.icon}
             />
             {isAudioPlaying && (
-              <StopRounded onClick={handleStopClick} color="error" className={classes.icon} />
+              <StopRounded onClick={handleStopClick} color="secondary" className={classes.icon} />
             )}
           </Typography>
           <Typography variant="body2">
