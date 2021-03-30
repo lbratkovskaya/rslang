@@ -8,7 +8,7 @@ const initialUserData: IUserData = {
   refreshToken: '',
 };
 
-let initialState: IUserState = {
+const initialState: IUserState = {
   isLoading: false,
   isLoggedIn: false,
   isRegistred: false,
