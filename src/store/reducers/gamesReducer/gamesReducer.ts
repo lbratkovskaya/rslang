@@ -1,16 +1,16 @@
 import { GamesActionTypes, IGamesAction, IGamesState } from '../../types';
 
 const initialState: IGamesState = {
-  words: [],
+  actualWords: [],
   games: {},
 };
 
 const gamesReducer = (state: IGamesState = initialState, action: IGamesAction) => {
   switch (action.type) {
     case GamesActionTypes.ADD_WORD:
-      return { ...state, words: action.payload.words };
+      return { ...state, actualWords: action.payload.actualWords };
     case GamesActionTypes.DELETE_WORD:
-      return { ...state, words: action.payload.words };
+      return { ...state, actualWords: action.payload.actualWords };
     default:
       return state;
   }

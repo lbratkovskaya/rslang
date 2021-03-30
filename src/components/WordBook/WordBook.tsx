@@ -2,15 +2,16 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useLocalStorageState from 'use-local-storage-state';
+import { Transition, TransitionStatus } from 'react-transition-group';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
 import { Pagination } from '@material-ui/lab';
-import { Transition, TransitionStatus } from 'react-transition-group';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
-import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
+import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
+import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
 
@@ -119,6 +120,10 @@ const WordBook: React.FC = () => {
     getWords();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [activePage, activeGroup]);
+
+  useEffect(() => {
+    wordBook.words.forEach((word) => dispatch(addWordToGamesStore(word)));
+  }, [wordBook.words]);
 
   return (
     // we need to have an empty parent component on every page for smooth transition animation

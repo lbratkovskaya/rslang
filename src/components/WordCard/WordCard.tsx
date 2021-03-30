@@ -5,7 +5,7 @@ import Parser from 'html-react-parser';
 import { Typography, Card, Chip } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
 import { setUserWordDeleted, setUserWordHard } from '../../store/actions/dictionaryActions';
-import { addWordToGamesStore, deleteWordFromGamesStore } from '../../store/actions/gamesActions';
+import { deleteWordFromGamesStore } from '../../store/actions/gamesActions';
 import backendUrl, {
   APPEAR_DURATION,
   APPEAR_STYLE,
@@ -89,6 +89,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const handleDelete = () => {
     dispatch(setUserWordDeleted(word, userData, true));
     dispatch(deleteWordFromGamesStore(word));
+
     setIsMounted(false);
     setTimeout(() => {
       setIsDeleted(true);
@@ -99,7 +100,6 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     const delay = WORDCARD_APPEAR_GAP * index;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
     preloadImage();
-    dispatch(addWordToGamesStore(word));
 
     return () => {
       clearTimeout(cardAppearTimeout);
@@ -109,7 +109,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION}>
+    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
         <>
           {!isDeleted && (

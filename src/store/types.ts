@@ -57,7 +57,7 @@ export interface IWord {
 
 export interface IWordBookState {
   isLoading: boolean;
-  words: IWord[];
+  words: Array<IWord>;
   activeGroup: number;
   activePage: number;
 }
@@ -122,7 +122,7 @@ export interface IDictionaryAction {
 }
 
 export interface IGamesState {
-  words: Array<IWord>;
+  actualWords: Array<IWord>;
   games: {
     // savannah: ISavannahState,
     // audioCalling: IAudioCallingState;
@@ -137,6 +137,6 @@ export enum GamesActionTypes {
 export interface IGamesAction {
   type: GamesActionTypes;
   payload: {
-    words: IWord[];
+    actualWords: Array<IWord>;
   };
 }

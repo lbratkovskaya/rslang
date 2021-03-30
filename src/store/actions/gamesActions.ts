@@ -3,25 +3,25 @@ import store from '../index';
 import { GamesActionTypes, IWord } from '../types';
 
 export const addWordToGamesStore = (word: IWord) => {
-  const { words } = store.getState().games;
-  const isMaxAmount = words.length >= GAMES_WORDS_MAX_AMOUNT;
-  const isAddedBefore = words.find((el) => el.word === word.word);
+  const { actualWords } = store.getState().games;
+  const isMaxAmount = actualWords.length > GAMES_WORDS_MAX_AMOUNT;
+  const isAddedBefore = actualWords.find((el) => el.word === word.word);
 
-  if (!isAddedBefore) words.push(word);
+  if (!isAddedBefore) actualWords.push(word);
 
-  if (isMaxAmount) words.shift();
+  if (isMaxAmount) actualWords.shift();
 
   return {
     type: GamesActionTypes.ADD_WORD,
-    payload: { words },
+    payload: { actualWords },
   };
 };
 
-export const deleteWordFromGamesStore = (word: IWord) => {
-  const words = store.getState().games.words.filter((el) => el.word !== word.word);
+export const deleteWordFromGamesStore = ({ word }: IWord) => {
+  const actualWords = store.getState().games.actualWords.filter((el) => el.word !== word);
 
   return {
-    type: GamesActionTypes.ADD_WORD,
-    payload: { words },
+    type: GamesActionTypes.DELETE_WORD,
+    payload: { actualWords },
   };
 };
