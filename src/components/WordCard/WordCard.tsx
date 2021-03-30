@@ -13,7 +13,7 @@ import backendUrl, {
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
 import { IAppState } from '../../store/types';
-import { IWordCardProps } from './types';
+import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
 const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
@@ -57,12 +57,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     audio.play();
   };
 
-  const renderButton = (
-    label: string,
-    altLabel: string,
-    clickHandler: () => void,
-    param?: boolean
-  ) => (
+  const renderButton = ({ label, altLabel, onClick, param }: IWordCardButton) => (
     <Chip
       className={classes.button}
       variant={param ? 'default' : 'outlined'}
@@ -71,8 +66,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
       deleteIcon={param ? <Done /> : <></>}
       clickable
       label={param ? altLabel : label}
-      onClick={clickHandler}
-      onDelete={clickHandler} // necessary for deleteIcon to be rendered
+      onClick={onClick}
+      onDelete={onClick} // necessary for deleteIcon to be rendered
     />
   );
 
@@ -166,13 +161,18 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           <Typography variant="body2" color="textSecondary" className={classes.secondary}>
             (Пример: {Parser(word.textExampleTranslate)})
           </Typography>
-          {renderButton(
-            'Добавить в сложные',
-            'Добавлено в сложные',
-            handleAddToDifficult,
-            isDifficult
-          )}
-          {renderButton('В удалённые', 'Удалено', handleDelete, isDeleted)}
+          {renderButton({
+            label: 'Добавить в сложные',
+            altLabel: 'Добавлено в сложные',
+            onClick: handleAddToDifficult,
+            param: isDifficult,
+          })}
+          {renderButton({
+            label: 'В удалённые',
+            altLabel: 'Удалено',
+            onClick: handleDelete,
+            param: isDeleted,
+          })}
         </Card>
       )}
     </Transition>
