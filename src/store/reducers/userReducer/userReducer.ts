@@ -8,7 +8,7 @@ const initialUserData: IUserData = {
   refreshToken: '',
 };
 
-const initialState: IUserState = {
+let initialState: IUserState = {
   isLoading: false,
   isLoggedIn: false,
   isRegistred: false,
@@ -16,9 +16,15 @@ const initialState: IUserState = {
   data: initialUserData,
 };
 
+const savedUserData = sessionStorage.getItem('userData');
+if (savedUserData !== null) {
+  initialState.data = JSON.parse(savedUserData);
+}
+
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {
   switch (action.type) {
     case UserActionTypes.SET_USER_DATA:
+      sessionStorage.setItem('userData', JSON.stringify( action.data ));
       return { ...state, data: action.data };
     case UserActionTypes.SET_FAILED_ATTEMPT:
       return { ...state, failedAttempt: action.failedAttempt };
