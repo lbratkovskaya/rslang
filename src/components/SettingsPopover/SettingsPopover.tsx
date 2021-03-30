@@ -4,13 +4,16 @@ import { Popover, Typography, Switch } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { setShowTranslate } from '../../store/actions/wordBookActions';
+import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
 
 const SettingsPopover: React.FC<any> = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'settings-popover' : undefined;
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -21,16 +24,12 @@ const SettingsPopover: React.FC<any> = () => {
   };
 
   const handleShowTranslateChange = () => {
-    console.log('change show translate');
     dispatch(setShowTranslate(!showTranslate));
   };
 
   const handleShowButtonsChange = () => {
-    console.log('change btn show');
+    dispatch(setShowButtons(!showButtons));
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'settings-popover' : undefined;
 
   return (
     <div>
@@ -62,7 +61,7 @@ const SettingsPopover: React.FC<any> = () => {
             checked={showTranslate}
             onChange={handleShowTranslateChange}
             color="primary"
-            name="checkedB"
+            // name="checkedB"
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
         </Typography>
@@ -72,7 +71,7 @@ const SettingsPopover: React.FC<any> = () => {
             checked={showButtons}
             onChange={handleShowButtonsChange}
             color="primary"
-            name="checkedB"
+            // name="checkedB"
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
         </Typography>

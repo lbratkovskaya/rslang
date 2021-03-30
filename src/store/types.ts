@@ -72,6 +72,7 @@ export enum WordBookActionTypes {
   SET_GROUP = 'SET_GROUP',
   SET_PAGE = 'SET_PAGE',
   SET_SHOW_TRANSLATE = 'SET_SHOW_TRANSLATE',
+  SET_SHOW_BUTTONS = 'SET_SHOW_BUTTON',
 }
 
 export interface ISavannahWord {
@@ -102,6 +103,7 @@ export interface IWordBookAction {
     activeGroup: number;
     activePage: number;
     showTranslate: boolean;
+    showButtons: boolean;
   };
 }
 

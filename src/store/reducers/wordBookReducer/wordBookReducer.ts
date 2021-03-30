@@ -25,6 +25,8 @@ const wordBookReducer = (state: IWordBookState = initialState, action: IWordBook
       return { ...state, activePage: action.payload.activePage };
     case WordBookActionTypes.SET_SHOW_TRANSLATE:
       return { ...state, showTranslate: action.payload.showTranslate };
+    case WordBookActionTypes.SET_SHOW_BUTTONS:
+      return { ...state, showButtons: action.payload.showButtons };
     default:
       return state;
   }

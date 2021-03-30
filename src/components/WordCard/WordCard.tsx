@@ -27,7 +27,9 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
   );
-  const { isLoading, showTranslate } = useSelector((state: IAppState) => state.wordBook);
+  const { isLoading, showTranslate, showButtons } = useSelector(
+    (state: IAppState) => state.wordBook
+  );
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -181,18 +183,20 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
           {renderMainParagraph('Example', word.textExample, textStyle.example)}
           {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
-          {renderButton({
-            label: 'Добавить в сложные',
-            altLabel: 'Добавлено в сложные',
-            onClick: handleAddToDifficult,
-            param: isDifficult,
-          })}
-          {renderButton({
-            label: 'В удалённые',
-            altLabel: 'Удалено',
-            onClick: handleDelete,
-            param: isDeleted,
-          })}
+          {showButtons &&
+            renderButton({
+              label: 'Добавить в сложные',
+              altLabel: 'Добавлено в сложные',
+              onClick: handleAddToDifficult,
+              param: isDifficult,
+            })}
+          {showButtons &&
+            renderButton({
+              label: 'В удалённые',
+              altLabel: 'Удалено',
+              onClick: handleDelete,
+              param: isDeleted,
+            })}
         </Card>
       )}
     </Transition>

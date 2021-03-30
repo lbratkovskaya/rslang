@@ -32,6 +32,11 @@ export const setShowTranslate = (show: boolean) => ({
   payload: { showTranslate: show },
 });
 
+export const setShowButtons = (show: boolean) => ({
+  type: WordBookActionTypes.SET_SHOW_BUTTONS,
+  payload: { showButtons: show },
+});
+
 export const fetchWords = (group: number = 0, page: number = 0) => async (dispatch: Dispatch) => {
   const url = `${backendUrl}/words/?group=${group}&page=${page}`;
 
