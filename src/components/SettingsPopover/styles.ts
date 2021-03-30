@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
       cursor: 'pointer',
       transition: 'color 0.2s',
       '&:hover, &:active': {
-        color: 'black',
+        color: 'rgba(0, 0, 0, 1)',
       },
     },
   })

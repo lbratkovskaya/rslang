@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Popover, Typography, Switch } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
+import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
 
-const SettingsPopover: React.FC<any> = () => {
+const SettingsPopover: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);

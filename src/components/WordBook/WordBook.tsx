@@ -9,12 +9,12 @@ import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
+import SettingsPopover from '../SettingsPopover/SettingsPopover';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
-import SettingsPopover from '../SettingsPopover/SettingsPopover';
 
 const useActivePage = createLocalStorageStateHook('activePage', 0);
 
@@ -114,7 +114,7 @@ const WordBook: React.FC = () => {
   };
 
   const saveSettingsToLocalStorage = () => {
-    // TODO
+    // TODO: implement saving
   };
 
   useEffect(() => {
