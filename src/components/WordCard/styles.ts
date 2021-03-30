@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const transitionStyles: { [key: string]: {} } = {
   entering: { opacity: 0 },
   entered: { opacity: 1 },
-  exiting: { opacity: 1 },
+  exiting: { opacity: 0, transform: 'scale(0)' },
   exited: { opacity: 0 },
 };
 
