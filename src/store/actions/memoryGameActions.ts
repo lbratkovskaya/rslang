@@ -39,28 +39,33 @@ export const disableClickedCards = () => ({
   type: MemoryGameTypes.DISABLE_CLICKED_CARDS,
 });
 
-const createCards = (words: Array<IWord>) => {
+const createCards = (words: Array<IWord>, gameMode: string) => {
   let result: Array<IMemoryGameCard> = [];
   if (words && words.length) {
     const row = words.map((element) => {
-      return [
-        { type: 'image', isOpen: false, disabled: false, value: element.image, id: element._id, audio: `${backendUrl}/${element.audio}` },
-        { type: 'text', isOpen: false, disabled: false, value: element.word, id: element._id, audio: `${backendUrl}/${element.audio}` },
-      ];
+      const mapResult = [{ type: 'text', isOpen: false, disabled: false, value: element.word, id: element._id, audio: `${backendUrl}/${element.audio}` }]
+      if(gameMode === 'image') {
+        mapResult.push(
+          { type: 'image', isOpen: false, disabled: false, value: element.image, id: element._id, audio: `${backendUrl}/${element.audio}` })
+      } else {
+        mapResult.push(
+          { type: 'translation', isOpen: false, disabled: false, value: element.wordTranslate, id: element._id, audio: `${backendUrl}/${element.audio}` })
+      }
+      return mapResult
     });
     result = row.reduce((a, b) => a.concat(b)).sort(() => Math.random() - 0.5);
   }
   return result;
 };
 
-export const initiateGameField = (gameSize: number) => (dispatch: Dispatch) => {
+export const initiateGameField = (gameSize: number, gameMode: string) => (dispatch: Dispatch) => {
   const url = `${backendUrl}/words/?random=true&count=${gameSize}`;
 
   fetch(url).then((res) => {
     try {
       if (res.status === 200) {
         res.json().then((body) => {
-          dispatch(setGameField(createCards(body)));
+          dispatch(setGameField(createCards(body, gameMode)));
         });
       }
     } catch (e) {

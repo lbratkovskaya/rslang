@@ -16,7 +16,7 @@ const MemoryGame: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleStartGame = () => {
-    dispatch(initiateGameField(4));
+    dispatch(initiateGameField(1, 'image')); //image or translation
     dispatch(startGame());
   };
 
@@ -28,7 +28,7 @@ const MemoryGame: React.FC = () => {
         handleShowModalWindow();
       }
     }
-  });
+  }, [ JSON.stringify(field)] );
 
   const handleShowModalWindow = () => setOpen(true)
   const handleCloseModalWindow = () => setOpen(false)
