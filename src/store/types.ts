@@ -61,6 +61,8 @@ export interface IWordBookState {
   words: Array<IWord>;
   activeGroup: number;
   activePage: number;
+  showTranslate: boolean;
+  showButtons: boolean;
 }
 
 export enum WordBookActionTypes {
@@ -69,6 +71,8 @@ export enum WordBookActionTypes {
   FETCH_ERROR = 'FETCH_WORDS_ERROR',
   SET_GROUP = 'SET_GROUP',
   SET_PAGE = 'SET_PAGE',
+  SET_SHOW_TRANSLATE = 'SET_SHOW_TRANSLATE',
+  SET_SHOW_BUTTONS = 'SET_SHOW_BUTTON',
 }
 
 export interface ISavannahWord {
@@ -98,6 +102,8 @@ export interface IWordBookAction {
     error: Error;
     activeGroup: number;
     activePage: number;
+    showTranslate: boolean;
+    showButtons: boolean;
   };
 }
 

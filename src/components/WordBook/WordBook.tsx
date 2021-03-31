@@ -9,6 +9,7 @@ import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
+import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
@@ -112,6 +113,10 @@ const WordBook: React.FC = () => {
     );
   };
 
+  const saveSettingsToLocalStorage = () => {
+    // TODO: implement saving
+  };
+
   useEffect(() => {
     const routeIndex = WORDBOOK_GROUPS.findIndex(
       (group: IGroup) => group.linkAddress === location.pathname
@@ -128,12 +133,21 @@ const WordBook: React.FC = () => {
     wordBook.words.forEach((word) => dispatch(addWordToGamesStore(word)));
   }, [wordBook.words]);
 
+  useEffect(() => {
+    return () => {
+      saveSettingsToLocalStorage();
+    };
+  }, []);
+
   return (
     // we need to have an empty parent component on every page for smooth transition animation
     <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">Учебник</Typography>
+        <Typography variant="h5">
+          Учебник
+          <SettingsPopover />
+        </Typography>
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
         <GroupsContent />

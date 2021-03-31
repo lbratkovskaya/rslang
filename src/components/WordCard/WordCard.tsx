@@ -23,10 +23,12 @@ import useStyles, { defaultImageSize, transitionStyles } from './styles';
 const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
-  const { isLoading } = useSelector((state: IAppState) => state.wordBook);
   const { data: userData } = useSelector((state: IAppState) => state.user);
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
+  );
+  const { isLoading, showTranslate, showButtons } = useSelector(
+    (state: IAppState) => state.wordBook
   );
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
@@ -118,6 +120,22 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     }, APPEAR_DURATION);
   };
 
+  const renderMainParagraph = (title: string, content: string, className: {}) => (
+    <Typography variant="body2">
+      {title}: <span style={className}>{Parser(content)}</span>
+    </Typography>
+  );
+
+  const renderParagraph = (title: string, content: string) => (
+    <Typography variant="body2" color="textSecondary" className={classes.secondary}>
+      {title}: {Parser(content)}
+    </Typography>
+  );
+
+  const renderWordTranslate = showTranslate && (
+    <span className={classes.wordTranslate}>{` — ${word.wordTranslate}`}</span>
+  );
+
   useEffect(() => {
     const delay = WORDCARD_APPEAR_GAP * index;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
@@ -148,8 +166,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
           />
           <Typography className={classes.word}>
             <span style={textStyle.word}>{word.word}</span>
-            {' — '}
-            <span className={classes.wordTranslate}>{word.wordTranslate}</span>
+            {renderWordTranslate}
           </Typography>
           <Typography className={classes.transcription}>
             {` ${word.transcription} `}
@@ -162,30 +179,24 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
               <StopRounded onClick={handleStopClick} color="secondary" className={classes.icon} />
             )}
           </Typography>
-          <Typography variant="body2">
-            Meaning: <span style={textStyle.meaning}>{Parser(word.textMeaning)}</span>
-          </Typography>
-          <Typography variant="body2" color="textSecondary" className={classes.secondary}>
-            (Значение: {Parser(word.textMeaningTranslate)})
-          </Typography>
-          <Typography variant="body2">
-            Example: <span style={textStyle.example}>{Parser(word.textExample)}</span>
-          </Typography>
-          <Typography variant="body2" color="textSecondary" className={classes.secondary}>
-            (Пример: {Parser(word.textExampleTranslate)})
-          </Typography>
-          {renderButton({
-            label: 'Добавить в сложные',
-            altLabel: 'Добавлено в сложные',
-            onClick: handleAddToDifficult,
-            param: isDifficult,
-          })}
-          {renderButton({
-            label: 'В удалённые',
-            altLabel: 'Удалено',
-            onClick: handleDelete,
-            param: isDeleted,
-          })}
+          {renderMainParagraph('Meaning', word.textMeaning, textStyle.meaning)}
+          {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
+          {renderMainParagraph('Example', word.textExample, textStyle.example)}
+          {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
+          {showButtons &&
+            renderButton({
+              label: 'Добавить в сложные',
+              altLabel: 'Добавлено в сложные',
+              onClick: handleAddToDifficult,
+              param: isDifficult,
+            })}
+          {showButtons &&
+            renderButton({
+              label: 'В удалённые',
+              altLabel: 'Удалено',
+              onClick: handleDelete,
+              param: isDeleted,
+            })}
         </Card>
       )}
     </Transition>
