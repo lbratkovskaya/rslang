@@ -11,6 +11,7 @@ export interface IAppState {
   volumeHandler: IVolumeState;
   settings: ISettingsState;
   memoryGame: IMemoryGameState;
+  sprint: ISprintState;
 }
 
 export interface IUserData {
@@ -33,6 +34,7 @@ export enum UserActionTypes {
   SET_USER_DATA = 'USER/SET_USER_DATA',
   SET_FAILED_ATTEMPT = 'USER/SET_FAILED_ATTEMPT',
   SET_IS_LOGGED_IN = 'USER/SET_IS_LOGGED_IN',
+
   SET_IS_REGISTERED = 'USER/SET_IS_REGISTERED',
   SET_IS_LOADING = 'USER/SET_IS_LOADING',
 }
@@ -241,4 +243,17 @@ export interface IStatisticsAction {
     correctTotal?: number;
     correctSeries?: number;
   };
+}
+export interface ISprintState {
+  level: number;
+  round: number;
+  isStartGame: boolean;
+  words: Array<ISprintWords>;
+}
+
+export interface ISprintWords {
+  word: string;
+  translate: string;
+  isCorrect: boolean;
+  wordAudio: string;
 }

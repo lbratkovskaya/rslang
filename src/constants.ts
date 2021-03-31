@@ -110,6 +110,16 @@ export interface IGroup {
   background: COLORS;
 }
 
+export const SPRINT = {
+  timeOutDelay: 60,
+  background:
+    'https://www.pixelstalk.net/wp-content/uploads/images2/Animal-Backgrounds-Free-Download.jpg',
+  sadImg: '../../../assets/sad.svg',
+  winkImg: '../../../assets/wink.svg',
+  audioTrue: '../../../assets/SprintAudio/sprint_true.mp3',
+  audioFalse: '../../../assets/SprintAudio/sprint_false.mp3',
+};
+
 export const modalTimeout = 1000;
 export const playIcon = './assets/play-button.svg';
 export const correctUrl: string = './assets/correct.wav';

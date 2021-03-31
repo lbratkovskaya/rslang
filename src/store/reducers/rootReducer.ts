@@ -8,6 +8,7 @@ import savannahReducer from './savannahReducer/savannahReducer';
 import settingsReducer from './settingsReducer/settingsReducer';
 import memoryGameReducer from './memoryGameReducer/memoryGameReducer';
 import volumeReducer from './volumeReducer/volumeReducer';
+import sprintReducer from './sprintReducer/sprintReducer';
 
 export default combineReducers({
   wordBook: wordBookReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   memoryGame: memoryGameReducer,
   audioCalling: audioCallingReducer,
   volumeHandler: volumeReducer,
+  sprint: sprintReducer,
 });
