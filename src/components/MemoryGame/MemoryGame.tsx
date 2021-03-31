@@ -16,7 +16,7 @@ const MemoryGame: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleStartGame = () => {
-    dispatch(initiateGameField(2));
+    dispatch(initiateGameField(4));
     dispatch(startGame());
   };
 
@@ -31,13 +31,15 @@ const MemoryGame: React.FC = () => {
   });
 
   const handleShowModalWindow = () => setOpen(true)
-
   const handleCloseModalWindow = () => setOpen(false)
+
+  //const failPlayer: HTMLAudioElement = new Audio('./assets/sounds/fail_sound.mp3');
+  
 
   return (
     <div>
       <Header />
-      <ModalWindow text={'Congratulations! You are won!!!'} open={open} handleClose={handleCloseModalWindow}/>
+      <ModalWindow text={'Congratulations! You won!!!'} open={open} handleClose={handleCloseModalWindow}/>
       <div className={styles.gameWrapper}>
         <CssBaseline />
         <div className={styles.controlsWrapper}>
@@ -57,6 +59,7 @@ const MemoryGame: React.FC = () => {
                   id={`${card.id}_${card.type}`}
                   isOpen={card.isOpen}
                   disabled={card.disabled}
+                  audio={card.audio}
                 />
               );
             })}

@@ -9,4 +9,5 @@ export interface ICardProps {
   type: string;
   isOpen: boolean;
   disabled: boolean;
+  audio: string;
 }

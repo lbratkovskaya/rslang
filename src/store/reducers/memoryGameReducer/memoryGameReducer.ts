@@ -57,9 +57,9 @@ export default function memoryGameReducer(
 ) {
   switch (action.type) {
     case MemoryGameTypes.START_GAME:
-      return { ...state, cardId: '', isStarted: true };
+      return { ...state, isStarted: true };
     case MemoryGameTypes.STOP_GAME:
-      return { ...state, cardId: '', isStarted: false };
+      return { ...state, isStarted: false };
     case MemoryGameTypes.SET_GAME_FIELD:
       return { ...state, field: action.field };
     case MemoryGameTypes.UPDATE_GAME_CARD:

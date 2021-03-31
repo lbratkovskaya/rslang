@@ -6,6 +6,7 @@ export interface IMemoryGameCard {
   type: string;
   isOpen: boolean;
   disabled: boolean;
+  audio: string;
 }
 
 export interface IMemoryGameState {
@@ -33,7 +34,7 @@ export interface IMemoryGameAction {
 
 export enum MemoryGameTypes {
   START_GAME = 'MEMORY_GAME/START_GAME',
-  STOP_GAME = 'MEMORY_GAME/START_GAME',
+  STOP_GAME = 'MEMORY_GAME/STOP_GAME',
   SET_GAME_FIELD = 'MEMORY_GAME/SET_GAME_FIELD',
   UPDATE_GAME_CARD = 'MEMORY_GAME/UPDATE_GAME_FIELD',
   HIDE_CLICKED_CARDS = 'MEMORY_GAME/HIDE_CLICKED_CARDS',

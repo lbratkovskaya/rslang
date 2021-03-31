@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import { MEMORY } from '../../constants';
 // import { red200 } from 'material-ui/styles/colors';
 
 const useStyles = makeStyles(() => ({
@@ -17,9 +18,14 @@ const useStyles = makeStyles(() => ({
     height: '100%',
   },
   sheet: {
-    backgroundColor: 'red',
+    background: `url(${MEMORY.sheet})`,
+    backgroundSize: 'cover',
     width: '22%',
     height: '28%',
+    // transition: '0.6s',
+    // transformStyle: 'preserve-3d',
+    // transform: 'rotateY(180deg)',
+    //transform: 'rotate(-90deg)',
   },
   imageNone: {
     opacity: '0',
@@ -27,6 +33,7 @@ const useStyles = makeStyles(() => ({
   image: {
     width: '100%',
     height: 'calc(width * 0.6666)',
+    transform: 'rotateY(180deg)',
   },
   gameWrapper: {
     display: 'flex',
@@ -36,6 +43,8 @@ const useStyles = makeStyles(() => ({
     width: '100vw',
     padding: '2%',
     height: 'calc(100vh - 80px)',
+    background: `url(${MEMORY.background})`,
+    backgroundSize: 'cover'
   },
   controlsWrapper: {
     display: 'flex',
@@ -54,6 +63,9 @@ const useStyles = makeStyles(() => ({
   card: {
     width: '22%',
     height: '28%',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
   },
   content: {
     marginTop: 'auto',
@@ -66,11 +78,15 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
   },
   text: {
     maxWidth: '100%',
     fontSize: '2vw',
     margin: '0 1%',
+    transform: 'rotateY(180deg)',
   },
   textNone: {
     fontSize: '0',

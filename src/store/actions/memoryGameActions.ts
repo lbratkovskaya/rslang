@@ -44,8 +44,8 @@ const createCards = (words: Array<IWord>) => {
   if (words && words.length) {
     const row = words.map((element) => {
       return [
-        { type: 'image', isOpen: false, disabled: false, value: element.image, id: element._id },
-        { type: 'text', isOpen: false, disabled: false, value: element.word, id: element._id },
+        { type: 'image', isOpen: false, disabled: false, value: element.image, id: element._id, audio: `${backendUrl}/${element.audio}` },
+        { type: 'text', isOpen: false, disabled: false, value: element.word, id: element._id, audio: `${backendUrl}/${element.audio}` },
       ];
     });
     result = row.reduce((a, b) => a.concat(b)).sort(() => Math.random() - 0.5);

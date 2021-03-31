@@ -10,6 +10,7 @@ import {
 import { IAppState } from '../../store/types';
 import { ICardProps } from './types';
 import backendUrl from '../../constants';
+import { MEMORY } from '../../constants';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 
 const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
@@ -26,6 +27,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
       value: '',
       isOpen: false,
       disabled: false,
+      audio: '',
     };
 
     // Клик по превой карточке
@@ -38,13 +40,18 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
       const [previousCard, _] = clickedCards;
       if (previousCard.id === currentCardId) {
         // обе карточки делаем disabled ...
-        setTimeout(() => dispatch(disableClickedCards()), 500);
+        setTimeout(() => dispatch(disableClickedCards()), MEMORY.timeShowingCard);
       } else {
         // Переворачиваем карточки обратно рубашкой вверх
-        setTimeout(() => dispatch(hideClickedCards()), 500);
+        setTimeout(() => dispatch(hideClickedCards()), MEMORY.timeShowingCard);
       }
     }
   };
+
+  function handleAutoplay(audio: string) {
+    const failPlayer = new Audio(audio)
+    failPlayer.play();
+  }
 
   return (
     <>
@@ -52,11 +59,18 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
         <Card
           className={props.isOpen ? styles.card : styles.sheet}
           id={props.id}
-          onClick={handleGameMove}>
+          onClick={(event) => {
+            handleGameMove(event)
+            if(!props.disabled) {
+              handleAutoplay(props.audio)
+              dispatch(disableClickedCards)
+            }
+          }}>
           <div className={styles.imageWrapper}>
             <img
               className={props.isOpen ? styles.image : styles.imageNone}
               src={`${backendUrl}/${props.value}`}
+              draggable="false"
             />
           </div>
         </Card>
@@ -64,7 +78,14 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
         <Card
           className={props.isOpen ? styles.cardWithText : styles.sheet}
           id={props.id}
-          onClick={handleGameMove}>
+          onClick={(event) => {
+            handleGameMove(event)
+            if(!props.disabled) {
+              handleAutoplay(props.audio)
+              dispatch(disableClickedCards)
+            }
+          }}
+        >
           <Typography className={props.isOpen ? styles.text : styles.textNone} component="div">
             {props.value}
           </Typography>

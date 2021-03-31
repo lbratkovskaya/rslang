@@ -93,6 +93,12 @@ export const SAVANNAH = {
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
 };
 
+export const MEMORY = {
+  timeShowingCard: 700,
+  sheet: 'assets/sheet-bg.jpg',
+  background: 'assets/memory-bg.jpg',
+};
+
 export interface IGroup {
   label: string;
   linkAddress: string;
