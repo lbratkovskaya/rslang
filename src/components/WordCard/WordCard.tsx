@@ -25,6 +25,9 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const [isMounted, setIsMounted] = useState(false);
   const { isLoading } = useSelector((state: IAppState) => state.wordBook);
   const { data: userData } = useSelector((state: IAppState) => state.user);
+  const userDifficultWords = useSelector((state: IAppState) =>
+    state.userDictionary.difficultWords.map((el) => el.word)
+  );
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -119,6 +122,8 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     const delay = WORDCARD_APPEAR_GAP * index;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
     preloadImage();
+
+    if (userDifficultWords.includes(word.word)) setIsDifficult(true);
 
     return () => {
       clearTimeout(cardAppearTimeout);
