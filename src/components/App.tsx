@@ -19,7 +19,7 @@ const App: React.FC = () => {
         render={(routeProps) => (
           <TransitionGroup component={null}>
             <CSSTransition
-              key={routeProps.location.key}
+              key={routeProps.location.pathname}
               timeout={timeout}
               classNames="page"
               mountOnEnter
