@@ -39,7 +39,7 @@ const SavannahStartWindow: React.FC = () => {
     setSelectLevel(Number(value));
   };
   const handleStartGame = () => {
-    const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount + 1) % SELECT_ROUNDS.amount;
+    const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount) % SELECT_ROUNDS.amount;
     setSelectRound(randomPage);
     onReduceArrayWords(wordBook?.words);
     startGame(true);
