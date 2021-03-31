@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginRight: theme.spacing(1),
+      transition: 'background 0.5s, color 0.5s',
     },
     wordTranslate: {
       textTransform: 'capitalize',

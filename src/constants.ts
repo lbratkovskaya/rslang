@@ -100,7 +100,7 @@ export const modalTimeout = 1000;
 
 export const APPEAR_DURATION = 600;
 export const APPEAR_STYLE = {
-  transition: `opacity ${APPEAR_DURATION}ms, transform ${APPEAR_DURATION}ms`,
+  transition: `opacity ${APPEAR_DURATION}ms, transform ${APPEAR_DURATION}ms, filter 200ms`,
 };
 
 export const WORDCARD_APPEAR_GAP = 85;
