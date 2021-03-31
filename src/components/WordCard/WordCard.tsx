@@ -4,7 +4,11 @@ import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip, useTheme } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
-import { setUserWordDeleted, setUserWordHard } from '../../store/actions/dictionaryActions';
+import {
+  setUserWordDeleted,
+  setUserWordEasy,
+  setUserWordHard,
+} from '../../store/actions/dictionaryActions';
 import { deleteWordFromGamesStore } from '../../store/actions/gamesActions';
 import backendUrl, {
   APPEAR_DURATION,
@@ -92,9 +96,13 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   };
 
   const handleAddToDifficult = () => {
-    dispatch(setUserWordHard(word, userData));
-    if (isDifficult) setIsDifficult(false);
-    else setIsDifficult(true);
+    if (isDifficult) {
+      dispatch(setUserWordEasy(word, userData));
+      setIsDifficult(false);
+    } else {
+      dispatch(setUserWordHard(word, userData));
+      setIsDifficult(true);
+    }
   };
 
   const handleDelete = () => {
