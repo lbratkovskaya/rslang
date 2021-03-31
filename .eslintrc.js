@@ -12,8 +12,8 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
     'plugin:jest/recommended',
-    "plugin:prettier/recommended",
-    "prettier",
+    'plugin:prettier/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,12 +23,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'jest',
-    'prettier',
-  ],
+  plugins: ['react', '@typescript-eslint', 'jest', 'prettier'],
   rules: {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
@@ -44,12 +39,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       2,
       {
-        extensions: [
-          '.js',
-          '.jsx',
-          '.ts',
-          '.tsx',
-        ],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
     'react/destructuring-assignment': [
@@ -63,5 +53,11 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };

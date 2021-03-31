@@ -1,5 +1,6 @@
 export interface IAppState {
   wordBook: IWordBookState;
+  savannah: ISavannahState;
   user: IUserState;
   userDictionary: IDictionaryState;
   games: IGamesState;
@@ -68,6 +69,25 @@ export enum WordBookActionTypes {
   FETCH_ERROR = 'FETCH_WORDS_ERROR',
   SET_GROUP = 'SET_GROUP',
   SET_PAGE = 'SET_PAGE',
+}
+
+export interface ISavannahWord {
+  word: string;
+  translate: string;
+  isCorrect: boolean;
+}
+
+export interface ISavannahState {
+  level: number;
+  round: number;
+  isEng: boolean;
+  isStartGame: boolean;
+  words: Array<ISavannahWord>;
+}
+
+export interface IOptions {
+  name: string;
+  amount: number;
 }
 
 export interface IWordBookAction {
