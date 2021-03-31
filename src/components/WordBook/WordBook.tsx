@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import useLocalStorageState from 'use-local-storage-state';
+import { createLocalStorageStateHook } from 'use-local-storage-state';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
@@ -15,14 +15,16 @@ import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
 
+const useActivePage = createLocalStorageStateHook('activePage', 0);
+
 const WordBook: React.FC = () => {
   const dispatch = useDispatch();
 
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const location = useLocation();
   const { activeGroup } = wordBook;
-  const [activePage, setActivePage] = useLocalStorageState('activePage', 0);
   const classes = useStyles();
+  const [activePage, setActivePage] = useActivePage();
 
   const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
 
