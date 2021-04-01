@@ -21,6 +21,8 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     height: '38px',
+    marginLeft: 'auto',
+    marginRight: '1vw',
   },
   sheet4: {
     background: `url(${MEMORY.sheet})`,
@@ -52,6 +54,7 @@ const useStyles = makeStyles(() => ({
   },
   gameWrapper: {
     display: 'flex',
+    //flexWrap: 'wrap',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -70,16 +73,6 @@ const useStyles = makeStyles(() => ({
       width: '100%',
       height: 'calc(100vh - 80px)',
       background: 'rgba(0, 0, 0, 0.05)',
-    },
-  },
-  controlsWrapper: {
-    zIndex: 1000,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '&:after': {
-      content: '""',
-      zIndex: 1000,
     },
   },
   cardsWrapper: {
@@ -166,6 +159,29 @@ const useStyles = makeStyles(() => ({
   },
   textNone: {
     fontSize: '0',
+  },
+  controlsWrapper: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    zIndex: 1000,
+    '&:after': {
+      content: '""',
+      zIndex: 1000,
+    },
+  },
+  selectorsWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  leftWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  canselBtnWrapper: {
+    marginLeft: 'auto',
   },
 }));
 

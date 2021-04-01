@@ -31,6 +31,16 @@ export const showGameCard = (newCard: IMemoryGameCard) => ({
   newCard,
 });
 
+export const handleFirstCard = (newCard: IMemoryGameCard) => ({
+  type: MemoryGameTypes.HANDLE_FIRST_CARD,
+  newCard,
+});
+
+export const handleSecondCard = (newCard: IMemoryGameCard) => ({
+  type: MemoryGameTypes.HANDLE_SECOND_CARD,
+  newCard,
+});
+
 export const hideClickedCards = () => ({
   type: MemoryGameTypes.HIDE_CLICKED_CARDS,
 });

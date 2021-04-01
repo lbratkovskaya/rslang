@@ -8,8 +8,6 @@ import GameExitBtn from '../commonComponents/GameExitBtn/GameExitBtn';
 import { GameSelect } from '../commonComponents';
 import { WORDBOOK_GROUPS, MEMORY } from '../../constants';
 
-// import Typography from 'material-ui/styles/typography';
-
 const ControlPanel: React.FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ const ControlPanel: React.FC = () => {
 
   const gameMode = mode ? 'image' : 'translation';
   const handleStartGame = () => {
-    dispatch(initiateGameField(gameSize, gameMode)); // image or translation
+    dispatch(initiateGameField(gameSize, gameMode));
     dispatch(startGame());
   };
 
@@ -54,40 +52,50 @@ const ControlPanel: React.FC = () => {
 
   return (
     <>
-      {isGameStarted && <GameExitBtn clickBtn={handleStopGame} />}
+      {isGameStarted && 
+        <div className={styles.controlsWrapper}>
+          <div className={styles.canselBtnWrapper}>
+            <GameExitBtn clickBtn={handleStopGame} />
+          </div>
+        </div>
+      }
       {!isGameStarted && (
         <div className={styles.controlsWrapper}>
-          <GameSelect
-            selectName="Уровень"
-            selectData={WORDBOOK_GROUPS}
-            changeSelectFc={handleSelectLevel}
-          />
-          <GameSelect
-            selectName="Сложность"
-            selectData={MEMORY.sizes}
-            changeSelectFc={handleSelectSize}
-          />
-          <div className={styles.switcherWrapper}>
-            <Typography variant="h6" component="p" color="inherit">
-              Перевод
-            </Typography>
-            <FormGroup>
-              <Typography component="div">
-                <Grid component="label" container alignItems="center" spacing={1}>
-                  <Grid item>Вкл</Grid>
-                  <Grid item>
-                    <Switch
-                      checked={mode}
-                      onChange={handleChangeGameMode}
-                      name="setMode"
-                      color="primary"
-                      className={styles.switcher}
-                    />
-                  </Grid>
-                  <Grid item>Выкл</Grid>
-                </Grid>
+          <div className={styles.leftWrapper}>
+            <div className={styles.selectorsWrapper}>
+              <GameSelect
+                selectName="Уровень"
+                selectData={WORDBOOK_GROUPS}
+                changeSelectFc={handleSelectLevel}
+              />
+              <GameSelect
+                selectName="Сложность"
+                selectData={MEMORY.sizes}
+                changeSelectFc={handleSelectSize}
+              />
+            </div>  
+            <div className={styles.switcherWrapper}>
+              <Typography variant="h6" component="p" color="inherit">
+                Перевод
               </Typography>
-            </FormGroup>
+              <FormGroup>
+                <Typography component="div">
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                    <Grid item>Вкл</Grid>
+                    <Grid item>
+                      <Switch
+                        checked={mode}
+                        onChange={handleChangeGameMode}
+                        name="setMode"
+                        color="primary"
+                        className={styles.switcher}
+                      />
+                    </Grid>
+                    <Grid item>Выкл</Grid>
+                  </Grid>
+                </Typography>
+              </FormGroup>
+            </div>
           </div>
           <Button
             className={styles.button}

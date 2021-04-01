@@ -10,19 +10,17 @@ import Header from '../Header';
 import ModalWindow from '../ModalWindow';
 import ControlPanel from './ControlPanel';
 import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
+import { Typography } from '@material-ui/core';
 
 const MemoryGame: React.FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const field = useSelector((state: IAppState) => state.memoryGame.field);
-  const [open, setOpen] = React.useState(false);
-  const handleFullScreenWrapper = useFullScreenHandle();
-  const [fullSize, setFullSize] = useState(false);
 
+  const [open, setOpen] = React.useState(false);
   const handleShowModalWindow = () => setOpen(true);
   const handleCloseModalWindow = () => setOpen(false);
-
   useEffect(() => {
     if (field && field.length && isGameStarted) {
       const allCardsAreDisabled = field.every((card) => card.disabled === true);
@@ -32,6 +30,9 @@ const MemoryGame: React.FC = () => {
       }
     }
   }, [JSON.stringify(field)]);
+
+  const handleFullScreenWrapper = useFullScreenHandle();
+  const [fullSize, setFullSize] = useState(false);
 
   const handleFullSizeMemoryGame = () => {
     setFullSize(!fullSize);
@@ -66,8 +67,21 @@ const MemoryGame: React.FC = () => {
                 />
               );
             })}
+            {!isGameStarted && (
+              <div>
+                <Typography variant="h1" component="h2" gutterBottom>
+                  Найди пару
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  Развивает внимание и память.
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  Пополняет словарный запас.
+                </Typography>
+              </div>
+            )}
+            <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />
         </div>
-        <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />
       </div>
     </>
   )

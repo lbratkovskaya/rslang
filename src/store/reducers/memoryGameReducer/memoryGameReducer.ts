@@ -14,6 +14,34 @@ const initialState: IMemoryGameState = {
   clickedCards: [],
 };
 
+
+const handleSecondCard = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard, prevCard: IMemoryGameCard|undefined) => {
+  if (prevCard) {
+    showCardInField(currentField, newCard);
+
+    if (newCard.id === prevCard.id) {
+      return currentField.map((card) => {
+          if ((card.id === newCard.id && card.type === newCard.type)
+              || (card.id === prevCard.id && card.type === prevCard.type)) {
+            card.disabled = true;
+            return card;
+          }
+        return card;
+      });
+    }
+
+    return currentField.map((card) => {
+        if ((card.id === newCard.id && card.type === newCard.type)
+            || (card.id === prevCard.id && card.type === prevCard.type)) {
+          card.isOpen = false;
+          return card;
+        }
+      return card;
+    });
+  }
+  return currentField;
+}
+
 const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
   return currentField.map((card) => {
     if (card.id === newCard.id && card.type === newCard.type) {
@@ -65,6 +93,19 @@ export default function memoryGameReducer(
       return { ...state, isStarted: false, field: [] };
     case MemoryGameTypes.SET_GAME_FIELD:
       return { ...state, field: action.field };
+    case MemoryGameTypes.HANDLE_FIRST_CARD:
+      return {
+        ...state,
+        field: showCardInField(state.field, action.newCard),
+        clickedCards: state.clickedCards.concat(action.newCard),
+      };
+    case MemoryGameTypes.HANDLE_SECOND_CARD:
+      return {
+        ...state,
+        field: handleSecondCard(state.field, action.newCard, state.clickedCards.pop()) ,
+        clickedCards: [],
+      };
+
     case MemoryGameTypes.UPDATE_GAME_CARD:
       return {
         ...state,
