@@ -21,7 +21,7 @@ const CurrentUserMenuItem: React.FC = () => {
   );
 
   const avatarElement = !isLoggedIn ? (
-    <Avatar className={classes.circle} src="/assets/avatar.ico" />
+    <Avatar className={classes.circle} src="/assets/avatar.png" />
   ) : (
     userAvatar
   );

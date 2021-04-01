@@ -1,0 +1,22 @@
+.MuiInputBase-root {
+  color: white !important;
+  opacity: 0.6;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.75) !important
+}
+.MuiNativeSelect-icon {
+  color: white !important;
+}
+.MuiIconButton-root {
+  color: white !important;
+  opacity: 0.74;
+  transition: all 300ms ease-out;
+}
+.MuiIconButton-root:hover,
+.MuiIconButton-root:focus {
+  transition: all 300ms ease-out;
+  opacity: 1;
+}
+.MuiNativeSelect-select option {
+  color: #333333;;
+}
+

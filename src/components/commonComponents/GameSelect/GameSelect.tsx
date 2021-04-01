@@ -29,7 +29,7 @@ const GameSelect: React.FC<IGameSelectProps> = (props: IGameSelectProps) => {
   return (
     <div className={classes.savannahMenuLevel}>
       <span className={classes.savannahSelectorName}>{props.selectName}</span>
-      <NativeSelect id={props.selectName} onChange={handleChange}>
+      <NativeSelect id={props.selectName} onChange={handleChange} className={classes.gameSelect}>
         {selectItems.map((el: string | number) => renderOption(el))}
       </NativeSelect>
     </div>

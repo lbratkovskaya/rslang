@@ -41,6 +41,14 @@ const useStyles = makeStyles((theme) =>
     switchRoot: {
       padding: '5px',
     },
+    gameSelect: {
+      '&:after': {
+        color: 'white',
+      },
+      '&input': {
+        color: 'white',
+      },
+    },
   })
 );
 

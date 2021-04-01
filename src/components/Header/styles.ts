@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         padding: '6px',
         textDecoration: 'none',
-        color: '#333333',
+        color: 'rgba(255, 255, 255, 0.8)',
       },
     },
     navMenuItemInner: {
@@ -86,15 +86,18 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     mainLogo: {
-      width: '80px',
-      minWidth: '80px',
+      width: '100px',
+      minWidth: '100px',
       height: '80px',
       marginRight: 'auto',
     },
     mainLogoPic: {
       width: '100%',
-      height: '100%',
+      height: '80%',
       borderRadius: '0',
+      marginTop: '10px',
+      color: 'white',
+      fill: 'white',
       '& svg': {
         color: 'aqua',
       },
@@ -103,8 +106,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#333333',
     },
     circle: {
-      height: '25px',
-      width: '25px',
+      height: '40px',
+      width: '40px',
     },
   })
 );

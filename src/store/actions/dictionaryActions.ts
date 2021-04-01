@@ -143,7 +143,6 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
   const deleted = getDeleted(word);
-  console.log('hard');
   if ((<IUserWord>word).userWord === undefined) {
     saveUserWord(word, userData, 'hard', deleted)(dispatch);
   } else {

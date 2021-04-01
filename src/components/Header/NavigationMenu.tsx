@@ -62,7 +62,7 @@ const NavigationMenu: React.FC = () => {
     <AppBar position="static">
       <Toolbar>
         <Link to="/" className={classes.mainLogo}>
-          <Avatar src="/assets/favicon.svg" title="RS Lang App" className={classes.mainLogoPic} />
+          <Avatar src="/assets/logo.svg" title="RS Lang App" className={classes.mainLogoPic} />
         </Link>
         <div className={classes.sectionDesktop}>
           {renderMenuItems()}
