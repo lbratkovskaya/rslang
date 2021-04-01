@@ -6,8 +6,10 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '95vh',
       padding: theme.spacing(2),
       boxSizing: 'border-box',
-      borderLeft: 'dashed 6px darkgray',
+      // borderLeft: 'dashed 6px darkgray',
       transition: 'background 0.5s, border 0.5s',
+      backgroundSize: '100px',
+      backgroundBlendMode: 'soft-light',
     },
     welcome: {
       maxWidth: '100%',

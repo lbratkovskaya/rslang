@@ -42,6 +42,7 @@ const NavigationMenu: React.FC = () => {
                 aria-label={menuItem.label}
                 aria-controls={menuItem.subMenuId}
                 aria-haspopup="true"
+                className={classes.arrow}
                 onClick={() => setSubMenuOpenId(menuItem.subMenuId || '')}>
                 <ArrowDropDown />
               </IconButton>
@@ -59,7 +60,7 @@ const NavigationMenu: React.FC = () => {
     });
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <Link to="/" className={classes.mainLogo}>
           <Avatar src="/assets/favicon.svg" title="RS Lang App" className={classes.mainLogoPic} />

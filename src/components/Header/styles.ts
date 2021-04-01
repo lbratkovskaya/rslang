@@ -2,6 +2,14 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    appBar: {
+      background: '#212229',
+      display: 'flex',
+    },
+    menu: {
+      width: '100%',
+      margin: '0 auto',
+    },
     grow: {
       flexGrow: 1,
     },
@@ -32,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       marginLeft: '20px',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       [theme.breakpoints.up('md')]: {
         display: 'flex',
       },
@@ -45,14 +53,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     navMenuItem: {
       padding: 0,
+      marginRight: '1.5rem',
       display: 'flex',
       alignItems: 'center',
-      fontSize: '1.7rem',
+      fontSize: '1rem',
       '& a': {
         width: '100%',
         padding: '6px',
         textDecoration: 'none',
-        color: '#333333',
+        color: '#fafafa',
       },
     },
     navMenuItemInner: {
@@ -74,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       display: 'flex',
       alignItems: 'center',
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       '& a': {
         textDecoration: 'none',
         color: '#333333',
@@ -90,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '80px',
       height: '80px',
       marginRight: 'auto',
+      filter: 'invert(1)',
     },
     mainLogoPic: {
       width: '100%',
@@ -105,6 +115,10 @@ const useStyles = makeStyles((theme: Theme) =>
     circle: {
       height: '25px',
       width: '25px',
+    },
+    arrow: {
+      padding: 0,
+      color: '#fafafa',
     },
   })
 );
