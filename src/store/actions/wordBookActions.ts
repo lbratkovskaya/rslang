@@ -45,7 +45,7 @@ export const fetchWords = (group: number = 0, page: number = 0) => async (dispat
     const res = await fetch(url);
     const words = await res.json();
     dispatch(fetchWordsSuccess(words));
-  } catch (e) {
+  } catch(e) {
     dispatch(fetchWordsError(e));
   }
 };

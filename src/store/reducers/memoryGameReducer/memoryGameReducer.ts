@@ -1,4 +1,7 @@
-import { IMemoryGameState, IMemoryGameAction, MemoryGameTypes, IMemoryGameCard } from './types';
+import { IMemoryGameAction,
+        IMemoryGameCard,
+        IMemoryGameState,
+        MemoryGameTypes} from './types';
 
 const initialState: IMemoryGameState = {
   cardId: '',

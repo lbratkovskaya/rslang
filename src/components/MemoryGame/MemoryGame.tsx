@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import { Button, CssBaseline } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { CssBaseline } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFullScreenHandle } from 'react-full-screen';
 import useStyles from './styles';
 import { IAppState } from '../../store/types';
-import { initiateGameField, startGame, stopGame } from '../../store/actions/memoryGameActions';
+import { stopGame } from '../../store/actions/memoryGameActions';
 import GameCard from './GameCard';
 import Header from '../Header';
 import ModalWindow from '../ModalWindow';
+import ControlPanel from './ControlPanel';
+import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
 
 const MemoryGame: React.FC = () => {
   const styles = useStyles();
@@ -14,11 +17,11 @@ const MemoryGame: React.FC = () => {
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const field = useSelector((state: IAppState) => state.memoryGame.field);
   const [open, setOpen] = React.useState(false);
+  const handleFullScreenWrapper = useFullScreenHandle();
+  const [fullSize, setFullSize] = useState(false);
 
-  const handleStartGame = () => {
-    dispatch(initiateGameField(1, 'image')); //image or translation
-    dispatch(startGame());
-  };
+  const handleShowModalWindow = () => setOpen(true);
+  const handleCloseModalWindow = () => setOpen(false);
 
   useEffect(() => {
     if (field && field.length && isGameStarted) {
@@ -28,25 +31,26 @@ const MemoryGame: React.FC = () => {
         handleShowModalWindow();
       }
     }
-  }, [ JSON.stringify(field)] );
+  }, [JSON.stringify(field)]);
 
-  const handleShowModalWindow = () => setOpen(true)
-  const handleCloseModalWindow = () => setOpen(false)
+  const handleFullSizeMemoryGame = () => {
+    setFullSize(!fullSize);
+    return fullSize ? handleFullScreenWrapper.exit() : handleFullScreenWrapper.enter();
+  };
 
-  //const failPlayer: HTMLAudioElement = new Audio('./assets/sounds/fail_sound.mp3');
-  
+  const FullScreenBtnComponent = <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />;
 
   return (
     <div>
       <Header />
-      <ModalWindow text={'Congratulations! You won!!!'} open={open} handleClose={handleCloseModalWindow}/>
+      <ModalWindow
+        text="Congratulations! You won!!!"
+        open={open}
+        handleClose={handleCloseModalWindow}
+      />
       <div className={styles.gameWrapper}>
         <CssBaseline />
-        <div className={styles.controlsWrapper}>
-          <Button type="button" variant="contained" color="primary" onClick={handleStartGame}>
-            Старт
-          </Button>
-        </div>
+        <ControlPanel />
         <div className={styles.cardsWrapper}>
           {isGameStarted &&
             field.map((card) => {
@@ -60,11 +64,13 @@ const MemoryGame: React.FC = () => {
                   isOpen={card.isOpen}
                   disabled={card.disabled}
                   audio={card.audio}
+                  gameSize={card.gameSize}
                 />
               );
             })}
         </div>
       </div>
+      <FullScreenWrapper component={FullScreenBtnComponent} handle={handleFullScreenWrapper} />
     </div>
   );
 };

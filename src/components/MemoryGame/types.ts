@@ -1,8 +1,3 @@
-// export interface IMemoryGameProps {
-//   isLoggedIn: boolean,
-//   location: string,
-// }
-
 export interface ICardProps {
   id?: string;
   value?: string;
@@ -10,4 +5,5 @@ export interface ICardProps {
   isOpen: boolean;
   disabled: boolean;
   audio: string;
+  gameSize: number;
 }

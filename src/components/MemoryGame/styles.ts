@@ -3,13 +3,6 @@ import { MEMORY } from '../../constants';
 // import { red200 } from 'material-ui/styles/colors';
 
 const useStyles = makeStyles(() => ({
-  // root: {
-  //   maxWidth: 345,
-  // },
-  // media: {
-  //   height: '100%',
-  //   width: '100%',
-  // },
   imageWrapper: {
     display: 'flex',
     alignItems: 'center',
@@ -17,15 +10,37 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
   },
-  sheet: {
+  switcherWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  switcher: {
+    zIndex: 1000,
+  },
+  button: {
+    height: '38px',
+  },
+  sheet4: {
     background: `url(${MEMORY.sheet})`,
     backgroundSize: 'cover',
     width: '22%',
     height: '28%',
-    // transition: '0.6s',
-    // transformStyle: 'preserve-3d',
-    // transform: 'rotateY(180deg)',
-    //transform: 'rotate(-90deg)',
+  },
+  sheet8: {
+    background: `url(${MEMORY.sheet})`,
+    backgroundSize: 'cover',
+    width: '22%',
+    height: '22%',
+    margin: '1vh 1vw',
+  },
+  sheet10: {
+    background: `url(${MEMORY.sheet})`,
+    backgroundSize: 'cover',
+    width: '17%',
+    height: '20%',
+    margin: '0.75vh 0.75vw',
   },
   imageNone: {
     opacity: '0',
@@ -41,16 +56,34 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100vw',
+    minWidth: '500px',
     padding: '2%',
     height: 'calc(100vh - 80px)',
     background: `url(${MEMORY.background})`,
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    color: 'white',
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      top: 80,
+      left: 0,
+      width: '100%',
+      height: 'calc(100vh - 80px)',
+      background: 'rgba(0, 0, 0, 0.05)',
+    },
   },
   controlsWrapper: {
+    zIndex: 1000,
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    '&:after': {
+      content: '""',
+      zIndex: 1000,
+    },
   },
   cardsWrapper: {
+    zIndex: 1000,
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -60,9 +93,25 @@ const useStyles = makeStyles(() => ({
     marginBottom: '3vh',
     paddingTop: '3vh',
   },
-  card: {
+  card4: {
     width: '22%',
     height: '28%',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
+  },
+  card8: {
+    width: '22%',
+    height: '22%',
+    margin: '1vh 1vw',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
+  },
+  card10: {
+    width: '17%',
+    height: '20%',
+    margin: '0.75vh 0.75vw',
     transition: '0.6s',
     transformStyle: 'preserve-3d',
     transform: 'rotateY(180deg)',
@@ -70,9 +119,35 @@ const useStyles = makeStyles(() => ({
   content: {
     marginTop: 'auto',
   },
-  cardWithText: {
+  cardWithText4: {
     width: '22%',
     height: '28%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
+  },
+  cardWithText8: {
+    width: '22%',
+    height: '22%',
+    margin: '1vh 1vw',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: '0.6s',
+    transformStyle: 'preserve-3d',
+    transform: 'rotateY(180deg)',
+  },
+  cardWithText10: {
+    width: '17%',
+    height: '20%',
+    margin: '0.75vh 0.75vw',
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'column',
@@ -87,6 +162,7 @@ const useStyles = makeStyles(() => ({
     fontSize: '2vw',
     margin: '0 1%',
     transform: 'rotateY(180deg)',
+    userSelect: 'none',
   },
   textNone: {
     fontSize: '0',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { get } from 'lodash';
 import useStyles from './styles';
 import {
   disableClickedCards,
@@ -9,8 +10,8 @@ import {
 } from '../../store/actions/memoryGameActions';
 import { IAppState } from '../../store/types';
 import { ICardProps } from './types';
-import backendUrl from '../../constants';
-import { MEMORY } from '../../constants';
+import backendUrl, { MEMORY } from '../../constants';
+
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 
 const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
@@ -28,42 +29,42 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
       isOpen: false,
       disabled: false,
       audio: '',
+      gameSize: MEMORY.Easy,
     };
 
-    // Клик по превой карточке
     if (!clickedCards.length) {
-      // Переворачиваем
       dispatch(showGameCard(newCard));
     } else {
-      // Клик по второй карточке
       dispatch(showGameCard(newCard));
       const [previousCard, _] = clickedCards;
       if (previousCard.id === currentCardId) {
-        // обе карточки делаем disabled ...
         setTimeout(() => dispatch(disableClickedCards()), MEMORY.timeShowingCard);
       } else {
-        // Переворачиваем карточки обратно рубашкой вверх
         setTimeout(() => dispatch(hideClickedCards()), MEMORY.timeShowingCard);
       }
     }
   };
 
   function handleAutoplay(audio: string) {
-    const failPlayer = new Audio(audio)
+    const failPlayer = new Audio(audio);
     failPlayer.play();
   }
+
+  const cardStyle = get(styles, `card${props.gameSize}`);
+  const sheetStyle = get(styles, `sheet${props.gameSize}`);
+  const cardWithTextStyle = get(styles, `cardWithText${props.gameSize}`);
 
   return (
     <>
       {props.type === 'image' ? (
         <Card
-          className={props.isOpen ? styles.card : styles.sheet}
+          className={props.isOpen ? cardStyle : sheetStyle}
           id={props.id}
           onClick={(event) => {
-            handleGameMove(event)
-            if(!props.disabled) {
-              handleAutoplay(props.audio)
-              dispatch(disableClickedCards)
+            handleGameMove(event);
+            if (!props.disabled) {
+              handleAutoplay(props.audio);
+              dispatch(disableClickedCards);
             }
           }}>
           <div className={styles.imageWrapper}>
@@ -71,21 +72,21 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
               className={props.isOpen ? styles.image : styles.imageNone}
               src={`${backendUrl}/${props.value}`}
               draggable="false"
+              alt="картинка"
             />
           </div>
         </Card>
       ) : (
         <Card
-          className={props.isOpen ? styles.cardWithText : styles.sheet}
+          className={props.isOpen ? cardWithTextStyle : sheetStyle}
           id={props.id}
           onClick={(event) => {
-            handleGameMove(event)
-            if(!props.disabled) {
-              handleAutoplay(props.audio)
-              dispatch(disableClickedCards)
+            handleGameMove(event);
+            if (!props.disabled) {
+              handleAutoplay(props.audio);
+              dispatch(disableClickedCards);
             }
-          }}
-        >
+          }}>
           <Typography className={props.isOpen ? styles.text : styles.textNone} component="div">
             {props.value}
           </Typography>

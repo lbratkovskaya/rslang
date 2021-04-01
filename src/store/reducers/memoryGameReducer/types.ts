@@ -7,6 +7,7 @@ export interface IMemoryGameCard {
   isOpen: boolean;
   disabled: boolean;
   audio: string;
+  gameSize: number;
 }
 
 export interface IMemoryGameState {

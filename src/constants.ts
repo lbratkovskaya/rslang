@@ -97,6 +97,35 @@ export const MEMORY = {
   timeShowingCard: 700,
   sheet: 'assets/sheet-bg.jpg',
   background: 'assets/memory-bg.jpg',
+  sizes: [
+    {
+      label: '',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Легко',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Нормально',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Сложно',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+  ],
+  Easy: 4,
+  Normal: 8,
+  Hard: 10,
 };
 
 export interface IGroup {
