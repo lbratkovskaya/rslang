@@ -20,27 +20,29 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
   const clickedCards = useSelector((state: IAppState) => state.memoryGame.clickedCards);
 
   const handleGameMove = (event: React.SyntheticEvent) => {
-    const [currentCardId, cardType] = event.currentTarget.id.split('_');
+    if(!props.disabled) {
+      const [currentCardId, cardType] = event.currentTarget.id.split('_');
 
-    const newCard: IMemoryGameCard = {
-      id: currentCardId,
-      type: cardType,
-      value: '',
-      isOpen: false,
-      disabled: false,
-      audio: '',
-      gameSize: MEMORY.Easy,
-    };
+      const newCard: IMemoryGameCard = {
+        id: currentCardId,
+        type: cardType,
+        value: '',
+        isOpen: false,
+        disabled: false,
+        audio: '',
+        gameSize: MEMORY.Easy,
+      };
 
-    if (!clickedCards.length) {
-      dispatch(showGameCard(newCard));
-    } else {
-      dispatch(showGameCard(newCard));
-      const [previousCard, _] = clickedCards;
-      if (previousCard.id === currentCardId) {
-        setTimeout(() => dispatch(disableClickedCards()), MEMORY.timeShowingCard);
+      if (!clickedCards.length) {
+        dispatch(showGameCard(newCard));
       } else {
-        setTimeout(() => dispatch(hideClickedCards()), MEMORY.timeShowingCard);
+        dispatch(showGameCard(newCard));
+        const [previousCard, _] = clickedCards;
+        if (previousCard.id === currentCardId) {
+          setTimeout(() => dispatch(disableClickedCards()), MEMORY.timeShowingCard);
+        } else {
+          setTimeout(() => dispatch(hideClickedCards()), MEMORY.timeShowingCard);
+        }
       }
     }
   };
@@ -50,9 +52,10 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
     failPlayer.play();
   }
 
-  const cardStyle = get(styles, `card${props.gameSize}`);
+  let cardStyle = get(styles, `card${props.gameSize}`);
+  let cardWithTextStyle = get(styles, `cardWithText${props.gameSize}`);
+
   const sheetStyle = get(styles, `sheet${props.gameSize}`);
-  const cardWithTextStyle = get(styles, `cardWithText${props.gameSize}`);
 
   return (
     <>

@@ -38,11 +38,9 @@ const MemoryGame: React.FC = () => {
     return fullSize ? handleFullScreenWrapper.exit() : handleFullScreenWrapper.enter();
   };
 
-  const FullScreenBtnComponent = <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />;
-
-  return (
-    <div>
-      <Header />
+  const gameComponent = (
+    <>
+      <Header /> 
       <ModalWindow
         text="Congratulations! You won!!!"
         open={open}
@@ -69,8 +67,14 @@ const MemoryGame: React.FC = () => {
               );
             })}
         </div>
+        <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />
       </div>
-      <FullScreenWrapper component={FullScreenBtnComponent} handle={handleFullScreenWrapper} />
+    </>
+  )
+
+  return (
+    <div>
+      <FullScreenWrapper component={gameComponent} handle={handleFullScreenWrapper} />
     </div>
   );
 };
