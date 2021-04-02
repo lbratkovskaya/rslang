@@ -24,7 +24,7 @@ if (savedUserData !== null) {
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {
   switch (action.type) {
     case UserActionTypes.SET_USER_DATA:
-      sessionStorage.setItem('userData', JSON.stringify( action.data ));
+      sessionStorage.setItem('userData', JSON.stringify(action.data));
       return { ...state, data: action.data };
     case UserActionTypes.SET_FAILED_ATTEMPT:
       return { ...state, failedAttempt: action.failedAttempt };

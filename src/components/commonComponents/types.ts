@@ -27,7 +27,7 @@ export interface IFullScreenWrapperProps {
 
 export interface IRenderTimeProps {
   remainingTime: number;
-} 
+}
 
 export interface ITimerProps {
   gameTime: number;

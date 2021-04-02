@@ -17,7 +17,7 @@ const ModalWindow: React.FC<IModalProps> = (props: IModalProps) => {
         onClose={props.handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        BackdropProps={{ timeout: timeout }}>
+        BackdropProps={{ timeout }}>
         <Fade in={props.open}>
           <div className={styles.paper}>
             <p id="transition-modal-description">{props.text}</p>

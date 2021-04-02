@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) =>
       fontSize: '1.5rem',
     },
     value: {
-      fontSize: '1.5rem'
+      fontSize: '1.5rem',
     },
     gameOver: {
       fontSize: '1.2rem',
