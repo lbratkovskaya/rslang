@@ -15,6 +15,7 @@ import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
+import GamesPopover from '../GamesPopover';
 
 const useActivePage = createLocalStorageStateHook('activePage', 0);
 
@@ -144,9 +145,10 @@ const WordBook: React.FC = () => {
     <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">
-          Учебник
+        <Typography variant="h5">Учебник</Typography>
+        <Typography>
           <SettingsPopover />
+          <GamesPopover />
         </Typography>
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
