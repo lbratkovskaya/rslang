@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         padding: '6px',
         textDecoration: 'none',
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: '#333333',
       },
     },
     navMenuItemInner: {

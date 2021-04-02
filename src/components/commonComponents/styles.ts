@@ -42,12 +42,28 @@ const useStyles = makeStyles((theme) =>
       padding: '5px',
     },
     gameSelect: {
+      color: 'white !important',
+      textShadow: '0 0 4px rgba(0, 0, 0, 0.75) !important',
+      opacity: '0.7',
+      transition: '0.2s linear',
+      '&:hover': {
+        opacity: '1',
+      },
+      '& select': {
+        padding: '3px 7px',
+      },
+      '&:before': {
+        borderColor: 'white !important',
+      },
       '&:after': {
-        color: 'white',
+        borderColor: 'white !important',
       },
       '&input': {
         color: 'white',
       },
+    },
+    exitBtnColor: {
+      color: 'white',
     },
   })
 );
