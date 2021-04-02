@@ -3,16 +3,12 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     gamesIcon: {
+      margin: '0 0.25rem',
       cursor: 'pointer',
       transition: 'color 0.2s',
       '&:hover, &:active': {
         color: 'rgba(0, 0, 0, 1)',
       },
-    },
-    root: {
-      display: 'inline-flex',
-      width: '2rem',
-      justifyContent: 'center',
     },
     title: {
       padding: '0.5rem 1rem 0',
@@ -34,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         filter: 'brightness(1)',
       },
+    },
+    link: {
+      textDecoration: 'none',
     },
   })
 );

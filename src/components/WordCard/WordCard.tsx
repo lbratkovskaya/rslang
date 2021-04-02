@@ -38,7 +38,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDifficult, setIsDifficult] = useState(false);
-  const { color } = WORDBOOK_GROUPS[activeGroup];
+  const { color } = WORDBOOK_GROUPS[activeGroup] || 'rgb(255, 0, 0)';
   const highlightStyle = { color };
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
@@ -151,7 +151,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
+    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION}>
       {(state: TransitionStatus) => (
         <Card
           className={classes.card}

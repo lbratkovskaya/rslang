@@ -32,7 +32,7 @@ const SettingsPopover: React.FC = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <>
       <Tooltip title="Настройки">
         <Settings
           aria-describedby={id}
@@ -76,7 +76,7 @@ const SettingsPopover: React.FC = () => {
           />
         </Typography>
       </Popover>
-    </div>
+    </>
   );
 };
 

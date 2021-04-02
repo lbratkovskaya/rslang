@@ -9,13 +9,13 @@ import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
+import GamesPopover from '../GamesPopover';
 import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
-import GamesPopover from '../GamesPopover';
 
 const useActivePage = createLocalStorageStateHook('activePage', 0);
 
@@ -146,10 +146,12 @@ const WordBook: React.FC = () => {
       <Header />
       <main className={classes.main} style={setMainBackground()}>
         <Typography variant="h5">Учебник</Typography>
-        <Typography>
-          <SettingsPopover />
-          <GamesPopover />
-        </Typography>
+        {!isRootLocation && (
+          <Typography>
+            <GamesPopover />
+            <SettingsPopover />
+          </Typography>
+        )}
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
         <GroupsContent />

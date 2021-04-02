@@ -2,11 +2,6 @@ import { createStyles, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: {
-      display: 'inline-flex',
-      width: '2rem',
-      justifyContent: 'center',
-    },
     title: {
       padding: '0.5rem 1rem',
     },
@@ -15,6 +10,7 @@ const useStyles = makeStyles(() =>
       textAlign: 'right',
     },
     settingsButton: {
+      margin: '0 0.25rem',
       cursor: 'pointer',
       transition: 'color 0.2s',
       '&:hover, &:active': {

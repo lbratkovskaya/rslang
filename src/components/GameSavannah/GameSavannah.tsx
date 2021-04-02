@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useFullScreenHandle } from 'react-full-screen';
 import SavannahGamePlay from './SavannahGamePlay';
 import SavannahStartWindow from './SavannahStartWindow';
@@ -14,11 +15,17 @@ const GameSavannah: React.FC = () => {
   const classes = useStyles();
   const handle = useFullScreenHandle();
   const fullScreenClass = fullSize ? ` ${classes.wrapperFull}` : ` ${classes.wrapperNotFull}`;
+  const location = useLocation();
+  const isComeFromWordbook = location.state?.fromWordbook;
 
   const handleFullSize = () => {
     setFullSize(!fullSize);
     return fullSize ? handle.exit() : handle.enter();
   };
+
+  useEffect(() => {
+    console.log(isComeFromWordbook);
+  }, []);
 
   const gameComponent = (
     <>

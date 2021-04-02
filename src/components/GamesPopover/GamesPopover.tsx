@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Popover, Tooltip, Typography } from '@material-ui/core';
 import { SportsEsportsOutlined } from '@material-ui/icons';
+import { GAMES, IGame } from '../../constants';
 import useStyles from './styles';
 
 const GamesPopover: React.FC = () => {
@@ -18,17 +20,24 @@ const GamesPopover: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const renderGameCard = (title: string, background?: string) => {
+  const renderGameCard = ({ title, background, route }: IGame) => {
     const style = { background, backgroundSize: 'cover' };
+
+    const handleRouteChange = () => {
+      setAnchorEl(null);
+    };
+
     return (
-      <Button className={classes.gameCard} style={style}>
-        {title}
-      </Button>
+      <Link className={classes.link} to={{ pathname: route, state: { fromWordbook: true } }}>
+        <Button className={classes.gameCard} style={style} onClick={handleRouteChange}>
+          {title}
+        </Button>
+      </Link>
     );
   };
 
   return (
-    <div className={classes.root}>
+    <>
       <Tooltip title="Игры">
         <SportsEsportsOutlined
           aria-describedby={id}
@@ -54,13 +63,13 @@ const GamesPopover: React.FC = () => {
           Начните игру с просмотренными словами
         </Typography>
         <div className={classes.gamesGrid}>
-          {renderGameCard('Саванна', 'url(../../assets/savannah-bg.jpg) center no-repeat')}
-          {renderGameCard('Аудиовызов')}
-          {renderGameCard('Спринт')}
-          {renderGameCard('Своя игра')}
+          {renderGameCard(GAMES.savannah)}
+          {renderGameCard(GAMES.audio)}
+          {renderGameCard(GAMES.sprint)}
+          {renderGameCard(GAMES.memory)}
         </div>
       </Popover>
-    </div>
+    </>
   );
 };
 
