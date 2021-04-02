@@ -24,3 +24,10 @@ export interface IFullScreenWrapperProps {
   component: {};
   handle: FullScreenHandle;
 }
+
+export interface ITimerProps {
+  gameTime: number;
+  size: number;
+  timerText: string;
+  handleOnComplite: () => void;
+}
