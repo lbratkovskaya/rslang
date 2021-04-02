@@ -41,6 +41,19 @@ const useStyles = makeStyles((theme) =>
     switchRoot: {
       padding: '5px',
     },
+    timer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      fontSize: '1.5rem',
+    },
+    value: {
+      fontSize: '1.5rem'
+    },
+    gameOver: {
+      fontSize: '1.2rem',
+      color: 'white',
+    },
   })
 );
 

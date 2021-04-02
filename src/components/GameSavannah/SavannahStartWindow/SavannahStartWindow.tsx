@@ -68,7 +68,6 @@ const SavannahStartWindow: React.FC = () => {
         <Typography variant="subtitle1" gutterBottom>
           Тренировка Саванна развивает словарный запас.
         </Typography>
-
         <ThemeProvider theme={theme}>
           <Button variant="contained" color="primary" size="large" onClick={handleStartGame}>
             Начать игру

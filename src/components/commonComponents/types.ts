@@ -25,9 +25,12 @@ export interface IFullScreenWrapperProps {
   handle: FullScreenHandle;
 }
 
+export interface IRenderTimeProps {
+  remainingTime: number;
+} 
+
 export interface ITimerProps {
   gameTime: number;
   size: number;
-  timerText: string;
   handleOnComplite: () => void;
 }
