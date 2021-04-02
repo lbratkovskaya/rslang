@@ -4,7 +4,7 @@ export const ROUTES = {
   root: '/',
   games: {
     root: '/games',
-    savanna: '/games/savanna',
+    savannah: '/games/savannah',
     audio: '/games/audio',
     sprint: '/games/sprint',
     memory: '/games/memory',
@@ -110,5 +110,34 @@ export const enterTimeout = 400;
 export const exitTimeout = 200;
 
 export const GAMES_WORDS_MAX_AMOUNT = 40;
+
+export interface IGame {
+  title: string;
+  background: string;
+  route: string;
+}
+
+export const GAMES: { [key: string]: IGame } = {
+  savannah: {
+    title: 'Саванна',
+    background: 'url(../../assets/savannah-bg.jpg) center no-repeat',
+    route: ROUTES.games.savannah,
+  },
+  audio: {
+    title: 'Аудиовызов',
+    background: 'linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d)',
+    route: ROUTES.games.audio,
+  },
+  sprint: {
+    title: 'Спринт',
+    background: '',
+    route: ROUTES.games.sprint,
+  },
+  memory: {
+    title: 'Найди пару',
+    background: '',
+    route: ROUTES.games.memory,
+  },
+};
 
 export default backendUrl;

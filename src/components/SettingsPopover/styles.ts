@@ -10,6 +10,7 @@ const useStyles = makeStyles(() =>
       textAlign: 'right',
     },
     settingsButton: {
+      margin: '0 0.25rem',
       cursor: 'pointer',
       transition: 'color 0.2s',
       '&:hover, &:active': {

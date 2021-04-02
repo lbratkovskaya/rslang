@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Button, ThemeProvider, Typography } from '@material-ui/core';
 import { GameSelect, LangSwitcher } from '../../commonComponents';
 import {
@@ -25,6 +26,9 @@ const SavannahStartWindow: React.FC = () => {
   const switchLanguage = (isLang: boolean) => dispatch(switchLang(isLang));
   const savannahData = useSelector((state: IAppState) => state.savannah);
   const wordBook = useSelector((state: IAppState) => state.wordBook);
+  const location = useLocation();
+  const isCameFromWordbook = location.state?.fromWordbook;
+  const { actualWords } = useSelector((state: IAppState) => state.games);
 
   const page: number = savannahData.round;
   const group: number = savannahData.level;
@@ -48,6 +52,11 @@ const SavannahStartWindow: React.FC = () => {
   const handleSwitchLang = (checked: boolean) => {
     switchLanguage(checked);
   };
+
+  useEffect(() => {
+    if (isCameFromWordbook) console.log('Came from wordBook, actual words: ', actualWords);
+    // TODO: use isComeFromWordbook flag to pass actualWords to the game
+  }, []);
 
   return (
     <>

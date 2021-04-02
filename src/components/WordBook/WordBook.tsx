@@ -9,6 +9,7 @@ import { Pagination } from '@material-ui/lab';
 import Header from '../Header';
 import Footer from '../Footer';
 import WordCard from '../WordCard';
+import GamesPopover from '../GamesPopover';
 import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
@@ -144,10 +145,13 @@ const WordBook: React.FC = () => {
     <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">
-          Учебник
-          <SettingsPopover />
-        </Typography>
+        <Typography variant="h5">Учебник</Typography>
+        {!isRootLocation && (
+          <Typography>
+            <GamesPopover />
+            <SettingsPopover />
+          </Typography>
+        )}
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
         <GroupsContent />
