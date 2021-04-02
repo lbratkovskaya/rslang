@@ -25,6 +25,7 @@ const GameSavannah: React.FC = () => {
   useEffect(() => {
     const bg = new Image();
     bg.onload = () => setStyle({ opacity: 1 });
+    bg.onerror = () => setStyle({ opacity: 1 });
     bg.src = SAVANNAH.background;
   }, []);
 
