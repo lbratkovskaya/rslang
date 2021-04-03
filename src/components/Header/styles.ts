@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
         ...linkStyle,
       },
       '&:first-child a': {
+        marginRight: '1.25rem',
         color: '#66b5ff',
       },
     },
@@ -126,8 +127,8 @@ const useStyles = makeStyles((theme: Theme) =>
       ...linkStyle,
     },
     mainLogoPic: {
-      width: 64,
-      height: 64,
+      width: 60,
+      height: 60,
       marginRight: '0.5rem',
       borderRadius: '0',
       filter: 'invert(1)',
