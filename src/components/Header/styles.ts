@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { HEADER_HEIGHT } from '../../constants';
 
 const bgColor = '#212229';
 const linkColor = '#fafafa';
@@ -10,11 +11,17 @@ const linkStyle = {
   },
 };
 
+export const importantStyle = {
+  fontWeight: 600,
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      background: bgColor,
+      height: HEADER_HEIGHT,
       display: 'flex',
+      position: 'relative',
+      background: bgColor,
     },
     menu: {
       width: '100%',
@@ -63,15 +70,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     navMenuItem: {
       padding: 0,
-      marginRight: '1.5rem',
+      marginLeft: '1.5rem',
       display: 'flex',
       alignItems: 'center',
       fontSize: '1rem',
       '& a': {
         width: '100%',
-        padding: '6px',
         textDecoration: 'none',
         ...linkStyle,
+      },
+      '&:first-child a': {
+        color: '#66b5ff',
       },
     },
     navMenuItemInner: {
@@ -106,7 +115,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     mainLogo: {
       width: 'fit-content',
-      height: '80px',
+      height: HEADER_HEIGHT,
       marginRight: 'auto',
       display: 'flex',
       alignItems: 'center',

@@ -7,7 +7,8 @@ import GameSavannah from './GameSavannah';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import UserDictionary from './UserDictionary/UserDictionary';
-import { enterTimeout, exitTimeout } from '../constants';
+import RandomPage from './RandomPage';
+import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';
 
 const App: React.FC = () => {
@@ -25,11 +26,12 @@ const App: React.FC = () => {
               mountOnEnter
               unmountOnExit>
               <Switch location={routeProps.location}>
-                <Route path="/sign-in" component={SignInPage} />
-                <Route path="/sign-up" component={SignUpPage} />
-                <Route path="/wordbook" component={WordBook} />
-                <Route path="/dictionary" component={UserDictionary} />
-                <Route path="/games/savannah" component={GameSavannah} />
+                <Route path={ROUTES.signIn} component={SignInPage} />
+                <Route path={ROUTES.signUp} component={SignUpPage} />
+                <Route path={ROUTES.wordBook.root} component={WordBook} />
+                <Route path={ROUTES.dictionary} component={UserDictionary} />
+                <Route path={ROUTES.games.savannah} component={GameSavannah} />
+                <Route path={ROUTES.study} component={RandomPage} />
                 <Route exact path="/" component={MainPage} />
               </Switch>
             </CSSTransition>

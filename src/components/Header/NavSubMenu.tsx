@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, MenuItem } from '@material-ui/core';
 import { NavSubMenuProps } from './types';
-import useStyles from './styles';
+import useStyles, { importantStyle } from './styles';
 
 const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
   const { anchor, id, isOpen, items, onMenuClose } = props;
@@ -11,7 +11,11 @@ const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
 
   const renderItems = (): JSX.Element[] =>
     items?.map((item) => (
-      <MenuItem className={subMenuClasses.navSubMenuItem} key={item.label} onClick={onMenuClose}>
+      <MenuItem
+        className={subMenuClasses.navSubMenuItem}
+        key={item.label}
+        onClick={onMenuClose}
+        style={item.important ? importantStyle : {}}>
         {item.withLink ? <Link to={item.linkAddress}>{item.label}</Link> : item.label}
       </MenuItem>
     ));
