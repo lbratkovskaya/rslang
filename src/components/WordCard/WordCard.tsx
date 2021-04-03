@@ -151,7 +151,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   }, []);
 
   return (
-    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION}>
+    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
         <Card
           className={classes.card}

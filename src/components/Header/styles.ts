@@ -1,9 +1,19 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
+const bgColor = '#212229';
+const linkColor = '#fafafa';
+const linkStyle = {
+  color: linkColor,
+  transition: 'opacity 100ms',
+  '&:hover': {
+    opacity: 0.75,
+  },
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      background: '#212229',
+      background: bgColor,
       display: 'flex',
     },
     menu: {
@@ -61,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         padding: '6px',
         textDecoration: 'none',
-        color: '#fafafa',
+        ...linkStyle,
       },
     },
     navMenuItemInner: {
@@ -95,30 +105,37 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     mainLogo: {
-      width: '80px',
-      minWidth: '80px',
+      width: 'fit-content',
       height: '80px',
       marginRight: 'auto',
-      filter: 'invert(1)',
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '1.75rem',
+      whiteSpace: 'nowrap',
+      textDecoration: 'none',
+      ...linkStyle,
     },
     mainLogoPic: {
-      width: '100%',
-      height: '100%',
+      width: 64,
+      height: 64,
+      marginRight: '0.5rem',
       borderRadius: '0',
+      filter: 'invert(1)',
       '& svg': {
         color: 'aqua',
       },
     },
     mobileMenuButton: {
-      color: '#333333',
+      ...linkStyle,
     },
     circle: {
       height: '25px',
       width: '25px',
+      ...linkStyle,
     },
     arrow: {
       padding: 0,
-      color: '#fafafa',
+      ...linkStyle,
     },
   })
 );
