@@ -122,6 +122,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.75rem',
       whiteSpace: 'nowrap',
       textDecoration: 'none',
+      letterSpacing: '1px',
       ...linkStyle,
     },
     mainLogoPic: {
