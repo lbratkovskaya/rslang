@@ -32,7 +32,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.dictionary} component={UserDictionary} />
                 <Route path={ROUTES.games.savannah} component={GameSavannah} />
                 <Route path={ROUTES.study} component={RandomPage} />
-                <Route exact path="/" component={MainPage} />
+                <Route exact path={ROUTES.root} component={MainPage} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { setPage } from '../../store/actions/wordBookActions';
 import { NUM_OF_PAGES, NUM_OF_SECTIONS, WORDBOOK_GROUPS } from '../../constants';
+import getRandomNumber from '../../utils';
 
-const getRandomNumber = (max: number) => Math.floor(Math.random() * max);
 const getRandomSectionIndex = () => getRandomNumber(NUM_OF_SECTIONS);
 const getRandomPageIndex = () => getRandomNumber(NUM_OF_PAGES);
 
