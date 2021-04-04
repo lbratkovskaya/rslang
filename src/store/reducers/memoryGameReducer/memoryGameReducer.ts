@@ -1,7 +1,4 @@
-import { IMemoryGameAction,
-        IMemoryGameCard,
-        IMemoryGameState,
-        MemoryGameTypes} from './types';
+import { IMemoryGameAction, IMemoryGameCard, IMemoryGameState, MemoryGameTypes } from './types';
 
 const initialState: IMemoryGameState = {
   cardId: '',
@@ -12,40 +9,15 @@ const initialState: IMemoryGameState = {
   field: [],
   error: false,
   clickedCards: [],
+  isFailed: false,
 };
 
-
-const handleSecondCard = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard, prevCard: IMemoryGameCard|undefined) => {
-  if (prevCard) {
-    showCardInField(currentField, newCard);
-
-    if (newCard.id === prevCard.id) {
-      return currentField.map((card) => {
-          if ((card.id === newCard.id && card.type === newCard.type)
-              || (card.id === prevCard.id && card.type === prevCard.type)) {
-            card.disabled = true;
-            return card;
-          }
-        return card;
-      });
-    }
-
-    return currentField.map((card) => {
-        if ((card.id === newCard.id && card.type === newCard.type)
-            || (card.id === prevCard.id && card.type === prevCard.type)) {
-          card.isOpen = false;
-          return card;
-        }
-      return card;
-    });
-  }
-  return currentField;
-}
-
 const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
-  return currentField.map((card) => {
+  return currentField.map((element) => {
+    const card = element;
     if (card.id === newCard.id && card.type === newCard.type) {
       card.isOpen = true;
+      card.isClicked = true;
       return card;
     }
     return card;
@@ -56,13 +28,13 @@ const hideClickedCards = (
   currentField: Array<IMemoryGameCard>,
   clickedCards: Array<IMemoryGameCard>
 ) => {
-  return currentField.map((card) => {
-    for (const clickedCard of clickedCards) {
+  return currentField.map((element) => {
+    const card = element;
+    clickedCards.forEach((clickedCard) => {
       if (card.id === clickedCard.id && card.type === clickedCard.type) {
         card.isOpen = false;
-        return card;
       }
-    }
+    });
     return card;
   });
 };
@@ -71,14 +43,32 @@ const disableClickedCards = (
   currentField: Array<IMemoryGameCard>,
   clickedCards: Array<IMemoryGameCard>
 ) => {
-  return currentField.map((card) => {
-    for (const clickedCard of clickedCards) {
+  return currentField.map((element) => {
+    const card = element;
+    clickedCards.forEach((clickedCard) => {
       if (card.id === clickedCard.id && card.type === clickedCard.type) {
         card.disabled = true;
-        return card;
       }
-    }
+    });
     return card;
+  });
+};
+
+const getLearnedWords = (currentField: Array<IMemoryGameCard>) => {
+  return currentField.filter((card) => {
+    if (card.type === 'text' && card.disabled) {
+      return true;
+    }
+    return false;
+  });
+};
+
+const getUnexploredWords = (currentField: Array<IMemoryGameCard>) => {
+  return currentField.filter((card) => {
+    if (card.type === 'text' && !card.disabled) {
+      return true;
+    }
+    return false;
   });
 };
 
@@ -91,21 +81,15 @@ export default function memoryGameReducer(
       return { ...state, isStarted: true };
     case MemoryGameTypes.STOP_GAME:
       return { ...state, isStarted: false, field: [] };
+    case MemoryGameTypes.FAILED_GAME:
+      return {
+        ...state,
+        isFailed: true,
+        learnedWords: getLearnedWords(state.field),
+        unExploredWords: getUnexploredWords(state.field),
+      };
     case MemoryGameTypes.SET_GAME_FIELD:
       return { ...state, field: action.field };
-    case MemoryGameTypes.HANDLE_FIRST_CARD:
-      return {
-        ...state,
-        field: showCardInField(state.field, action.newCard),
-        clickedCards: state.clickedCards.concat(action.newCard),
-      };
-    case MemoryGameTypes.HANDLE_SECOND_CARD:
-      return {
-        ...state,
-        field: handleSecondCard(state.field, action.newCard, state.clickedCards.pop()) ,
-        clickedCards: [],
-      };
-
     case MemoryGameTypes.UPDATE_GAME_CARD:
       return {
         ...state,

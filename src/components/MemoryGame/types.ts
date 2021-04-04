@@ -7,3 +7,7 @@ export interface ICardProps {
   audio: string;
   gameSize: number;
 }
+
+export interface IResultTableProps {
+  isFail: boolean;
+}

@@ -8,6 +8,7 @@ export interface IMemoryGameCard {
   disabled: boolean;
   audio: string;
   gameSize: number;
+  isClicked: boolean;
 }
 
 export interface IMemoryGameState {
@@ -19,6 +20,9 @@ export interface IMemoryGameState {
   isLoading: boolean;
   error: boolean;
   clickedCards: Array<IMemoryGameCard>;
+  isFailed: boolean;
+  learnedWords?: Array<string>;
+  unExploredWords?: Array<string>;
 }
 
 export interface IMemoryGameAction {
@@ -37,9 +41,8 @@ export interface IMemoryGameAction {
 export enum MemoryGameTypes {
   START_GAME = 'MEMORY_GAME/START_GAME',
   STOP_GAME = 'MEMORY_GAME/STOP_GAME',
+  FAILED_GAME = 'MEMORY_GAME/FAILED_GAME',
   SET_GAME_FIELD = 'MEMORY_GAME/SET_GAME_FIELD',
-  HANDLE_FIRST_CARD = 'MEMORY_GAME/HANDLE_FIRST_CARD',
-  HANDLE_SECOND_CARD = 'MEMORY_GAME/HANDLE_SECOND_CARD',
   UPDATE_GAME_CARD = 'MEMORY_GAME/UPDATE_GAME_FIELD',
   HIDE_CLICKED_CARDS = 'MEMORY_GAME/HIDE_CLICKED_CARDS',
   DISABLE_CLICKED_CARDS = 'MEMORY_GAME/DISABLE_CLICKED_CARDS',

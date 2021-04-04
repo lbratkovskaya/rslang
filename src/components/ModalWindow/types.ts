@@ -1,5 +1,7 @@
 export interface IModalProps {
   open: boolean;
   handleClose: () => void;
-  text: string;
+  text?: string;
+  table?: {};
+  isText: boolean;
 }

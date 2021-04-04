@@ -97,6 +97,7 @@ export const MEMORY = {
   timeShowingCard: 700,
   sheet: 'assets/sheet-bg.jpg',
   background: 'assets/memory-bg.jpg',
+  gameTimePerCard: 5,
   sizes: [
     {
       label: '',

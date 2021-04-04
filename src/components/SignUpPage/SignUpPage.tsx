@@ -21,7 +21,7 @@ import useStyles from './styles';
 import { ROUTES } from '../../constants';
 
 const SignUpPage: React.FC = () => {
-  const styles = useStyles();
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -104,11 +104,12 @@ const SignUpPage: React.FC = () => {
         text="Выбран некорректный файл. Пожалуйста, выберите изображение."
         open={open}
         handleClose={handleCloseModalWindow}
+        isText
       />
-      <Container className={styles.container} component="main" maxWidth="xs">
+      <Container className={classes.container} component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={styles.paper}>
-          <Avatar className={styles.avatar}>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
             <input
               accept="image/*"
               id="contained-button-file"
@@ -119,16 +120,16 @@ const SignUpPage: React.FC = () => {
             />
             <label htmlFor="contained-button-file">
               {userImageToUpload === undefined ? (
-                <LockOutlinedIcon className={styles.pointer} />
+                <LockOutlinedIcon className={classes.pointer} />
               ) : (
-                <Avatar className={styles.userImage} src={userImageToUpload.toString()} />
+                <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
               )}
             </label>
           </Avatar>
           <Typography component="h1" variant="h5">
             Регистрация
           </Typography>
-          <form className={styles.form} noValidate onSubmit={handleSubmit}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -217,19 +218,23 @@ const SignUpPage: React.FC = () => {
               </Grid>
             </Grid>
             {isLoading ? (
-              <CircularProgress className={styles.spinner} />
+              <CircularProgress className={classes.spinner} />
             ) : (
-              <div className={styles.button_wrapper}>
-                <Link to="/" className={styles.link_button}>
+              <div className={classes.button_wrapper}>
+                <Link to="/" className={classes.link_button}>
                   <Button
                     type="button"
                     variant="contained"
                     color="default"
-                    className={styles.cancel}>
+                    className={classes.cancel}>
                     Отмена
                   </Button>
                 </Link>
-                <Button type="submit" variant="contained" color="primary" className={styles.submit}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}>
                   Регистрация
                 </Button>
               </div>
@@ -238,7 +243,7 @@ const SignUpPage: React.FC = () => {
               <Grid item>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Уже есть аккаунт?
-                  <Link to="/sign-in" className={styles.link}>
+                  <Link to="/sign-in" className={classes.link}>
                     Войти
                   </Link>
                 </Typography>

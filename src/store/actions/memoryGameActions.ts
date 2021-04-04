@@ -11,6 +11,10 @@ export const stopGame = () => ({
   type: MemoryGameTypes.STOP_GAME,
 });
 
+export const gameFailed = () => ({
+  type: MemoryGameTypes.FAILED_GAME,
+});
+
 export const setError = (error: boolean) => ({
   type: MemoryGameTypes.SET_ERROR,
   error,
@@ -28,16 +32,6 @@ export const setGameField = (field: Array<IMemoryGameCard>) => ({
 
 export const showGameCard = (newCard: IMemoryGameCard) => ({
   type: MemoryGameTypes.UPDATE_GAME_CARD,
-  newCard,
-});
-
-export const handleFirstCard = (newCard: IMemoryGameCard) => ({
-  type: MemoryGameTypes.HANDLE_FIRST_CARD,
-  newCard,
-});
-
-export const handleSecondCard = (newCard: IMemoryGameCard) => ({
-  type: MemoryGameTypes.HANDLE_SECOND_CARD,
   newCard,
 });
 
@@ -61,8 +55,9 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
           disabled: false,
           value: element.word,
           gameSize,
-          id: element._id,
+          id: element.id,
           audio: `${backendUrl}/${element.audio}`,
+          isClicked: false,
         },
       ];
       if (gameMode === 'image') {
@@ -71,9 +66,10 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
           isOpen: false,
           disabled: false,
           value: element.image,
-          id: element._id,
+          id: element.id,
           gameSize,
           audio: `${backendUrl}/${element.audio}`,
+          isClicked: false,
         });
       } else {
         mapResult.push({
@@ -82,8 +78,9 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
           disabled: false,
           value: element.wordTranslate,
           gameSize,
-          id: element._id,
+          id: element.id,
           audio: `${backendUrl}/${element.audio}`,
+          isClicked: false,
         });
       }
       return mapResult;
@@ -93,18 +90,66 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
   return result;
 };
 
-export const initiateGameField = (gameSize: number, gameMode: string) => (dispatch: Dispatch) => {
-  const url = `${backendUrl}/words/?random=true&count=${gameSize}`;
-
-  fetch(url).then((res) => {
-    try {
-      if (res.status === 200) {
-        res.json().then((body) => {
-          dispatch(setGameField(createCards(body, gameMode, gameSize)));
-        });
+export const initiateGameField = (
+  gameSize: number,
+  gameMode: string,
+  isCameFromWordBook: boolean,
+  group: number,
+  page: number,
+  actualWords: Array<IWord>
+) => (dispatch: Dispatch) => {
+  const url = `${backendUrl}/words/?group=${group}&page=${page}`;
+  if (!isCameFromWordBook) {
+    fetch(url).then((res) => {
+      try {
+        if (res.status === 200) {
+          res.json().then((body) => {
+            dispatch(
+              setGameField(
+                createCards(
+                  body.sort(() => Math.random() - 0.5).slice(-gameSize),
+                  gameMode,
+                  gameSize
+                )
+              )
+            );
+          });
+        }
+      } catch (e) {
+        dispatch(setError(true));
       }
-    } catch (e) {
-      dispatch(setError(true));
+    });
+  } else {
+    const gameWords = actualWords
+      .slice(-20)
+      .sort(() => Math.random() - 0.5)
+      .slice(-gameSize);
+    dispatch(setGameField(createCards(gameWords, gameMode, gameSize)));
+  }
+};
+
+export const updateClickedWords = (currentField: Array<IMemoryGameCard>) => {
+  const nonWords = currentField.filter((card) => {
+    if (card.type !== 'text') {
+      return true;
     }
+    return false;
+  });
+
+  const words = currentField.filter((card) => {
+    if (card.type === 'text') {
+      return true;
+    }
+    return false;
+  });
+
+  return words.map((element) => {
+    const card = element;
+    nonWords.forEach((nonWordCard) => {
+      if (card.id === nonWordCard.id && nonWordCard.isClicked === true) {
+        card.isClicked = true;
+      }
+    });
+    return card;
   });
 };

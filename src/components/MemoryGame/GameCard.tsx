@@ -1,37 +1,26 @@
 import React from 'react';
-import { Card, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
-import useStyles from './styles';
+import { Card, Typography } from '@material-ui/core';
 import {
   disableClickedCards,
-  handleFirstCard,
-  handleSecondCard,
   hideClickedCards,
   showGameCard,
 } from '../../store/actions/memoryGameActions';
+import backendUrl, { MEMORY } from '../../constants';
 import { IAppState } from '../../store/types';
 import { ICardProps } from './types';
-import backendUrl, { MEMORY } from '../../constants';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
+import useStyles from './styles';
 
 const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
-  const styles = useStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const clickedCards = useSelector((state: IAppState) => state.memoryGame.clickedCards);
-  // const [prevCard, setPrevCard] = React.useState<IMemoryGameCard>({
-  //   id: '',
-  //   type: '',
-  //   value: '',
-  //   isOpen: false,
-  //   disabled: false,
-  //   audio: '',
-  //   gameSize: MEMORY.Easy,
-  // });
-  // const [isNewCard, setIsNewCard] = React.useState(true);
+  const isGameStared = useSelector((state: IAppState) => state.memoryGame.isStarted);
 
   const handleGameMove = (event: React.SyntheticEvent) => {
-    if(!props.disabled) {
+    if (!props.disabled && isGameStared) {
       const [currentCardId, cardType] = event.currentTarget.id.split('_');
 
       const newCard: IMemoryGameCard = {
@@ -42,18 +31,16 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
         disabled: false,
         audio: '',
         gameSize: MEMORY.Easy,
+        isClicked: false,
       };
 
       if (!clickedCards.length) {
-        //dispatch(handleFirstCard(newCard));
         dispatch(showGameCard(newCard));
       } else {
         dispatch(showGameCard(newCard));
-        //dispatch(handleSecondCard(newCard));
-        const [previousCard, _] = clickedCards;
+        const [previousCard] = clickedCards;
         if (previousCard.id === currentCardId) {
-          dispatch(disableClickedCards())
-          //setTimeout(() => ), MEMORY.timeShowingCard);
+          dispatch(disableClickedCards());
         } else {
           setTimeout(() => dispatch(hideClickedCards()), MEMORY.timeShowingCard);
         }
@@ -66,9 +53,9 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
     failPlayer.play();
   }
 
-  const cardStyle = get(styles, `card${props.gameSize}`);
-  const cardWithTextStyle = get(styles, `cardWithText${props.gameSize}`);
-  const sheetStyle = get(styles, `sheet${props.gameSize}`);
+  const cardStyle = get(classes, `card${props.gameSize}`);
+  const cardWithTextStyle = get(classes, `cardWithText${props.gameSize}`);
+  const sheetStyle = get(classes, `sheet${props.gameSize}`);
 
   return (
     <>
@@ -83,9 +70,9 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
               dispatch(disableClickedCards);
             }
           }}>
-          <div className={styles.imageWrapper}>
+          <div className={classes.imageWrapper}>
             <img
-              className={props.isOpen ? styles.image : styles.imageNone}
+              className={props.isOpen ? classes.image : classes.imageNone}
               src={`${backendUrl}/${props.value}`}
               draggable="false"
               alt="картинка"
@@ -103,7 +90,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
               dispatch(disableClickedCards);
             }
           }}>
-          <Typography className={props.isOpen ? styles.text : styles.textNone} component="div">
+          <Typography className={props.isOpen ? classes.text : classes.textNone} component="div">
             {props.value}
           </Typography>
         </Card>

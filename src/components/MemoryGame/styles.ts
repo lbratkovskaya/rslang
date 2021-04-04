@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import { MEMORY } from '../../constants';
-// import { red200 } from 'material-ui/styles/colors';
 
 const useStyles = makeStyles(() => ({
   imageWrapper: {
@@ -54,7 +53,6 @@ const useStyles = makeStyles(() => ({
   },
   gameWrapper: {
     display: 'flex',
-    //flexWrap: 'wrap',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -182,6 +180,44 @@ const useStyles = makeStyles(() => ({
   },
   canselBtnWrapper: {
     marginLeft: 'auto',
+  },
+  tableContainer: {
+    maxWidth: 350,
+    maxHeight: 350,
+    margin: '10px auto',
+  },
+  table: {
+    maxWidth: '350px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    marginBottom: '30px',
+  },
+  incorrectAnswer: {
+    color: 'red',
+  },
+  correctAnswer: {
+    color: 'green',
+  },
+  title: {
+    fontSize: '96px',
+  },
+  gameSelect: {
+    fontSize: '18px',
+  },
+  empty: {
+    width: '100%',
+    height: '60px',
+  },
+  '@media (max-width: 680px)': {
+    leftWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+    },
+    title: {
+      fontSize: '70px',
+    },
   },
 }));
 

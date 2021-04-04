@@ -1,36 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { CssBaseline } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useFullScreenHandle } from 'react-full-screen';
-import useStyles from './styles';
-import { IAppState } from '../../store/types';
-import { stopGame } from '../../store/actions/memoryGameActions';
-import GameCard from './GameCard';
-import Header from '../Header';
-import ModalWindow from '../ModalWindow';
-import ControlPanel from './ControlPanel';
+import { CssBaseline, Typography } from '@material-ui/core';
 import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
-import { Typography } from '@material-ui/core';
+import ControlPanel from './ControlPanel';
+import Header from '../Header';
+import GameCard from './GameCard';
+import { IAppState } from '../../store/types';
+import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
+import useStyles from './styles';
 
 const MemoryGame: React.FC = () => {
-  const styles = useStyles();
-  const dispatch = useDispatch();
+  const classes = useStyles();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const field = useSelector((state: IAppState) => state.memoryGame.field);
-
-  const [open, setOpen] = React.useState(false);
-  const handleShowModalWindow = () => setOpen(true);
-  const handleCloseModalWindow = () => setOpen(false);
-  useEffect(() => {
-    if (field && field.length && isGameStarted) {
-      const allCardsAreDisabled = field.every((card) => card.disabled === true);
-      if (allCardsAreDisabled === true) {
-        dispatch(stopGame());
-        handleShowModalWindow();
-      }
-    }
-  }, [JSON.stringify(field)]);
-
   const handleFullScreenWrapper = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
 
@@ -41,19 +24,13 @@ const MemoryGame: React.FC = () => {
 
   const gameComponent = (
     <>
-      <Header /> 
-      <ModalWindow
-        text="Congratulations! You won!!!"
-        open={open}
-        handleClose={handleCloseModalWindow}
-      />
-      <div className={styles.gameWrapper}>
+      <Header />
+      <div className={classes.gameWrapper}>
         <CssBaseline />
         <ControlPanel />
-        <div className={styles.cardsWrapper}>
+        <div className={classes.cardsWrapper}>
           {isGameStarted &&
-            field.map((card) => {
-              /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            field.map((card: IMemoryGameCard) => {
               return (
                 <GameCard
                   type={card.type}
@@ -67,24 +44,24 @@ const MemoryGame: React.FC = () => {
                 />
               );
             })}
-            {!isGameStarted && (
-              <div>
-                <Typography variant="h1" component="h2" gutterBottom>
-                  Найди пару
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Развивает внимание и память.
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Пополняет словарный запас.
-                </Typography>
-              </div>
-            )}
-            <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />
+          {!isGameStarted && (
+            <div>
+              <Typography variant="h1" component="h2" gutterBottom className={classes.title}>
+                Найди пару
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Развивает внимание и память.
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Пополняет словарный запас.
+              </Typography>
+            </div>
+          )}
+          <FullScreenBtn changeScreen={handleFullSizeMemoryGame} />
         </div>
       </div>
     </>
-  )
+  );
 
   return (
     <div>

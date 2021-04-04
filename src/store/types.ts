@@ -44,7 +44,7 @@ export interface IUserAction {
 }
 
 export interface IWord {
-  _id: string;
+  id: string;
   group: number;
   page: number;
   word: string;
@@ -112,7 +112,7 @@ export interface IWordBookAction {
 }
 
 export interface IUserWord extends IWord {
-  _id: string;
+  _id?: string;
   userWord?: {
     difficulty: string;
     optional: {
