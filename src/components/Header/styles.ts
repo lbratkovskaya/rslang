@@ -11,8 +11,10 @@ const linkStyle = {
   },
 };
 
-export const importantStyle = {
-  fontWeight: 600,
+export const dictionatyIcon = {
+  marginRight: '0.5rem',
+  fontSize: '1rem',
+  verticalAlign: 'middle',
 };
 
 const useStyles = makeStyles((theme: Theme) =>
