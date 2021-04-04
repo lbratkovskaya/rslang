@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLocalStorageStateHook } from 'use-local-storage-state';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { Typography, Breadcrumbs, Chip } from '@material-ui/core';
 import { ArrowUpward } from '@material-ui/icons';
@@ -14,6 +13,7 @@ import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup, setPage } from '../../store/actions/wordBookActions';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
+import { useSavedWordBookSettings } from '../../utils';
 import {
   WORDBOOK_GROUPS,
   IGroup,
@@ -25,8 +25,6 @@ import {
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
 
-const useActivePage = createLocalStorageStateHook('activePage', 0);
-
 const WordBook: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -34,19 +32,18 @@ const WordBook: React.FC = () => {
   const userData = useSelector((state: IAppState) => state.user.data);
   const location = useLocation();
   const { activeGroup, isLoading } = wordBook;
-  const [activePage, setActivePage] = useActivePage();
   const classes = useStyles();
+  const [savedSettings, setSavedSettings] = useSavedWordBookSettings();
 
   const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
   const shouldRenderGamesButton = !isRootLocation && !isLoading;
 
-  const getWords = () => dispatch(fetchWords(activeGroup, activePage));
-  const loadDictionary = () => dispatch(fetchDictionary(userData));
+  const getWords = () => dispatch(fetchWords(activeGroup, savedSettings.activePage));
 
   const handlePageSelect = (e: ChangeEvent<unknown>, newPage: number): void => {
     const targetPageIndex = newPage - 1;
-    if (activePage === targetPageIndex) return;
-    setActivePage(targetPageIndex);
+    if (savedSettings.activePage === targetPageIndex) return;
+    setSavedSettings({ ...savedSettings, activePage: targetPageIndex });
     dispatch(setPage(targetPageIndex));
   };
 
@@ -75,7 +72,7 @@ const WordBook: React.FC = () => {
   const PaginationPanel = () => (
     <Pagination
       count={NUM_OF_PAGES}
-      page={activePage + 1}
+      page={savedSettings.activePage + 1}
       className={classes.pagination}
       onChange={handlePageSelect}
     />
@@ -148,17 +145,17 @@ const WordBook: React.FC = () => {
   useEffect(() => {
     getWords();
     if (userData) {
-      loadDictionary();
+      fetchDictionary(userData);
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [activePage, activeGroup]);
+  }, [savedSettings.activePage, activeGroup]);
 
   useEffect(() => {
     wordBook.words.forEach((word) => dispatch(addWordToGamesStore(word)));
   }, [wordBook.words]);
 
   useEffect(() => {
-    if (wordBook.activePage >= 0) setActivePage(wordBook.activePage);
+    dispatch(setPage(savedSettings.activePage));
 
     return () => {
       saveSettingsToLocalStorage();
