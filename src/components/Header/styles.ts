@@ -1,7 +1,34 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { HEADER_HEIGHT } from '../../constants';
+
+const bgColor = '#212229';
+const linkColor = '#fafafa';
+const linkStyle = {
+  color: linkColor,
+  transition: 'opacity 100ms',
+  '&:hover': {
+    opacity: 0.75,
+  },
+};
+
+export const dictionatyIcon = {
+  marginRight: '0.5rem',
+  fontSize: '1rem',
+  verticalAlign: 'middle',
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    appBar: {
+      height: HEADER_HEIGHT,
+      display: 'flex',
+      position: 'relative',
+      background: bgColor,
+    },
+    menu: {
+      width: '100%',
+      margin: '0 auto',
+    },
     grow: {
       flexGrow: 1,
     },
@@ -32,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       marginLeft: '20px',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       [theme.breakpoints.up('md')]: {
         display: 'flex',
       },
@@ -45,14 +72,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     navMenuItem: {
       padding: 0,
+      marginLeft: '1.5rem',
       display: 'flex',
       alignItems: 'center',
-      fontSize: '1.7rem',
+      fontSize: '1rem',
       '& a': {
         width: '100%',
-        padding: '6px',
         textDecoration: 'none',
-        color: '#333333',
+        ...linkStyle,
+      },
+      '&:first-child a': {
+        marginRight: '1.25rem',
+        color: '#66b5ff',
       },
     },
     navMenuItemInner: {
@@ -74,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       display: 'flex',
       alignItems: 'center',
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       '& a': {
         textDecoration: 'none',
         color: '#333333',
@@ -86,25 +117,38 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     mainLogo: {
-      width: '80px',
-      minWidth: '80px',
-      height: '80px',
+      width: 'fit-content',
+      height: HEADER_HEIGHT,
       marginRight: 'auto',
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '1.75rem',
+      whiteSpace: 'nowrap',
+      textDecoration: 'none',
+      letterSpacing: '1px',
+      ...linkStyle,
     },
     mainLogoPic: {
-      width: '100%',
-      height: '100%',
+      width: 60,
+      height: 60,
+      marginRight: '0.5rem',
       borderRadius: '0',
+      filter: 'invert(1)',
       '& svg': {
         color: 'aqua',
       },
     },
     mobileMenuButton: {
-      color: '#333333',
+      ...linkStyle,
     },
     circle: {
       height: '25px',
       width: '25px',
+      ...linkStyle,
+    },
+    arrow: {
+      padding: 0,
+      ...linkStyle,
     },
   })
 );

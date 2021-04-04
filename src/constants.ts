@@ -22,6 +22,8 @@ export const ROUTES = {
   settings: '/settings',
   statistics: '/statistics',
   study: '/study',
+  signIn: '/sing-in',
+  signUp: '/sign-up',
 };
 
 export enum COLORS {
@@ -78,6 +80,9 @@ export const WORDBOOK_GROUPS: Array<IGroup> = [
   },
 ];
 
+export const NUM_OF_SECTIONS = WORDBOOK_GROUPS.length;
+export const NUM_OF_PAGES = 30;
+
 export const SAVANNAH = {
   health: 5,
   timeOutDelay: 500,
@@ -110,6 +115,9 @@ export const enterTimeout = 400;
 export const exitTimeout = 200;
 
 export const GAMES_WORDS_MAX_AMOUNT = 40;
+
+export const HEADER_HEIGHT = 80;
+export const MIN_MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT}px)`;
 
 export interface IGame {
   title: string;

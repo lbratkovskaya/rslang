@@ -16,6 +16,7 @@ export type ISubMenuItem = {
   label: string;
   withLink: boolean;
   linkAddress?: string;
+  important?: boolean;
 };
 
 export type IMenuItem = {

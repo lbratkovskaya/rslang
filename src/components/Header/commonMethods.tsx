@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import NavSubMenu from './NavSubMenu';
+import { WORDBOOK_GROUPS } from '../../constants';
 import { IMenuItem } from './types';
 
 export const generateRefToRefObject = (
@@ -52,3 +53,7 @@ export const renderMenuItem = (
     </div>
   );
 };
+
+export const getSectionLabel = (index: number) => `${WORDBOOK_GROUPS[index].label} раздел`;
+
+export const getSectionRoute = (index: number) => WORDBOOK_GROUPS[index].linkAddress;

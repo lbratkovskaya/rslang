@@ -11,9 +11,16 @@ import Footer from '../Footer';
 import WordCard from '../WordCard';
 import GamesPopover from '../GamesPopover';
 import SettingsPopover from '../SettingsPopover';
-import { fetchWords, setGroup } from '../../store/actions/wordBookActions';
+import { fetchWords, setGroup, setPage } from '../../store/actions/wordBookActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
-import { WORDBOOK_GROUPS, IGroup, ROUTES, APPEAR_DURATION, APPEAR_STYLE } from '../../constants';
+import {
+  WORDBOOK_GROUPS,
+  IGroup,
+  ROUTES,
+  APPEAR_DURATION,
+  APPEAR_STYLE,
+  NUM_OF_PAGES,
+} from '../../constants';
 import { IAppState, IWord } from '../../store/types';
 import useStyles, { transitionStyles } from './styles';
 
@@ -36,6 +43,7 @@ const WordBook: React.FC = () => {
     const targetPageIndex = newPage - 1;
     if (activePage === targetPageIndex) return;
     setActivePage(targetPageIndex);
+    dispatch(setPage(targetPageIndex));
   };
 
   const setMainBackground = () => {
@@ -62,7 +70,7 @@ const WordBook: React.FC = () => {
 
   const PaginationPanel = () => (
     <Pagination
-      count={30}
+      count={NUM_OF_PAGES}
       page={activePage + 1}
       className={classes.pagination}
       onChange={handlePageSelect}
@@ -135,6 +143,8 @@ const WordBook: React.FC = () => {
   }, [wordBook.words]);
 
   useEffect(() => {
+    if (wordBook.activePage >= 0) setActivePage(wordBook.activePage);
+
     return () => {
       saveSettingsToLocalStorage();
     };

@@ -1,86 +1,45 @@
+import { getSectionLabel, getSectionRoute } from './commonMethods';
+import { GAMES, NUM_OF_SECTIONS, ROUTES } from '../../constants';
 import { IMenuItem, ISubMenuItem } from './types';
 
 const gamesId = 'miniGames';
 const sectionsId = 'wordBook';
 export const mobileMenuId = 'mobileMenu';
 
-export const gamesItems: Array<ISubMenuItem> = [
-  {
-    label: 'Savannah',
-    withLink: true,
-    linkAddress: '/games/savannah',
-  },
-  {
-    label: 'AudioCall',
-    withLink: true,
-    linkAddress: '/games/audio',
-  },
-  {
-    label: 'Sprint',
-    withLink: true,
-    linkAddress: '/games/sprint',
-  },
-  {
-    label: 'Memory Game',
-    withLink: true,
-    linkAddress: '/games/memory',
-  },
-];
+const gamesTitles = Array.from(Object.keys(GAMES));
 
-export const sectionsItems: Array<ISubMenuItem> = [
-  {
-    label: 'Red Section',
+export const gamesItems: Array<ISubMenuItem> = gamesTitles.map((game) => ({
+  label: GAMES[game].title,
+  withLink: true,
+  linkAddress: GAMES[game].route,
+}));
+
+export const sectionsItems: Array<ISubMenuItem> = new Array(NUM_OF_SECTIONS)
+  .fill(null)
+  .map((el, index) => ({
+    label: getSectionLabel(index),
     withLink: true,
-    linkAddress: '/wordBook/red',
-  },
-  {
-    label: 'Yellow Section',
+    linkAddress: getSectionRoute(index),
+    important: false,
+  }))
+  .concat({
+    label: 'Мой словарь',
     withLink: true,
-    linkAddress: '/wordBook/yellow',
-  },
-  {
-    label: 'Orange Section',
-    withLink: true,
-    linkAddress: '/wordBook/orange',
-  },
-  {
-    label: 'Green Section',
-    withLink: true,
-    linkAddress: '/wordBook/green',
-  },
-  {
-    label: 'Blue Section',
-    withLink: true,
-    linkAddress: '/wordBook/blue',
-  },
-  {
-    label: 'Purple Section',
-    withLink: true,
-    linkAddress: '/wordBook/purple',
-  },
-  {
-    label: 'My Dictionary',
-    withLink: true,
-    linkAddress: '/dictionary',
-  },
-  {
-    label: 'Settings',
-    withLink: true,
-    linkAddress: '/settings',
-  },
-];
+    linkAddress: ROUTES.dictionary,
+    important: true,
+  });
 
 export const menuItems: Array<IMenuItem> = [
   {
     id: 'study',
-    linkAddress: '/study',
-    label: 'Time to Study',
+    linkAddress: ROUTES.study,
+    label: 'Случайная страница',
     withSubMenu: false,
   },
   {
     id: 'wordBook',
-    linkAddress: '/wordBook',
-    label: 'Wordbook',
+    linkAddress: ROUTES.wordBook.root,
+    label: 'Учебник',
     withSubMenu: true,
     ariaControlsId: sectionsId,
     subMenuId: 'wordBook',
@@ -88,8 +47,8 @@ export const menuItems: Array<IMenuItem> = [
   },
   {
     id: 'games',
-    linkAddress: '/games',
-    label: 'Mini-games',
+    linkAddress: ROUTES.games.root,
+    label: 'Мини-игры',
     withSubMenu: true,
     ariaControlsId: gamesId,
     subMenuId: 'gamesMenu',
@@ -97,8 +56,8 @@ export const menuItems: Array<IMenuItem> = [
   },
   {
     id: 'statistics',
-    linkAddress: '/statistics',
-    label: 'Statistics',
+    linkAddress: ROUTES.statistics,
+    label: 'Статистика',
     withSubMenu: false,
   },
 ];
