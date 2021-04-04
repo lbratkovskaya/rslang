@@ -27,7 +27,6 @@ import useStyles, { transitionStyles } from './styles';
 
 const WordBook: React.FC = () => {
   const dispatch = useDispatch();
-
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const userData = useSelector((state: IAppState) => state.user.data);
   const location = useLocation();
@@ -131,10 +130,6 @@ const WordBook: React.FC = () => {
     );
   };
 
-  const saveSettingsToLocalStorage = () => {
-    // TODO: implement saving
-  };
-
   useEffect(() => {
     const routeIndex = WORDBOOK_GROUPS.findIndex(
       (group: IGroup) => group.linkAddress === location.pathname
@@ -156,10 +151,6 @@ const WordBook: React.FC = () => {
 
   useEffect(() => {
     dispatch(setPage(savedSettings.activePage));
-
-    return () => {
-      saveSettingsToLocalStorage();
-    };
   }, []);
 
   return (
