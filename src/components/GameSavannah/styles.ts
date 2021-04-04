@@ -48,6 +48,8 @@ const useStyles = makeStyles((theme) =>
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
+      opacity: 0,
+      transition: 'opacity 1s',
       [theme.breakpoints.down('sm')]: {
         padding: '0 1rem',
       },
