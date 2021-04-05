@@ -4,17 +4,19 @@ import { DictionaryActionTypes, IUserData, IUserWord, IWord } from '../types';
 
 const splitDictionaryWords = (loadedWords: { paginatedResults: Array<IUserWord> }[]) => {
   const acc = {
-    easyWords: [] as Array<IUserWord>,
+    learningWords: [] as Array<IUserWord>,
     difficultWords: [] as Array<IUserWord>,
     deletedWords: [] as Array<IUserWord>,
   };
   loadedWords[0].paginatedResults.reduce((accum, word) => {
     if (word.userWord?.optional.deleted) {
       accum.deletedWords.push(word);
-    } else if (word.userWord?.difficulty === 'hard') {
+    }
+    if (word.userWord?.difficulty === 'hard') {
       accum.difficultWords.push(word);
-    } else {
-      accum.easyWords.push(word);
+    }
+    if (!word.userWord?.optional.deleted) {
+      accum.learningWords.push(word);
     }
     return accum;
   }, acc);
@@ -65,7 +67,7 @@ const fetchDictError = (error: Error) => ({
 export const fetchDictionary = (userData: IUserData) => async (dispatch: Dispatch) => {
   const fetchUserId = userData.userId;
   // eslint-disable-next-line max-len
-  const url = `${backendUrl}/users/${fetchUserId}/aggregatedWords?filter={"userWord":{"$exists": true}}`;
+  const url = `${backendUrl}/users/${fetchUserId}/aggregatedWords?wordsPerPage=3600&filter={"userWord":{"$exists": true}}`;
   const userToken = userData.token;
 
   if (!userToken) {

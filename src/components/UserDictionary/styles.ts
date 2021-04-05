@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
+      alignItems: 'center',
+      width: '100%',
+      borderLeft: 'dashed 6px darkgray',
     },
     card: {
       margin: theme.spacing(1),
@@ -66,15 +69,33 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(1),
       borderRadius: theme.spacing(1) / 2,
     },
+    words: {
+      display: 'flex',
+      flexDirection: 'row',
+      flexGrow: 1,
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+    },
     wordCard: {
       position: 'relative',
       display: 'flex',
-      width: '460px',
+      '& > div:first-child': {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        filter: 'none !important',
+      },
+      '& > div:last-child': {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+      },
     },
     heatsPanel: {
       position: 'relative',
       display: 'flex',
       minWidth: '130px',
+      minHeight: '100%',
+      margin: '8px',
+      marginLeft: '-8px',
       flexDirection: 'column',
       justifyContent: 'center',
       gap: '30px',
@@ -91,6 +112,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.3rem',
       fontWeight: 500,
       color: '#c01818',
+    },
+    pagination: {
+      margin: theme.spacing(2),
     },
   })
 );

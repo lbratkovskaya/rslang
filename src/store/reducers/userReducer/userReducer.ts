@@ -19,6 +19,9 @@ const initialState: IUserState = {
 const savedUserData = sessionStorage.getItem('userData');
 if (savedUserData !== null) {
   initialState.data = JSON.parse(savedUserData);
+  if (initialState.data.token) {
+    initialState.isLoggedIn = true;
+  }
 }
 
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {

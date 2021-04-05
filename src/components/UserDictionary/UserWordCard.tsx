@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
-import WordCard from '../WordCard';
-import { IUserWordCardProps } from './types';
-import { IAppState } from '../../store/types';
-import useStyles from './styles';
-import { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
+import { Typography, Card, useTheme } from '@material-ui/core';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import WordCard from '../WordCard';
+import { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
+import { IUserWordCardProps } from './types';
+import useStyles from './styles';
 import { transitionStyles } from '../WordCard/styles';
 
 const UserWordCard: React.FC<IUserWordCardProps> = ({ word, index }: IUserWordCardProps) => {
-  const isLoading = useSelector((state: IAppState) => state.userDictionary.isLoading);
   const [isMounted, setIsMounted] = useState(false);
   const classes = useStyles();
+  const theme = useTheme();
+  const colorOfDifficult = theme.palette.secondary.main;
 
   useEffect(() => {
     const delay = WORDCARD_APPEAR_GAP * index;
@@ -24,19 +23,33 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({ word, index }: IUserWordCa
     };
   }, []);
 
+  const difficultStyle = {
+    filter: word.userWord?.difficulty === 'hard' ? `drop-shadow(0 0 3px ${colorOfDifficult})` : '',
+  };
+
   return (
-    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
+    <Transition in={isMounted} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
-        <div className={classes.wordCard} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
-          <WordCard word={word} index={index} activeGroup={word.group} isLoading={isLoading} />
-          <div className={classes.heatsPanel}>
+        <div
+          className={classes.wordCard}
+          style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
+          <WordCard
+            word={word}
+            index={index}
+            activeGroup={word.group}
+            isLoading={false}
+            showDeleted
+          />
+          <Card
+            className={classes.heatsPanel}
+            style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
             <Typography className={classes.successHeats}>
               Success: {word.userWord?.optional.successHeats || 0}
             </Typography>
             <Typography className={classes.errorHeats}>
               Errors: {word.userWord?.optional.errorHeats || 0}
             </Typography>
-          </div>
+          </Card>
         </div>
       )}
     </Transition>

@@ -25,6 +25,7 @@ const WordCard: React.FC<IWordCardProps> = ({
   index,
   activeGroup,
   isLoading,
+  showDeleted,
 }: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
@@ -32,9 +33,10 @@ const WordCard: React.FC<IWordCardProps> = ({
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
   );
-  const { isLoading, showTranslate, showButtons } = useSelector(
-    (state: IAppState) => state.wordBook
+  const userDeletedWords = useSelector((state: IAppState) =>
+    state.userDictionary.deletedWords.map((el) => el.word)
   );
+  const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -146,6 +148,7 @@ const WordCard: React.FC<IWordCardProps> = ({
     preloadImage();
 
     if (userDifficultWords.includes(word.word)) setIsDifficult(true);
+    if (userDeletedWords.includes(word.word)) setIsDeleted(true);
 
     return () => {
       clearTimeout(cardAppearTimeout);
@@ -158,7 +161,7 @@ const WordCard: React.FC<IWordCardProps> = ({
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
         <>
-          {!isDeleted && (
+          {(!isDeleted || showDeleted) && (
             <Card
               className={classes.card}
               style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>

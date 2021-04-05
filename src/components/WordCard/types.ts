@@ -5,6 +5,7 @@ export interface IWordCardProps {
   index: number;
   activeGroup: any;
   isLoading: boolean;
+  showDeleted: boolean;
 }
 
 export interface IWordCardButton {

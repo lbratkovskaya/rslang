@@ -122,7 +122,7 @@ export interface IUserWord extends IWord {
 
 export interface IDictionaryState {
   isLoading: boolean;
-  easyWords: Array<IWord>;
+  learningWords: Array<IWord>;
   difficultWords: Array<IWord>;
   deletedWords: Array<IWord>;
 }
@@ -140,7 +140,7 @@ export interface IDictionaryAction {
   type: DictionaryActionTypes;
   payload: {
     allWords: Array<IWord>;
-    easyWords: Array<IWord>;
+    learningWords: Array<IWord>;
     difficultWords: Array<IWord>;
     deletedWords: Array<IWord>;
     error: Error;

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBar, Box, Tab, Tabs, useTheme } from '@material-ui/core';
+import { AppBar, Tab, Tabs, useTheme } from '@material-ui/core';
 import DictionarySection from './DictionarySection';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -20,7 +20,7 @@ const TabPanel = (props: PropsWithChildren<TabPanelProps>) => {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}>
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && children}
     </div>
   );
 };
@@ -64,9 +64,7 @@ const UserDictionary: React.FC = () => {
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>
               <div className={classes.dictionary}>
-                <DictionarySection
-                  words={[...dictionary.easyWords, ...dictionary.difficultWords] || []}
-                />
+                <DictionarySection words={[...dictionary.learningWords] || []} />
               </div>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
