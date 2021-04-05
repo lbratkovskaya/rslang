@@ -3,7 +3,7 @@ import { Transition, TransitionStatus } from 'react-transition-group';
 import { Card, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import UserWordCard from './UserWordCard';
-import { RESULT_APPEAR_TIMEOUT, WORDBOOK_GROUPS } from '../../constants';
+import { APPEAR_DURATION, RESULT_APPEAR_TIMEOUT, WORDBOOK_GROUPS } from '../../constants';
 import { IDictionarySectionProps } from './types';
 import { IUserWord } from '../../store/types';
 import useStyles, { transitionStyles, RESULT_APPEAR_STYLE } from './styles';
@@ -41,6 +41,34 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
     setTotalResults(totalHeats);
   };
 
+  const renderWords = () => {
+    return pagedWords[activePage]?.map((word, index) => (
+      <div key={word.word}>
+        <UserWordCard
+          word={word}
+          index={index}
+          removeOnDifficultyChange={removeOnDifficultyChange}
+        />
+      </div>
+    ));
+  };
+
+  const setMainBackground = () => {
+    const currentGroup = WORDBOOK_GROUPS[activeGroup];
+    const background = currentGroup?.background || '#fafafa';
+    const borderColor = currentGroup?.color || 'darkgray';
+    return { background, borderColor };
+  };
+
+  const PaginationPanel = () => (
+    <Pagination
+      count={pagesCount}
+      page={activePage + 1}
+      className={classes.pagination}
+      onChange={handlePageSelect}
+    />
+  );
+
   useEffect(() => {
     // eslint-disable-next-line no-undef
     let cardAppearTimeout: NodeJS.Timeout;
@@ -61,7 +89,7 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
     setPagedWords(tmp);
     if (tmp.length) {
       calculateTotalResults(tmp[0]);
-      cardAppearTimeout = setTimeout(() => setIsMounted(true), 500);
+      cardAppearTimeout = setTimeout(() => setIsMounted(true), APPEAR_DURATION);
     }
     return () => {
       if (cardAppearTimeout) {
@@ -79,7 +107,7 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
       setActiveGroup(currentPageWords[0].group);
 
       calculateTotalResults(currentPageWords);
-      cardAppearTimeout = setTimeout(() => setIsMounted(true), 500);
+      cardAppearTimeout = setTimeout(() => setIsMounted(true), APPEAR_DURATION);
     }
 
     return () => {
@@ -90,37 +118,10 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
     };
   }, [activePage]);
 
-  const PaginationPanel = () => (
-    <Pagination
-      count={pagesCount}
-      page={activePage + 1}
-      className={classes.pagination}
-      onChange={handlePageSelect}
-    />
-  );
-
-  const renderWords = () => {
-    return pagedWords[activePage]?.map((word, index) => (
-      <div key={word.word}>
-        <UserWordCard
-          word={word}
-          index={index}
-          removeOnDifficultyChange={removeOnDifficultyChange}
-        />
-      </div>
-    ));
-  };
-
-  const setMainBackground = () => {
-    const currentGroup = WORDBOOK_GROUPS[activeGroup];
-    const background = currentGroup?.background || '#fafafa';
-    const borderColor = currentGroup?.color || 'darkgray';
-    return { background, borderColor };
-  };
-
   return (
     <div className={classes.section} style={setMainBackground()}>
       <PaginationPanel />
+      <Typography variant="h5">Раздел: {WORDBOOK_GROUPS[activeGroup].label}</Typography>
       <div className={classes.words}>{renderWords()}</div>
       {pagedWords[activePage]?.length > 2 && <PaginationPanel />}
       <Transition in={isMounted} timeout={RESULT_APPEAR_TIMEOUT}>
@@ -128,10 +129,11 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
           <Card
             className={classes.totalResults}
             style={{ ...RESULT_APPEAR_STYLE, ...transitionStyles[state] }}>
+            <Typography variant="h6">Суммарно</Typography>
             <Typography className={classes.successHeats}>
-              Success: {totalResults.success}
+              Попаданий: {totalResults.success}
             </Typography>
-            <Typography className={classes.errorHeats}>Errors: {totalResults.fail}</Typography>
+            <Typography className={classes.errorHeats}>промахов: {totalResults.fail}</Typography>
           </Card>
         )}
       </Transition>

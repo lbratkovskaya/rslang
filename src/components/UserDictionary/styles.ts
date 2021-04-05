@@ -1,6 +1,7 @@
 import { createStyles, makeStyles, StyleRules, Theme } from '@material-ui/core';
 import { APPEAR_DURATION } from '../../constants';
 import { wordBookStyles } from '../WordBook/styles';
+import { wordCardStyles } from '../WordCard/styles';
 
 export const a11yProps = (index: any) => {
   return {
@@ -54,20 +55,11 @@ const useStyles = makeStyles((theme: Theme) => {
       padding: '15px 30px',
       left: '16px',
     },
-    successHeats: {
-      fontSize: '1.3rem',
-      fontWeight: 500,
-      color: '#1b861b',
-    },
-    errorHeats: {
-      fontSize: '1.3rem',
-      fontWeight: 500,
-      color: '#c01818',
-    },
   } as StyleRules;
 
   const { pagination, words } = wordBookStyles(theme);
-  Object.assign(styles, { pagination, words });
+  const { successHeats, errorHeats } = wordCardStyles(theme);
+  Object.assign(styles, { pagination, words, successHeats, errorHeats });
   return createStyles(styles);
 });
 

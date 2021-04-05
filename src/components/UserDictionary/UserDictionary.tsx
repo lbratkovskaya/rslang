@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBar, Tab, Tabs, useTheme } from '@material-ui/core';
-import DictionarySection from './DictionarySection';
+import { AppBar, Tab, Tabs, Typography, useTheme } from '@material-ui/core';
+import UserDictionarySection from './UserDictionarySection';
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
@@ -35,18 +35,19 @@ const UserDictionary: React.FC = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
-  useEffect(() => {
-    getWords();
-  }, [currentUser]);
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    getWords();
+  }, [currentUser]);
 
   return (
     <>
       <Header />
       <main>
+        <Typography variant="h4">Мой словарь</Typography>
         {userData.userId ? (
           <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -64,7 +65,7 @@ const UserDictionary: React.FC = () => {
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>
               <div className={classes.dictionary}>
-                <DictionarySection
+                <UserDictionarySection
                   words={dictionary.learningWords || []}
                   removeOnDifficultyChange={false}
                 />
@@ -72,7 +73,7 @@ const UserDictionary: React.FC = () => {
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <div className={classes.dictionary}>
-                <DictionarySection
+                <UserDictionarySection
                   words={dictionary.difficultWords || []}
                   removeOnDifficultyChange
                 />
@@ -80,7 +81,7 @@ const UserDictionary: React.FC = () => {
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
               <div className={classes.dictionary}>
-                <DictionarySection
+                <UserDictionarySection
                   words={dictionary.deletedWords || []}
                   removeOnDifficultyChange={false}
                 />

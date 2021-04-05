@@ -17,6 +17,10 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
 
+  const difficultStyle = {
+    filter: word.userWord?.difficulty === 'hard' ? `drop-shadow(0 0 3px ${colorOfDifficult})` : '',
+  };
+
   useEffect(() => {
     const delay = WORDCARD_APPEAR_GAP * index;
     const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
@@ -26,10 +30,6 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({
       setIsMounted(false);
     };
   }, []);
-
-  const difficultStyle = {
-    filter: word.userWord?.difficulty === 'hard' ? `drop-shadow(0 0 3px ${colorOfDifficult})` : '',
-  };
 
   return (
     <Transition in={isMounted} timeout={APPEAR_DURATION} unmountOnExit>

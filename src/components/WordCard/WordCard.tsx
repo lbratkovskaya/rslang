@@ -230,10 +230,10 @@ const WordCard: React.FC<IWordCardProps> = ({
                 <div className={classes.heatsPanel}>
                   <ChevronLeft className={classes.chevron} />
                   <Typography className={classes.successHeats}>
-                    Success: {userWords[word.word]?.userWord?.optional.successHeats || 0}
+                    Попаданий: {userWords[word.word]?.userWord?.optional.successHeats || 0}
                   </Typography>
                   <Typography className={classes.errorHeats}>
-                    Errors: {userWords[word.word]?.userWord?.optional.errorHeats || 0}
+                    Промахов: {userWords[word.word]?.userWord?.optional.errorHeats || 0}
                   </Typography>
                 </div>
               )}
