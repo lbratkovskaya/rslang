@@ -4,6 +4,7 @@ export interface IAppState {
   user: IUserState;
   userDictionary: IDictionaryState;
   games: IGamesState;
+  settings: ISettingsState;
 }
 
 export interface IUserData {
@@ -165,4 +166,8 @@ export interface IGamesAction {
   payload: {
     actualWords: Array<IWord>;
   };
+}
+
+export interface ISettingsState {
+  soundsVolume: number;
 }

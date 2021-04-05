@@ -49,10 +49,10 @@ const SavannahEndGame: React.FC = () => {
 
   const classes = useStyles();
 
-  const renderAnswers = (element: ISavannahWord, condition: boolean, i: number) => {
+  const renderAnswers = (element: ISavannahWord, condition: boolean) => {
     return (
-      <TableRow key={i}>
-        <TableCell>{element?.word}</TableCell>
+      <TableRow key={element.word}>
+        <TableCell>{element.word}</TableCell>
         <TableCell align="right">
           {condition ? (
             <Done className={classes.correctAnswer} />
@@ -76,9 +76,7 @@ const SavannahEndGame: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {savannahData.words.map((el: ISavannahWord, i: number) =>
-                renderAnswers(el, el.isCorrect, i)
-              )}
+              {savannahData.words.map((el: ISavannahWord) => renderAnswers(el, el.isCorrect))}
             </TableBody>
           </Table>
         </TableContainer>

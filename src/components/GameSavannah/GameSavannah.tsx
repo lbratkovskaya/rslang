@@ -40,7 +40,9 @@ const GameSavannah: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <div className={classes.headerWrapper}>
+        <Header />
+      </div>
       <FullScreenWrapper component={gameComponent} handle={handle} />
     </>
   );

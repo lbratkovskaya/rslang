@@ -4,12 +4,13 @@ import { Favorite } from '@material-ui/icons';
 import SavannahEndGame from './SavannahEndGame';
 import { GameExitBtn } from '../../commonComponents';
 import { clickStartGame, onAnswer } from '../../../store/actions/savannahActions';
-import { SAVANNAH } from '../../../constants';
+import { SAVANNAH, VOLUME_DIVIDER } from '../../../constants';
 import { IAppState, ISavannahWord } from '../../../store/types';
 import useStyles from '../styles';
 
 const SavannahGamePlay: React.FC = () => {
   const savannahData = useSelector((state: IAppState) => state?.savannah);
+  const soundsVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
 
   const dispatch = useDispatch();
   const answer = (wordsArray: Array<ISavannahWord>, word: string, isAnswer: boolean) =>
@@ -28,7 +29,7 @@ const SavannahGamePlay: React.FC = () => {
 
   const classes = useStyles();
 
-  const timeOutFunc = () => {
+  const timeOutFunc = (): void => {
     const answersArray: Array<ISavannahWord> = savannahData?.words
       .filter((el) => (savannahData.isEng ? el?.word : el?.translate) !== currentWord)
       .sort(() => Math.random() - 0.5)
@@ -49,19 +50,21 @@ const SavannahGamePlay: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [startWord]);
 
-  const onAudioPlay = (url: string) => {
+  const onAudioPlay = (url: string): void => {
     const audio = new Audio(url);
+    audio.volume = soundsVolume / VOLUME_DIVIDER;
     audio.play();
   };
 
-  const handleAnimationEnd = () => {
+  const handleAnimationEnd = (): void => {
     onAudioPlay(SAVANNAH.audioIncorrect);
     setAnimate(true);
+    setIsCorrectAnswer(false);
     setStartWord(startWord + 1);
     setHealth(health - 1);
   };
 
-  const handleCheckAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCheckAnswer = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { name } = e.currentTarget;
     const matchCheck = currentWord.toLocaleLowerCase() === name.toLocaleLowerCase();
     if (matchCheck) {
@@ -70,18 +73,19 @@ const SavannahGamePlay: React.FC = () => {
       answer(savannahData.words, currentWord, true);
     } else {
       onAudioPlay(SAVANNAH.audioIncorrect);
+      setIsCorrectAnswer(false);
       setHealth(health - 1);
     }
     setStartWord(startWord + 1);
     setAnimate(true);
   };
 
-  const handleStyleSpan = (el: ISavannahWord) => {
+  const handleStyleSpan = (el: ISavannahWord): string => {
     const matchCheck = savannahData?.words?.[startWord - 1]?.word === el?.word;
     return matchCheck ? classes.answerTrue : classes.answerWrong;
   };
 
-  const handleExitGame = () => {
+  const handleExitGame = (): void => {
     startGame(false);
   };
 
@@ -101,7 +105,8 @@ const SavannahGamePlay: React.FC = () => {
           onClick={handleCheckAnswer}
           name={savannahData.isEng ? el?.word : el?.translate}
           key={el?.word}
-          className={animate ? handleStyleSpan(el) : ''}>
+          className={animate ? handleStyleSpan(el) : ''}
+          disabled={animate}>
           {savannahData.isEng ? el?.translate : el?.word}
         </button>
       ))}

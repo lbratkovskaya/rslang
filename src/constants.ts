@@ -121,6 +121,11 @@ export const GAMES_WORDS_MAX_AMOUNT = 40;
 export const HEADER_HEIGHT = 80;
 export const MIN_MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT}px)`;
 
+export const VOLUME_DIVIDER = 100;
+
+export const MAX_VOLUME = 100;
+export const MIN_VOLUME = 0;
+
 export interface IGame {
   title: string;
   background: string;
