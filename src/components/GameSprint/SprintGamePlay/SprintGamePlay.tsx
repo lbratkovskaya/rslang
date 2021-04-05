@@ -24,8 +24,7 @@ const SprintGamePlay: React.FC = () => {
   const [classAnswer, setClassAnswer] = useState(classes.answerDefault);
   const [currentWord, setCurrentWord] = useState('');
   const [translateWord, setTranslateWord] = useState('');
-  const [timer, setTimer] = useState(1000);
-  // SPRINT.timeOutDelay
+  const [timer, setTimer] = useState(SPRINT.timeOutDelay);
   const [selectWord, setSelectWord] = useState(0);
   const [isEndGame, setIsEndGame] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);

@@ -84,7 +84,7 @@ const SprintGameEnd: React.FC = () => {
           {renderTable(false)}
         </TableContainer>
         <Button variant="contained" color="secondary" onClick={handleRestGame}>
-          Сделать круг
+          СДЕЛАТЬ КРУГ
         </Button>
       </div>
     );

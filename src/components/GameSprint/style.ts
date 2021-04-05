@@ -99,10 +99,9 @@ const useStyles = makeStyles(() =>
       height: 'calc(100vh - 80px)',
     },
     table: {
-      Width: '100%',
+      Width: '700%',
     },
     tableContainer: {
-      width: '50rem',
       height: '33rem',
       margin: '2rem auto',
       background: 'scroll',
