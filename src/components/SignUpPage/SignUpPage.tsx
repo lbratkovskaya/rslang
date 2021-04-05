@@ -53,7 +53,7 @@ const SignUpPage: React.FC = () => {
     setConfirmPassword('');
     dispatch(setFailedAttempt(false));
     dispatch(setIsRegistred(false));
-    history.push(ROUTES.sign_in);
+    history.push(ROUTES.signIn);
   };
 
   const handleSubmit = (event: React.FormEvent) => {

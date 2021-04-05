@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Card, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import WordCard from '../WordCard';
 import { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
@@ -7,7 +7,11 @@ import { IUserWordCardProps } from './types';
 import useStyles from './styles';
 import { transitionStyles } from '../WordCard/styles';
 
-const UserWordCard: React.FC<IUserWordCardProps> = ({ word, index }: IUserWordCardProps) => {
+const UserWordCard: React.FC<IUserWordCardProps> = ({
+  word,
+  index,
+  removeOnDifficultyChange,
+}: IUserWordCardProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -39,17 +43,8 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({ word, index }: IUserWordCa
             activeGroup={word.group}
             isLoading={false}
             showDeleted
+            removeOnDifficultyChange={removeOnDifficultyChange}
           />
-          <Card
-            className={classes.heatsPanel}
-            style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
-            <Typography className={classes.successHeats}>
-              Success: {word.userWord?.optional.successHeats || 0}
-            </Typography>
-            <Typography className={classes.errorHeats}>
-              Errors: {word.userWord?.optional.errorHeats || 0}
-            </Typography>
-          </Card>
         </div>
       )}
     </Transition>

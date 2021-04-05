@@ -11,11 +11,10 @@ const splitDictionaryWords = (loadedWords: { paginatedResults: Array<IUserWord> 
   loadedWords[0].paginatedResults.reduce((accum, word) => {
     if (word.userWord?.optional.deleted) {
       accum.deletedWords.push(word);
-    }
-    if (word.userWord?.difficulty === 'hard') {
-      accum.difficultWords.push(word);
-    }
-    if (!word.userWord?.optional.deleted) {
+    } else {
+      if (word.userWord?.difficulty === 'hard') {
+        accum.difficultWords.push(word);
+      }
       accum.learningWords.push(word);
     }
     return accum;

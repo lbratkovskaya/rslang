@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
-import { Typography, Card, Chip, useTheme, IconButton } from '@material-ui/core';
+import { Typography, Card, Chip, useTheme } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded, ChevronLeft } from '@material-ui/icons';
 import {
   setUserWordDeleted,
@@ -26,6 +26,7 @@ const WordCard: React.FC<IWordCardProps> = ({
   activeGroup,
   isLoading,
   showDeleted,
+  removeOnDifficultyChange,
 }: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
@@ -121,6 +122,9 @@ const WordCard: React.FC<IWordCardProps> = ({
       dispatch(setUserWordHard(word, userData));
       setIsDifficult(true);
     }
+    if (removeOnDifficultyChange) {
+      setIsMounted(false);
+    }
   };
 
   const handleDelete = () => {
@@ -208,6 +212,7 @@ const WordCard: React.FC<IWordCardProps> = ({
               {renderMainParagraph('Example', word.textExample, textStyle.example)}
               {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
               {showButtons &&
+                !isDeleted &&
                 renderButton({
                   label: 'Добавить в сложные',
                   altLabel: 'Добавлено в сложные',

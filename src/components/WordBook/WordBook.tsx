@@ -116,6 +116,7 @@ const WordBook: React.FC = () => {
             activeGroup={activeGroup}
             isLoading={isLoading}
             showDeleted={false}
+            removeOnDifficultyChange={false}
           />
         ))}
       </div>

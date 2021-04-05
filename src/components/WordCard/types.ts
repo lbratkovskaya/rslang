@@ -6,6 +6,7 @@ export interface IWordCardProps {
   activeGroup: any;
   isLoading: boolean;
   showDeleted: boolean;
+  removeOnDifficultyChange: boolean;
 }
 
 export interface IWordCardButton {

@@ -1,28 +1,49 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Transition, TransitionStatus } from 'react-transition-group';
+import { Card, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-import { IDictionarySectionProps } from './types';
-import useStyles from './styles';
 import UserWordCard from './UserWordCard';
+import { RESULT_APPEAR_TIMEOUT, WORDBOOK_GROUPS } from '../../constants';
+import { IDictionarySectionProps } from './types';
 import { IUserWord } from '../../store/types';
-import { WORDBOOK_GROUPS } from '../../constants';
+import useStyles, { transitionStyles, RESULT_APPEAR_STYLE } from './styles';
 
 const DictionarySection: React.FC<IDictionarySectionProps> = ({
   words,
+  removeOnDifficultyChange,
 }: IDictionarySectionProps) => {
   const classes = useStyles();
   const [pagesCount, setPagesCount] = useState(0);
   const [activeGroup, setActiveGroup] = useState(0);
   const [activePage, setActivePage] = useState(0);
   const [pagedWords, setPagedWords] = useState([] as Array<Array<IUserWord>>);
+  const [totalResults, setTotalResults] = useState({ success: 0, fail: 0 });
+  const [isMounted, setIsMounted] = useState(false);
   const pageSize = 20;
 
   const handlePageSelect = (e: ChangeEvent<unknown>, newPage: number): void => {
     const targetPageIndex = newPage - 1;
     if (activePage === targetPageIndex) return;
     setActivePage(targetPageIndex);
+    setIsMounted(false);
+  };
+
+  const calculateTotalResults = (currentPageWords: IUserWord[]): void => {
+    const totalHeats = currentPageWords.reduce(
+      (acc, uWord) => {
+        acc.success += uWord.userWord?.optional.successHeats || 0;
+        acc.fail += uWord.userWord?.optional.errorHeats || 0;
+        return acc;
+      },
+      { success: 0, fail: 0 }
+    );
+
+    setTotalResults(totalHeats);
   };
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
+    let cardAppearTimeout: NodeJS.Timeout;
     const tempWord = [...words];
     const tmp = [] as Array<Array<IUserWord>>;
     tempWord.sort((word1, word2) => word1.group - word2.group);
@@ -38,13 +59,35 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
     }
     setPagesCount(tmp.length);
     setPagedWords(tmp);
+    if (tmp.length) {
+      calculateTotalResults(tmp[0]);
+      cardAppearTimeout = setTimeout(() => setIsMounted(true), 500);
+    }
+    return () => {
+      if (cardAppearTimeout) {
+        clearTimeout(cardAppearTimeout);
+        setIsMounted(false);
+      }
+    };
   }, [words]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
+    let cardAppearTimeout: NodeJS.Timeout;
     const currentPageWords = pagedWords[activePage];
     if (currentPageWords) {
       setActiveGroup(currentPageWords[0].group);
+
+      calculateTotalResults(currentPageWords);
+      cardAppearTimeout = setTimeout(() => setIsMounted(true), 500);
     }
+
+    return () => {
+      if (cardAppearTimeout) {
+        clearTimeout(cardAppearTimeout);
+        setIsMounted(false);
+      }
+    };
   }, [activePage]);
 
   const PaginationPanel = () => (
@@ -59,7 +102,11 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
   const renderWords = () => {
     return pagedWords[activePage]?.map((word, index) => (
       <div key={word.word}>
-        <UserWordCard word={word} index={index} />
+        <UserWordCard
+          word={word}
+          index={index}
+          removeOnDifficultyChange={removeOnDifficultyChange}
+        />
       </div>
     ));
   };
@@ -76,6 +123,18 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
       <PaginationPanel />
       <div className={classes.words}>{renderWords()}</div>
       {pagedWords[activePage]?.length > 2 && <PaginationPanel />}
+      <Transition in={isMounted} timeout={RESULT_APPEAR_TIMEOUT}>
+        {(state: TransitionStatus) => (
+          <Card
+            className={classes.totalResults}
+            style={{ ...RESULT_APPEAR_STYLE, ...transitionStyles[state] }}>
+            <Typography className={classes.successHeats}>
+              Success: {totalResults.success}
+            </Typography>
+            <Typography className={classes.errorHeats}>Errors: {totalResults.fail}</Typography>
+          </Card>
+        )}
+      </Transition>
     </div>
   );
 };
