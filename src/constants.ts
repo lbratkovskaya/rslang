@@ -22,7 +22,7 @@ export const ROUTES = {
   settings: '/settings',
   statistics: '/statistics',
   study: '/study',
-  signIn: '/sing-in',
+  signIn: '/sign-in',
   signUp: '/sign-up',
 };
 

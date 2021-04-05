@@ -12,9 +12,9 @@ const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
 
   const renderItems = (): JSX.Element[] =>
     items?.map((item) => (
-      <>
+      <div key={item.label}>
         {item.important && <Divider />}
-        <MenuItem className={subMenuClasses.navSubMenuItem} key={item.label} onClick={onMenuClose}>
+        <MenuItem className={subMenuClasses.navSubMenuItem} onClick={onMenuClose}>
           {item.withLink ? (
             <Link to={item.linkAddress}>
               {item.important && <BookmarksRounded style={dictionatyIcon} />}
@@ -24,7 +24,7 @@ const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
             item.label
           )}
         </MenuItem>
-      </>
+      </div>
     ));
 
   return (
