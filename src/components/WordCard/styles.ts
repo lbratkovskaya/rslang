@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: 450,
       textAlign: 'left',
       position: 'relative',
+      height: '100%',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         maxWidth: 600,

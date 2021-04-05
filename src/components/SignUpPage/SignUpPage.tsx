@@ -16,6 +16,7 @@ import ModalWindow from '../ModalWindow/ModalWindow';
 import { signUpUser, setFailedAttempt, setIsRegistred } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
+import { ROUTES } from '../../constants';
 
 const SignUpPage: React.FC = () => {
   const styles = useStyles();
@@ -26,7 +27,7 @@ const SignUpPage: React.FC = () => {
   const [userEmail, setUserEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [passwordMismatch, setPasswordMissmatch] = React.useState(false);
+  const [passwordMismatch, setPasswordMismatch] = React.useState(false);
   const [passwordTooShort, setPasswordTooShort] = React.useState(false);
   const [emailInvalid, setEmailInvalid] = React.useState(false);
   const [userNameEmpty, setUserNameEmpty] = React.useState(false);
@@ -43,7 +44,7 @@ const SignUpPage: React.FC = () => {
   const handleClose = () => {
     setEmailInvalid(false);
     setUserEmailEmpty(false);
-    setPasswordMissmatch(false);
+    setPasswordMismatch(false);
     setUserNameEmpty(false);
     setPasswordTooShort(false);
     setUserName('');
@@ -52,7 +53,7 @@ const SignUpPage: React.FC = () => {
     setConfirmPassword('');
     dispatch(setFailedAttempt(false));
     dispatch(setIsRegistred(false));
-    history.push('/sign-in');
+    history.push(ROUTES.sign_in);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -66,7 +67,7 @@ const SignUpPage: React.FC = () => {
     } else if (password.length < 8) {
       setPasswordTooShort(true);
     } else if (password !== confirmPassword) {
-      setPasswordMissmatch(true);
+      setPasswordMismatch(true);
     } else {
       dispatch(signUpUser(userName, userEmail, password, userImageToUpload));
     }
@@ -187,7 +188,7 @@ const SignUpPage: React.FC = () => {
                   }}
                   onFocus={() => {
                     setPasswordTooShort(false);
-                    setPasswordMissmatch(false);
+                    setPasswordMismatch(false);
                   }}
                 />
               </Grid>
@@ -207,7 +208,7 @@ const SignUpPage: React.FC = () => {
                     setConfirmPassword(event.currentTarget.value);
                   }}
                   onFocus={() => {
-                    setPasswordMissmatch(false);
+                    setPasswordMismatch(false);
                   }}
                 />
               </Grid>
