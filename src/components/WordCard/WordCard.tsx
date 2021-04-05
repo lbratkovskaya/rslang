@@ -20,7 +20,12 @@ import { IAppState } from '../../store/types';
 import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
-const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
+const WordCard: React.FC<IWordCardProps> = ({
+  word,
+  index,
+  activeGroup,
+  isLoading,
+}: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
   const { data: userData } = useSelector((state: IAppState) => state.user);
@@ -34,7 +39,6 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [playingAudioIndex, setPlayingAudioIndex] = useState(-1);
-  const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDifficult, setIsDifficult] = useState(false);
   const { color } = WORDBOOK_GROUPS[activeGroup] || 'rgb(255, 0, 0)';

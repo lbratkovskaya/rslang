@@ -66,6 +66,32 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(1),
       borderRadius: theme.spacing(1) / 2,
     },
+    wordCard: {
+      position: 'relative',
+      display: 'flex',
+      width: '460px',
+    },
+    heatsPanel: {
+      position: 'relative',
+      display: 'flex',
+      minWidth: '130px',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '30px',
+      right: 0,
+      top: 0,
+      background: 'white',
+    },
+    successHeats: {
+      fontSize: '1.3rem',
+      fontWeight: 500,
+      color: '#1b861b',
+    },
+    errorHeats: {
+      fontSize: '1.3rem',
+      fontWeight: 500,
+      color: '#c01818',
+    },
   })
 );
 

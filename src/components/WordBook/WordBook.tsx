@@ -31,9 +31,9 @@ const WordBook: React.FC = () => {
 
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const location = useLocation();
-  const { activeGroup } = wordBook;
-  const classes = useStyles();
+  const { activeGroup, isLoading } = wordBook;
   const [activePage, setActivePage] = useActivePage();
+  const classes = useStyles();
 
   const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
 
@@ -106,7 +106,13 @@ const WordBook: React.FC = () => {
     const renderWordCards = () => (
       <div className={classes.words}>
         {wordBook.words.map((word: IWord, index: number) => (
-          <WordCard word={word} key={word.word} index={index} />
+          <WordCard
+            word={word}
+            key={word.word}
+            index={index}
+            activeGroup={activeGroup}
+            isLoading={isLoading}
+          />
         ))}
       </div>
     );

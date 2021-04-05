@@ -1,41 +1,45 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Card, Chip, Typography } from '@material-ui/core';
-import { Done } from '@material-ui/icons';
-import {
-  setUserWordDeleted,
-  setUserWordEasy,
-  setUserWordHard,
-} from '../../store/actions/dictionaryActions';
-import backendUrl from '../../constants';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Typography } from '@material-ui/core';
+import WordCard from '../WordCard';
 import { IUserWordCardProps } from './types';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import WordCard from '../WordCard';
+import { APPEAR_DURATION, APPEAR_STYLE, WORDCARD_APPEAR_GAP } from '../../constants';
+import { Transition, TransitionStatus } from 'react-transition-group';
+import { transitionStyles } from '../WordCard/styles';
 
 const UserWordCard: React.FC<IUserWordCardProps> = ({ word, index }: IUserWordCardProps) => {
+  const isLoading = useSelector((state: IAppState) => state.userDictionary.isLoading);
+  const [isMounted, setIsMounted] = useState(false);
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const currentUser = useSelector((state: IAppState) => state.user);
-  const difficulty = word.userWord?.difficulty || 'easy';
-  const isDeleted = word.userWord?.optional?.deleted || false;
 
-  const renderButton = (label: string, onClickHandler: () => void) => {
-    return (
-      <Chip
-        className={classes.button}
-        variant="outlined"
-        size="small"
-        deleteIcon={<Done />}
-        clickable
-        onClick={onClickHandler}
-        label={label}
-      />
-    );
-  };
+  useEffect(() => {
+    const delay = WORDCARD_APPEAR_GAP * index;
+    const cardAppearTimeout = setTimeout(() => setIsMounted(true), delay);
+
+    return () => {
+      clearTimeout(cardAppearTimeout);
+      setIsMounted(false);
+    };
+  }, []);
 
   return (
-    <WordCard word={word} index={index}/>
+    <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
+      {(state: TransitionStatus) => (
+        <div className={classes.wordCard} style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}>
+          <WordCard word={word} index={index} activeGroup={word.group} isLoading={isLoading} />
+          <div className={classes.heatsPanel}>
+            <Typography className={classes.successHeats}>
+              Success: {word.userWord?.optional.successHeats || 0}
+            </Typography>
+            <Typography className={classes.errorHeats}>
+              Errors: {word.userWord?.optional.errorHeats || 0}
+            </Typography>
+          </div>
+        </div>
+      )}
+    </Transition>
   );
 };
 

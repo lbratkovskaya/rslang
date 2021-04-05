@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SwipeableViews from 'react-swipeable-views';
 import { AppBar, Box, Tab, Tabs, useTheme } from '@material-ui/core';
 import DictionarySection from './DictionarySection';
 import Header from '../Header';
@@ -44,10 +43,6 @@ const UserDictionary: React.FC = () => {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
-
   return (
     <>
       <Header />
@@ -62,33 +57,28 @@ const UserDictionary: React.FC = () => {
                 textColor="primary"
                 variant="fullWidth"
                 aria-label="full width tabs example">
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+                <Tab label="Изучаемые слова" {...a11yProps(0)} />
+                <Tab label="Сложные слова" {...a11yProps(1)} />
+                <Tab label="Удалённые слова" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
-            <SwipeableViews
-              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={value}
-              onChangeIndex={handleChangeIndex}>
-              <TabPanel value={value} index={0} dir={theme.direction}>
-                <div className={classes.dictionary}>
-                  <DictionarySection
-                    words={[...dictionary.easyWords, ...dictionary.difficultWords] || []}
-                  />
-                </div>
-              </TabPanel>
-              <TabPanel value={value} index={1} dir={theme.direction}>
-                <div className={classes.dictionary}>
-                  <DictionarySection words={dictionary.difficultWords || []} />
-                </div>
-              </TabPanel>
-              <TabPanel value={value} index={2} dir={theme.direction}>
-                <div className={classes.dictionary}>
-                  <DictionarySection words={dictionary.deletedWords || []} />
-                </div>
-              </TabPanel>
-            </SwipeableViews>
+            <TabPanel value={value} index={0} dir={theme.direction}>
+              <div className={classes.dictionary}>
+                <DictionarySection
+                  words={[...dictionary.easyWords, ...dictionary.difficultWords] || []}
+                />
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}>
+              <div className={classes.dictionary}>
+                <DictionarySection words={dictionary.difficultWords || []} />
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={2} dir={theme.direction}>
+              <div className={classes.dictionary}>
+                <DictionarySection words={dictionary.deletedWords || []} />
+              </div>
+            </TabPanel>
           </div>
         ) : (
           <span>Авторизуйтесь для просмотра изучаемых Вами слов</span>
