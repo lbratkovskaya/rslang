@@ -9,9 +9,9 @@ const DictionarySection: React.FC<IDictionarySectionProps> = ({
   const classes = useStyles();
 
   const renderWords = () => {
-    return words.map((word) => (
+    return words.map((word, index) => (
       <div key={word.word}>
-        <UserWordCard word={word} />
+        <UserWordCard word={word} index={index}/>
       </div>
     ));
   };

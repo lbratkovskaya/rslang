@@ -6,4 +6,11 @@ export interface IDictionarySectionProps {
 
 export interface IUserWordCardProps {
   word: IUserWord;
+  index: number;
+}
+
+export interface TabPanelProps {
+  dir?: string;
+  index: any;
+  value: any;
 }

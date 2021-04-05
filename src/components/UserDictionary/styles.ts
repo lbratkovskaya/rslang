@@ -1,13 +1,25 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
+export const a11yProps = (index: any) => {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+};
+
 const COLORS = {
   secondaryText: 'rgba(0, 0, 0, 0.35)',
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      backgroundColor: theme.palette.background.paper,
+      width: '100%',
+    },
     dictionary: {
       display: 'flex',
+      justifyContent: 'center',
     },
     section: {
       display: 'flex',
