@@ -172,3 +172,11 @@ export const setUserWordDeleted = (word: IWord, userData: IUserData) => async (
     setUserWordData(word, userData, difficulty, true)(dispatch);
   }
 };
+
+export const addWordsToUserDictionary = (words: Array<IWord>, userData: IUserData) => async (
+  dispatch: Dispatch
+) => {
+  const unsavedWords = words.filter((word) => (<IUserWord>word).userWord === undefined);
+
+  unsavedWords.forEach((word) => saveUserWord(word, userData, 'easy', true)(dispatch));
+};

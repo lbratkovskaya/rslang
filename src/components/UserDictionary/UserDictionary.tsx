@@ -24,7 +24,9 @@ const UserDictionary: React.FC = () => {
       <Header />
       <main>
         <div className={classes.dictionary}>
-          <DictionarySection words={dictionary.easyWords || []} />
+          <DictionarySection
+            words={[...dictionary.easyWords, ...dictionary.difficultWords] || []}
+          />
           <DictionarySection words={dictionary.difficultWords || []} />
           <DictionarySection words={dictionary.deletedWords || []} />
         </div>

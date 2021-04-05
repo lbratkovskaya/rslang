@@ -140,6 +140,9 @@ const WordBook: React.FC = () => {
 
   useEffect(() => {
     wordBook.words.forEach((word) => dispatch(addWordToGamesStore(word)));
+    //   if (userData) {
+    //     dispatch(addWordsToUserDictionary(wordBook.words, userData));
+    //   }
   }, [wordBook.words]);
 
   useEffect(() => {
