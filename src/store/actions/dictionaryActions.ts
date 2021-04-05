@@ -29,9 +29,9 @@ const getErrorHeats = (word: IWord): number => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.errorHeats) || 0;
 };
 
-const getDeleted = (word: IWord): boolean => {
-  return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.deleted) || false;
-};
+// const getDeleted = (word: IWord): boolean => {
+//   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.deleted) || false;
+// };
 
 const getDifficulty = (word: IWord): string => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.difficulty) || 'easy';
@@ -42,12 +42,22 @@ const startDictLoading = () => ({
   payload: { isLoading: true },
 });
 
-export const fetchDictSuccess = (words: { paginatedResults: Array<IUserWord> }[]) => ({
+const fetchDictSuccess = (words: { paginatedResults: Array<IUserWord> }[]) => ({
   type: DictionaryActionTypes.FETCH_SUCCESS,
   payload: { ...splitDictionaryWords(words), isLoading: false },
 });
 
-export const fetchDictError = (error: Error) => ({
+const setEmptyDictionary = () => ({
+  type: DictionaryActionTypes.FETCH_SUCCESS,
+  payload: {
+    easyWords: [] as Array<IUserWord>,
+    difficultWords: [] as Array<IUserWord>,
+    deletedWords: [] as Array<IUserWord>,
+    isLoading: false,
+  },
+});
+
+const fetchDictError = (error: Error) => ({
   type: DictionaryActionTypes.FETCH_ERROR,
   payload: { error, isLoading: false },
 });
@@ -58,6 +68,10 @@ export const fetchDictionary = (userData: IUserData) => async (dispatch: Dispatc
   const url = `${backendUrl}/users/${fetchUserId}/aggregatedWords?filter={"userWord":{"$exists": true}}`;
   const userToken = userData.token;
 
+  if (!userToken) {
+    dispatch(setEmptyDictionary());
+    return;
+  }
   dispatch(startDictLoading());
   try {
     const res = await fetch(url, {
@@ -132,33 +146,29 @@ export const setUserWordData = (
 };
 
 export const setUserWordEasy = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
-  const deleted =
-    ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.deleted) || false;
   if ((<IUserWord>word).userWord === undefined) {
-    saveUserWord(word, userData, 'easy', deleted)(dispatch);
+    saveUserWord(word, userData, 'easy', false)(dispatch);
   } else {
-    setUserWordData(word, userData, 'easy', deleted)(dispatch);
+    setUserWordData(word, userData, 'easy', false)(dispatch);
   }
 };
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
-  const deleted = getDeleted(word);
-  console.log('hard');
   if ((<IUserWord>word).userWord === undefined) {
-    saveUserWord(word, userData, 'hard', deleted)(dispatch);
+    saveUserWord(word, userData, 'hard', false)(dispatch);
   } else {
-    setUserWordData(word, userData, 'hard', deleted)(dispatch);
+    setUserWordData(word, userData, 'hard', false)(dispatch);
   }
 };
 
-export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: boolean) => async (
+export const setUserWordDeleted = (word: IWord, userData: IUserData) => async (
   dispatch: Dispatch
 ) => {
   const difficulty = getDifficulty(word);
 
   if ((<IUserWord>word).userWord === undefined) {
-    saveUserWord(word, userData, difficulty, deleted)(dispatch);
+    saveUserWord(word, userData, difficulty, true)(dispatch);
   } else {
-    setUserWordData(word, userData, difficulty, deleted)(dispatch);
+    setUserWordData(word, userData, difficulty, true)(dispatch);
   }
 };

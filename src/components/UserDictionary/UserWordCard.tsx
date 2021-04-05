@@ -16,6 +16,22 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({ word }: IUserWordCardProps
   const classes = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: IAppState) => state.user);
+  const difficulty = word.userWord?.difficulty || 'easy';
+  const isDeleted = word.userWord?.optional?.deleted || false;
+
+  const renderButton = (label: string, onClickHandler: () => void) => {
+    return (
+      <Chip
+        className={classes.button}
+        variant="outlined"
+        size="small"
+        deleteIcon={<Done />}
+        clickable
+        onClick={onClickHandler}
+        label={label}
+      />
+    );
+  };
 
   return (
     <Card className={classes.card}>
@@ -30,33 +46,12 @@ const UserWordCard: React.FC<IUserWordCardProps> = ({ word }: IUserWordCardProps
         {`${word.word} — `}
         <span className={classes.wordTranslate}>{word.wordTranslate}</span>
       </Typography>
-      <Chip
-        className={classes.button}
-        variant="outlined"
-        size="small"
-        deleteIcon={<Done />}
-        clickable
-        onClick={() => dispatch(setUserWordHard(word, currentUser.data))}
-        label="В сложные"
-      />
-      <Chip
-        className={classes.button}
-        variant="outlined"
-        size="small"
-        deleteIcon={<Done />}
-        clickable
-        onClick={() => dispatch(setUserWordDeleted(word, currentUser.data, true))}
-        label="В удалённые"
-      />
-      <Chip
-        className={classes.button}
-        variant="outlined"
-        size="small"
-        deleteIcon={<Done />}
-        clickable
-        onClick={() => dispatch(setUserWordEasy(word, currentUser.data))}
-        label="В изученные"
-      />
+      {(isDeleted || difficulty !== 'hard') &&
+        renderButton('В сложные', () => dispatch(setUserWordHard(word, currentUser.data)))}
+      {!isDeleted &&
+        renderButton('В удалённые', () => dispatch(setUserWordDeleted(word, currentUser.data)))}
+      {(isDeleted || difficulty !== 'easy') &&
+        renderButton('В изученные', () => dispatch(setUserWordEasy(word, currentUser.data)))}
     </Card>
   );
 };

@@ -34,7 +34,6 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [playingAudioIndex, setPlayingAudioIndex] = useState(-1);
-  const dispatch = useDispatch();
   const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDifficult, setIsDifficult] = useState(false);
@@ -42,6 +41,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   const highlightStyle = { color };
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
+  const dispatch = useDispatch();
 
   const textStyle = {
     word: playingAudioIndex === 0 ? highlightStyle : {},
@@ -111,7 +111,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   };
 
   const handleDelete = () => {
-    dispatch(setUserWordDeleted(word, userData, true));
+    dispatch(setUserWordDeleted(word, userData));
     dispatch(deleteWordFromGamesStore(word));
 
     setIsMounted(false);
@@ -153,51 +153,59 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   return (
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
-        <Card
-          className={classes.card}
-          style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
-          <img
-            src={`${backendUrl}/${word.image}`}
-            alt={word.word}
-            width={defaultImageSize.width}
-            height={defaultImageSize.height}
-            className={classes.image}
-            style={isImageReady ? { opacity: 1 } : {}}
-          />
-          <Typography className={classes.word}>
-            <span style={textStyle.word}>{word.word}</span>
-            {renderWordTranslate}
-          </Typography>
-          <Typography className={classes.transcription}>
-            {` ${word.transcription} `}
-            <VolumeUpRounded
-              onClick={handleAudioClick}
-              color={isAudioPlaying ? 'disabled' : 'action'}
-              className={classes.icon}
-            />
-            {isAudioPlaying && (
-              <StopRounded onClick={handleStopClick} color="secondary" className={classes.icon} />
-            )}
-          </Typography>
-          {renderMainParagraph('Meaning', word.textMeaning, textStyle.meaning)}
-          {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
-          {renderMainParagraph('Example', word.textExample, textStyle.example)}
-          {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
-          {showButtons &&
-            renderButton({
-              label: 'Добавить в сложные',
-              altLabel: 'Добавлено в сложные',
-              onClick: handleAddToDifficult,
-              param: isDifficult,
-            })}
-          {showButtons &&
-            renderButton({
-              label: 'В удалённые',
-              altLabel: 'Удалено',
-              onClick: handleDelete,
-              param: isDeleted,
-            })}
-        </Card>
+        <>
+          {!isDeleted && (
+            <Card
+              className={classes.card}
+              style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
+              <img
+                src={`${backendUrl}/${word.image}`}
+                alt={word.word}
+                width={defaultImageSize.width}
+                height={defaultImageSize.height}
+                className={classes.image}
+                style={isImageReady ? { opacity: 1 } : {}}
+              />
+              <Typography className={classes.word}>
+                <span style={textStyle.word}>{word.word}</span>
+                {renderWordTranslate}
+              </Typography>
+              <Typography className={classes.transcription}>
+                {` ${word.transcription} `}
+                <VolumeUpRounded
+                  onClick={handleAudioClick}
+                  color={isAudioPlaying ? 'disabled' : 'action'}
+                  className={classes.icon}
+                />
+                {isAudioPlaying && (
+                  <StopRounded
+                    onClick={handleStopClick}
+                    color="secondary"
+                    className={classes.icon}
+                  />
+                )}
+              </Typography>
+              {renderMainParagraph('Meaning', word.textMeaning, textStyle.meaning)}
+              {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
+              {renderMainParagraph('Example', word.textExample, textStyle.example)}
+              {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
+              {showButtons &&
+                renderButton({
+                  label: 'Добавить в сложные',
+                  altLabel: 'Добавлено в сложные',
+                  onClick: handleAddToDifficult,
+                  param: isDifficult,
+                })}
+              {showButtons &&
+                renderButton({
+                  label: 'В удалённые',
+                  altLabel: 'Удалено',
+                  onClick: handleDelete,
+                  param: isDeleted,
+                })}
+            </Card>
+          )}
+        </>
       )}
     </Transition>
   );
