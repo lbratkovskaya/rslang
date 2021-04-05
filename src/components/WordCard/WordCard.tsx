@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
-import { Typography, Card, Chip, useTheme } from '@material-ui/core';
-import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
+import { Typography, Card, Chip, useTheme, IconButton } from '@material-ui/core';
+import { Done, VolumeUpRounded, StopRounded, ChevronLeft } from '@material-ui/icons';
 import {
   setUserWordDeleted,
   setUserWordEasy,
@@ -16,7 +16,7 @@ import backendUrl, {
   WORDBOOK_GROUPS,
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
-import { IAppState } from '../../store/types';
+import { IAppState, IUserWord } from '../../store/types';
 import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
@@ -36,6 +36,13 @@ const WordCard: React.FC<IWordCardProps> = ({
   const userDeletedWords = useSelector((state: IAppState) =>
     state.userDictionary.deletedWords.map((el) => el.word)
   );
+  const userWords =
+    useSelector((state: IAppState) =>
+      state.userDictionary.learningWords?.reduce((acc, el) => {
+        Object.assign(acc, { [el.word]: el });
+        return acc;
+      }, {} as { [key: string]: IUserWord })
+    ) || {};
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
@@ -117,13 +124,17 @@ const WordCard: React.FC<IWordCardProps> = ({
   };
 
   const handleDelete = () => {
-    dispatch(setUserWordDeleted(word, userData));
-    dispatch(deleteWordFromGamesStore(word));
-
-    setIsMounted(false);
-    setTimeout(() => {
-      setIsDeleted(true);
-    }, APPEAR_DURATION);
+    dispatch(setUserWordDeleted(word, userData, !isDeleted));
+    if (isDeleted) {
+      setIsDeleted(false);
+      setIsMounted(false);
+    } else {
+      dispatch(deleteWordFromGamesStore(word));
+      setIsMounted(false);
+      setTimeout(() => {
+        setIsDeleted(true);
+      }, APPEAR_DURATION);
+    }
   };
 
   const renderMainParagraph = (title: string, content: string, className: {}) => (
@@ -210,6 +221,17 @@ const WordCard: React.FC<IWordCardProps> = ({
                   onClick: handleDelete,
                   param: isDeleted,
                 })}
+              {userWords[word.word]?.userWord && (
+                <div className={classes.heatsPanel}>
+                  <ChevronLeft className={classes.chevron} />
+                  <Typography className={classes.successHeats}>
+                    Success: {userWords[word.word]?.userWord?.optional.successHeats || 0}
+                  </Typography>
+                  <Typography className={classes.errorHeats}>
+                    Errors: {userWords[word.word]?.userWord?.optional.errorHeats || 0}
+                  </Typography>
+                </div>
+              )}
             </Card>
           )}
         </>

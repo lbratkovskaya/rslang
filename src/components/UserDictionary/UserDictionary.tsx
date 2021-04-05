@@ -64,7 +64,7 @@ const UserDictionary: React.FC = () => {
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>
               <div className={classes.dictionary}>
-                <DictionarySection words={[...dictionary.learningWords] || []} />
+                <DictionarySection words={dictionary.learningWords || []} />
               </div>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>

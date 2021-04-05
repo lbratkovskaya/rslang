@@ -163,15 +163,15 @@ export const setUserWordHard = (word: IWord, userData: IUserData) => async (disp
   }
 };
 
-export const setUserWordDeleted = (word: IWord, userData: IUserData) => async (
+export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: boolean) => async (
   dispatch: Dispatch
 ) => {
   const difficulty = getDifficulty(word);
 
   if ((<IUserWord>word).userWord === undefined) {
-    saveUserWord(word, userData, difficulty, true)(dispatch);
+    saveUserWord(word, userData, difficulty, deleted)(dispatch);
   } else {
-    setUserWordData(word, userData, difficulty, true)(dispatch);
+    setUserWordData(word, userData, difficulty, deleted)(dispatch);
   }
 };
 

@@ -1,4 +1,5 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, StyleRules, Theme } from '@material-ui/core';
+import { wordBookStyles } from '../WordBook/styles';
 
 export const a11yProps = (index: any) => {
   return {
@@ -7,12 +8,8 @@ export const a11yProps = (index: any) => {
   };
 };
 
-const COLORS = {
-  secondaryText: 'rgba(0, 0, 0, 0.35)',
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  const styles = {
     root: {
       backgroundColor: theme.palette.background.paper,
       width: '100%',
@@ -35,47 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: 450,
       textAlign: 'left',
     },
-    word: {
-      textTransform: 'capitalize',
-      fontWeight: 500,
-    },
-    transcription: {
-      marginBottom: theme.spacing(1),
-      display: 'flex',
-      color: COLORS.secondaryText,
-      lineHeight: 2,
-      fontSize: 14,
-      fontWeight: 400,
-      letterSpacing: 1,
-    },
-    icon: {
-      cursor: 'pointer',
-      '&:hover': {
-        color: 'black',
-      },
-    },
-    button: {
-      marginRight: theme.spacing(1),
-    },
-    wordTranslate: {
-      textTransform: 'capitalize',
-      fontWeight: 400,
-    },
-    secondary: {
-      marginBottom: theme.spacing(1),
-    },
-    image: {
-      float: 'right',
-      marginLeft: theme.spacing(1),
-      borderRadius: theme.spacing(1) / 2,
-    },
-    words: {
-      display: 'flex',
-      flexDirection: 'row',
-      flexGrow: 1,
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    },
     wordCard: {
       position: 'relative',
       display: 'flex',
@@ -89,34 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
         borderBottomLeftRadius: 0,
       },
     },
-    heatsPanel: {
-      position: 'relative',
-      display: 'flex',
-      minWidth: '130px',
-      minHeight: '100%',
-      margin: '8px',
-      marginLeft: '-8px',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: '30px',
-      right: 0,
-      top: 0,
-      background: 'white',
-    },
-    successHeats: {
-      fontSize: '1.3rem',
-      fontWeight: 500,
-      color: '#1b861b',
-    },
-    errorHeats: {
-      fontSize: '1.3rem',
-      fontWeight: 500,
-      color: '#c01818',
-    },
-    pagination: {
-      margin: theme.spacing(2),
-    },
-  })
-);
+  } as StyleRules;
+
+  const { pagination, words } = wordBookStyles(theme);
+  Object.assign(styles, { pagination, words });
+  return createStyles(styles);
+});
 
 export default useStyles;

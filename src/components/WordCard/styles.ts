@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
       minWidth: 450,
       textAlign: 'left',
+      position: 'relative',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         maxWidth: 600,
@@ -54,6 +55,41 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.spacing(1) / 2,
       opacity: 0,
       transition: `opacity ${APPEAR_DURATION}ms`,
+    },
+    heatsPanel: {
+      position: 'absolute',
+      display: 'flex',
+      minWidth: '130px',
+      minHeight: '100%',
+      padding: '8px',
+      paddingLeft: '30px',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '30px',
+      right: 0,
+      top: 0,
+      background: 'rgba(255, 255, 255, .8)',
+      transition: 'transform .3s',
+      transform: 'translateX(calc(100% - 30px))',
+      '&:hover': {
+        transform: 'translateX(0)',
+      },
+    },
+    chevron: {
+      position: 'absolute',
+      left: 0,
+      transform: 'scale(1.3)',
+      color: 'rgba(0, 0, 0, 0.47)',
+    },
+    successHeats: {
+      fontSize: '1.3rem',
+      fontWeight: 500,
+      color: '#1b861b',
+    },
+    errorHeats: {
+      fontSize: '1.3rem',
+      fontWeight: 500,
+      color: '#c01818',
     },
   })
 );
