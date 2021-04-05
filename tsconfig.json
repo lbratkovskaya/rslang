@@ -13,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "types": ["node"]
   },
   "include": [
     "./src/**/*"

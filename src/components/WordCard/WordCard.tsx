@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
 import { Typography, Card, Chip, useTheme } from '@material-ui/core';
-import { Done, VolumeUpRounded, StopRounded } from '@material-ui/icons';
+import { Done, VolumeUpRounded, StopRounded, ChevronLeft } from '@material-ui/icons';
 import {
   setUserWordDeleted,
   setUserWordEasy,
@@ -16,32 +16,46 @@ import backendUrl, {
   WORDBOOK_GROUPS,
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
-import { IAppState } from '../../store/types';
+import { IAppState, IUserWord } from '../../store/types';
 import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
-const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => {
+const WordCard: React.FC<IWordCardProps> = ({
+  word,
+  index,
+  activeGroup,
+  isLoading,
+  showDeleted,
+  removeOnDifficultyChange,
+}: IWordCardProps) => {
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
   const { data: userData } = useSelector((state: IAppState) => state.user);
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
   );
-  const { isLoading, showTranslate, showButtons } = useSelector(
-    (state: IAppState) => state.wordBook
+  const userDeletedWords = useSelector((state: IAppState) =>
+    state.userDictionary.deletedWords.map((el) => el.word)
   );
+  const userWords =
+    useSelector((state: IAppState) =>
+      state.userDictionary.learningWords?.reduce((acc, el) => {
+        Object.assign(acc, { [el.word]: el });
+        return acc;
+      }, {} as { [key: string]: IUserWord })
+    ) || {};
+  const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [playingAudioIndex, setPlayingAudioIndex] = useState(-1);
-  const dispatch = useDispatch();
-  const activeGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDifficult, setIsDifficult] = useState(false);
   const { color } = WORDBOOK_GROUPS[activeGroup] || 'rgb(255, 0, 0)';
   const highlightStyle = { color };
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
+  const dispatch = useDispatch();
 
   const textStyle = {
     word: playingAudioIndex === 0 ? highlightStyle : {},
@@ -108,16 +122,23 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
       dispatch(setUserWordHard(word, userData));
       setIsDifficult(true);
     }
+    if (removeOnDifficultyChange) {
+      setIsMounted(false);
+    }
   };
 
   const handleDelete = () => {
-    dispatch(setUserWordDeleted(word, userData, true));
-    dispatch(deleteWordFromGamesStore(word));
-
-    setIsMounted(false);
-    setTimeout(() => {
-      setIsDeleted(true);
-    }, APPEAR_DURATION);
+    dispatch(setUserWordDeleted(word, userData, !isDeleted));
+    if (isDeleted) {
+      setIsDeleted(false);
+      setIsMounted(false);
+    } else {
+      dispatch(deleteWordFromGamesStore(word));
+      setIsMounted(false);
+      setTimeout(() => {
+        setIsDeleted(true);
+      }, APPEAR_DURATION);
+    }
   };
 
   const renderMainParagraph = (title: string, content: string, className: {}) => (
@@ -142,6 +163,7 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
     preloadImage();
 
     if (userDifficultWords.includes(word.word)) setIsDifficult(true);
+    if (userDeletedWords.includes(word.word)) setIsDeleted(true);
 
     return () => {
       clearTimeout(cardAppearTimeout);
@@ -153,51 +175,71 @@ const WordCard: React.FC<IWordCardProps> = ({ word, index }: IWordCardProps) => 
   return (
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>
       {(state: TransitionStatus) => (
-        <Card
-          className={classes.card}
-          style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
-          <img
-            src={`${backendUrl}/${word.image}`}
-            alt={word.word}
-            width={defaultImageSize.width}
-            height={defaultImageSize.height}
-            className={classes.image}
-            style={isImageReady ? { opacity: 1 } : {}}
-          />
-          <Typography className={classes.word}>
-            <span style={textStyle.word}>{word.word}</span>
-            {renderWordTranslate}
-          </Typography>
-          <Typography className={classes.transcription}>
-            {` ${word.transcription} `}
-            <VolumeUpRounded
-              onClick={handleAudioClick}
-              color={isAudioPlaying ? 'disabled' : 'action'}
-              className={classes.icon}
-            />
-            {isAudioPlaying && (
-              <StopRounded onClick={handleStopClick} color="secondary" className={classes.icon} />
-            )}
-          </Typography>
-          {renderMainParagraph('Meaning', word.textMeaning, textStyle.meaning)}
-          {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
-          {renderMainParagraph('Example', word.textExample, textStyle.example)}
-          {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
-          {showButtons &&
-            renderButton({
-              label: 'Добавить в сложные',
-              altLabel: 'Добавлено в сложные',
-              onClick: handleAddToDifficult,
-              param: isDifficult,
-            })}
-          {showButtons &&
-            renderButton({
-              label: 'В удалённые',
-              altLabel: 'Удалено',
-              onClick: handleDelete,
-              param: isDeleted,
-            })}
-        </Card>
+        <>
+          {(!isDeleted || showDeleted) && (
+            <Card
+              className={classes.card}
+              style={{ ...APPEAR_STYLE, ...difficultStyle, ...transitionStyles[state] }}>
+              <img
+                src={`${backendUrl}/${word.image}`}
+                alt={word.word}
+                width={defaultImageSize.width}
+                height={defaultImageSize.height}
+                className={classes.image}
+                style={isImageReady ? { opacity: 1 } : {}}
+              />
+              <Typography className={classes.word}>
+                <span style={textStyle.word}>{word.word}</span>
+                {renderWordTranslate}
+              </Typography>
+              <Typography className={classes.transcription}>
+                {` ${word.transcription} `}
+                <VolumeUpRounded
+                  onClick={handleAudioClick}
+                  color={isAudioPlaying ? 'disabled' : 'action'}
+                  className={classes.icon}
+                />
+                {isAudioPlaying && (
+                  <StopRounded
+                    onClick={handleStopClick}
+                    color="secondary"
+                    className={classes.icon}
+                  />
+                )}
+              </Typography>
+              {renderMainParagraph('Meaning', word.textMeaning, textStyle.meaning)}
+              {showTranslate && renderParagraph('Значение', word.textMeaningTranslate)}
+              {renderMainParagraph('Example', word.textExample, textStyle.example)}
+              {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
+              {showButtons &&
+                !isDeleted &&
+                renderButton({
+                  label: 'Добавить в сложные',
+                  altLabel: 'Добавлено в сложные',
+                  onClick: handleAddToDifficult,
+                  param: isDifficult,
+                })}
+              {showButtons &&
+                renderButton({
+                  label: 'В удалённые',
+                  altLabel: 'Удалено',
+                  onClick: handleDelete,
+                  param: isDeleted,
+                })}
+              {userWords[word.word]?.userWord && (
+                <div className={classes.heatsPanel}>
+                  <ChevronLeft className={classes.chevron} />
+                  <Typography className={classes.successHeats}>
+                    Попаданий: {userWords[word.word]?.userWord?.optional.successHeats || 0}
+                  </Typography>
+                  <Typography className={classes.errorHeats}>
+                    Промахов: {userWords[word.word]?.userWord?.optional.errorHeats || 0}
+                  </Typography>
+                </div>
+              )}
+            </Card>
+          )}
+        </>
       )}
     </Transition>
   );

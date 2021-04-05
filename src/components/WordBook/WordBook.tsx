@@ -12,6 +12,7 @@ import WordCard from '../WordCard';
 import GamesPopover from '../GamesPopover';
 import SettingsPopover from '../SettingsPopover';
 import { fetchWords, setGroup, setPage } from '../../store/actions/wordBookActions';
+import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { addWordToGamesStore } from '../../store/actions/gamesActions';
 import {
   WORDBOOK_GROUPS,
@@ -30,14 +31,16 @@ const WordBook: React.FC = () => {
   const dispatch = useDispatch();
 
   const wordBook = useSelector((state: IAppState) => state.wordBook);
+  const userData = useSelector((state: IAppState) => state.user.data);
   const location = useLocation();
-  const { activeGroup } = wordBook;
-  const classes = useStyles();
+  const { activeGroup, isLoading } = wordBook;
   const [activePage, setActivePage] = useActivePage();
+  const classes = useStyles();
 
   const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
 
   const getWords = () => dispatch(fetchWords(activeGroup, activePage));
+  const loadDictionary = () => dispatch(fetchDictionary(userData));
 
   const handlePageSelect = (e: ChangeEvent<unknown>, newPage: number): void => {
     const targetPageIndex = newPage - 1;
@@ -106,7 +109,15 @@ const WordBook: React.FC = () => {
     const renderWordCards = () => (
       <div className={classes.words}>
         {wordBook.words.map((word: IWord, index: number) => (
-          <WordCard word={word} key={word.word} index={index} />
+          <WordCard
+            word={word}
+            key={word.word}
+            index={index}
+            activeGroup={activeGroup}
+            isLoading={isLoading}
+            showDeleted={false}
+            removeOnDifficultyChange={false}
+          />
         ))}
       </div>
     );
@@ -135,6 +146,9 @@ const WordBook: React.FC = () => {
 
   useEffect(() => {
     getWords();
+    if (userData) {
+      loadDictionary();
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [activePage, activeGroup]);
 

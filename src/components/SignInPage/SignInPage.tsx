@@ -13,6 +13,7 @@ import {
 import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
+import { ROUTES } from '../../constants';
 
 const SignInPage: React.FC = () => {
   const styles = useStyles();
@@ -30,7 +31,11 @@ const SignInPage: React.FC = () => {
   const handleClose = () => {
     setPasswordEmpty(false);
     setFailedAttempt(false);
-    history.push('/');
+    if (history.action === 'POP') {
+      history.push(ROUTES.dictionary);
+    } else {
+      history.go(-1);
+    }
   };
 
   const clearUserName = () => {

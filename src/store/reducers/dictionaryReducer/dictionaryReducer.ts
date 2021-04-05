@@ -2,7 +2,7 @@ import { IDictionaryState, IDictionaryAction, DictionaryActionTypes, IWord } fro
 
 const initialState: IDictionaryState = {
   isLoading: false,
-  easyWords: [] as Array<IWord>,
+  learningWords: [] as Array<IWord>,
   difficultWords: [] as Array<IWord>,
   deletedWords: [] as Array<IWord>,
 };
@@ -18,7 +18,7 @@ export default function dictionaryReducer(
       return {
         ...state,
         isLoading: false,
-        easyWords: action.payload.easyWords,
+        learningWords: action.payload.learningWords,
         difficultWords: action.payload.difficultWords,
         deletedWords: action.payload.deletedWords,
       };

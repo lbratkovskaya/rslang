@@ -19,6 +19,9 @@ const initialState: IUserState = {
 const savedUserData = sessionStorage.getItem('userData');
 if (savedUserData !== null) {
   initialState.data = JSON.parse(savedUserData);
+  if (initialState.data.token) {
+    initialState.isLoggedIn = true;
+  }
 }
 
 export default function userReducer(state: IUserState = initialState, action: IUserAction) {
@@ -29,7 +32,11 @@ export default function userReducer(state: IUserState = initialState, action: IU
     case UserActionTypes.SET_FAILED_ATTEMPT:
       return { ...state, failedAttempt: action.failedAttempt };
     case UserActionTypes.SET_IS_LOGGED_IN:
-      return { ...state, isLoggedIn: action.isLoggedIn };
+      return {
+        ...state,
+        isLoggedIn: action.isLoggedIn,
+        data: action.isLoggedIn ? state.data : initialUserData,
+      };
     case UserActionTypes.SET_IS_REGISTERED:
       return { ...state, isRegistred: action.isRegistred };
     case UserActionTypes.SET_IS_LOADING:

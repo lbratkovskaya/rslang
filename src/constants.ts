@@ -108,6 +108,8 @@ export const APPEAR_STYLE = {
   transition: `opacity ${APPEAR_DURATION}ms, transform ${APPEAR_DURATION}ms, filter 200ms`,
 };
 
+export const RESULT_APPEAR_TIMEOUT = 10;
+
 export const WORDCARD_APPEAR_GAP = 85;
 export const timeout = 1000;
 
