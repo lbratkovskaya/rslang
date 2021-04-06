@@ -33,4 +33,5 @@ export interface ITimerProps {
   gameTime: number;
   size: number;
   handleOnComplite: () => void;
+  isGameStarted: boolean;
 }

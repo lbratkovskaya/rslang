@@ -6,7 +6,7 @@ import useStyles from '../styles';
 const Timer: React.FC<ITimerProps> = (props: ITimerProps) => {
   const styles = useStyles();
   const renderTime: React.FC<IRenderTimeProps> = (renderTimeProps: IRenderTimeProps) => {
-    if (renderTimeProps.remainingTime === 0) {
+    if (renderTimeProps.remainingTime === 0 || props.isGameStarted) {
       return <div className={styles.gameOver}>Game over</div>;
     }
     return (
