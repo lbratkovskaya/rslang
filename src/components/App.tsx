@@ -28,7 +28,6 @@ const App: React.FC = () => {
               mountOnEnter
               unmountOnExit>
               <Switch location={routeProps.location}>
-              
                 <Route path={ROUTES.signIn} component={SignInPage} />
                 <Route path={ROUTES.signUp} component={SignUpPage} />
                 <Route path={ROUTES.wordBook.root} component={WordBook} />
