@@ -7,14 +7,14 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import { BACKGROUND_URL } from './constants';
+import { SPRINT } from '../../constants';
 
 const useStyles = makeStyles(() =>
   createStyles({
     sprintWrapper: {
       height: '100vh',
-      background: `url(${BACKGROUND_URL})
-         no-repeat`,
+      background: `url(${SPRINT.background})
+      rgb(133, 129, 129) no-repeat`,
       backgroundBlendMode: 'multiply',
       backgroundSize: 'cover',
       padding: '0 2rem',
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       justifyContent: 'space-between',
       padding: '2rem 0',
-      color: 'white',
+      color: '#fff',
     },
     sprintMenuSettings: {
       width: '15em',
@@ -41,9 +41,9 @@ const useStyles = makeStyles(() =>
       color: '#fff',
       textTransform: 'capitalize',
       '& button': {
-        opacity: '0.5',
+        width: '15rem',
         fontSize: '1.3rem',
-        margin: '0 1rem',
+        margin: '0 2rem',
         padding: '0.5rem 0.5rem',
         border: '2px solid #fff',
         borderRadius: '0.5rem',
@@ -56,41 +56,36 @@ const useStyles = makeStyles(() =>
         },
       },
     },
-    endGameWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100%',
-    },
+
     answerDefault: {
       margin: 'auto auto',
       background: '#fff !important',
-      width: '30rem',
+      width: '70%',
       opacity: '0.7',
-      border: '2px solid #fff',
+      border: '2px solid #0048fc',
       borderRadius: '0.5rem',
     },
     answerWrong: {
       margin: 'auto auto',
-      background: 'tomato !important',
-      width: '30rem',
+      background: '#FF6347 !important',
+      width: '70%',
       opacity: '0.7',
-      border: '2px solid #fff',
+      border: '2px solid #0048fc',
       borderRadius: '0.5rem',
     },
     answerTrue: {
       margin: 'auto auto',
-      background: 'lime !important',
-      width: '30rem',
+      background: '#2bff7f !important',
+      width: '70%',
       opacity: '0.7',
-      border: '2px solid #fff',
+      border: '2px solid #0048fc',
       borderRadius: '0.5rem',
     },
     sprintSpan: {
       fontSize: '3rem',
       fontWeight: 600,
-      color: 'dodgerblue',
+      color: '#0048fc',
+      textTransform: 'capitalize',
     },
     wrapperFull: {
       height: '100vh',
@@ -103,14 +98,24 @@ const useStyles = makeStyles(() =>
     },
     tableContainer: {
       height: '33rem',
-      margin: '2rem auto',
+      margin: '3rem auto',
       background: 'scroll',
+      '&::-webkit-scrollbar': {
+        width: '24px',
+        height: '8px',
+        backgroundColor: '#143861',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#843465',
+        borderRadius: '9em',
+        boxShadow: 'inset 1px 1px 10px #f3faf7',
+      },
     },
     tableSpanCorrectly: {
-      background: 'lime',
+      background: '#0dff2a',
     },
     tableSpanUnCorrectly: {
-      background: 'red',
+      background: '#f51400',
     },
   })
 );
@@ -122,7 +127,7 @@ export const StyledTableCell = withStyles((theme) => ({
   },
   body: {
     fontSize: 20,
-    color: 'yellow',
+    color: '#ffff00',
   },
 }))(TableCell);
 

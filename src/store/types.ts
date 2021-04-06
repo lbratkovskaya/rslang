@@ -247,6 +247,7 @@ export interface IStatisticsAction {
 export interface ISprintState {
   level: number;
   round: number;
+  isEng: boolean;
   isStartGame: boolean;
   words: Array<ISprintWords>;
 }

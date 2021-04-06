@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useFullScreenHandle } from 'react-full-screen';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../../store/types';
+import { useFullScreenHandle } from 'react-full-screen';
 import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
 import Header from '../Header';
 import SprintGamePlay from './SprintGamePlay';
 import StartGameSprint from './StartGameSprint';
+import { IAppState } from '../../store/types';
 import useStyles from './style';
 
 const GameSprint: React.FC = () => {

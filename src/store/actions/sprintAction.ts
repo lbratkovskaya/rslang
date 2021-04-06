@@ -15,6 +15,13 @@ export function selectRound(round: number) {
   };
 }
 
+export function switchLang(isEng: boolean) {
+  return {
+    type: SprintActionTypes.SPRINT_SWITCH_LANG,
+    payload: { isEng },
+  };
+}
+
 export function clickStartGame(isStart: boolean) {
   return {
     type: SprintActionTypes.SPRINT_START_GAME,

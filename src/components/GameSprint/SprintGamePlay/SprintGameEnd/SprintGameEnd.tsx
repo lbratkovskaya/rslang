@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Paper,
@@ -9,14 +11,12 @@ import {
 } from '@material-ui/core';
 import DoneOutlineTwoToneIcon from '@material-ui/icons/DoneOutlineTwoTone';
 import ClearIcon from '@material-ui/icons/Clear';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import SprintGamePlay from '../SprintGamePlay';
 import { reduceArrayWords, selectLevel, selectRound } from '../../../../store/actions/sprintAction';
 import { fetchWords } from '../../../../store/actions/wordBookActions';
-import { IAppState, ISprintWords, IWord } from '../../../../store/types';
 import { SELECT_LEVELS, SELECT_ROUNDS } from '../../constants';
+import { IAppState, ISprintWords, IWord } from '../../../../store/types';
 import useStyles, { StyledTableCell, StyledTableRow } from '../../style';
-import SprintGamePlay from '../SprintGamePlay';
 
 const SprintGameEnd: React.FC = () => {
   const wordBook = useSelector((state: IAppState) => state.wordBook);
@@ -36,7 +36,7 @@ const SprintGameEnd: React.FC = () => {
     getWords(group, page);
   }, []);
 
-  const handleRestGame = () => {
+  const handleRestGame = (): void => {
     randomLevel(group);
     randomRound(page);
     setIsRestGame(true);

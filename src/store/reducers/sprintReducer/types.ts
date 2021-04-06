@@ -16,6 +16,6 @@ export interface ISprintActions {
     round: number;
     isEng: boolean;
     isStartGame: boolean;
-    words: ISprintWords[];
+    words: Array<ISprintWords>;
   };
 }

@@ -112,8 +112,7 @@ export interface IGroup {
 
 export const SPRINT = {
   timeOutDelay: 60,
-  background:
-    'https://www.pixelstalk.net/wp-content/uploads/images2/Animal-Backgrounds-Free-Download.jpg',
+  background: 'https://99px.ru/sstorage/53/2018/08/tmb_234204_794603.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
   audioTrue: '../../../assets/SprintAudio/sprint_true.mp3',

@@ -1,16 +1,14 @@
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState, ISprintWords } from '../../../store/types';
-import { modalTimeout, SPRINT } from '../../../constants';
-import { clickStartGame, onAnswer } from '../../../store/actions/sprintAction';
-import useStyles from '../style';
+import { Card, CardContent, Button, Typography } from '@material-ui/core/index';
 import SprintGameEnd from './SprintGameEnd';
-import { TIME_OUT_DELAY } from '../constants';
+import Timer from '../../commonComponents/Timer';
 import { GameExitBtn } from '../../commonComponents';
+import { clickStartGame, onAnswer } from '../../../store/actions/sprintAction';
+import { modalTimeout, SPRINT } from '../../../constants';
+import { TIME_OUT_DELAY } from '../constants';
+import { IAppState, ISprintWords } from '../../../store/types';
+import useStyles from '../style';
 
 const SprintGamePlay: React.FC = () => {
   const classes = useStyles();
@@ -29,7 +27,7 @@ const SprintGamePlay: React.FC = () => {
   const [isEndGame, setIsEndGame] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const timeDaleyWord = () => {
+  const timeDaleyWord = (): void => {
     setCurrentWord(sprintInfo?.words?.[selectWord]?.word);
     setTranslateWord(sprintInfo?.words?.[selectWord]?.translate);
     setClassAnswer(classes.answerDefault);
@@ -58,12 +56,16 @@ const SprintGamePlay: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [timer]);
 
-  const onAudioPlay = (url: string) => {
+  useEffect(() => {
+    return () => startGame(false);
+  }, []);
+
+  const onAudioPlay = (url: string): void => {
     const audio = new Audio(url);
     audio.play();
   };
 
-  const handleCheckWord = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCheckWord = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { name } = e.currentTarget;
     const isCorrectAnswer: boolean =
       (name === 'false' && translateWord !== randomWord) ||
@@ -80,8 +82,18 @@ const SprintGamePlay: React.FC = () => {
     setSelectWord(selectWord + 1);
   };
 
-  const handleExitGame = () => {
-    startGame(false);
+  const handleExitGame = () => startGame(false);
+
+  const handleEndGame = (): void => {
+    if (timer === 0) setIsEndGame(true);
+  };
+
+  const btnComponent = (selectName: string) => {
+    return (
+      <Button disabled={isDisabled} name={selectName} variant="contained" onClick={handleCheckWord}>
+        {selectName === 'true' ? 'ВЕРНО' : 'НЕВЕРНО'}
+      </Button>
+    );
   };
 
   if (!isEndGame) {
@@ -89,10 +101,9 @@ const SprintGamePlay: React.FC = () => {
       <>
         <div>
           <div className={classes.sprintHeader}>
-            {timer}
+            <Timer gameTime={timer} handleOnComplite={handleEndGame} size={60} />
             <GameExitBtn clickBtn={handleExitGame} />
           </div>
-
           <Card className={classAnswer}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom className={classes.sprintSpan}>
@@ -104,20 +115,8 @@ const SprintGamePlay: React.FC = () => {
             </CardContent>
           </Card>
           <div className={classes.sprintChooseWrapper}>
-            <Button
-              disabled={isDisabled ? true : isDisabled}
-              name="true"
-              variant="contained"
-              onClick={handleCheckWord}>
-              Верно
-            </Button>
-            <Button
-              disabled={isDisabled ? true : isDisabled}
-              name="false"
-              variant="contained"
-              onClick={handleCheckWord}>
-              Неверно
-            </Button>
+            {btnComponent('true')}
+            {btnComponent('false')}
           </div>
         </div>
       </>
