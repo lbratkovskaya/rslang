@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { Link, Typography } from '@material-ui/core';
 import Footer from './Footer';
 
-// configure({ adapter: new Adapter() });
 const copyright = <Typography className="copy">&copy; 2021</Typography>;
 const rsSchoolLink = (
   <a className="rsschool" href="https://rs.school/" target="_blank" rel="noreferrer">
@@ -11,7 +10,7 @@ const rsSchoolLink = (
   </a>
 );
 
-describe('<Footer />', () => {
+describe('<Footer /> testing', () => {
   const wrapper = shallow(<Footer />);
 
   it('Should render RS School link', () => {

@@ -13,10 +13,18 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
-    "./src/**/*"
-, "jest.config.ts"  ],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
+    "./src/**/*",
+    "jest.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }
