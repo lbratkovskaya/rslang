@@ -38,6 +38,7 @@ const WordBook: React.FC = () => {
   const classes = useStyles();
 
   const isRootLocation = `${ROUTES.wordBook.root}/`.includes(location.pathname);
+  const shouldRenderGamesButton = !isRootLocation && !isLoading;
 
   const getWords = () => dispatch(fetchWords(activeGroup, activePage));
   const loadDictionary = () => dispatch(fetchDictionary(userData));
@@ -169,17 +170,16 @@ const WordBook: React.FC = () => {
     <div>
       <Header />
       <main className={classes.main} style={setMainBackground()}>
-        <Typography variant="h5">Учебник</Typography>
-        {!isRootLocation && (
-          <Typography>
-            <GamesPopover />
-            <SettingsPopover />
-          </Typography>
-        )}
+        <Typography variant="h5" className={classes.title}>
+          Учебник {!isRootLocation && <SettingsPopover />}
+        </Typography>
         <BreadcrumbsPanel />
         {!isRootLocation && <PaginationPanel />}
+        {shouldRenderGamesButton && <GamesPopover />}
         <GroupsContent />
-        {isRootLocation ? <WelcomeMessage /> : <PaginationPanel />}
+        {isRootLocation && <WelcomeMessage />}
+        {shouldRenderGamesButton && <GamesPopover />}
+        {!isRootLocation && <PaginationPanel />}
       </main>
       <Footer />
     </div>

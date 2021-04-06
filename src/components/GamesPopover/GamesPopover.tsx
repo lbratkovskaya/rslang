@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Popover, Tooltip, Typography } from '@material-ui/core';
-import { SportsEsportsOutlined } from '@material-ui/icons';
-import { GAMES, IGame } from '../../constants';
-import useStyles from './styles';
+import { Transition, TransitionStatus } from 'react-transition-group';
+import { Avatar, Button, Popover, Tooltip, Typography } from '@material-ui/core';
+import { APPEAR_DURATION, APPEAR_STYLE, GAMES, IGame } from '../../constants';
+import useStyles, { transitionStyles } from './styles';
 
 const GamesPopover: React.FC = () => {
   const classes = useStyles();
@@ -38,19 +38,24 @@ const GamesPopover: React.FC = () => {
 
   return (
     <>
-      <Tooltip title="Игры">
-        <SportsEsportsOutlined
-          aria-describedby={id}
-          onClick={handleClick}
-          className={classes.gamesIcon}
-          color="action"
-        />
-      </Tooltip>
+      <Transition in appear timeout={APPEAR_DURATION}>
+        {(state: TransitionStatus) => (
+          <Tooltip title="Игры" placement="right">
+            <Avatar
+              src="../../assets/games.svg"
+              onClick={handleClick}
+              className={classes.gamesIcon}
+              style={{ ...APPEAR_STYLE, ...transitionStyles[state] }}
+            />
+          </Tooltip>
+        )}
+      </Transition>
       <Popover
         id={id}
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}
+        disableScrollLock
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',

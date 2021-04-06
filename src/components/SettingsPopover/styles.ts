@@ -1,5 +1,11 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 
+const shadowColor = 'rgba(0, 0, 0, 0.4)';
+
+const setShadowFilter = (radius: number) => ({
+  filter: `drop-shadow(0 0 ${radius}px ${shadowColor})`,
+});
+
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
@@ -10,11 +16,14 @@ const useStyles = makeStyles(() =>
       textAlign: 'right',
     },
     settingsButton: {
-      margin: '0 0.25rem',
+      position: 'absolute',
+      right: '-2rem',
       cursor: 'pointer',
-      transition: 'color 0.2s',
+      transform: 'translateY(3px)',
+      transition: 'filter 0.1s',
+      ...setShadowFilter(1),
       '&:hover, &:active': {
-        color: 'rgba(0, 0, 0, 1)',
+        ...setShadowFilter(2),
       },
     },
   })

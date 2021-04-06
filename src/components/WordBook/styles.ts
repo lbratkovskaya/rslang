@@ -1,14 +1,21 @@
 import { createStyles, makeStyles, StyleRules, Theme } from '@material-ui/core';
+import { MIN_MAIN_HEIGHT } from '../../constants';
 
 export const wordBookStyles = (theme: Theme): StyleRules => ({
   main: {
-    minHeight: '95vh',
+    minHeight: MIN_MAIN_HEIGHT,
     padding: theme.spacing(2),
     boxSizing: 'border-box',
     borderLeft: 'dashed 6px darkgray',
     transition: 'background 0.5s, border 0.5s',
     backgroundSize: '100px',
     backgroundBlendMode: 'soft-light',
+  },
+  title: {
+    position: 'relative',
+    textTransform: 'uppercase',
+    letterSpacing: '2px',
+    fontWeight: 500,
   },
   welcome: {
     maxWidth: '100%',
@@ -34,6 +41,7 @@ export const wordBookStyles = (theme: Theme): StyleRules => ({
     marginBottom: theme.spacing(12),
   },
   words: {
+    marginBottom: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 1,
@@ -59,6 +67,9 @@ export const wordBookStyles = (theme: Theme): StyleRules => ({
   },
   pagination: {
     margin: theme.spacing(2),
+  },
+  buttonsContainer: {
+    display: 'flex',
   },
 });
 
