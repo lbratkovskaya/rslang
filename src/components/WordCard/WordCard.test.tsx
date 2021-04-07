@@ -8,7 +8,7 @@ import store from '../../store';
 
 const mockStore = configureStore([]);
 
-describe('<WordCard /> testing', () => {
+describe('<WordCard /> testing:', () => {
   let wrapper: ShallowWrapper<typeof WordCard>;
 
   const testStore = mockStore(store);

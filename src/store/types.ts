@@ -143,6 +143,7 @@ export enum DictionaryActionTypes {
 export interface IDictionaryAction {
   type: DictionaryActionTypes;
   payload: {
+    isLoading: boolean;
     allWords: Array<IWord>;
     learningWords: Array<IWord>;
     difficultWords: Array<IWord>;

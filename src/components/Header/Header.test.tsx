@@ -5,7 +5,7 @@ import Header from '.';
 import { logoPath, menuItems } from './navMenuData';
 import { IMenuItem } from './types';
 
-describe('<Header /> testing', () => {
+describe('<Header /> testing:', () => {
   const wrapper: ShallowWrapper<typeof Header> = shallow(<Header />).shallow();
 
   const navigationLinks = menuItems.map((menuItem: IMenuItem) => (

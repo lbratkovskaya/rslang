@@ -13,7 +13,7 @@ import { WordBookActionTypes } from '../types';
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('WordBook actions testing', () => {
+describe('wordBookActions testing:', () => {
   afterEach(() => {
     fetchMock.restore();
   });

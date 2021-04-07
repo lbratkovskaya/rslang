@@ -10,7 +10,7 @@ const rsSchoolLink = (
   </a>
 );
 
-describe('<Footer /> testing', () => {
+describe('<Footer /> testing:', () => {
   const wrapper = shallow(<Footer />);
 
   it('Should render RS School link', () => {
