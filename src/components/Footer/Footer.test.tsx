@@ -22,6 +22,6 @@ describe('<Footer /> testing:', () => {
   });
 
   it('Should render copyright', () => {
-    expect(wrapper.contains(copyright)).toEqual(true);
+    expect(wrapper.contains(copyright)).toBeTruthy();
   });
 });
