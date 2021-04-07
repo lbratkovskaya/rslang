@@ -1,11 +1,20 @@
 import { makeStyles } from '@material-ui/core';
+import { REGFORMS } from '../../constants';
 
 const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: '#fff',
+    marginTop: '1vh',
+    marginLeft: '1vw',
+  },
+  signUpPageWrapper: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    background: REGFORMS.sign_up.background,
+    backgroundSize: 'cover',
+    height: 'calc(100vh - 269px)',
   },
   paper: {
-    marginTop: '64px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -59,6 +68,11 @@ const useStyles = makeStyles(() => ({
   },
   link_button: {
     textDecoration: 'none',
+  },
+  '@media (max-width: 601px)': {
+    signUpPageWrapper: {
+      height: 'calc(100vh - 297px)',
+    },
   },
 }));
 

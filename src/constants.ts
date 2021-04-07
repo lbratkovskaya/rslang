@@ -248,4 +248,13 @@ export const GAMES: { [key: string]: IGame } = {
   },
 };
 
+export const REGFORMS = {
+  sign_in: {
+    background: 'url(../../assets/sign_in_bg.jpeg)',
+  },
+  sign_up: {
+    background: 'url(../../assets/sign_up_bg.jpeg)',
+  },
+};
+
 export default backendUrl;
