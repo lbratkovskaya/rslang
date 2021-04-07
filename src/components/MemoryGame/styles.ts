@@ -185,6 +185,7 @@ const useStyles = makeStyles(() => ({
     maxWidth: 350,
     maxHeight: 350,
     margin: '10px auto',
+    paddingTop: '20px',
   },
   table: {
     maxWidth: '350px',

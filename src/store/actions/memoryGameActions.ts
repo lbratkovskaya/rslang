@@ -123,6 +123,7 @@ export const initiateGameField = (
       }
     });
   } else {
+    dispatch(setIsLoading(false));
     const gameWords = actualWords
       .slice(-20)
       .sort(() => Math.random() - 0.5)

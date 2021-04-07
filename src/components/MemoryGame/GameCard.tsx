@@ -7,7 +7,7 @@ import {
   hideClickedCards,
   showGameCard,
 } from '../../store/actions/memoryGameActions';
-import backendUrl, { GAMES_CONSTS, MEMORY } from '../../constants';
+import backendUrl, { GAMES, MEMORY } from '../../constants';
 import { IAppState } from '../../store/types';
 import { ICardProps } from './types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
@@ -30,7 +30,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
         isOpen: false,
         disabled: false,
         audio: '',
-        gameSize: GAMES_CONSTS.gameDifficulty.easy.memoryGame,
+        gameSize: GAMES.memory.difficulty.easy.value,
         isClicked: false,
       };
 

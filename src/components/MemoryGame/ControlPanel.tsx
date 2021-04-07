@@ -13,7 +13,7 @@ import {
   startGame,
   stopGame,
 } from '../../store/actions/memoryGameActions';
-import { WORDBOOK_GROUPS, MEMORY, GAMES_CONSTS } from '../../constants';
+import { GAMES, MEMORY, WORDBOOK_GROUPS } from '../../constants';
 import { SELECT_ROUNDS } from '../GameSavannah/constants';
 import { IAppState } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
@@ -23,8 +23,8 @@ const ControlPanel: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
-  const [imageMode, setMode] = React.useState(true);
-  const [gameSize, setGameSize] = React.useState(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
+  const [gameSize, setGameSize] = React.useState(GAMES.memory.difficulty.easy.value);
+  const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
 
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
@@ -38,16 +38,16 @@ const ControlPanel: React.FC = () => {
 
   const [allCardsAreDisabled, setAllCardsAreDisabled] = React.useState(false);
 
-  const gameMode = imageMode ? 'image' : 'translation';
+  const [gameMode, setMode] = React.useState('image');
+  const handleChangeGameMode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMode(event.target.checked? 'image': 'translation');
+  };
+  
   const handleStartGame = () => {
     dispatch(
       initiateGameField(gameSize, gameMode, isCameFromWordbook, wordsCategory, page, actualWords)
     );
     dispatch(startGame());
-  };
-
-  const handleChangeGameMode = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.checked);
   };
 
   const handleStopGame = () => {
@@ -62,20 +62,20 @@ const ControlPanel: React.FC = () => {
 
   const handleSelectSize = (value: string | number) => {
     switch (value) {
-      case 'Легко': {
-        setGameSize(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
+      case GAMES.memory.difficulty.easy.label: {
+        setGameSize(GAMES.memory.difficulty.easy.value);
         break;
       }
-      case 'Нормально': {
-        setGameSize(GAMES_CONSTS.gameDifficulty.normal.memoryGame);
+      case GAMES.memory.difficulty.normal.label: {
+        setGameSize(GAMES.memory.difficulty.normal.value);
         break;
       }
-      case 'Сложно': {
-        setGameSize(GAMES_CONSTS.gameDifficulty.hard.memoryGame);
+      case GAMES.memory.difficulty.hard.label: {
+        setGameSize(GAMES.memory.difficulty.hard.value);
         break;
       }
       default:
-        setGameSize(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
+        setGameSize(GAMES.memory.difficulty.easy.value);
     }
   };
 
@@ -111,7 +111,7 @@ const ControlPanel: React.FC = () => {
 
   return (
     <>
-      {isGameStarted && !allCardsAreDisabled && (
+      {isGameStarted && !allCardsAreDisabled && !isLoading && (
         <div className={classes.controlsWrapper}>
           <Timer gameTime={gameTime} handleOnComplite={handleGameOver} size={60} />
           <div className={classes.canselBtnWrapper}>
@@ -177,7 +177,7 @@ const ControlPanel: React.FC = () => {
                   <Grid component="label" container alignItems="center" spacing={1}>
                     <Grid item>
                       <Switch
-                        checked={imageMode}
+                        checked={(gameMode === 'image')}
                         onChange={handleChangeGameMode}
                         name="setMode"
                         color="primary"
