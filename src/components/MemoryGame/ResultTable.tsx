@@ -22,6 +22,7 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
   const field = useSelector((state: IAppState) => state.memoryGame.field);
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userName = useSelector((state: IAppState) => state.user.data.name);
+  const isFail = props.isFail ? 'Сожалеем, вы проиграли...' : 'Поздравляем, вы выиграли!!!';
 
   const renderAnswers = (element: IMemoryGameCard, i: number) => {
     return (
@@ -65,8 +66,7 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
     <>
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Typography variant="subtitle1" gutterBottom>
-          {props.isFail && <p>Сожалеем, вы проиграли...</p>}
-          {!props.isFail && <p>Поздравляем, вы выиграли!!!</p>}
+          {isFail}
         </Typography>
         <Table className={classes.table} size="small">
           <TableHead>

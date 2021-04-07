@@ -93,6 +93,23 @@ export const SAVANNAH = {
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
 };
 
+export const GAMES_CONSTS = {
+  gameDifficulty: {
+    easy: {
+      label: 'Легко',
+      memoryGame: 4,
+    },
+    normal: {
+      label: 'Нормально',
+      memoryGame: 8,
+    },
+    hard: {
+      label: 'Сложно',
+      memoryGame: 10,
+    },
+  },
+};
+
 export const MEMORY = {
   timeShowingCard: 700,
   sheet: 'assets/sheet-bg.jpg',
@@ -124,9 +141,6 @@ export const MEMORY = {
       background: COLORS.BG_RED,
     },
   ],
-  Easy: 4,
-  Normal: 8,
-  Hard: 10,
 };
 
 export interface IGroup {

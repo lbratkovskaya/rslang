@@ -13,7 +13,7 @@ import {
   startGame,
   stopGame,
 } from '../../store/actions/memoryGameActions';
-import { WORDBOOK_GROUPS, MEMORY } from '../../constants';
+import { WORDBOOK_GROUPS, MEMORY, GAMES_CONSTS } from '../../constants';
 import { SELECT_ROUNDS } from '../GameSavannah/constants';
 import { IAppState } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
@@ -23,8 +23,8 @@ const ControlPanel: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
-  const [mode, setMode] = React.useState(true);
-  const [gameSize, setGameSize] = React.useState(MEMORY.Easy);
+  const [imageMode, setMode] = React.useState(true);
+  const [gameSize, setGameSize] = React.useState(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
 
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
@@ -38,7 +38,7 @@ const ControlPanel: React.FC = () => {
 
   const [allCardsAreDisabled, setAllCardsAreDisabled] = React.useState(false);
 
-  const gameMode = mode ? 'image' : 'translation';
+  const gameMode = imageMode ? 'image' : 'translation';
   const handleStartGame = () => {
     dispatch(
       initiateGameField(gameSize, gameMode, isCameFromWordbook, wordsCategory, page, actualWords)
@@ -63,19 +63,19 @@ const ControlPanel: React.FC = () => {
   const handleSelectSize = (value: string | number) => {
     switch (value) {
       case 'Легко': {
-        setGameSize(MEMORY.Easy);
+        setGameSize(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
         break;
       }
       case 'Нормально': {
-        setGameSize(MEMORY.Normal);
+        setGameSize(GAMES_CONSTS.gameDifficulty.normal.memoryGame);
         break;
       }
       case 'Сложно': {
-        setGameSize(MEMORY.Hard);
+        setGameSize(GAMES_CONSTS.gameDifficulty.hard.memoryGame);
         break;
       }
       default:
-        setGameSize(MEMORY.Easy);
+        setGameSize(GAMES_CONSTS.gameDifficulty.easy.memoryGame);
     }
   };
 
@@ -177,7 +177,7 @@ const ControlPanel: React.FC = () => {
                   <Grid component="label" container alignItems="center" spacing={1}>
                     <Grid item>
                       <Switch
-                        checked={mode}
+                        checked={imageMode}
                         onChange={handleChangeGameMode}
                         name="setMode"
                         color="primary"

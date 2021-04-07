@@ -100,7 +100,7 @@ const sendUserWord = (
   const fetchUserId = userData.userId;
   const userToken = userData.token;
   // eslint-disable-next-line no-underscore-dangle
-  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word).id}`;
+  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word)._id}`;
   const method = isNew ? 'POST' : 'PUT';
 
   const successHeats = getSuccessHeats(word);
@@ -155,7 +155,7 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
 };
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
-  //const deleted = getDeleted(word);
+  // const deleted = getDeleted(word);
   if ((<IUserWord>word).userWord === undefined) {
     saveUserWord(word, userData, 'hard', false)(dispatch);
   } else {
