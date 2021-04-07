@@ -98,6 +98,7 @@ export const initiateGameField = (
   page: number,
   actualWords: Array<IWord>
 ) => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true));
   const url = `${backendUrl}/words/?group=${group}&page=${page}`;
   if (!isCameFromWordBook) {
     fetch(url).then((res) => {
@@ -115,8 +116,10 @@ export const initiateGameField = (
             );
           });
         }
+        dispatch(setIsLoading(false));
       } catch (e) {
         dispatch(setError(true));
+        dispatch(setIsLoading(false));
       }
     });
   } else {

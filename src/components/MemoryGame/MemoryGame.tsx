@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFullScreenHandle } from 'react-full-screen';
-import { CssBaseline, Typography } from '@material-ui/core';
+import { CircularProgress, CssBaseline, Typography } from '@material-ui/core';
 import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
 import ControlPanel from './ControlPanel';
 import Header from '../Header';
@@ -16,6 +16,7 @@ const MemoryGame: React.FC = () => {
   const field = useSelector((state: IAppState) => state.memoryGame.field);
   const handleFullScreenWrapper = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
+  const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading)
 
   const handleFullSizeMemoryGame = () => {
     setFullSize(!fullSize);
@@ -29,7 +30,10 @@ const MemoryGame: React.FC = () => {
         <CssBaseline />
         <ControlPanel />
         <div className={classes.cardsWrapper}>
-          {isGameStarted &&
+          {isGameStarted && isLoading &&
+            <CircularProgress />
+          }
+          {isGameStarted && !isLoading &&
             field.map((card: IMemoryGameCard) => {
               return (
                 <GameCard
