@@ -4,6 +4,7 @@ import { ISettingsAction, SettingsActionTypes } from './types';
 
 const initialState: ISettingsState = {
   soundsVolume: MAX_VOLUME,
+  gameMode: 'easy',
 };
 
 export default function settingsReducer(
@@ -12,7 +13,9 @@ export default function settingsReducer(
 ) {
   switch (action.type) {
     case SettingsActionTypes.CHANGE_VOLUME:
-      return { ...state, soundsVolume: action.payload };
+      return { ...state, soundsVolume: action.payload.soundsVolume };
+    case SettingsActionTypes.CHANGE_GAME_MODE:
+      return { ...state, gameMode: action.payload.gameMode };
     default:
       return state;
   }

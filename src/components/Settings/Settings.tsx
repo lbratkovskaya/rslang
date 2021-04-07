@@ -1,23 +1,37 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, IconButton, Slider, Typography } from '@material-ui/core';
+import {
+  FormControlLabel,
+  Grid,
+  IconButton,
+  Radio,
+  RadioGroup,
+  Slider,
+  Typography,
+} from '@material-ui/core';
 import { VolumeOff, VolumeUp } from '@material-ui/icons';
 import Footer from '../Footer';
 import Header from '../Header';
-import { changeVolumeSounds } from '../../store/actions/settingsActions';
+import { changeVolumeSounds, changeGameModeAction } from '../../store/actions/settingsActions';
 import { MAX_VOLUME, MIN_VOLUME } from '../../constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { ISettingsAction } from '../../store/reducers/settingsReducer/types';
 
 const Settings: React.FC = () => {
   const dispatch = useDispatch();
   const settingsState = useSelector((state: IAppState) => state.settings);
-  const changeVolume = (volume: number | Array<number>): ISettingsAction =>
-    dispatch(changeVolumeSounds(volume));
+  const { gameMode } = settingsState;
+  const changeVolume = (volume: number | Array<number>) => dispatch(changeVolumeSounds(volume));
+  const changeGameMode = (mode: string) => dispatch(changeGameModeAction(mode));
   const handleChange = (e: React.ChangeEvent<{}>, value: number | Array<number>): void => {
     changeVolume(value);
   };
+
+  const handleChangeGameMode = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value } = e.currentTarget;
+    changeGameMode(value);
+  };
+
   const handleVolumeUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
     return name === 'volumeUp' ? changeVolume(MAX_VOLUME) : changeVolume(MIN_VOLUME);
@@ -51,6 +65,19 @@ const Settings: React.FC = () => {
               </IconButton>
             </Grid>
           </Grid>
+        </div>
+        <div>
+          <Typography>Уровень сложности игр</Typography>
+          <RadioGroup
+            aria-label="gender"
+            name="gender1"
+            className={classes.gameModeWrapper}
+            value={gameMode}
+            onChange={handleChangeGameMode}>
+            <FormControlLabel value="easy" control={<Radio />} label="Легкий" />
+            <FormControlLabel value="normal" control={<Radio />} label="Средний" />
+            <FormControlLabel value="hard" control={<Radio />} label="Сложный" />
+          </RadioGroup>
         </div>
       </div>
       <Footer />

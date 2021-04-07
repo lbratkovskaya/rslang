@@ -41,6 +41,12 @@ const SavannahGamePlay: React.FC = () => {
   };
 
   useEffect(() => {
+    return () => {
+      startGame(false);
+    };
+  }, []);
+
+  useEffect(() => {
     const checkEndGame = (startWord >= savannahData?.words.length && !isEndGame) || health === 0;
     if (checkEndGame) {
       setIsEndGame(true);

@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) =>
       transform: 'translate(-50%)',
       color: '#fff',
       textTransform: 'capitalize',
+      fontSize: '2rem',
     },
     savannahChooseWrapper: {
       display: 'flex',

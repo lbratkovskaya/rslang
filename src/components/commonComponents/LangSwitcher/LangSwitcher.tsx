@@ -15,9 +15,7 @@ const LangSwitcher: React.FC<ILangSwitchProps> = (props: ILangSwitchProps) => {
         Язык загадываемых слов
       </Typography>
       <FormControlLabel
-        control={
-          <Switch color="primary" checked={props.isLang} classes={{ root: classes.switchRoot }} />
-        }
+        control={<Switch color="primary" checked={props.isLang} />}
         label={props.isLang ? 'En' : 'Ру'}
         onChange={handleSwitchLang}
       />

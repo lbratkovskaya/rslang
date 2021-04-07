@@ -56,9 +56,6 @@ const useStyles = makeStyles((theme) =>
         margin: '0 0.5rem',
       },
     },
-    switchRoot: {
-      padding: '5px',
-    },
     timer: {
       display: 'flex',
       flexDirection: 'column',

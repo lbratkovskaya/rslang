@@ -170,4 +170,5 @@ export interface IGamesAction {
 
 export interface ISettingsState {
   soundsVolume: number;
+  gameMode: string;
 }

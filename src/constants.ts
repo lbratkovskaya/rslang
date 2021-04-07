@@ -86,8 +86,7 @@ export const NUM_OF_PAGES = 30;
 export const SAVANNAH = {
   health: 5,
   timeOutDelay: 500,
-  background:
-    'https://www.pixelstalk.net/wp-content/uploads/images2/Animal-Backgrounds-Free-Download.jpg',
+  background: '../../../assets/savannah-bg.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
   audioCorrect: '../../../assets/audio/savannah-true.mp3',

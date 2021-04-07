@@ -30,21 +30,21 @@ const GameSavannah: React.FC = () => {
   }, []);
 
   const gameComponent = (
-    <>
+    <div>
       <div className={`${classes.savannahWrapper}${fullScreenClass}`} style={style}>
         {!savannahData.isStartGame ? <SavannahStartWindow /> : <SavannahGamePlay />}
       </div>
       <FullScreenBtn changeScreen={handleFullSize} />
-    </>
+    </div>
   );
 
   return (
-    <>
+    <div>
       <div className={classes.headerWrapper}>
         <Header />
       </div>
       <FullScreenWrapper component={gameComponent} handle={handle} />
-    </>
+    </div>
   );
 };
 

@@ -6,3 +6,10 @@ export function changeVolumeSounds(value: number | Array<number>) {
     payload: { soundsVolume: value },
   };
 }
+
+export function changeGameModeAction(value: string) {
+  return {
+    type: SettingsActionTypes.CHANGE_GAME_MODE,
+    payload: { gameMode: value },
+  };
+}
