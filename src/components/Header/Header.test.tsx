@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
 import { Link } from 'react-router-dom';
+import { shallow, ShallowWrapper } from 'enzyme';
 import Header from '.';
 import { logoPath, menuItems } from './navMenuData';
 import { IMenuItem } from './types';
