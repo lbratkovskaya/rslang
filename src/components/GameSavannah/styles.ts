@@ -5,38 +5,8 @@ import { SAVANNAH } from '../../constants';
 const useStyles = makeStyles((theme) =>
   createStyles({
     headerWrapper: {
-      position: 'absolute',
-      width: '100%',
-      zIndex: 10,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      transition: '0.5s linear',
-      '& svg': {
-        marginTop: '0.5rem',
-        fill: '#fff',
-      },
-    },
-    headerArrowBtn: {
-      transform: 'rotate(90deg)',
       position: 'relative',
-      animation: `$arrowAimate 1s linear infinite`,
-      cursor: 'pointer',
-    },
-
-    arrowDown: {
-      transform: 'rotate(90deg)',
-    },
-
-    arrowUp: {
-      transform: 'rotate(-90deg)',
-    },
-
-    headerHide: {
-      top: '-80px',
-    },
-    headerShow: {
-      top: '0',
+      zIndex: 2,
     },
     savannahWrapper: {
       background: `url(${SAVANNAH.background})
@@ -79,11 +49,13 @@ const useStyles = makeStyles((theme) =>
     },
     fallenWord: {
       position: 'absolute',
+      zIndex: 0,
       top: '-100px',
       left: '50%',
       transform: 'translate(-50%)',
       color: '#fff',
       textTransform: 'capitalize',
+      fontSize: '2rem',
     },
     savannahChooseWrapper: {
       display: 'flex',

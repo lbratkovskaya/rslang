@@ -9,3 +9,5 @@ export const SELECT_ROUNDS: IOptions = {
   name: 'round',
   amount: 30,
 };
+
+export const MAX_LENGTH_GAME_ARR: number = 20;

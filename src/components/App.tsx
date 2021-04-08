@@ -6,7 +6,9 @@ import MainPage from './MainPage';
 import GameSavannah from './GameSavannah';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
+import Settings from './Settings';
 import UserDictionary from './UserDictionary/UserDictionary';
+
 import RandomPage from './RandomPage';
 import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';
@@ -32,6 +34,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.dictionary} component={UserDictionary} />
                 <Route path={ROUTES.games.savannah} component={GameSavannah} />
                 <Route path={ROUTES.study} component={RandomPage} />
+                <Route path={ROUTES.settings} component={Settings} />
                 <Route exact path={ROUTES.root} component={MainPage} />
               </Switch>
             </CSSTransition>

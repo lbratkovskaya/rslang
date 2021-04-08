@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) =>
       '& span': {
         pointerEvents: 'none',
         '& svg': {
-          fill: '#fff',
+          fill: '#FFFFFF',
         },
       },
     },
@@ -19,10 +19,28 @@ const useStyles = makeStyles((theme) =>
       alignItems: 'center',
       fontSize: '1.5rem',
       marginRight: '1rem',
+      '& > div::before': {
+        borderColor: '#FFFFFF !important',
+      },
+      '& > div::after': {
+        borderColor: '#FFFFFF !important',
+      },
+      '& select': {
+        color: '#FFFFFF !important',
+        '&[disabled]': {
+          opacity: 0.6,
+        },
+      },
+      '& option': {
+        color: '#000000 !important',
+      },
+      '& svg': {
+        color: '#FFFFFF !important',
+      },
     },
     savannahSelectorName: {
       margin: '0 1rem',
-      color: '#fff',
+      color: '#FFFFFF',
       textTransform: 'capitalize',
       fontSize: '18px',
       [theme.breakpoints.down('sm')]: {
@@ -33,13 +51,10 @@ const useStyles = makeStyles((theme) =>
     switchLangWrapper: {
       display: 'flex',
       alignItems: 'center',
-      color: '#fff',
+      color: '#FFFFFF',
       '& h6': {
         margin: '0 0.5rem',
       },
-    },
-    switchRoot: {
-      padding: '5px',
     },
     timer: {
       display: 'flex',
@@ -52,7 +67,10 @@ const useStyles = makeStyles((theme) =>
     },
     gameOver: {
       fontSize: '1.2rem',
-      color: 'white',
+      color: '#FFFFFF',
+    },
+    exitBtnColor: {
+      color: '#FFFFFF !important',
     },
   })
 );

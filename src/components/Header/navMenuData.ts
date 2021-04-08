@@ -60,4 +60,10 @@ export const menuItems: Array<IMenuItem> = [
     label: 'Статистика',
     withSubMenu: false,
   },
+  {
+    id: 'settings',
+    linkAddress: ROUTES.settings,
+    label: 'Настройки',
+    withSubMenu: false,
+  },
 ];

@@ -11,7 +11,7 @@ import {
   switchLang,
 } from '../../../store/actions/savannahActions';
 import { fetchWords } from '../../../store/actions/wordBookActions';
-import { SELECT_ROUNDS } from '../constants';
+import { MAX_LENGTH_GAME_ARR, SELECT_ROUNDS } from '../constants';
 import { WORDBOOK_GROUPS } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles, { theme } from '../styles';
@@ -39,24 +39,25 @@ const SavannahStartWindow: React.FC = () => {
     getWords(group, page);
   }, [group, page]);
 
-  const handleChange = (value: string | number) => {
+  const handleChange = (value: string | number): void => {
     setSelectLevel(Number(value));
   };
-  const handleStartGame = () => {
-    const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount) % SELECT_ROUNDS.amount;
-    setSelectRound(randomPage);
-    onReduceArrayWords(wordBook?.words);
+  const handleStartGame = (): void => {
+    if (isCameFromWordbook) {
+      const cutActualWords = actualWords.slice(-MAX_LENGTH_GAME_ARR);
+      onReduceArrayWords(cutActualWords);
+    } else {
+      const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount) % SELECT_ROUNDS.amount;
+      setSelectRound(randomPage);
+      onReduceArrayWords(wordBook?.words);
+    }
+
     startGame(true);
   };
 
-  const handleSwitchLang = (checked: boolean) => {
+  const handleSwitchLang = (checked: boolean): void => {
     switchLanguage(checked);
   };
-
-  useEffect(() => {
-    if (isCameFromWordbook) console.log('Came from wordBook, actual words: ', actualWords);
-    // TODO: use isComeFromWordbook flag to pass actualWords to the game
-  }, []);
 
   return (
     <>
@@ -66,6 +67,8 @@ const SavannahStartWindow: React.FC = () => {
             changeSelectFc={handleChange}
             selectData={WORDBOOK_GROUPS}
             selectName="Уровень"
+            disabled={isCameFromWordbook}
+            value={group}
           />
           <LangSwitcher isLang={savannahData.isEng} handleSwitch={handleSwitchLang} />
         </div>

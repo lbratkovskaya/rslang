@@ -5,6 +5,8 @@ export interface IGameSelectProps {
   changeSelectFc: (item: string | number) => void;
   selectData: Array<IGroup> | number;
   selectName: string;
+  disabled: boolean;
+  value: number;
 }
 
 export interface ILangSwitchProps {

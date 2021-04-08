@@ -86,8 +86,7 @@ export const NUM_OF_PAGES = 30;
 export const SAVANNAH = {
   health: 5,
   timeOutDelay: 500,
-  background:
-    'https://www.pixelstalk.net/wp-content/uploads/images2/Animal-Backgrounds-Free-Download.jpg',
+  background: '../../../assets/savannah-bg.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
   audioCorrect: '../../../assets/audio/savannah-true.mp3',
@@ -120,6 +119,11 @@ export const GAMES_WORDS_MAX_AMOUNT = 40;
 
 export const HEADER_HEIGHT = 80;
 export const MIN_MAIN_HEIGHT = `calc(100vh - ${HEADER_HEIGHT}px)`;
+
+export const VOLUME_DIVIDER = 100;
+
+export const MAX_VOLUME = 100;
+export const MIN_VOLUME = 0;
 
 export interface IGame {
   title: string;
