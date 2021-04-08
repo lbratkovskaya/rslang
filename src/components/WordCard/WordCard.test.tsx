@@ -28,7 +28,7 @@ describe('<WordCard /> testing:', () => {
     );
   });
 
-  it('WordCard must have a correct snapshot', () => {
+  it('Must have a correct snapshot', () => {
     expect(wrapper.debug()).toMatchSnapshot();
   });
 

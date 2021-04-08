@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen, configure } from '@testing-library/react';
-import GameSelect from './GameSelect';
+import GameSelect from '.';
 import { WORDBOOK_GROUPS } from '../../../constants';
 
 configure({ testIdAttribute: 'id' });
