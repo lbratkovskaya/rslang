@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Popover, Typography, Tooltip, Checkbox } from '@material-ui/core';
-import { Settings } from '@material-ui/icons';
+import { TuneRounded } from '@material-ui/icons';
 import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
@@ -33,12 +33,12 @@ const SettingsPopover: React.FC = () => {
 
   return (
     <>
-      <Tooltip title="Настройки">
-        <Settings
+      <Tooltip title="Настройки" placement="right">
+        <TuneRounded
           aria-describedby={id}
           onClick={handleClick}
           className={classes.settingsButton}
-          color="action"
+          color="secondary"
         />
       </Tooltip>
       <Popover
@@ -46,6 +46,7 @@ const SettingsPopover: React.FC = () => {
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}
+        disableScrollLock
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',
