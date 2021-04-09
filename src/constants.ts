@@ -1,4 +1,4 @@
-const backendUrl = 'https://rslang-server.herokuapp.com';
+export const backendUrl = 'https://rslang-server.herokuapp.com';
 
 export const ROUTES = {
   root: '/',
@@ -43,37 +43,37 @@ export enum COLORS {
 
 export const WORDBOOK_GROUPS: Array<IGroup> = [
   {
-    label: 'Красный',
+    label: '�������',
     linkAddress: ROUTES.wordBook.red,
     color: COLORS.RED,
     background: COLORS.BG_RED,
   },
   {
-    label: 'Жёлтый',
+    label: 'Ƹ����',
     linkAddress: ROUTES.wordBook.yellow,
     color: COLORS.YELLOW,
     background: COLORS.BG_YELLOW,
   },
   {
-    label: 'Оранжевый',
+    label: '���������',
     linkAddress: ROUTES.wordBook.orange,
     color: COLORS.ORANGE,
     background: COLORS.BG_ORANGE,
   },
   {
-    label: 'Зелёный',
+    label: '������',
     linkAddress: ROUTES.wordBook.green,
     color: COLORS.GREEN,
     background: COLORS.BG_GREEN,
   },
   {
-    label: 'Синий',
+    label: '�����',
     linkAddress: ROUTES.wordBook.blue,
     color: COLORS.BLUE,
     background: COLORS.BG_BLUE,
   },
   {
-    label: 'Фиолетовый',
+    label: '����������',
     linkAddress: ROUTES.wordBook.purple,
     color: COLORS.PURPLE,
     background: COLORS.BG_PURPLE,
@@ -87,8 +87,8 @@ export const SAVANNAH = {
   health: 5,
   timeOutDelay: 500,
   background: '../../../assets/savannah-bg.jpg',
-  sadImg: '../../../assets/sad.svg',
-  winkImg: '../../../assets/wink.svg',
+  sadImg: '../../../assets/sad.png',
+  winkImg: '../../../assets/wink.png',
   audioCorrect: '../../../assets/audio/savannah-true.mp3',
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
 };
@@ -147,59 +147,33 @@ export const VOLUME_DIVIDER = 100;
 
 export const MAX_VOLUME = 100;
 export const MIN_VOLUME = 0;
-interface IgameDifficulty {
-  value: number;
-  label: string;
-}
+export const EXTRA_WORDS_FOR_GAMES = 50;
+
+export const COUNTDOWN = {
+  delay: 3,
+  percentage: 100,
+  timeOutPetcent: 25,
+};
 
 export interface IGame {
   title: string;
   background: string;
   route: string;
-  difficulty: { [key: string]: IgameDifficulty };
 }
 
 export const GAMES: { [key: string]: IGame } = {
   savannah: {
-    title: 'Саванна',
+    title: '�������',
     background: 'url(../../assets/savannah-bg.jpg) center no-repeat',
     route: ROUTES.games.savannah,
-    difficulty: {
-      easy: {
-        value: 0,
-        label: 'Легко',
-      },
-      normal: {
-        value: 0,
-        label: 'Нормально',
-      },
-      hard: {
-        value: 0,
-        label: 'Сложно',
-      },
-    },
   },
   audio: {
-    title: 'Аудиовызов',
+    title: '����������',
     background: 'linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d)',
     route: ROUTES.games.audio,
-    difficulty: {
-      easy: {
-        value: 0,
-        label: 'Легко',
-      },
-      normal: {
-        value: 0,
-        label: 'Нормально',
-      },
-      hard: {
-        value: 0,
-        label: 'Сложно',
-      },
-    },
   },
   sprint: {
-    title: 'Спринт',
+    title: '������',
     background: '',
     route: ROUTES.games.sprint,
     difficulty: {
@@ -218,33 +192,16 @@ export const GAMES: { [key: string]: IGame } = {
     },
   },
   memory: {
-    title: 'Найди пару',
+    title: '����� ����',
     background: '',
     route: ROUTES.games.memory,
-    difficulty: {
-      easy: {
-        value: 4,
-        label: 'Легко',
-      },
-      normal: {
-        value: 8,
-        label: 'Нормально',
-      },
-      hard: {
-        value: 10,
-        label: 'Сложно',
-      },
-    },
   },
 };
 
-export const REGFORMS = {
-  sign_in: {
-    background: 'url(../../assets/sign_in_bg.jpeg)',
-  },
-  sign_up: {
-    background: 'url(../../assets/sign_up_bg.jpeg)',
-  },
+export const GAME_MODE_WORDS = {
+  easy: 10,
+  normal: 20,
+  hard: 30,
 };
 
 export default backendUrl;

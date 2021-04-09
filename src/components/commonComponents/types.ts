@@ -36,3 +36,7 @@ export interface ITimerProps {
   size: number;
   handleOnComplite: () => void;
 }
+
+export interface IGameModeProps {
+  changeModeFc: (mode: string) => void;
+}

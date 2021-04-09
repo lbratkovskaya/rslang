@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useFullScreenHandle } from 'react-full-screen';
 import SavannahGamePlay from './SavannahGamePlay';
 import SavannahStartWindow from './SavannahStartWindow';
-import { FullScreenWrapper, FullScreenBtn } from '../commonComponents';
+import { FullScreenWrapper, FullScreenBtn, Countdown } from '../commonComponents';
 import Header from '../Header';
 import { SAVANNAH } from '../../constants';
 import { IAppState } from '../../store/types';
@@ -11,6 +11,7 @@ import useStyles from './styles';
 
 const GameSavannah: React.FC = () => {
   const savannahData = useSelector((state: IAppState) => state.savannah);
+  const { isCountDown } = useSelector((state: IAppState) => state.games);
   const [fullSize, setFullSize] = useState(false);
   const classes = useStyles();
   const handle = useFullScreenHandle();
@@ -29,10 +30,17 @@ const GameSavannah: React.FC = () => {
     bg.src = SAVANNAH.background;
   }, []);
 
+  const renderComponent = () => {
+    if (!isCountDown) {
+      return !savannahData.isStartGame ? <SavannahStartWindow /> : <SavannahGamePlay />;
+    }
+    return <Countdown />;
+  };
+
   const gameComponent = (
     <div>
       <div className={`${classes.savannahWrapper}${fullScreenClass}`} style={style}>
-        {!savannahData.isStartGame ? <SavannahStartWindow /> : <SavannahGamePlay />}
+        {renderComponent()}
       </div>
       <FullScreenBtn changeScreen={handleFullSize} />
     </div>

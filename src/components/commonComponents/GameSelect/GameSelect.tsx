@@ -2,7 +2,7 @@ import React from 'react';
 import { NativeSelect } from '@material-ui/core';
 import { IGroup, WORDBOOK_GROUPS } from '../../../constants';
 import { IGameSelectProps } from '../types';
-import useStyles from '../styles';
+import { useStyles } from '../styles';
 
 const GameSelect: React.FC<IGameSelectProps> = (props: IGameSelectProps) => {
   const classes = useStyles();

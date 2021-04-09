@@ -7,6 +7,7 @@ export enum SavannahActionTypes {
   SAVANNAH_START_GAME = 'SAVANNAH/START_GAME',
   SAVANNAH_REDUCE_ARR = 'SAVANNAH/REDUCE_ARR',
   SAVANNAH_ANSWER = 'SAVANNAH/SAVANNAH_ANSWER',
+  SAVANNAH_GAME_MODE = 'SAVANNAH/SAVANNAH_GAME_MODE',
 }
 
 export interface ISavannahActions {
@@ -16,6 +17,7 @@ export interface ISavannahActions {
     round: number;
     isEng: boolean;
     isStartGame: boolean;
-    words: Array<ISavannahWord>;
+    mode: string;
+    wordsData: Array<ISavannahWord>;
   };
 }

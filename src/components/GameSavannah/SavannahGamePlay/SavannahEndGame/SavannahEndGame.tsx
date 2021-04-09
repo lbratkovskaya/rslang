@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
-import { Clear, Done } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 import SavannahGamePlay from '../SavannahGamePlay';
+import { GameExitBtn, TableEndGame } from '../../../commonComponents';
 import {
+  clickStartGame,
   reduceArrayWords,
   selectLevel,
   selectRound,
 } from '../../../../store/actions/savannahActions';
-import { fetchWords } from '../../../../store/actions/wordBookActions';
+import { addWordsToUserDictionary } from '../../../../store/actions/dictionaryActions';
+import { fetchGameWords } from '../../../../store/actions/gamesActions';
 import { SELECT_LEVELS, SELECT_ROUNDS } from '../../constants';
-import { IAppState, ISavannahWord, IWord } from '../../../../store/types';
+import { IAppState, IUserData, IWord } from '../../../../store/types';
 import useStyles from '../../styles';
 
 const SavannahEndGame: React.FC = () => {
@@ -30,11 +23,16 @@ const SavannahEndGame: React.FC = () => {
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
   ]);
-  const onRandomLevel = (level: number) => dispatch(selectLevel(level));
-  const onRandomRound = (round: number) => dispatch(selectRound(round));
-  const getWords = (group: number, page: number) => dispatch(fetchWords(group, page));
   const onReduceArrayWords = (wordsArray: Array<IWord>) =>
     dispatch(reduceArrayWords(wordsArray, userWords));
+  const user = useSelector((state: IAppState) => state.user.data);
+  const { gameWords } = useSelector((state: IAppState) => state.games);
+  const onRandomLevel = (level: number) => dispatch(selectLevel(level));
+  const onRandomRound = (round: number) => dispatch(selectRound(round));
+  const getGameWords = (groups: number, pages: number) => dispatch(fetchGameWords(groups, pages));
+  const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
+  const sendWordsToUserDictionary = (words: Array<IWord>, userData: IUserData) =>
+    dispatch(addWordsToUserDictionary(words, userData));
 
   const [isRestart, setIsRestart] = useState(false);
 
@@ -42,49 +40,36 @@ const SavannahEndGame: React.FC = () => {
   const page: number = Math.floor(Math.random() * SELECT_ROUNDS.amount);
 
   useEffect(() => {
-    getWords(group, page);
+    getGameWords(group, page);
+  }, []);
+
+  useEffect(() => {
+    const arrayForUserDictionary = savannahData.wordsData.map((el) => el.word);
+    return () => {
+      sendWordsToUserDictionary(arrayForUserDictionary, user);
+    };
   }, []);
 
   const handleNewGame = () => {
     onRandomLevel(group);
     onRandomRound(page);
     setIsRestart(true);
-    onReduceArrayWords(wordBook?.words);
+    onReduceArrayWords(gameWords);
+  };
+
+  const handleExitGame = (): void => {
+    startGame(false);
   };
 
   const classes = useStyles();
 
-  const renderAnswers = (element: ISavannahWord, condition: boolean) => {
-    return (
-      <TableRow key={element.word}>
-        <TableCell>{element.word}</TableCell>
-        <TableCell align="right">
-          {condition ? (
-            <Done className={classes.correctAnswer} />
-          ) : (
-            <Clear className={classes.incorrectAnswer} />
-          )}
-        </TableCell>
-      </TableRow>
-    );
-  };
-
   if (!isRestart) {
     return (
-      <div className="end-game-wrapper">
-        <TableContainer className={classes.tableContainer} component={Paper}>
-          <Table className={classes.table} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Слово</TableCell>
-                <TableCell align="right">Ответ</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {savannahData.words.map((el: ISavannahWord) => renderAnswers(el, el.isCorrect))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <div>
+        <div className={classes.savannahEndGameExit}>
+          <GameExitBtn clickBtn={handleExitGame} />
+        </div>
+        <TableEndGame words={savannahData.wordsData} />
         <Button variant="contained" color="secondary" onClick={handleNewGame}>
           Новая игра
         </Button>

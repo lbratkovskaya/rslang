@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) =>
       zIndex: 2,
     },
     savannahWrapper: {
+      position: 'relative',
       background: `url(${SAVANNAH.background})
         rgb(133, 129, 129) no-repeat`,
       backgroundBlendMode: 'multiply',
@@ -107,7 +108,7 @@ const useStyles = makeStyles((theme) =>
     },
 
     footerImg: {
-      width: '50px',
+      width: '80px',
     },
 
     footerImgAnimate: {
@@ -116,28 +117,18 @@ const useStyles = makeStyles((theme) =>
     savannahSwitcher: {
       padding: '1rem',
     },
-    tableContainer: {
-      maxWidth: 350,
-      height: 350,
-      margin: '10px auto',
-    },
-    table: {
-      maxWidth: 350,
-      paddingLeft: 20,
-      paddingRight: 20,
-    },
-    incorrectAnswer: {
-      color: 'red',
-    },
-    correctAnswer: {
-      color: 'green',
-    },
     savannahWordFall: {
       animation: `$fallen 5s linear`,
     },
 
     switchLabel: {
       color: '#fff',
+    },
+
+    savannahEndGameExit: {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
     },
 
     '@keyframes fallen': {

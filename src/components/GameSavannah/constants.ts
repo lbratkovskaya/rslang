@@ -10,4 +10,9 @@ export const SELECT_ROUNDS: IOptions = {
   amount: 30,
 };
 
-export const MAX_LENGTH_GAME_ARR: number = 20;
+export const KEYBOARD_CODE = {
+  1: 49,
+  2: 50,
+  3: 51,
+  4: 52,
+};
