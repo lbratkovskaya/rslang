@@ -1,3 +1,5 @@
+import { IMemoryGameState } from './reducers/memoryGameReducer/types';
+
 export interface IAppState {
   wordBook: IWordBookState;
   savannah: ISavannahState;
@@ -5,6 +7,7 @@ export interface IAppState {
   userDictionary: IDictionaryState;
   games: IGamesState;
   settings: ISettingsState;
+  memoryGame: IMemoryGameState;
 }
 
 export interface IUserData {

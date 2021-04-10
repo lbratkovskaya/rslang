@@ -93,6 +93,39 @@ export const SAVANNAH = {
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
 };
 
+export const MEMORY = {
+  timeShowingCard: 700,
+  sheet: 'assets/sheet-bg.jpg',
+  background: 'assets/memory-bg.jpg',
+  gameTimePerCard: 5,
+  sizes: [
+    {
+      label: '',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Легко',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Нормально',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Сложно',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+  ],
+};
+
 export interface IGroup {
   label: string;
   linkAddress: string;
@@ -124,11 +157,16 @@ export const VOLUME_DIVIDER = 100;
 
 export const MAX_VOLUME = 100;
 export const MIN_VOLUME = 0;
+interface IgameDifficulty {
+  value: number;
+  label: string;
+}
 
 export interface IGame {
   title: string;
   background: string;
   route: string;
+  difficulty: { [key: string]: IgameDifficulty };
 }
 
 export const GAMES: { [key: string]: IGame } = {
@@ -136,21 +174,77 @@ export const GAMES: { [key: string]: IGame } = {
     title: 'Саванна',
     background: 'url(../../assets/savannah-bg.jpg) center no-repeat',
     route: ROUTES.games.savannah,
+    difficulty: {
+      easy: {
+        value: 0,
+        label: 'Легко',
+      },
+      normal: {
+        value: 0,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 0,
+        label: 'Сложно',
+      },
+    },
   },
   audio: {
     title: 'Аудиовызов',
     background: 'linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d)',
     route: ROUTES.games.audio,
+    difficulty: {
+      easy: {
+        value: 0,
+        label: 'Легко',
+      },
+      normal: {
+        value: 0,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 0,
+        label: 'Сложно',
+      },
+    },
   },
   sprint: {
     title: 'Спринт',
     background: '',
     route: ROUTES.games.sprint,
+    difficulty: {
+      easy: {
+        value: 0,
+        label: 'Легко',
+      },
+      normal: {
+        value: 0,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 0,
+        label: 'Сложно',
+      },
+    },
   },
   memory: {
     title: 'Найди пару',
     background: '',
     route: ROUTES.games.memory,
+    difficulty: {
+      easy: {
+        value: 4,
+        label: 'Легко',
+      },
+      normal: {
+        value: 8,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 10,
+        label: 'Сложно',
+      },
+    },
   },
 };
 

@@ -5,6 +5,7 @@ import dictionaryReducer from './dictionaryReducer/dictionaryReducer';
 import gamesReducer from './gamesReducer/gamesReducer';
 import savannahReducer from './savannahReducer/savannahReducer';
 import settingsReducer from './settingsReducer/settingsReducer';
+import memoryGameReducer from './memoryGameReducer/memoryGameReducer';
 
 export default combineReducers({
   wordBook: wordBookReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   games: gamesReducer,
   savannah: savannahReducer,
   settings: settingsReducer,
+  memoryGame: memoryGameReducer,
 });

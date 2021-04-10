@@ -10,13 +10,15 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
+import Footer from '../Footer';
+import Header from '../Header';
 import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
 import { ROUTES } from '../../constants';
 
 const SignInPage: React.FC = () => {
-  const styles = useStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -76,13 +78,14 @@ const SignInPage: React.FC = () => {
 
   return (
     <div>
-      <Container className={styles.container} component="main" maxWidth="xs">
+      <Header />
+      <Container className={classes.container} component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={styles.paper}>
+        <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Вход
           </Typography>
-          <form className={styles.form} noValidate onSubmit={handleSubmit}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -117,22 +120,32 @@ const SignInPage: React.FC = () => {
               onFocus={clearPassword}
             />
             {isLoading ? (
-              <CircularProgress className={styles.spinner} />
+              <CircularProgress className={classes.spinner} />
             ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={styles.submit}>
-                Вход
-              </Button>
+              <div className={classes.button_wrapper}>
+                <Link to="/" className={classes.link_button}>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="default"
+                    className={classes.cancel}>
+                    Отмена
+                  </Button>
+                </Link>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}>
+                  Вход
+                </Button>
+              </div>
             )}
             <Grid container justify="flex-end">
               <Grid item>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Еще нет аккаунта?
-                  <Link to="/sign-up" className={styles.link}>
+                  <Link to="/sign-up" className={classes.link}>
                     Зарегистрируйтесь
                   </Link>
                 </Typography>
@@ -141,6 +154,7 @@ const SignInPage: React.FC = () => {
           </form>
         </div>
       </Container>
+      <Footer />
     </div>
   );
 };

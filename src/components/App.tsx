@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import WordBook from './WordBook';
 import MainPage from './MainPage';
 import GameSavannah from './GameSavannah';
+import MemoryGame from './MemoryGame';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import Settings from './Settings';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.signIn} component={SignInPage} />
                 <Route path={ROUTES.signUp} component={SignUpPage} />
                 <Route path={ROUTES.wordBook.root} component={WordBook} />
+                <Route path={ROUTES.games.memory} component={MemoryGame} />
                 <Route path={ROUTES.dictionary} component={UserDictionary} />
                 <Route path={ROUTES.games.savannah} component={GameSavannah} />
                 <Route path={ROUTES.study} component={RandomPage} />
