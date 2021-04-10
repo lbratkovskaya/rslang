@@ -12,6 +12,9 @@ export interface IWordCardProps {
 export interface IWordCardButton {
   label: string;
   altLabel: string;
+  title: string;
+  altTitle: string;
+  clickable: boolean;
   onClick?: () => void;
   param?: boolean;
 }

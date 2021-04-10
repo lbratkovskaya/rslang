@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
-import { Typography, Card, Chip, useTheme } from '@material-ui/core';
+import { Typography, Card, Chip, useTheme, Menu, MenuItem } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded, ChevronLeft } from '@material-ui/icons';
 import {
   setUserWordDeleted,
@@ -31,6 +31,7 @@ const WordCard: React.FC<IWordCardProps> = ({
   const classes = useStyles();
   const [isMounted, setIsMounted] = useState(false);
   const { data: userData } = useSelector((state: IAppState) => state.user);
+  const isUserLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
   );
@@ -51,6 +52,7 @@ const WordCard: React.FC<IWordCardProps> = ({
   const [playingAudioIndex, setPlayingAudioIndex] = useState(-1);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDifficult, setIsDifficult] = useState(false);
+  const [restoreAnchor, setRestoreAnchor] = useState<null | HTMLElement>(null);
   const { color } = WORDBOOK_GROUPS[activeGroup] || 'rgb(255, 0, 0)';
   const highlightStyle = { color };
   const theme = useTheme();
@@ -80,17 +82,26 @@ const WordCard: React.FC<IWordCardProps> = ({
     audio.play();
   };
 
-  const renderButton = ({ label, altLabel, onClick, param }: IWordCardButton) => (
+  const renderButton = ({
+    label,
+    altLabel,
+    title,
+    altTitle,
+    clickable,
+    onClick,
+    param,
+  }: IWordCardButton) => (
     <Chip
       className={classes.button}
       variant={param ? 'default' : 'outlined'}
       color={param ? 'secondary' : 'default'}
       size="small"
       deleteIcon={param ? <Done /> : <></>}
-      clickable
+      clickable={clickable}
       label={param ? altLabel : label}
-      onClick={onClick}
-      onDelete={onClick} // necessary for deleteIcon to be rendered
+      title={param ? title : altTitle}
+      onClick={clickable ? onClick : undefined}
+      onDelete={clickable ? onClick : undefined} // necessary for deleteIcon to be rendered
     />
   );
 
@@ -128,17 +139,25 @@ const WordCard: React.FC<IWordCardProps> = ({
   };
 
   const handleDelete = () => {
-    dispatch(setUserWordDeleted(word, userData, !isDeleted));
     if (isDeleted) {
-      setIsDeleted(false);
-      setIsMounted(false);
-    } else {
-      dispatch(deleteWordFromGamesStore(word));
-      setIsMounted(false);
-      setTimeout(() => {
-        setIsDeleted(true);
-      }, APPEAR_DURATION);
+      // setIsDeleted(false);
+      // setIsMounted(false);
+      return;
     }
+    dispatch(setUserWordDeleted(word, userData, !isDeleted));
+    dispatch(deleteWordFromGamesStore(word));
+    setIsMounted(false);
+    setTimeout(() => {
+      setIsDeleted(true);
+    }, APPEAR_DURATION);
+  };
+
+  const handleRestoreClick = (event: React.MouseEvent<HTMLElement>) => {
+    setRestoreAnchor(event.currentTarget);
+  };
+
+  const handleRestoreClose = () => {
+    setRestoreAnchor(null);
   };
 
   const renderMainParagraph = (title: string, content: string, className: {}) => (
@@ -212,20 +231,56 @@ const WordCard: React.FC<IWordCardProps> = ({
               {renderMainParagraph('Example', word.textExample, textStyle.example)}
               {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
               {showButtons &&
+                isUserLoggedIn &&
                 !isDeleted &&
                 renderButton({
                   label: 'Добавить в сложные',
                   altLabel: 'Добавлено в сложные',
+                  title: 'Добавить слово в список сложных слов',
+                  altTitle: 'Удалить слово из списка сложных слов',
+                  clickable: true,
                   onClick: handleAddToDifficult,
                   param: isDifficult,
                 })}
               {showButtons &&
+                isUserLoggedIn &&
                 renderButton({
                   label: 'В удалённые',
                   altLabel: 'Удалено',
+                  title: 'Переместить слово в удалённые',
+                  altTitle: '',
+                  clickable: !isDeleted,
                   onClick: handleDelete,
                   param: isDeleted,
                 })}
+              {showButtons && isUserLoggedIn && isDeleted && (
+                <>
+                  <Chip
+                    aria-controls="simple-menu"
+                    className={classes.button}
+                    variant="outlined"
+                    color="default"
+                    size="small"
+                    clickable
+                    label="Восстановить"
+                    onClick={handleRestoreClick}
+                  />
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={restoreAnchor}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    getContentAnchorEl={null}
+                    keepMounted
+                    open={Boolean(restoreAnchor)}
+                    onClose={handleRestoreClose}>
+                    <MenuItem onClick={() => {}}>Удалить из словаря</MenuItem>
+                    <MenuItem onClick={() => {}}>Оставить в словаре</MenuItem>
+                  </Menu>
+                </>
+              )}
               {userWords[word.word]?.userWord && (
                 <div className={classes.heatsPanel}>
                   <ChevronLeft className={classes.chevron} />
