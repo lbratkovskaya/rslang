@@ -9,12 +9,12 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import Footer from '../Footer';
 import Header from '../Header';
+import Footer from '../Footer';
 import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
+import { ROUTES } from '../../constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { ROUTES } from '../../constants';
 
 const SignInPage: React.FC = () => {
   const classes = useStyles();

@@ -13,12 +13,12 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Header from '../Header';
+import ModalWindow from '../ModalWindow';
 import Footer from '../Footer';
-import ModalWindow from '../ModalWindow/ModalWindow';
 import { signUpUser, setFailedAttempt, setIsRegistred } from '../../store/actions/userAuthActions';
+import { ROUTES } from '../../constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { ROUTES } from '../../constants';
 
 const SignUpPage: React.FC = () => {
   const classes = useStyles();
