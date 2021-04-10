@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import Parser from 'html-react-parser';
-import { Typography, Card, Chip, useTheme, Menu, MenuItem } from '@material-ui/core';
+import { Typography, Card, Chip, useTheme, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { Done, VolumeUpRounded, StopRounded, ChevronLeft } from '@material-ui/icons';
 import {
   setUserWordDeleted,
   setUserWordEasy,
   setUserWordHard,
+  deleteUserWord,
 } from '../../store/actions/dictionaryActions';
 import { deleteWordFromGamesStore } from '../../store/actions/gamesActions';
 import backendUrl, {
@@ -75,7 +76,7 @@ const WordCard: React.FC<IWordCardProps> = ({
     img.src = `${backendUrl}/${word.image}`;
   };
 
-  const playAudio = (src: string, audioIndex: number) => {
+  const playAudio = (src: string, audioIndex: number): void => {
     setIsAudioPlaying(true);
     setPlayingAudioIndex(audioIndex);
     audio.src = `${backendUrl}/${src}`;
@@ -90,22 +91,29 @@ const WordCard: React.FC<IWordCardProps> = ({
     clickable,
     onClick,
     param,
-  }: IWordCardButton) => (
-    <Chip
-      className={classes.button}
-      variant={param ? 'default' : 'outlined'}
-      color={param ? 'secondary' : 'default'}
-      size="small"
-      deleteIcon={param ? <Done /> : <></>}
-      clickable={clickable}
-      label={param ? altLabel : label}
-      title={param ? title : altTitle}
-      onClick={clickable ? onClick : undefined}
-      onDelete={clickable ? onClick : undefined} // necessary for deleteIcon to be rendered
-    />
-  );
+  }: IWordCardButton): JSX.Element => {
+    const userTitle = param ? altTitle : title;
+    const chipTitle = isUserLoggedIn ? userTitle : 'Авторизуйтесь, чтобы воспользоваться функцией';
+    return (
+      <>
+        <Tooltip title={chipTitle} placement="bottom">
+          <Chip
+            className={`${classes.button} ${!isUserLoggedIn && classes.buttonInactive}`}
+            variant={param ? 'default' : 'outlined'}
+            color={param ? 'secondary' : 'default'}
+            size="small"
+            deleteIcon={param ? <Done /> : <></>}
+            clickable={clickable}
+            label={param ? altLabel : label}
+            onClick={clickable ? onClick : undefined}
+            onDelete={clickable ? onClick : undefined} // necessary for deleteIcon to be rendered
+          />
+        </Tooltip>
+      </>
+    );
+  };
 
-  const handleAudioClick = () => {
+  const handleAudioClick = (): void => {
     playAudio(word.audio, 0);
     audio.onended = () => {
       playAudio(word.audioMeaning, 1);
@@ -119,13 +127,13 @@ const WordCard: React.FC<IWordCardProps> = ({
     };
   };
 
-  const handleStopClick = () => {
+  const handleStopClick = (): void => {
     audio.pause();
     setIsAudioPlaying(false);
     setPlayingAudioIndex(-1);
   };
 
-  const handleAddToDifficult = () => {
+  const handleAddToDifficult = (): void => {
     if (isDifficult) {
       dispatch(setUserWordEasy(word, userData));
       setIsDifficult(false);
@@ -138,10 +146,8 @@ const WordCard: React.FC<IWordCardProps> = ({
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     if (isDeleted) {
-      // setIsDeleted(false);
-      // setIsMounted(false);
       return;
     }
     dispatch(setUserWordDeleted(word, userData, !isDeleted));
@@ -152,27 +158,45 @@ const WordCard: React.FC<IWordCardProps> = ({
     }, APPEAR_DURATION);
   };
 
-  const handleRestoreClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleRestoreClick = (event: React.MouseEvent<HTMLElement>): void => {
     setRestoreAnchor(event.currentTarget);
   };
 
-  const handleRestoreClose = () => {
+  const handleRestoreClose = (): void => {
     setRestoreAnchor(null);
   };
 
-  const renderMainParagraph = (title: string, content: string, className: {}) => (
+  const handleKeepInDictionary = (): void => {
+    handleRestoreClose();
+    dispatch(setUserWordDeleted(word, userData, !isDeleted));
+    setIsMounted(false);
+    setTimeout(() => {
+      setIsDeleted(true);
+    }, APPEAR_DURATION);
+  };
+
+  const handleRemoveFromDictionary = (): void => {
+    handleRestoreClose();
+    dispatch(deleteUserWord(word, userData));
+    setIsMounted(false);
+    setTimeout(() => {
+      setIsDeleted(true);
+    }, APPEAR_DURATION);
+  };
+
+  const renderMainParagraph = (title: string, content: string, className: {}): JSX.Element => (
     <Typography variant="body2">
       {title}: <span style={className}>{Parser(content)}</span>
     </Typography>
   );
 
-  const renderParagraph = (title: string, content: string) => (
+  const renderParagraph = (title: string, content: string): JSX.Element => (
     <Typography variant="body2" color="textSecondary" className={classes.secondary}>
       {title}: {Parser(content)}
     </Typography>
   );
 
-  const renderWordTranslate = showTranslate && (
+  const wordTranslateComponent = showTranslate && (
     <span className={classes.wordTranslate}>{` — ${word.wordTranslate}`}</span>
   );
 
@@ -209,7 +233,7 @@ const WordCard: React.FC<IWordCardProps> = ({
               />
               <Typography className={classes.word}>
                 <span style={textStyle.word}>{word.word}</span>
-                {renderWordTranslate}
+                {wordTranslateComponent}
               </Typography>
               <Typography className={classes.transcription}>
                 {` ${word.transcription} `}
@@ -231,25 +255,23 @@ const WordCard: React.FC<IWordCardProps> = ({
               {renderMainParagraph('Example', word.textExample, textStyle.example)}
               {showTranslate && renderParagraph('Пример', word.textExampleTranslate)}
               {showButtons &&
-                isUserLoggedIn &&
                 !isDeleted &&
                 renderButton({
                   label: 'Добавить в сложные',
                   altLabel: 'Добавлено в сложные',
                   title: 'Добавить слово в список сложных слов',
                   altTitle: 'Удалить слово из списка сложных слов',
-                  clickable: true,
+                  clickable: isUserLoggedIn,
                   onClick: handleAddToDifficult,
                   param: isDifficult,
                 })}
               {showButtons &&
-                isUserLoggedIn &&
                 renderButton({
                   label: 'В удалённые',
                   altLabel: 'Удалено',
                   title: 'Переместить слово в удалённые',
                   altTitle: '',
-                  clickable: !isDeleted,
+                  clickable: isUserLoggedIn && !isDeleted,
                   onClick: handleDelete,
                   param: isDeleted,
                 })}
@@ -276,8 +298,8 @@ const WordCard: React.FC<IWordCardProps> = ({
                     keepMounted
                     open={Boolean(restoreAnchor)}
                     onClose={handleRestoreClose}>
-                    <MenuItem onClick={() => {}}>Удалить из словаря</MenuItem>
-                    <MenuItem onClick={() => {}}>Оставить в словаре</MenuItem>
+                    <MenuItem onClick={handleRemoveFromDictionary}>Удалить из словаря</MenuItem>
+                    <MenuItem onClick={handleKeepInDictionary}>Оставить в словаре</MenuItem>
                   </Menu>
                 </>
               )}
