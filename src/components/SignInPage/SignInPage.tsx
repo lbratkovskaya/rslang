@@ -78,8 +78,8 @@ const SignInPage: React.FC = () => {
   return (
     <div>
       <Header />
-      <div className={classes.signInPageWrapper}>
-        <Container className={classes.container} component="main" maxWidth="xs">
+      <main className={classes.signInPageWrapper}>
+        <Container maxWidth="xs">
           <div className={classes.paper}>
             <Typography component="h1" variant="h5">
               Вход
@@ -127,10 +127,10 @@ const SignInPage: React.FC = () => {
                   variant="contained"
                   color="primary"
                   className={classes.submit}>
-                  Вход
+                  Войти
                 </Button>
               )}
-              <Grid container justify="flex-end">
+              <Grid container justify="center">
                 <Grid item>
                   <Typography variant="body2" color="textSecondary" component="p">
                     Еще нет аккаунта?
@@ -143,7 +143,8 @@ const SignInPage: React.FC = () => {
             </form>
           </div>
         </Container>
-      </div>
+        <div className={classes.image} />
+      </main>
       <Footer />
     </div>
   );

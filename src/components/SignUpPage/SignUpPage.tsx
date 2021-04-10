@@ -8,6 +8,7 @@ import {
   Container,
   TextField,
   Grid,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -105,26 +106,28 @@ const SignUpPage: React.FC = () => {
         handleClose={handleCloseModalWindow}
         isText
       />
-      <div className={classes.signUpPageWrapper}>
-        <Container className={classes.container} component="main" maxWidth="xs">
+      <main className={classes.signUpPageWrapper}>
+        <Container maxWidth="xs">
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-                style={{ display: 'none' }}
-                onChange={setUserImage}
-              />
-              <label htmlFor="contained-button-file">
-                {userImageToUpload === undefined ? (
-                  <LockOutlinedIcon className={classes.pointer} />
-                ) : (
-                  <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
-                )}
-              </label>
-            </Avatar>
+            <Tooltip title="Загрузить аватар" placement="right">
+              <Avatar className={classes.avatar}>
+                <input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={setUserImage}
+                />
+                <label htmlFor="contained-button-file">
+                  {userImageToUpload === undefined ? (
+                    <LockOutlinedIcon className={classes.pointer} />
+                  ) : (
+                    <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
+                  )}
+                </label>
+              </Avatar>
+            </Tooltip>
             <Typography component="h1" variant="h5">
               Регистрация
             </Typography>
@@ -232,13 +235,13 @@ const SignUpPage: React.FC = () => {
                   <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.submit}>
                     Регистрация
                   </Button>
                 </div>
               )}
-              <Grid container justify="flex-end">
+              <Grid container justify="center">
                 <Grid item>
                   <Typography variant="body2" color="textSecondary" component="p">
                     Уже есть аккаунт?
@@ -251,7 +254,8 @@ const SignUpPage: React.FC = () => {
             </form>
           </div>
         </Container>
-      </div>
+        <div className={classes.image} />
+      </main>
       <Footer />
     </div>
   );

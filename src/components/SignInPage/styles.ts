@@ -1,18 +1,11 @@
 import { makeStyles } from '@material-ui/core';
-import { REGFORMS } from '../../constants';
+import { HEADER_HEIGHT, REGFORMS } from '../../constants';
 
 const useStyles = makeStyles(() => ({
   signInPageWrapper: {
     display: 'flex',
-    alignItems: 'flex-end',
-    background: REGFORMS.sign_in.background,
-    backgroundSize: 'cover',
-    height: 'calc(100vh - 269px)',
-  },
-  container: {
-    backgroundColor: '#fff',
-    marginBottom: '1vh',
-    marginRight: '1vw',
+    minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+    height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   },
   paper: {
     display: 'flex',
@@ -24,8 +17,17 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     marginTop: '8px',
   },
+  image: {
+    background: REGFORMS.sign_in.background,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    filter: 'brightness(0.7)',
+    height: '100%',
+    width: '100%',
+  },
   submit: {
     margin: '24px 0 16px 0',
+    width: 'auto',
   },
   link: {
     color: 'blue',
