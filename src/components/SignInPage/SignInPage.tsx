@@ -109,7 +109,7 @@ const SignInPage: React.FC = () => {
                 name="пароль"
                 label="пароль"
                 type="password"
-                id="пароль"
+                id="password"
                 autoComplete="пароль"
                 error={passwordEmpty || isFailedAttempt}
                 helperText={passwordHelperText}

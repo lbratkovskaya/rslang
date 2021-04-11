@@ -138,7 +138,7 @@ const SignUpPage: React.FC = () => {
                     variant="outlined"
                     required
                     fullWidth
-                    id="имя"
+                    id="name"
                     label="имя"
                     name="имя"
                     autoComplete="имя"
