@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       lineHeight: '30px',
       margin: '1% auto',
+      color: 'white',
     },
     moreInfo: {
       width: 'max-content',

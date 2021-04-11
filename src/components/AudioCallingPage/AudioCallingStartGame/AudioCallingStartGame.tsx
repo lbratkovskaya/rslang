@@ -18,7 +18,6 @@ import useStyles from './styles';
 
 const AudioCallingStartGame: React.FC = () => {
   const dispatch = useDispatch();
-  const wordBook = useSelector((state: IAppState) => state.wordBook);
   const createStartArray = (wordsArray: Array<IWord>) => dispatch(createArrayWords(wordsArray));
   const setSelectRound = (round: number) => dispatch(selectRound(round));
   const setSelectLevel = (level: number) => dispatch(selectLevel(level));
@@ -65,7 +64,6 @@ const AudioCallingStartGame: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log([group, page, `from wordbook ${isCameFromWordbook}`, wordBook]);
     if (isCameFromWordbook) {
       setCurPage(wbPage);
       setCurGroup(wbGroup);
