@@ -6,19 +6,19 @@ import {
   Button,
   CircularProgress,
   Container,
-  CssBaseline,
   TextField,
   Grid,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Header from '../Header';
+import ModalWindow from '../ModalWindow';
 import Footer from '../Footer';
-import ModalWindow from '../ModalWindow/ModalWindow';
 import { signUpUser, setFailedAttempt, setIsRegistred } from '../../store/actions/userAuthActions';
+import { ROUTES } from '../../constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { ROUTES } from '../../constants';
 
 const SignUpPage: React.FC = () => {
   const classes = useStyles();
@@ -106,152 +106,156 @@ const SignUpPage: React.FC = () => {
         handleClose={handleCloseModalWindow}
         isText
       />
-      <Container className={classes.container} component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <input
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-              style={{ display: 'none' }}
-              onChange={setUserImage}
-            />
-            <label htmlFor="contained-button-file">
-              {userImageToUpload === undefined ? (
-                <LockOutlinedIcon className={classes.pointer} />
+      <main className={classes.signUpPageWrapper}>
+        <Container maxWidth="xs">
+          <div className={classes.paper}>
+            <Tooltip title="Загрузить аватар" placement="right">
+              <Avatar className={classes.avatar}>
+                <input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={setUserImage}
+                />
+                <label htmlFor="contained-button-file">
+                  {userImageToUpload === undefined ? (
+                    <LockOutlinedIcon className={classes.pointer} />
+                  ) : (
+                    <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
+                  )}
+                </label>
+              </Avatar>
+            </Tooltip>
+            <Typography component="h1" variant="h5">
+              Регистрация
+            </Typography>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="имя"
+                    name="имя"
+                    autoComplete="имя"
+                    error={userNameEmpty}
+                    helperText={userNameEmpty && 'введите имя'}
+                    onChange={(event) => {
+                      setUserName(event.currentTarget.value);
+                      dispatch(setFailedAttempt(false));
+                    }}
+                    onFocus={() => {
+                      setUserNameEmpty(false);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    error={userEmailEmpty || emailInvalid || isFailedAttempt}
+                    helperText={
+                      (userEmailEmpty && 'введите email') ||
+                      (emailInvalid && 'email не существует') ||
+                      (isFailedAttempt && 'email занят')
+                    }
+                    label="email"
+                    name="email"
+                    autoComplete="email"
+                    onChange={(event) => {
+                      setUserEmail(event.currentTarget.value);
+                    }}
+                    onFocus={() => {
+                      setEmailInvalid(false);
+                      setUserEmailEmpty(false);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="пароль"
+                    label="пароль"
+                    type="password"
+                    id="password"
+                    error={passwordTooShort}
+                    helperText={passwordTooShort && 'пароль должен быть длиннее 8 символов'}
+                    autoComplete="пароль"
+                    onChange={(event) => {
+                      setPassword(event.currentTarget.value);
+                    }}
+                    onFocus={() => {
+                      setPasswordTooShort(false);
+                      setPasswordMismatch(false);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="повторите пароль"
+                    label="повторите пароль"
+                    type="password"
+                    error={passwordMismatch}
+                    helperText={passwordMismatch && 'пароли не совпадают'}
+                    id="confirm_password"
+                    autoComplete="повторите пароль"
+                    onChange={(event) => {
+                      setConfirmPassword(event.currentTarget.value);
+                    }}
+                    onFocus={() => {
+                      setPasswordMismatch(false);
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {isLoading ? (
+                <CircularProgress className={classes.spinner} />
               ) : (
-                <Avatar className={classes.userImage} src={userImageToUpload.toString()} />
-              )}
-            </label>
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Регистрация
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="имя"
-                  label="имя"
-                  name="имя"
-                  autoComplete="имя"
-                  error={userNameEmpty}
-                  helperText={userNameEmpty && 'введите имя'}
-                  onChange={(event) => {
-                    setUserName(event.currentTarget.value);
-                    dispatch(setFailedAttempt(false));
-                  }}
-                  onFocus={() => {
-                    setUserNameEmpty(false);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  error={userEmailEmpty || emailInvalid || isFailedAttempt}
-                  helperText={
-                    (userEmailEmpty && 'введите email') ||
-                    (emailInvalid && 'email не существует') ||
-                    (isFailedAttempt && 'email занят')
-                  }
-                  label="email"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(event) => {
-                    setUserEmail(event.currentTarget.value);
-                  }}
-                  onFocus={() => {
-                    setEmailInvalid(false);
-                    setUserEmailEmpty(false);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="пароль"
-                  label="пароль"
-                  type="password"
-                  id="password"
-                  error={passwordTooShort}
-                  helperText={passwordTooShort && 'пароль должен быть длиннее 8 символов'}
-                  autoComplete="пароль"
-                  onChange={(event) => {
-                    setPassword(event.currentTarget.value);
-                  }}
-                  onFocus={() => {
-                    setPasswordTooShort(false);
-                    setPasswordMismatch(false);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="повторите пароль"
-                  label="повторите пароль"
-                  type="password"
-                  error={passwordMismatch}
-                  helperText={passwordMismatch && 'пароли не совпадают'}
-                  id="confirm_password"
-                  autoComplete="повторите пароль"
-                  onChange={(event) => {
-                    setConfirmPassword(event.currentTarget.value);
-                  }}
-                  onFocus={() => {
-                    setPasswordMismatch(false);
-                  }}
-                />
-              </Grid>
-            </Grid>
-            {isLoading ? (
-              <CircularProgress className={classes.spinner} />
-            ) : (
-              <div className={classes.button_wrapper}>
-                <Link to="/" className={classes.link_button}>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    color="default"
-                    className={classes.cancel}>
-                    Отмена
-                  </Button>
-                </Link>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}>
-                  Регистрация
-                </Button>
-              </div>
-            )}
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Уже есть аккаунт?
-                  <Link to="/sign-in" className={classes.link}>
-                    Войти
+                <div className={classes.button_wrapper}>
+                  <Link to="/" className={classes.link_button}>
+                    <Button
+                      type="button"
+                      variant="contained"
+                      color="default"
+                      className={classes.cancel}>
+                      Отмена
+                    </Button>
                   </Link>
-                </Typography>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    className={classes.submit}>
+                    Регистрация
+                  </Button>
+                </div>
+              )}
+              <Grid container justify="center">
+                <Grid item>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Уже есть аккаунт?
+                    <Link to="/sign-in" className={classes.link}>
+                      Войти
+                    </Link>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
+            </form>
+          </div>
+        </Container>
+        <div className={classes.image} />
+      </main>
       <Footer />
     </div>
   );

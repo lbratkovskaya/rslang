@@ -40,9 +40,9 @@ const ControlPanel: React.FC = () => {
 
   const [gameMode, setMode] = React.useState('image');
   const handleChangeGameMode = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.checked? 'image': 'translation');
+    setMode(event.target.checked ? 'image' : 'translation');
   };
-  
+
   const handleStartGame = () => {
     dispatch(
       initiateGameField(gameSize, gameMode, isCameFromWordbook, wordsCategory, page, actualWords)
@@ -145,12 +145,16 @@ const ControlPanel: React.FC = () => {
                   selectName="Раздел учебника"
                   selectData={WORDBOOK_GROUPS}
                   changeSelectFc={handleSelectLevel}
+                  disabled={isCameFromWordbook}
+                  value={0}
                 />
               )}
               <GameSelect
                 selectName="Сложность"
                 selectData={MEMORY.sizes}
                 changeSelectFc={handleSelectSize}
+                disabled={isCameFromWordbook}
+                value={0}
               />
             </div>
             <div className={classes.switcherWrapper}>
@@ -177,7 +181,7 @@ const ControlPanel: React.FC = () => {
                   <Grid component="label" container alignItems="center" spacing={1}>
                     <Grid item>
                       <Switch
-                        checked={(gameMode === 'image')}
+                        checked={gameMode === 'image'}
                         onChange={handleChangeGameMode}
                         name="setMode"
                         color="primary"

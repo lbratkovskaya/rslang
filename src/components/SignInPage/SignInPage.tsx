@@ -3,19 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
   Button,
-  CssBaseline,
   TextField,
   Grid,
   Typography,
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import Footer from '../Footer';
 import Header from '../Header';
+import Footer from '../Footer';
 import { signInUser, setFailedAttempt } from '../../store/actions/userAuthActions';
+import { ROUTES } from '../../constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
-import { ROUTES } from '../../constants';
 
 const SignInPage: React.FC = () => {
   const classes = useStyles();
@@ -79,81 +78,73 @@ const SignInPage: React.FC = () => {
   return (
     <div>
       <Header />
-      <Container className={classes.container} component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Вход
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="email"
-              name="email"
-              autoComplete="email"
-              error={userNameEmpty || isFailedAttempt}
-              helperText={emailHelperText}
-              onChange={(event) => {
-                setUserName(event.currentTarget.value);
-              }}
-              onFocus={clearUserName}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="пароль"
-              label="пароль"
-              type="password"
-              id="пароль"
-              autoComplete="пароль"
-              error={passwordEmpty || isFailedAttempt}
-              helperText={passwordHelperText}
-              onChange={(event) => {
-                setPassword(event.currentTarget.value);
-              }}
-              onFocus={clearPassword}
-            />
-            {isLoading ? (
-              <CircularProgress className={classes.spinner} />
-            ) : (
-              <div className={classes.button_wrapper}>
-                <Link to="/" className={classes.link_button}>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    color="default"
-                    className={classes.cancel}>
-                    Отмена
-                  </Button>
-                </Link>
+      <main className={classes.signInPageWrapper}>
+        <Container maxWidth="xs">
+          <div className={classes.paper}>
+            <Typography component="h1" variant="h5">
+              Вход
+            </Typography>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="email"
+                name="email"
+                autoComplete="email"
+                error={userNameEmpty || isFailedAttempt}
+                helperText={emailHelperText}
+                onChange={(event) => {
+                  setUserName(event.currentTarget.value);
+                }}
+                onFocus={clearUserName}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="пароль"
+                label="пароль"
+                type="password"
+                id="password"
+                autoComplete="пароль"
+                error={passwordEmpty || isFailedAttempt}
+                helperText={passwordHelperText}
+                onChange={(event) => {
+                  setPassword(event.currentTarget.value);
+                }}
+                onFocus={clearPassword}
+              />
+              {isLoading ? (
+                <CircularProgress className={classes.spinner} />
+              ) : (
                 <Button
                   type="submit"
+                  fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}>
-                  Вход
+                  Войти
                 </Button>
-              </div>
-            )}
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Еще нет аккаунта?
-                  <Link to="/sign-up" className={classes.link}>
-                    Зарегистрируйтесь
-                  </Link>
-                </Typography>
+              )}
+              <Grid container justify="center">
+                <Grid item>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Еще нет аккаунта?
+                    <Link to="/sign-up" className={classes.link}>
+                      Зарегистрируйтесь
+                    </Link>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
+            </form>
+          </div>
+        </Container>
+        <div className={classes.image} />
+      </main>
       <Footer />
     </div>
   );
