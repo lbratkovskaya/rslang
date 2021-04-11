@@ -182,3 +182,28 @@ export const addWordsToUserDictionary = (words: Array<IWord>, userData: IUserDat
 
   unsavedWords.forEach((word) => saveUserWord(word, userData, 'easy', true)(dispatch));
 };
+
+export const deleteUserWord = (word: IUserWord, userData: IUserData) => async (
+  dispatch: Dispatch
+) => {
+  const fetchUserId = userData.userId;
+  const userToken = userData.token;
+  // eslint-disable-next-line no-underscore-dangle
+  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word)._id}`;
+  dispatch(startDictLoading());
+  try {
+    fetch(url, {
+      method: 'DELETE',
+      credentials: 'omit',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(() => fetchDictionary(userData)(dispatch))
+      .catch((error) => dispatch(fetchDictError(error)));
+  } catch (e) {
+    dispatch(fetchDictError(e));
+  }
+};

@@ -8,8 +8,7 @@ import MemoryGame from './MemoryGame';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import Settings from './Settings';
-import UserDictionary from './UserDictionary/UserDictionary';
-
+import UserDictionary from './UserDictionary';
 import RandomPage from './RandomPage';
 import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';

@@ -42,6 +42,9 @@ export const wordCardStyles = (theme: Theme): StyleRules => ({
     marginRight: theme.spacing(1),
     transition: 'background 0.5s, color 0.5s',
   },
+  buttonInactive: {
+    color: COLORS.secondaryText,
+  },
   wordTranslate: {
     textTransform: 'capitalize',
     fontWeight: 400,
