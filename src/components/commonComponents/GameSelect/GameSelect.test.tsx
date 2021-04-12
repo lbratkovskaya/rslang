@@ -13,6 +13,8 @@ describe('<GameSelect /> testing:', () => {
       changeSelectFc={mockChangeSelectFc}
       selectData={WORDBOOK_GROUPS}
       selectName="testselect"
+      disabled={false}
+      value={1}
     />
   );
 
