@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WordCard /> testing: Must have a correct snapshot 1`] = `
+"<ContextProvider value={{...}}>
+  <WordCard word={{...}} index={0} activeGroup={0} isLoading={false} showDeleted={true} removeOnDifficultyChange={false} />
+</ContextProvider>"
+`;

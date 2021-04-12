@@ -5,7 +5,7 @@ import { ArrowDropDown, MoreVert } from '@material-ui/icons';
 import CurrentUserMenuItem from './CurrentUserMenuItem';
 import MobileNavMenu from './MobileNavMenu';
 import NavSubMenu from './NavSubMenu';
-import { menuItems, mobileMenuId } from './navMenuData';
+import { logoPath, menuItems, mobileMenuId } from './navMenuData';
 import useStyles from './styles';
 
 const NavigationMenu: React.FC = () => {
@@ -63,11 +63,7 @@ const NavigationMenu: React.FC = () => {
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <Link to="/" className={classes.mainLogo}>
-          <Avatar
-            src="../../assets/favicon.svg"
-            title="RS Lang App"
-            className={classes.mainLogoPic}
-          />
+          <Avatar src={logoPath} title="RSCoon English" className={classes.mainLogoPic} />
           RSCoon English
         </Link>
         <div className={classes.sectionDesktop}>

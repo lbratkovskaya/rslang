@@ -4,7 +4,7 @@ import { URLs, AUTHORS } from './constants';
 import { Author } from './types';
 import './Footer.scss';
 
-const Footer: React.FC = () => {
+const Footer: React.FC = (): JSX.Element => {
   const renderGithubLink = (author: Author) => {
     const [firstName, surname] = author.name.split(' ');
 
