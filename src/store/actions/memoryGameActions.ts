@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../constants';
-import { IMemoryGameCard, MemoryGameTypes } from '../reducers/memoryGameReducer/types';
 import { IWord } from '../types';
+import { IMemoryGameCard, MemoryGameTypes } from '../reducers/memoryGameReducer/types';
 
 export const startGame = () => ({
   type: MemoryGameTypes.START_GAME,
@@ -35,12 +35,23 @@ export const showGameCard = (newCard: IMemoryGameCard) => ({
   newCard,
 });
 
-export const hideClickedCards = () => ({
+export const hideClickedCards = (processCards: Array<IMemoryGameCard>) => ({
   type: MemoryGameTypes.HIDE_CLICKED_CARDS,
+  processCards,
 });
 
-export const disableClickedCards = () => ({
+export const disableClickedCards = (processCards: Array<IMemoryGameCard>) => ({
   type: MemoryGameTypes.DISABLE_CLICKED_CARDS,
+  processCards,
+});
+
+export const clearClickedCards = () => ({
+  type: MemoryGameTypes.CLEAR_CLICKED_CARDS,
+});
+
+export const setWordsVolumeLevel = (value: number) => ({
+  type: MemoryGameTypes.SET_WORDS_VOLUME,
+  wordsVolume: value,
 });
 
 const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) => {
@@ -93,7 +104,7 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
 export const initiateGameField = (
   gameSize: number,
   gameMode: string,
-  isCameFromWordBook: boolean,
+  isCameFromWordBook: boolean | undefined,
   group: number,
   page: number,
   actualWords: Array<IWord>
@@ -155,5 +166,44 @@ export const updateClickedWords = (currentField: Array<IMemoryGameCard>) => {
       }
     });
     return card;
+  });
+};
+
+export const getClickedWordsAsArray = (currentField: Array<IMemoryGameCard>) => {
+  const result: Array<string> = [];
+  updateClickedWords(currentField).forEach((card) => {
+    if (card.isClicked) {
+      result.push(card.value);
+    }
+  });
+  return result;
+};
+
+export const sendGameStatistic = (
+  field: Array<IMemoryGameCard>,
+  series: Array<number>,
+  token: string,
+  userId: string
+) => {
+  const url = `${backendUrl}/users/${userId}/statistics`;
+  const learnedWords = getClickedWordsAsArray(field).length;
+  fetch(url, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      learnedWords,
+      optional: {
+        dateTime: Date.now(),
+        miniGame: 'memoryGame',
+        wordsCount: field.length / 2,
+        totalCorrect: learnedWords,
+        seriesCorrect: series.sort((a, b) => b - a)[0],
+      },
+    }),
   });
 };

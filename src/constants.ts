@@ -98,32 +98,9 @@ export const MEMORY = {
   sheet: 'assets/sheet-bg.jpg',
   background: 'assets/memory-bg.jpg',
   gameTimePerCard: 5,
-  sizes: [
-    {
-      label: '',
-      linkAddress: '',
-      color: COLORS.RED,
-      background: COLORS.BG_RED,
-    },
-    {
-      label: 'Легко',
-      linkAddress: '',
-      color: COLORS.RED,
-      background: COLORS.BG_RED,
-    },
-    {
-      label: 'Нормально',
-      linkAddress: '',
-      color: COLORS.RED,
-      background: COLORS.BG_RED,
-    },
-    {
-      label: 'Сложно',
-      linkAddress: '',
-      color: COLORS.RED,
-      background: COLORS.BG_RED,
-    },
-  ],
+  gameWordsMinimalVolumeLevel: 10,
+  gameWordsDefaultVolumeLevel: 60,
+  gameWordsMaxVolumeLevel: 100,
 };
 
 export interface IGroup {

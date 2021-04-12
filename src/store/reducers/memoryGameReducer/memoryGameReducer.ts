@@ -1,15 +1,18 @@
+import { MEMORY } from '../../../constants';
 import { IMemoryGameAction, IMemoryGameCard, IMemoryGameState, MemoryGameTypes } from './types';
 
 const initialState: IMemoryGameState = {
   cardId: '',
   isStarted: false,
-  size: 8,
   isLoading: false,
   words: [],
   field: [],
   error: false,
   clickedCards: [],
   isFailed: false,
+  wordsVolume: MEMORY.gameWordsDefaultVolumeLevel,
+  serieCounter: 0,
+  series: [0],
 };
 
 const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
@@ -22,6 +25,21 @@ const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryG
     }
     return card;
   });
+};
+
+const addInClickedCards = (clickedCards: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
+  const foundCard = clickedCards.find((card) => {
+    if (card.id === newCard.id && card.type === newCard.type) {
+      return true;
+    }
+    return false;
+  });
+  const res = clickedCards;
+
+  if (foundCard === undefined) {
+    res.push(newCard);
+  }
+  return res;
 };
 
 const hideClickedCards = (
@@ -80,7 +98,14 @@ export default function memoryGameReducer(
     case MemoryGameTypes.START_GAME:
       return { ...state, isStarted: true };
     case MemoryGameTypes.STOP_GAME:
-      return { ...state, isStarted: false, field: [] };
+      return {
+        ...state,
+        isStarted: false,
+        field: [],
+        clickedCard: [],
+        serieCounter: 0,
+        series: [],
+      };
     case MemoryGameTypes.FAILED_GAME:
       return {
         ...state,
@@ -94,24 +119,32 @@ export default function memoryGameReducer(
       return {
         ...state,
         field: showCardInField(state.field, action.newCard),
-        clickedCards: state.clickedCards.concat(action.newCard),
+        clickedCards: addInClickedCards(state.clickedCards, action.newCard),
       };
     case MemoryGameTypes.HIDE_CLICKED_CARDS:
       return {
         ...state,
-        field: hideClickedCards(state.field, state.clickedCards),
-        clickedCards: [],
+        field: hideClickedCards(state.field, action.processCards),
+        serieCounter: 0,
+        series: state.series.concat([state.serieCounter]),
       };
     case MemoryGameTypes.DISABLE_CLICKED_CARDS:
       return {
         ...state,
-        field: disableClickedCards(state.field, state.clickedCards),
+        field: disableClickedCards(state.field, action.processCards),
+        serieCounter: state.serieCounter + 1,
+      };
+    case MemoryGameTypes.CLEAR_CLICKED_CARDS:
+      return {
+        ...state,
         clickedCards: [],
       };
     case MemoryGameTypes.SET_IS_LOADING:
       return { ...state, isLoading: action.isLoading };
     case MemoryGameTypes.SET_ERROR:
       return { ...state, error: action.error };
+    case MemoryGameTypes.SET_WORDS_VOLUME:
+      return { ...state, wordsVolume: action.wordsVolume };
     default:
       return state;
   }

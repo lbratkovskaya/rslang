@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFullScreenHandle } from 'react-full-screen';
 import { CircularProgress, CssBaseline, Typography } from '@material-ui/core';
 import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
@@ -7,13 +7,21 @@ import ControlPanel from './ControlPanel';
 import Header from '../Header';
 import GameCard from './GameCard';
 import { IAppState } from '../../store/types';
+import {
+  clearClickedCards,
+  disableClickedCards,
+  hideClickedCards,
+} from '../../store/actions/memoryGameActions';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import useStyles from './styles';
+import { MEMORY } from '../../constants';
 
 const MemoryGame: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const field = useSelector((state: IAppState) => state.memoryGame.field);
+  const clickedCards = useSelector((state: IAppState) => state.memoryGame.clickedCards);
   const handleFullScreenWrapper = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
@@ -22,6 +30,21 @@ const MemoryGame: React.FC = () => {
     setFullSize(!fullSize);
     return fullSize ? handleFullScreenWrapper.exit() : handleFullScreenWrapper.enter();
   };
+
+  useEffect(() => {
+    if (clickedCards.length === 2) {
+      dispatch(clearClickedCards());
+      const [previousCard, currentCard] = clickedCards;
+      if (previousCard.id === currentCard.id) {
+        dispatch(disableClickedCards([previousCard, currentCard]));
+      } else {
+        setTimeout(
+          () => dispatch(hideClickedCards([previousCard, currentCard])),
+          MEMORY.timeShowingCard
+        );
+      }
+    }
+  }, [JSON.stringify(field)]);
 
   const gameComponent = (
     <>

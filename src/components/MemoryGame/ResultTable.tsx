@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { Clear, Done } from '@material-ui/icons';
-import { updateClickedWords } from '../../store/actions/memoryGameActions';
+import { getClickedWordsAsArray, updateClickedWords } from '../../store/actions/memoryGameActions';
 import { IAppState } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import { IResultTableProps } from './types';
@@ -50,16 +50,6 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
 
   const getWordsFromGameField = (currentField: Array<IMemoryGameCard>) => {
     return updateClickedWords(currentField).map((card, index) => renderAnswers(card, index));
-  };
-
-  const getClickedWordsAsArray = (currentField: Array<IMemoryGameCard>) => {
-    const result: Array<string> = [];
-    updateClickedWords(currentField).forEach((card) => {
-      if (card.isClicked) {
-        result.push(card.value);
-      }
-    });
-    return result;
   };
 
   return (
