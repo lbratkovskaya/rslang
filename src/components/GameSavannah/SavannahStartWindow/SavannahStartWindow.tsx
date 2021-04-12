@@ -11,24 +11,35 @@ import {
   switchLang,
 } from '../../../store/actions/savannahActions';
 import { fetchWords } from '../../../store/actions/wordBookActions';
+import { fetchDictionary } from '../../../store/actions/dictionaryActions';
 import { MAX_LENGTH_GAME_ARR, SELECT_ROUNDS } from '../constants';
 import { WORDBOOK_GROUPS } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles, { theme } from '../styles';
 
 const SavannahStartWindow: React.FC = () => {
+  const userData = useSelector((state: IAppState) => state.user?.data);
+  const savannahData = useSelector((state: IAppState) => state.savannah);
+  const wordBook = useSelector((state: IAppState) => state.wordBook);
+  const userWords = useSelector((state: IAppState) => [
+    ...state.userDictionary.learningWords,
+    ...state.userDictionary.deletedWords,
+  ]);
+  const { actualWords } = useSelector((state: IAppState) => state.games);
+
   const dispatch = useDispatch();
   const setSelectLevel = (level: number) => dispatch(selectLevel(level));
   const setSelectRound = (round: number) => dispatch(selectRound(round));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const getWords = (groups: number, pages: number) => dispatch(fetchWords(groups, pages));
-  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
+
+  const getDictionaryWords = () => dispatch(fetchDictionary(userData));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) =>
+    dispatch(reduceArrayWords(wordsArray, userWords));
   const switchLanguage = (isLang: boolean) => dispatch(switchLang(isLang));
-  const savannahData = useSelector((state: IAppState) => state.savannah);
-  const wordBook = useSelector((state: IAppState) => state.wordBook);
+
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
-  const { actualWords } = useSelector((state: IAppState) => state.games);
 
   const page: number = savannahData.round;
   const group: number = savannahData.level;
@@ -58,6 +69,10 @@ const SavannahStartWindow: React.FC = () => {
   useEffect(() => {
     getWords(group, page);
   }, [group, page]);
+
+  useEffect(() => {
+    getDictionaryWords();
+  }, []);
 
   return (
     <>

@@ -85,6 +85,7 @@ export enum WordBookActionTypes {
 
 export interface ISavannahWord {
   word: string;
+  wordObj: IWord;
   translate: string;
   isCorrect: boolean;
 }
@@ -193,4 +194,51 @@ export interface IGamesAction {
 export interface ISettingsState {
   soundsVolume: number;
   gameMode: string;
+}
+
+export enum IGameName {
+  SAVANNAH = 'savannah',
+  AUDIO = 'audio',
+  SPRINT = 'sprint',
+  MEMORY = 'memory',
+}
+
+export type IGameStatistics = {
+  wordsLearned: number;
+  wordsTotal: number;
+  correctTotal: number;
+  correctSeries: number;
+};
+
+export type IDateStatistics = IGameStatistics & {
+  dateTime: number;
+  gameName: string;
+};
+
+export type IStatistics = {
+  [key: string]: IDateStatistics;
+};
+
+export interface IStatisticsState {
+  isLoading: boolean;
+  statistics: IStatistics;
+}
+
+export enum StatisticsActionTypes {
+  STATS_IS_LOADING = 'STATS_IS_LOADING',
+  STATS_FETCH_SUCCESS = 'STATS_FETCH_SUCCESS',
+  STATS_FETCH_ERROR = 'STATS_FETCH_ERROR',
+  SET_DAY_STATS = 'SET_DAY_STATS',
+  ADD_GAME_STATS = 'ADD_GAME_STATS',
+}
+
+export interface IStatisticsAction {
+  type: StatisticsActionTypes;
+  payload: {
+    error?: Error;
+    gameName?: string;
+    wordsLearned?: number;
+    correctTotal?: number;
+    correctSeries?: number;
+  };
 }
