@@ -91,6 +91,8 @@ export const SAVANNAH = {
   winkImg: '../../../assets/wink.png',
   audioCorrect: '../../../assets/audio/savannah-true.mp3',
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
+  finishAudioWin: '../../../assets/audio/win-sound.mp3',
+  finishAudioFail: '../../../assets/audio/fail-sound.mp3',
 };
 
 export const MEMORY = {

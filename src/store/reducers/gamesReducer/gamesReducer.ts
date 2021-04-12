@@ -4,7 +4,6 @@ const initialState: IGamesState = {
   actualWords: [],
   gameWords: [],
   extraWords: [],
-  games: {},
   isLoading: false,
   isCountDown: false,
 };

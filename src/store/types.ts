@@ -166,10 +166,6 @@ export interface IGamesState {
   gameWords: Array<IWord>;
   extraWords: Array<IWord>;
   isLoading: boolean;
-  games: {
-    // savannah: ISavannahState,
-    // audioCalling: IAudioCallingState;
-  };
   isCountDown: boolean;
 }
 

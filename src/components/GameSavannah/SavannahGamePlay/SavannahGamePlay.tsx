@@ -27,7 +27,7 @@ const SavannahGamePlay: React.FC = () => {
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 
   const saveUserWords = () => {
-    const wordsToSaveToDict = savannahData.words.map((savWord) => ({
+    const wordsToSaveToDict = savannahData.wordsData.map((savWord) => ({
       word: savWord.wordObj,
       correct: savWord.isCorrect,
     }));
@@ -55,8 +55,8 @@ const SavannahGamePlay: React.FC = () => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [health, setHealth] = useState(SAVANNAH.health);
   const currentWord = savannahData.isEng
-    ? savannahData?.wordsData?.[startWord]?.word?.word
-    : savannahData?.wordsData?.[startWord]?.word?.wordTranslate;
+    ? savannahData?.wordsData?.[startWord]?.word
+    : savannahData?.wordsData?.[startWord]?.translate;
 
   const classes = useStyles();
 
@@ -65,15 +65,19 @@ const SavannahGamePlay: React.FC = () => {
 
   const timeOutFunc = (): void => {
     const answersArray: Array<ISavannahWord> = savannahData?.wordsData
-      .filter(
-        (el) => (savannahData.isEng ? el?.word.word : el?.word?.wordTranslate) !== currentWord
-      )
+      .filter((el) => (savannahData.isEng ? el?.word : el?.translate) !== currentWord)
       .sort(() => Math.random() - 0.5)
       .slice(0, 3)
       .concat([savannahData?.wordsData?.[startWord]])
       .sort(() => Math.random() - 0.5);
     setAnimate(false);
     setFilteredArr(answersArray);
+  };
+
+  const onAudioPlay = (url: string): void => {
+    const audio = new Audio(url);
+    audio.volume = soundsVolume / VOLUME_DIVIDER;
+    audio.play();
   };
 
   useEffect(() => {
@@ -90,7 +94,7 @@ const SavannahGamePlay: React.FC = () => {
       setAnimate(true);
       saveUserWords();
       saveGameStatistics(
-        savannahData?.words,
+        savannahData?.wordsData,
         Math.max(currentSuccessSeries, successSeriesMaxLength)
       );
     }
@@ -100,12 +104,6 @@ const SavannahGamePlay: React.FC = () => {
     };
   }, [startWord]);
 
-  const onAudioPlay = (url: string): void => {
-    const audio = new Audio(url);
-    audio.volume = soundsVolume / VOLUME_DIVIDER;
-    audio.play();
-  };
-
   const handleAnimationEnd = (): void => {
     onAudioPlay(SAVANNAH.audioIncorrect);
     setAnimate(true);
@@ -113,7 +111,7 @@ const SavannahGamePlay: React.FC = () => {
     answer(savannahData.wordsData, currentWord, false);
     setStartWord(startWord + 1);
     setHealth(health - 1);
-    answer(savannahData.words, currentWord, false);
+    answer(savannahData.wordsData, currentWord, false);
     setSuccessSeriesMaxLength(Math.max(currentSuccessSeries, successSeriesMaxLength));
     setCurrentSuccessSeries(0);
   };
@@ -123,7 +121,7 @@ const SavannahGamePlay: React.FC = () => {
     if (matchCheck) {
       onAudioPlay(SAVANNAH.audioCorrect);
       setIsCorrectAnswer(true);
-      answer(savannahData.words, currentWord, true);
+      answer(savannahData.wordsData, currentWord, true);
       setCurrentSuccessSeries(currentSuccessSeries + 1);
     } else {
       onAudioPlay(SAVANNAH.audioIncorrect);
@@ -146,8 +144,8 @@ const SavannahGamePlay: React.FC = () => {
     if (Object.values(KEYBOARD_CODE).includes(e.keyCode) && !animate) {
       const codeIndex = Object.values(KEYBOARD_CODE).indexOf(e.keyCode);
       const transmittedWord = savannahData.isEng
-        ? filteredArr[codeIndex].word.word
-        : filteredArr[codeIndex].word.wordTranslate;
+        ? filteredArr[codeIndex].word
+        : filteredArr[codeIndex].translate;
       checkAnswer(transmittedWord);
     }
   };
@@ -160,7 +158,7 @@ const SavannahGamePlay: React.FC = () => {
   }, [filteredArr, animate]);
 
   const handleStyleSpan = (el: ISavannahWord): string => {
-    const matchCheck = savannahData?.wordsData?.[startWord - 1]?.word.word === el?.word.word;
+    const matchCheck = savannahData?.wordsData?.[startWord - 1]?.word === el?.word;
     return matchCheck ? classes.answerTrue : classes.answerWrong;
   };
 
@@ -177,7 +175,7 @@ const SavannahGamePlay: React.FC = () => {
   );
 
   const renderChooseWord = () => {
-    if (startWord >= savannahData.wordsData.length) {
+    if (startWord >= savannahData.wordsData.length || health === 0) {
       return setIsEndGame(true);
     }
     return (
@@ -186,11 +184,11 @@ const SavannahGamePlay: React.FC = () => {
           <button
             type="button"
             onClick={handleClickCheckAnswer}
-            name={savannahData.isEng ? el?.word?.word : el?.word?.wordTranslate}
-            key={el?.word?.word}
+            name={savannahData.isEng ? el?.word : el?.translate}
+            key={el?.word}
             className={animate ? handleStyleSpan(el) : ''}
             disabled={animate}>
-            {savannahData.isEng ? el?.word?.wordTranslate : el?.word?.word}
+            {savannahData.isEng ? el?.translate : el?.word}
           </button>
         ))}
       </div>
@@ -202,8 +200,8 @@ const SavannahGamePlay: React.FC = () => {
     return (
       <span className={`${classes.fallenWord}${classAnimate}`} onAnimationEnd={handleAnimationEnd}>
         {savannahData.isEng
-          ? savannahData?.wordsData?.[startWord]?.word?.word
-          : savannahData?.wordsData?.[startWord]?.word?.wordTranslate}
+          ? savannahData?.wordsData?.[startWord]?.word
+          : savannahData?.wordsData?.[startWord]?.translate}
       </span>
     );
   };

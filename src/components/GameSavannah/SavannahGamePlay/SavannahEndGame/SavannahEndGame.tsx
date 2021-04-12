@@ -18,7 +18,6 @@ import useStyles from '../../styles';
 const SavannahEndGame: React.FC = () => {
   const dispatch = useDispatch();
   const savannahData = useSelector((state: IAppState) => state.savannah);
-  const wordBook = useSelector((state: IAppState) => state.wordBook);
   const userWords = useSelector((state: IAppState) => [
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
@@ -31,8 +30,10 @@ const SavannahEndGame: React.FC = () => {
   const onRandomRound = (round: number) => dispatch(selectRound(round));
   const getGameWords = (groups: number, pages: number) => dispatch(fetchGameWords(groups, pages));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
-  const sendWordsToUserDictionary = (words: Array<IWord>, userData: IUserData) =>
-    dispatch(addWordsToUserDictionary(words, userData));
+  const sendWordsToUserDictionary = (
+    words: Array<{ word: IWord; correct: boolean }>,
+    userData: IUserData
+  ) => dispatch(addWordsToUserDictionary(words, userData));
 
   const [isRestart, setIsRestart] = useState(false);
 
@@ -44,7 +45,12 @@ const SavannahEndGame: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const arrayForUserDictionary = savannahData.wordsData.map((el) => el.word);
+    const arrayForUserDictionary = savannahData.wordsData.map((el) => {
+      return {
+        word: el.wordObj,
+        correct: el.isCorrect,
+      };
+    });
     return () => {
       if (user.userId) sendWordsToUserDictionary(arrayForUserDictionary, user);
     };

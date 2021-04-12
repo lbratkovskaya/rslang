@@ -16,18 +16,22 @@ import {
   fetchExtraWords,
   fetchGameWords,
 } from '../../../store/actions/gamesActions';
+import { fetchDictionary } from '../../../store/actions/dictionaryActions';
 import { SELECT_ROUNDS } from '../constants';
 import { EXTRA_WORDS_FOR_GAMES, GAMES, WORDBOOK_GROUPS } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles, { theme } from '../styles';
 
 const SavannahStartWindow: React.FC = () => {
+  const savannahData = useSelector((state: IAppState) => state.savannah);
+  const { gameWords, isLoading } = useSelector((state: IAppState) => state.games);
+  const location = useLocation();
+  const isCameFromWordbook = location.state?.fromWordbook;
+  const { actualWords } = useSelector((state: IAppState) => state.games);
+  const { extraWords } = useSelector((state: IAppState) => state.games);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const userData = useSelector((state: IAppState) => state.user?.data);
-  const wordBook = useSelector((state: IAppState) => state.wordBook);
-  const userWords = useSelector((state: IAppState) => [
-    ...state.userDictionary.learningWords,
-    ...state.userDictionary.deletedWords,
-  ]);
+  const userWords = [...userDictionary?.learningWords, ...userDictionary?.deletedWords];
 
   const dispatch = useDispatch();
   const setSelectLevel = (level: number) => dispatch(selectLevel(level));
@@ -40,12 +44,7 @@ const SavannahStartWindow: React.FC = () => {
   const changeMode = (mode: string) => dispatch(changeGameMode(mode));
   const switchLanguage = (isLang: boolean) => dispatch(switchLang(isLang));
   const countDownStart = (isCount: boolean) => dispatch(changeCountDown(isCount));
-  const savannahData = useSelector((state: IAppState) => state.savannah);
-  const { gameWords, isLoading } = useSelector((state: IAppState) => state.games);
-  const location = useLocation();
-  const isCameFromWordbook = location.state?.fromWordbook;
-  const { actualWords } = useSelector((state: IAppState) => state.games);
-  const { extraWords } = useSelector((state: IAppState) => state.games);
+  const getUserDictionary = () => dispatch(fetchDictionary(userData));
 
   const page: number = savannahData.round;
   const group: number = savannahData.level;
@@ -100,6 +99,10 @@ const SavannahStartWindow: React.FC = () => {
   useEffect(() => {
     getExtraWords(extraWordsValue);
   }, [extraWordsValue]);
+
+  useEffect(() => {
+    getUserDictionary();
+  }, []);
 
   return (
     <>

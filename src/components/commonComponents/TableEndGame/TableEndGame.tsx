@@ -17,6 +17,7 @@ interface ITableEndProps {
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
   const classes = useStyles();
+
   const chooseTableHeadStyle = (value: boolean | undefined | string) => {
     switch (value) {
       case true:
@@ -29,6 +30,7 @@ const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
         return classes.tableHeadDefault;
     }
   };
+
   const renderAnswers = (condition: boolean | undefined, title: string) => {
     return (
       <>
@@ -44,10 +46,10 @@ const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
             .filter((el) => el.isCorrect === condition)
             .map((el) => {
               return (
-                <TableRow key={el.word.word}>
-                  <TableCell className={classes.tableWordStyle}>{el.word.word}</TableCell>
+                <TableRow key={el.word}>
+                  <TableCell className={classes.tableWordStyle}>{el.word}</TableCell>
                   <TableCell className={classes.tableWordStyle} align="right">
-                    {el.word.wordTranslate}
+                    {el.translate}
                   </TableCell>
                 </TableRow>
               );

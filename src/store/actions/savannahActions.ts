@@ -58,8 +58,9 @@ export function onAnswer(wordsArray: Array<ISavannahWord>, word: string, answer:
   return {
     type: SavannahActionTypes.SAVANNAH_ANSWER,
     payload: wordsArray.map((el) => {
-      if (el.word.word === word || el.word.wordTranslate === word) {
+      if (el.word === word || el.word === word) {
         return {
+          ...el,
           word: el.word,
           isCorrect: answer,
         };

@@ -86,7 +86,7 @@ export const useStyles = makeStyles((theme) =>
       maxWidth: '80%',
       height: 350,
       margin: '10px auto',
-      background: 'scroll',
+      background: 'scroll !important',
       '&::-webkit-scrollbar': {
         width: '8px',
         height: '8px',
