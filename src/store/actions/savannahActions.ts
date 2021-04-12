@@ -1,4 +1,4 @@
-import { IWord, ISavannahWord } from '../types';
+import { IWord, ISavannahWord, IUserWord } from '../types';
 import { SavannahActionTypes } from '../reducers/savannahReducer/types';
 
 export function selectLevel(level: number) {
@@ -29,14 +29,17 @@ export function clickStartGame(isStart: boolean) {
   };
 }
 
-export function reduceArrayWords(wordsArray: Array<IWord>) {
+export function reduceArrayWords(wordsArray: Array<IWord>, userWords: Array<IUserWord>) {
   return {
     type: SavannahActionTypes.SAVANNAH_REDUCE_ARR,
     payload: wordsArray
       .sort(() => Math.random() - 0.5)
       .map((el) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const userWord = userWords.find((uw) => (uw.id || uw._id) === el.id);
         return {
           word: el.word,
+          wordObj: userWord || el,
           translate: el.wordTranslate,
           isCorrect: false,
         };

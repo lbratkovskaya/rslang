@@ -26,10 +26,15 @@ const SavannahEndGame: React.FC = () => {
   const dispatch = useDispatch();
   const savannahData = useSelector((state: IAppState) => state.savannah);
   const wordBook = useSelector((state: IAppState) => state.wordBook);
+  const userWords = useSelector((state: IAppState) => [
+    ...state.userDictionary.learningWords,
+    ...state.userDictionary.deletedWords,
+  ]);
   const onRandomLevel = (level: number) => dispatch(selectLevel(level));
   const onRandomRound = (round: number) => dispatch(selectRound(round));
   const getWords = (group: number, page: number) => dispatch(fetchWords(group, page));
-  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) =>
+    dispatch(reduceArrayWords(wordsArray, userWords));
 
   const [isRestart, setIsRestart] = useState(false);
 
