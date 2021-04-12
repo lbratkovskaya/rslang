@@ -168,3 +168,42 @@ export const updateClickedWords = (currentField: Array<IMemoryGameCard>) => {
     return card;
   });
 };
+
+export const getClickedWordsAsArray = (currentField: Array<IMemoryGameCard>) => {
+  const result: Array<string> = [];
+  updateClickedWords(currentField).forEach((card) => {
+    if (card.isClicked) {
+      result.push(card.value);
+    }
+  });
+  return result;
+};
+
+export const sendGameStatistic = (
+  field: Array<IMemoryGameCard>,
+  series: Array<number>,
+  token: string,
+  userId: string
+) => {
+  const url = `${backendUrl}/users/${userId}/statistics`;
+  const learnedWords = getClickedWordsAsArray(field).length;
+  fetch(url, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      learnedWords,
+      optional: {
+        dateTime: Date.now(),
+        miniGame: 'memoryGame',
+        wordsCount: field.length / 2,
+        totalCorrect: learnedWords,
+        seriesCorrect: series.sort((a, b) => b - a)[0],
+      },
+    }),
+  });
+};

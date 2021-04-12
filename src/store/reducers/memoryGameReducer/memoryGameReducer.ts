@@ -12,6 +12,8 @@ const initialState: IMemoryGameState = {
   clickedCards: [],
   isFailed: false,
   wordsVolume: MEMORY.gameWordsDefaultVolumeLevel,
+  serieCounter: 0,
+  series: [0],
 };
 
 const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
@@ -45,7 +47,6 @@ const hideClickedCards = (
   currentField: Array<IMemoryGameCard>,
   clickedCards: Array<IMemoryGameCard>
 ) => {
-  // let cardsToClose = clickedCards.length === 2 ? clickedCards : clickedCards.slice(0, -1)
   return currentField.map((element) => {
     const card = element;
     clickedCards.forEach((clickedCard) => {
@@ -98,7 +99,14 @@ export default function memoryGameReducer(
     case MemoryGameTypes.START_GAME:
       return { ...state, isStarted: true };
     case MemoryGameTypes.STOP_GAME:
-      return { ...state, isStarted: false, field: [] };
+      return {
+        ...state,
+        isStarted: false,
+        field: [],
+        clickedCard: [],
+        serieCounter: 0,
+        series: [],
+      };
     case MemoryGameTypes.FAILED_GAME:
       return {
         ...state,
@@ -118,11 +126,14 @@ export default function memoryGameReducer(
       return {
         ...state,
         field: hideClickedCards(state.field, action.processCards),
+        serieCounter: 0,
+        series: state.series.concat([state.serieCounter]),
       };
     case MemoryGameTypes.DISABLE_CLICKED_CARDS:
       return {
         ...state,
         field: disableClickedCards(state.field, action.processCards),
+        serieCounter: state.serieCounter + 1,
       };
     case MemoryGameTypes.CLEAR_CLICKED_CARDS:
       return {

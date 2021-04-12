@@ -24,6 +24,8 @@ export interface IMemoryGameState {
   learnedWords?: Array<string>;
   unExploredWords?: Array<string>;
   wordsVolume: number;
+  serieCounter: number;
+  series: Array<number>;
 }
 
 export interface IMemoryGameAction {
@@ -54,4 +56,6 @@ export enum MemoryGameTypes {
   SET_ERROR = 'MEMORY_GAME/SET_ERROR',
   SET_CARD_ID = 'MEMORY_GAME/SET_CARD_ID',
   SET_WORDS_VOLUME = 'MEMORY_GAME/SET_WORDS_VOLUME',
+  RESET_SERIE_COUNTER = 'MEMORY_GAME/RESET_SERIE_COUNTER',
+  INCREASE_SERIE_COUNTER = 'MEMORY_GAME/INCREASE_SERIE_COUNTER',
 }

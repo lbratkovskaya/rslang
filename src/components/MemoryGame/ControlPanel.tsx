@@ -20,6 +20,7 @@ import Timer from '../commonComponents/Timer';
 import {
   gameFailed,
   initiateGameField,
+  sendGameStatistic,
   setWordsVolumeLevel,
   startGame,
   stopGame,
@@ -37,6 +38,9 @@ const ControlPanel: React.FC = () => {
   const [gameSize, setGameSize] = React.useState(GAMES.memory.difficulty.easy.value);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
   const gameLevelFromSettings = useSelector((state: IAppState) => state.settings.gameMode);
+  const series = useSelector((state: IAppState) => state.memoryGame.series);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
+  const userData = useSelector((state: IAppState) => state.user.data);
 
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
@@ -122,6 +126,9 @@ const ControlPanel: React.FC = () => {
       const cardsAreDisabled = field.every((card: IMemoryGameCard) => card.disabled === true);
       if (cardsAreDisabled === true) {
         handleShowModalWindow();
+        if (isLoggedIn) {
+          sendGameStatistic(field, series, userData.token, userData.userId);
+        }
       }
       setAllCardsAreDisabled(cardsAreDisabled);
     }
