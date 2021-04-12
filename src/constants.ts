@@ -43,37 +43,37 @@ export enum COLORS {
 
 export const WORDBOOK_GROUPS: Array<IGroup> = [
   {
-    label: '�������',
+    label: 'Красный',
     linkAddress: ROUTES.wordBook.red,
     color: COLORS.RED,
     background: COLORS.BG_RED,
   },
   {
-    label: 'Ƹ����',
+    label: 'Жёлтый',
     linkAddress: ROUTES.wordBook.yellow,
     color: COLORS.YELLOW,
     background: COLORS.BG_YELLOW,
   },
   {
-    label: '���������',
+    label: 'Оранжевый',
     linkAddress: ROUTES.wordBook.orange,
     color: COLORS.ORANGE,
     background: COLORS.BG_ORANGE,
   },
   {
-    label: '������',
+    label: 'Зелёный',
     linkAddress: ROUTES.wordBook.green,
     color: COLORS.GREEN,
     background: COLORS.BG_GREEN,
   },
   {
-    label: '�����',
+    label: 'Синий',
     linkAddress: ROUTES.wordBook.blue,
     color: COLORS.BLUE,
     background: COLORS.BG_BLUE,
   },
   {
-    label: '����������',
+    label: 'Фиолетовый',
     linkAddress: ROUTES.wordBook.purple,
     color: COLORS.PURPLE,
     background: COLORS.BG_PURPLE,
@@ -101,6 +101,32 @@ export const MEMORY = {
   gameWordsMinimalVolumeLevel: 10,
   gameWordsDefaultVolumeLevel: 60,
   gameWordsMaxVolumeLevel: 100,
+  sizes: [
+    {
+      label: '',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Легко',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Нормально',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Сложно',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+  ],
 };
 
 export interface IGroup {
@@ -155,25 +181,59 @@ export const COUNTDOWN = {
   timeOutPetcent: 25,
 };
 
+interface IgameDifficulty {
+  value: number;
+  label: string;
+}
+
 export interface IGame {
   title: string;
   background: string;
   route: string;
+  difficulty: { [key: string]: IgameDifficulty };
 }
 
 export const GAMES: { [key: string]: IGame } = {
   savannah: {
-    title: '�������',
-    background: 'url(../../assets/savannah-bg.jpg) center no-repeat',
+    title: 'Саванна',
+    background: 'url(../../assets/savannah-bg.jpg) #858181 center no-repeat',
     route: ROUTES.games.savannah,
+    difficulty: {
+      easy: {
+        value: 10,
+        label: 'Легко',
+      },
+      normal: {
+        value: 20,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 30,
+        label: 'Сложно',
+      },
+    },
   },
   audio: {
-    title: '����������',
+    title: 'Аудиовызов',
     background: 'linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d)',
     route: ROUTES.games.audio,
+    difficulty: {
+      easy: {
+        value: 0,
+        label: 'Легко',
+      },
+      normal: {
+        value: 0,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 0,
+        label: 'Сложно',
+      },
+    },
   },
   sprint: {
-    title: '������',
+    title: 'Спринт',
     background: '',
     route: ROUTES.games.sprint,
     difficulty: {
@@ -192,16 +252,33 @@ export const GAMES: { [key: string]: IGame } = {
     },
   },
   memory: {
-    title: '����� ����',
+    title: 'Найди пару',
     background: '',
     route: ROUTES.games.memory,
+    difficulty: {
+      easy: {
+        value: 4,
+        label: 'Легко',
+      },
+      normal: {
+        value: 8,
+        label: 'Нормально',
+      },
+      hard: {
+        value: 10,
+        label: 'Сложно',
+      },
+    },
   },
 };
 
-export const GAME_MODE_WORDS = {
-  easy: 10,
-  normal: 20,
-  hard: 30,
+export const REGFORMS = {
+  sign_in: {
+    background: 'url(../../assets/sign_in_bg.jpeg)',
+  },
+  sign_up: {
+    background: 'url(../../assets/sign_up_bg.jpeg)',
+  },
 };
 
 export default backendUrl;

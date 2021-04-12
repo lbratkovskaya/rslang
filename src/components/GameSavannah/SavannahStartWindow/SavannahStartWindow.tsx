@@ -17,7 +17,7 @@ import {
   fetchGameWords,
 } from '../../../store/actions/gamesActions';
 import { SELECT_ROUNDS } from '../constants';
-import { EXTRA_WORDS_FOR_GAMES, GAME_MODE_WORDS, WORDBOOK_GROUPS } from '../../../constants';
+import { EXTRA_WORDS_FOR_GAMES, GAMES, WORDBOOK_GROUPS } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles, { theme } from '../styles';
 
@@ -62,13 +62,13 @@ const SavannahStartWindow: React.FC = () => {
     let wordCount = 0;
     switch (currentMode) {
       case 'easy':
-        wordCount = GAME_MODE_WORDS.easy;
+        wordCount = GAMES.savannah.difficulty.easy.value;
         break;
       case 'normal':
-        wordCount = GAME_MODE_WORDS.normal;
+        wordCount = GAMES.savannah.difficulty.normal.value;
         break;
       default:
-        wordCount = GAME_MODE_WORDS.hard;
+        wordCount = GAMES.savannah.difficulty.hard.value;
         break;
     }
     if (isCameFromWordbook) {
@@ -118,7 +118,7 @@ const SavannahStartWindow: React.FC = () => {
       </div>
       <div className={classes.savannahRules}>
         <Typography variant="h1" component="h2" gutterBottom>
-          Саванна
+          {GAMES.savannah.title}
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
           Тренировка Саванна развивает словарный запас.

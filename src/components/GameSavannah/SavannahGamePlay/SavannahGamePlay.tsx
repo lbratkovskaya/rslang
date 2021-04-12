@@ -221,11 +221,13 @@ const SavannahGamePlay: React.FC = () => {
         {isRenderingFallingWords && renderFallingWords()}
         {renderChooseWord()}
         <div className={classes.savannahFooter}>
-          <img
-            className={`${classes.footerImg}${isFooterImgAnimation}`}
-            src={!isCorrectAnswer ? SAVANNAH.sadImg : SAVANNAH.winkImg}
-            alt=""
-          />
+          {startWord > 0 && (
+            <img
+              className={`${classes.footerImg}${isFooterImgAnimation}`}
+              src={!isCorrectAnswer ? SAVANNAH.sadImg : SAVANNAH.winkImg}
+              alt=""
+            />
+          )}
         </div>
       </>
     );

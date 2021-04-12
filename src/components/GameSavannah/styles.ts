@@ -1,6 +1,6 @@
 import { createMuiTheme, createStyles, makeStyles } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import { SAVANNAH } from '../../constants';
+import { GAMES } from '../../constants';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) =>
     },
     savannahWrapper: {
       position: 'relative',
-      background: `url(${SAVANNAH.background})
-        rgb(133, 129, 129) no-repeat`,
+      background: `${GAMES.savannah.background}`,
       backgroundBlendMode: 'multiply',
       backgroundSize: 'cover',
       padding: '0 2rem',
