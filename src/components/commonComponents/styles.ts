@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) =>
     },
     exitBtnColor: {
       color: '#FFFFFF !important',
+      '&:hover': {
+        opacity: 0.7,
+      },
     },
   })
 );

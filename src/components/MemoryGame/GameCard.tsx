@@ -4,8 +4,8 @@ import { get } from 'lodash';
 import { Card, Typography } from '@material-ui/core';
 import { showGameCard } from '../../store/actions/memoryGameActions';
 import backendUrl, { GAMES } from '../../constants';
-import { IAppState } from '../../store/types';
 import { ICardProps } from './types';
+import { IAppState } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import useStyles from './styles';
 
@@ -29,15 +29,14 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
         gameSize: GAMES.memory.difficulty.easy.value,
         isClicked: false,
       };
-
       dispatch(showGameCard(newCard));
     }
   };
 
   function handleAutoplay(audio: string) {
-    const failPlayer = new Audio(audio);
-    failPlayer.volume = volume / 100;
-    failPlayer.play();
+    const player = new Audio(audio);
+    player.volume = volume / 100;
+    player.play();
   }
 
   const cardStyle = get(classes, `card${props.gameSize}`);
@@ -54,7 +53,6 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
             handleGameMove(event);
             if (!props.disabled) {
               handleAutoplay(props.audio);
-              // dispatch(disableClickedCards);
             }
           }}>
           <div className={classes.imageWrapper}>
@@ -74,7 +72,6 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
             handleGameMove(event);
             if (!props.disabled) {
               handleAutoplay(props.audio);
-              // dispatch(disableClickedCards);
             }
           }}>
           <Typography className={props.isOpen ? classes.text : classes.textNone} component="div">

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../constants';
-import { IMemoryGameCard, MemoryGameTypes } from '../reducers/memoryGameReducer/types';
 import { IWord } from '../types';
+import { IMemoryGameCard, MemoryGameTypes } from '../reducers/memoryGameReducer/types';
 
 export const startGame = () => ({
   type: MemoryGameTypes.START_GAME,
@@ -104,7 +104,7 @@ const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) =>
 export const initiateGameField = (
   gameSize: number,
   gameMode: string,
-  isCameFromWordBook: boolean,
+  isCameFromWordBook: boolean | undefined,
   group: number,
   page: number,
   actualWords: Array<IWord>

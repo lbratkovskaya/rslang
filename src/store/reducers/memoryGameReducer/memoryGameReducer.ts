@@ -4,7 +4,6 @@ import { IMemoryGameAction, IMemoryGameCard, IMemoryGameState, MemoryGameTypes }
 const initialState: IMemoryGameState = {
   cardId: '',
   isStarted: false,
-  size: 8,
   isLoading: false,
   words: [],
   field: [],

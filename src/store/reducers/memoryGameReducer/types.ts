@@ -16,7 +16,6 @@ export interface IMemoryGameState {
   isStarted: boolean;
   words: Array<IWord>;
   field: Array<IMemoryGameCard>;
-  size: number;
   isLoading: boolean;
   error: boolean;
   clickedCards: Array<IMemoryGameCard>;
@@ -34,7 +33,6 @@ export interface IMemoryGameAction {
   isStarted?: boolean;
   words?: Array<IWord>;
   field?: Array<IMemoryGameCard>;
-  size?: number;
   isLoading: boolean;
   error: boolean;
   newCard: IMemoryGameCard;

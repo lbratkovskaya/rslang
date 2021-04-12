@@ -203,6 +203,7 @@ const useStyles = makeStyles(() => ({
     fontSize: '96px',
   },
   gameSelect: {
+    color: '#FFFFFF',
     fontSize: '18px',
   },
   empty: {
@@ -211,14 +212,15 @@ const useStyles = makeStyles(() => ({
   },
   gameMenuLevel: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     fontSize: '1.5rem',
-    marginRight: '1rem',
+    marginBottom: '1rem',
     '& > div::before': {
-      borderColor: '#FFFFFF !important',
+      borderColor: 'rgb(63, 81, 181) !important',
     },
     '& > div::after': {
-      borderColor: '#FFFFFF !important',
+      borderColor: 'rgb(63, 81, 181) !important',
     },
     '& select': {
       color: '#FFFFFF !important',
@@ -234,17 +236,24 @@ const useStyles = makeStyles(() => ({
     },
   },
   levelSelectorName: {
-    margin: '0 1rem',
     color: '#FFFFFF',
     textTransform: 'capitalize',
     fontSize: '18px',
-    // [theme.breakpoints.down('sm')]: {
-    //   margin: '0',
-    //   marginRight: '0.5rem',
-    // },
   },
   volumeSettings: {
-    margin: '1rem 0',
+    width: '80%',
+  },
+  btnColor: {
+    color: '#FFFFFF !important',
+    '&:hover': {
+      opacity: 0.7,
+    },
+  },
+  list: {
+    paddingTop: 80,
+    width: 250,
+    height: '100%',
+    backgroundColor: 'rgb(33, 34, 41) !important',
   },
   '@media (max-width: 680px)': {
     leftWrapper: {
