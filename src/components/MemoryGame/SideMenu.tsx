@@ -14,8 +14,7 @@ import {
   Switch,
   Typography,
 } from '@material-ui/core';
-import { VolumeUp } from '@material-ui/icons';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { VolumeUp, Settings } from '@material-ui/icons';
 import { initiateGameField, setWordsVolumeLevel } from '../../store/actions/memoryGameActions';
 import { WORDBOOK_GROUPS, GAMES, MEMORY } from '../../constants';
 import { SELECT_ROUNDS } from '../GameSavannah/constants';
@@ -203,7 +202,7 @@ const SideMenu: React.FC = () => {
     <div>
       <React.Fragment key="left">
         <Button onClick={handleCloseMenu('left', true)} className={classes.btnColor}>
-          <SettingsIcon />
+          <Settings />
         </Button>
         <Drawer anchor="left" open={menuState.left} onClose={handleCloseMenu('left', false)}>
           {list()}

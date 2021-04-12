@@ -217,10 +217,10 @@ const useStyles = makeStyles(() => ({
     fontSize: '1.5rem',
     marginBottom: '1rem',
     '& > div::before': {
-      borderColor: 'rgb(63, 81, 181) !important',
+      borderColor: '#3f51b5 !important',
     },
     '& > div::after': {
-      borderColor: 'rgb(63, 81, 181) !important',
+      borderColor: '#3f51b5 !important',
     },
     '& select': {
       color: '#FFFFFF !important',
@@ -253,7 +253,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: 80,
     width: 250,
     height: '100%',
-    backgroundColor: 'rgb(33, 34, 41) !important',
+    backgroundColor: '#212229 !important',
   },
   '@media (max-width: 680px)': {
     leftWrapper: {
