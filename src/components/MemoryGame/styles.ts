@@ -209,6 +209,43 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '60px',
   },
+  gameMenuLevel: {
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '1.5rem',
+    marginRight: '1rem',
+    '& > div::before': {
+      borderColor: '#FFFFFF !important',
+    },
+    '& > div::after': {
+      borderColor: '#FFFFFF !important',
+    },
+    '& select': {
+      color: '#FFFFFF !important',
+      '&[disabled]': {
+        opacity: 0.6,
+      },
+    },
+    '& option': {
+      color: '#000000 !important',
+    },
+    '& svg': {
+      color: '#FFFFFF !important',
+    },
+  },
+  levelSelectorName: {
+    margin: '0 1rem',
+    color: '#FFFFFF',
+    textTransform: 'capitalize',
+    fontSize: '18px',
+    // [theme.breakpoints.down('sm')]: {
+    //   margin: '0',
+    //   marginRight: '0.5rem',
+    // },
+  },
+  volumeSettings: {
+    margin: '1rem 0',
+  },
   '@media (max-width: 680px)': {
     leftWrapper: {
       display: 'flex',

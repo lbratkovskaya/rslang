@@ -23,6 +23,7 @@ export interface IMemoryGameState {
   isFailed: boolean;
   learnedWords?: Array<string>;
   unExploredWords?: Array<string>;
+  wordsVolume: number;
 }
 
 export interface IMemoryGameAction {
@@ -36,6 +37,7 @@ export interface IMemoryGameAction {
   error: boolean;
   newCard: IMemoryGameCard;
   prevCard: IMemoryGameCard;
+  wordsVolume: number;
 }
 
 export enum MemoryGameTypes {
@@ -49,4 +51,5 @@ export enum MemoryGameTypes {
   SET_IS_LOADING = 'MEMORY_GAME/SET_IS_LOADING',
   SET_ERROR = 'MEMORY_GAME/SET_ERROR',
   SET_CARD_ID = 'MEMORY_GAME/SET_CARD_ID',
+  SET_WORDS_VOLUME = 'MEMORY_GAME/SET_WORDS_VOLUME',
 }

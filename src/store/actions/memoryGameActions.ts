@@ -43,6 +43,11 @@ export const disableClickedCards = () => ({
   type: MemoryGameTypes.DISABLE_CLICKED_CARDS,
 });
 
+export const setWordsVolumeLevel = (value: number) => ({
+  type: MemoryGameTypes.SET_WORDS_VOLUME,
+  wordsVolume: value,
+});
+
 const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) => {
   let result: Array<IMemoryGameCard> = [];
   /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */

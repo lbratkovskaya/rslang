@@ -1,3 +1,4 @@
+import { MEMORY } from '../../../constants';
 import { IMemoryGameAction, IMemoryGameCard, IMemoryGameState, MemoryGameTypes } from './types';
 
 const initialState: IMemoryGameState = {
@@ -10,6 +11,7 @@ const initialState: IMemoryGameState = {
   error: false,
   clickedCards: [],
   isFailed: false,
+  wordsVolume: MEMORY.gameWordsDefaultVolumeLevel,
 };
 
 const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
@@ -112,6 +114,8 @@ export default function memoryGameReducer(
       return { ...state, isLoading: action.isLoading };
     case MemoryGameTypes.SET_ERROR:
       return { ...state, error: action.error };
+    case MemoryGameTypes.SET_WORDS_VOLUME:
+      return { ...state, wordsVolume: action.wordsVolume };
     default:
       return state;
   }

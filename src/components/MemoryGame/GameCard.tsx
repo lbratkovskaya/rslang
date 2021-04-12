@@ -18,6 +18,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
   const dispatch = useDispatch();
   const clickedCards = useSelector((state: IAppState) => state.memoryGame.clickedCards);
   const isGameStared = useSelector((state: IAppState) => state.memoryGame.isStarted);
+  const volume = useSelector((state: IAppState) => state.memoryGame.wordsVolume);
 
   const handleGameMove = (event: React.SyntheticEvent) => {
     if (!props.disabled && isGameStared) {
@@ -50,6 +51,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
 
   function handleAutoplay(audio: string) {
     const failPlayer = new Audio(audio);
+    failPlayer.volume = volume / 100;
     failPlayer.play();
   }
 
