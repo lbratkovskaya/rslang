@@ -49,6 +49,7 @@ const SavannahStartWindow: React.FC = () => {
   const handleChange = (value: string | number): void => {
     setSelectLevel(Number(value));
   };
+
   const handleStartGame = (): void => {
     if (isCameFromWordbook) {
       const cutActualWords = actualWords.slice(-MAX_LENGTH_GAME_ARR);

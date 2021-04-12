@@ -204,15 +204,15 @@ export const GAMES: { [key: string]: IGame } = {
     route: ROUTES.games.sprint,
     difficulty: {
       easy: {
-        value: 0,
+        value: 60,
         label: 'Легко',
       },
       normal: {
-        value: 0,
+        value: 50,
         label: 'Нормально',
       },
       hard: {
-        value: 0,
+        value: 40,
         label: 'Сложно',
       },
     },

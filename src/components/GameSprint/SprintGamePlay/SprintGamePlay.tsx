@@ -18,22 +18,23 @@ const SprintGamePlay: React.FC = () => {
     dispatch(onAnswer(wordsArray, word, isAnswer));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const sprintInfo = useSelector((state: IAppState) => state?.sprint);
+  const { changeTimer } = useSelector((state: IAppState) => state.sprint);
   const [randomWord, setRandomWord] = useState('');
   const [classAnswer, setClassAnswer] = useState(classes.answerDefault);
   const [currentWord, setCurrentWord] = useState('');
   const [translateWord, setTranslateWord] = useState('');
-  const [timer, setTimer] = useState(SPRINT.timeOutDelay);
+  const [timer, setTimer] = useState(changeTimer);
   const [selectWord, setSelectWord] = useState(0);
   const [isEndGame, setIsEndGame] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const timeDaleyWord = (): void => {
-    setCurrentWord(sprintInfo?.words?.[selectWord]?.word);
-    setTranslateWord(sprintInfo?.words?.[selectWord]?.translate);
+    setCurrentWord(sprintInfo?.wordsData?.[selectWord]?.word.word);
+    setTranslateWord(sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate);
     setClassAnswer(classes.answerDefault);
-    const getRandomTranslate: string =
-      sprintInfo?.words?.[Math.floor(Math.random() * sprintInfo.words.length)]?.translate;
-    const getCurrentWordTranslate: string = sprintInfo?.words?.[selectWord]?.translate;
+    const randomIndex: number = Math.floor(Math.random() * sprintInfo.wordsData.length);
+    const getRandomTranslate: string = sprintInfo?.wordsData?.[randomIndex]?.word.wordTranslate;
+    const getCurrentWordTranslate: string = sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate;
     const getRandomArray: Array<string> = [getRandomTranslate, getCurrentWordTranslate];
     const getRandomWord = getRandomArray[Math.floor(Math.random() * getRandomArray.length)];
     setRandomWord(getRandomWord);
@@ -41,7 +42,7 @@ const SprintGamePlay: React.FC = () => {
   };
 
   useEffect(() => {
-    if (selectWord >= sprintInfo.words.length) {
+    if (selectWord >= sprintInfo.wordsData.length) {
       setIsEndGame(true);
     }
     const timerClass = setTimeout(() => timeDaleyWord(), TIME_OUT_DELAY);
@@ -57,7 +58,9 @@ const SprintGamePlay: React.FC = () => {
   }, [timer]);
 
   useEffect(() => {
-    return () => startGame(false);
+    return () => {
+      startGame(false);
+    };
   }, []);
 
   const onAudioPlay = (url: string): void => {
@@ -65,15 +68,14 @@ const SprintGamePlay: React.FC = () => {
     audio.play();
   };
 
-  const handleCheckWord = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    const { name } = e.currentTarget;
+  const onCheckAnswer = (word: string): void => {
     const isCorrectAnswer: boolean =
-      (name === 'false' && translateWord !== randomWord) ||
-      (name === 'true' && translateWord === randomWord);
+      (word === 'false' && translateWord !== randomWord) ||
+      (word === 'true' && translateWord === randomWord);
     if (isCorrectAnswer) {
       onAudioPlay(SPRINT.audioTrue);
       setClassAnswer(classes.answerTrue);
-      answer(sprintInfo.words, translateWord, true);
+      answer(sprintInfo.wordsData, translateWord, true);
     } else {
       onAudioPlay(SPRINT.audioFalse);
       setClassAnswer(classes.answerWrong);
@@ -82,11 +84,39 @@ const SprintGamePlay: React.FC = () => {
     setSelectWord(selectWord + 1);
   };
 
-  const handleExitGame = () => startGame(false);
+  const handleCheckWord = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    const { name } = e.currentTarget;
+    onCheckAnswer(name);
+  };
+
+  const handleExitGame = (): void => {
+    startGame(false);
+  };
 
   const handleEndGame = (): void => {
     if (timer === 0) setIsEndGame(true);
   };
+
+  const handleKeyboardAnswer = (e: KeyboardEvent) => {
+    if (isDisabled) return;
+    switch (e.keyCode) {
+      case 37:
+        onCheckAnswer('true');
+        break;
+      case 39:
+        onCheckAnswer('false');
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyboardAnswer);
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardAnswer);
+    };
+  }, [isDisabled]);
 
   const btnComponent = (selectName: string) => {
     return (

@@ -249,12 +249,11 @@ export interface ISprintState {
   round: number;
   isEng: boolean;
   isStartGame: boolean;
-  words: Array<ISprintWords>;
+  changeTimer: number;
+  wordsData: Array<ISprintWords>;
 }
 
 export interface ISprintWords {
-  word: string;
-  translate: string;
   isCorrect: boolean;
-  wordAudio: string;
+  word: IWord;
 }

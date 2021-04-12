@@ -9,3 +9,4 @@ export const SELECT_ROUNDS: any = {
 };
 
 export const TIME_OUT_DELAY: number = 500;
+export const MAX_LENGTH_GAME_ARR: number = 20;

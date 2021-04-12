@@ -22,10 +22,17 @@ export function switchLang(isEng: boolean) {
   };
 }
 
-export function clickStartGame(isStart: boolean) {
+export function clickStartGame(isStartGame: boolean) {
   return {
     type: SprintActionTypes.SPRINT_START_GAME,
-    payload: isStart,
+    payload: { isStartGame },
+  };
+}
+
+export function checkChangeTimer(changeTimer: number) {
+  return {
+    type: SprintActionTypes.SPRINT_CHANGE_TIMER,
+    payload: { changeTimer },
   };
 }
 
@@ -36,10 +43,8 @@ export function reduceArrayWords(wordsArray: IWord[]) {
       .sort(() => Math.random() - 0.5)
       .map((el) => {
         return {
-          word: el.word,
-          translate: el.wordTranslate,
           isCorrect: false,
-          wordAudio: el.audio,
+          word: el,
         };
       }),
   };
@@ -49,10 +54,10 @@ export function onAnswer(wordsArray: ISprintWords[], word: string, answer: boole
   return {
     type: SprintActionTypes.SPRINT_ANSWER,
     payload: wordsArray.map((el) => {
-      if (el.word === word || el.translate === word) {
+      if (el.word.word === word || el.word.wordTranslate === word) {
         return {
-          ...el,
           isCorrect: answer,
+          word: el.word,
         };
       }
       return el;

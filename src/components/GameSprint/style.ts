@@ -13,8 +13,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     sprintWrapper: {
       height: '100vh',
-      background: `url(${SPRINT.background})
-      rgb(133, 129, 129) no-repeat`,
+      background: `url(${SPRINT.background}) #858181 no-repeat`,
       backgroundBlendMode: 'multiply',
       backgroundSize: 'cover',
       padding: '0 2rem',
@@ -28,7 +27,9 @@ const useStyles = makeStyles(() =>
       color: '#fff',
     },
     sprintMenuSettings: {
-      width: '15em',
+      display: 'flex',
+      width: '350px',
+      flexWrap: 'wrap',
     },
     sprintRules: {
       color: '#fff',
@@ -116,6 +117,9 @@ const useStyles = makeStyles(() =>
     },
     tableSpanUnCorrectly: {
       background: '#f51400',
+    },
+    buttonMain: {
+      margin: '20px',
     },
   })
 );
