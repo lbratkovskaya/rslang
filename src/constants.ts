@@ -5,7 +5,7 @@ export const ROUTES = {
   games: {
     root: '/games',
     savannah: '/games/savannah',
-    audio: '/games/audio',
+    audio: '/games/audio-calling',
     sprint: '/games/sprint',
     memory: '/games/memory',
   },
@@ -111,6 +111,10 @@ export interface IGroup {
 }
 
 export const modalTimeout = 1000;
+export const playIcon = './assets/play-button.svg';
+export const correctUrl: string = './assets/correct.wav';
+export const skipUrl: string = './assets/skip.wav';
+export const incorrectUrl: string = './assets/incorrect.wav';
 
 export const APPEAR_DURATION = 600;
 export const APPEAR_STYLE = {

@@ -50,7 +50,6 @@ const MobileNavMenu: React.FC<MobileNavMenuProps> = (props: MobileNavMenuProps) 
       open={isOpen}
       onClose={onMenuClose}>
       {items && renderItems()}
-
       <MenuItem key="userAuth" className={mobileClasses.navMenuItem}>
         <div key={authId} className={mobileClasses.navMenuItemInner} ref={authRef}>
           <span>Вход/Регистрация</span>

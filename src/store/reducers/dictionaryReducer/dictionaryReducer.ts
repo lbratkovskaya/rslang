@@ -24,6 +24,8 @@ export default function dictionaryReducer(
       };
     case DictionaryActionTypes.FETCH_ERROR:
       return { ...state, isLoading: false, error: action.payload.error };
+    case DictionaryActionTypes.SEND_WORDS:
+      return { ...state, learningWords: action.payload.learningWords };
     default:
       return state;
   }

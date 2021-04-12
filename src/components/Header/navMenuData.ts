@@ -7,6 +7,7 @@ const sectionsId = 'wordBook';
 export const mobileMenuId = 'mobileMenu';
 export const logoPath = '../../assets/favicon.svg';
 
+
 const gamesTitles = Array.from(Object.keys(GAMES));
 
 export const gamesItems: Array<ISubMenuItem> = gamesTitles.map((game) => ({
@@ -20,6 +21,7 @@ export const sectionsItems: Array<ISubMenuItem> = new Array(NUM_OF_SECTIONS)
   .map((el, index) => ({
     label: getSectionLabel(index),
     withLink: true,
+
     linkAddress: getSectionRoute(index),
     important: false,
   }))

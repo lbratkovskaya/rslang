@@ -1,11 +1,14 @@
+import { IAudioCallingState } from './reducers/audioCallingReducer/types';
 import { IMemoryGameState } from './reducers/memoryGameReducer/types';
 
 export interface IAppState {
   wordBook: IWordBookState;
   savannah: ISavannahState;
   user: IUserState;
+  audioCalling: IAudioCallingState;
   userDictionary: IDictionaryState;
   games: IGamesState;
+  volumeHandler: IVolumeState;
   settings: ISettingsState;
   memoryGame: IMemoryGameState;
 }
@@ -62,6 +65,7 @@ export interface IWord {
 
 export interface IWordBookState {
   isLoading: boolean;
+
   words: Array<IWord>;
   activeGroup: number;
   activePage: number;
@@ -138,6 +142,7 @@ export enum DictionaryActionTypes {
   SET_WORD_EASY = 'SET_WORD_EASY',
   SET_WORD_HARD = 'SET_WORD_HARD',
   SET_WORD_DELETED = 'SET_WORD_DELETED',
+  SEND_WORDS = 'SEND_WORDS',
 }
 
 export interface IDictionaryAction {
@@ -158,6 +163,19 @@ export interface IGamesState {
     // savannah: ISavannahState,
     // audioCalling: IAudioCallingState;
   };
+}
+
+export interface IVolumeAction {
+  type: VolumeActionTypes;
+  volume: string;
+}
+
+export interface IVolumeState {
+  volume: number;
+}
+
+export enum VolumeActionTypes {
+  CHANGE_VOLUME = 'CHANGE_VOLUME',
 }
 
 export enum GamesActionTypes {
