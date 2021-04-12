@@ -35,12 +35,18 @@ export const showGameCard = (newCard: IMemoryGameCard) => ({
   newCard,
 });
 
-export const hideClickedCards = () => ({
+export const hideClickedCards = (processCards: Array<IMemoryGameCard>) => ({
   type: MemoryGameTypes.HIDE_CLICKED_CARDS,
+  processCards,
 });
 
-export const disableClickedCards = () => ({
+export const disableClickedCards = (processCards: Array<IMemoryGameCard>) => ({
   type: MemoryGameTypes.DISABLE_CLICKED_CARDS,
+  processCards,
+});
+
+export const clearClickedCards = () => ({
+  type: MemoryGameTypes.CLEAR_CLICKED_CARDS,
 });
 
 export const setWordsVolumeLevel = (value: number) => ({

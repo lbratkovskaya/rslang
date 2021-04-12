@@ -26,10 +26,26 @@ const showCardInField = (currentField: Array<IMemoryGameCard>, newCard: IMemoryG
   });
 };
 
+const addInClickedCards = (clickedCards: Array<IMemoryGameCard>, newCard: IMemoryGameCard) => {
+  const foundCard = clickedCards.find((card) => {
+    if (card.id === newCard.id && card.type === newCard.type) {
+      return true;
+    }
+    return false;
+  });
+  const res = clickedCards;
+
+  if (foundCard === undefined) {
+    res.push(newCard);
+  }
+  return res;
+};
+
 const hideClickedCards = (
   currentField: Array<IMemoryGameCard>,
   clickedCards: Array<IMemoryGameCard>
 ) => {
+  // let cardsToClose = clickedCards.length === 2 ? clickedCards : clickedCards.slice(0, -1)
   return currentField.map((element) => {
     const card = element;
     clickedCards.forEach((clickedCard) => {
@@ -96,18 +112,21 @@ export default function memoryGameReducer(
       return {
         ...state,
         field: showCardInField(state.field, action.newCard),
-        clickedCards: state.clickedCards.concat(action.newCard),
+        clickedCards: addInClickedCards(state.clickedCards, action.newCard),
       };
     case MemoryGameTypes.HIDE_CLICKED_CARDS:
       return {
         ...state,
-        field: hideClickedCards(state.field, state.clickedCards),
-        clickedCards: [],
+        field: hideClickedCards(state.field, action.processCards),
       };
     case MemoryGameTypes.DISABLE_CLICKED_CARDS:
       return {
         ...state,
-        field: disableClickedCards(state.field, state.clickedCards),
+        field: disableClickedCards(state.field, action.processCards),
+      };
+    case MemoryGameTypes.CLEAR_CLICKED_CARDS:
+      return {
+        ...state,
         clickedCards: [],
       };
     case MemoryGameTypes.SET_IS_LOADING:
