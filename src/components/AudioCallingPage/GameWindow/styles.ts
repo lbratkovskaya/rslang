@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
       textTransform: 'uppercase',
       backgroundColor: 'blue',
       transition: 'all .3s ease-in-out',
-      boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.75)',
+      boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.75)',
       '&:hover': {
         backgroundColor: '#1C2391',
         transition: 'all .2s ease-in-out',
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() =>
       textTransform: 'uppercase',
       backgroundColor: 'green',
       transition: 'all .3s ease-in-out',
-      boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.75)',
+      boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.75)',
       '&:hover': {
         backgroundColor: '#1C9120',
         transition: 'all .2s ease-in-out',
@@ -60,7 +60,7 @@ const useStyles = makeStyles(() =>
       textTransform: 'uppercase',
       backgroundColor: 'red',
       transition: 'all .3s ease-in-out',
-      boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.75)',
+      boxShadow: '0px 3px 5px 0px rgba(0, 0, 0, 0.75)',
       '&:hover': {
         backgroundColor: '#ED4337',
         transition: 'all .2s ease-in-out',

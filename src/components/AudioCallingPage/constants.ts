@@ -10,4 +10,6 @@ export const SELECT_ROUNDS: IOptions = {
   amount: 30,
 };
 
+export const ANIMATION_DURATION: number = 500;
+
 export const MAX_LENGTH_GAME_ARR: number = 20;

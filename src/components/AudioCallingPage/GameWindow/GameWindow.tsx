@@ -16,6 +16,7 @@ import {
   clickStartGame,
 } from '../../../store/actions/audioCallingActions';
 import gameMode from '../AudioCallingStartGame/constants';
+import { ANIMATION_DURATION } from '../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles from './styles';
 
@@ -63,7 +64,7 @@ const AudioCallingStartGame: React.FC = () => {
 
   const startAnimation = () => {
     setAnimate(true);
-    setTimeout(() => setAnimate(false), 500);
+    setTimeout(() => setAnimate(false), ANIMATION_DURATION);
   };
 
   const playClickEffect = (url: string) => {

@@ -15,7 +15,6 @@ export default combineReducers({
   userDictionary: dictionaryReducer,
   games: gamesReducer,
   savannah: savannahReducer,
-
   settings: settingsReducer,
   memoryGame: memoryGameReducer,
   audioCalling: audioCallingReducer,

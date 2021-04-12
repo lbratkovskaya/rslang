@@ -40,7 +40,6 @@ const AudioCallingStartGame: React.FC = () => {
   };
 
   const handleChange = (value: string | number): void => {
-    console.log(value);
     setSelectLevel(Number(value));
     sendActiveGroup(Number(value));
     setCurGroup(Number(value));

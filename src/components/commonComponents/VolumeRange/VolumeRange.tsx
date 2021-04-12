@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Slider } from '@material-ui/core';
-import { IAppState } from '../../../store/types';
 import changeVol from '../../../store/actions/volumeChangeActions';
+import { IAppState } from '../../../store/types';
 import useStyles from './styles';
 
 const VolumeRange: React.FC = () => {
