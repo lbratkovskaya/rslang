@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GAMES, IGame } from '../../constants';
@@ -24,11 +24,16 @@ const GamesPage: React.FC = () => {
   return (
     <div>
       <Header />
-      <main className={classes.gamesGrid}>
-        {renderGameCard(GAMES.savannah)}
-        {renderGameCard(GAMES.audio)}
-        {renderGameCard(GAMES.sprint)}
-        {renderGameCard(GAMES.memory)}
+      <main className={classes.root}>
+        <Typography variant="h5" className={classes.title}>
+          Мини-игры
+        </Typography>
+        <div className={classes.gamesGrid}>
+          {renderGameCard(GAMES.savannah)}
+          {renderGameCard(GAMES.audio)}
+          {renderGameCard(GAMES.sprint)}
+          {renderGameCard(GAMES.memory)}
+        </div>
       </main>
       <Footer />
     </div>
