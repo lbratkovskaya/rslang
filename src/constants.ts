@@ -255,7 +255,7 @@ export const GAMES: { [key: string]: IGame } = {
   },
   memory: {
     title: 'Найди пару',
-    background: '',
+    background: 'url(../../assets/memory-bg.jpg) center no-repeat',
     route: ROUTES.games.memory,
     difficulty: {
       easy: {
