@@ -102,11 +102,15 @@ const useStyles = makeStyles((theme) =>
       background: 'green !important',
     },
     savannahFooter: {
+      position: 'relative',
       marginTop: 'auto',
       padding: '2rem 0',
     },
 
     footerImg: {
+      position: 'absolute',
+      left: '50%',
+      top: '-50%',
       width: '80px',
     },
 

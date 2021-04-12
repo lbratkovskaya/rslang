@@ -46,7 +46,7 @@ const SavannahEndGame: React.FC = () => {
   useEffect(() => {
     const arrayForUserDictionary = savannahData.wordsData.map((el) => el.word);
     return () => {
-      sendWordsToUserDictionary(arrayForUserDictionary, user);
+      if (user.userId) sendWordsToUserDictionary(arrayForUserDictionary, user);
     };
   }, []);
 
