@@ -3,16 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Popover, Typography, Tooltip, Checkbox } from '@material-ui/core';
 import { TuneRounded } from '@material-ui/icons';
 import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
-import useStyles from './styles';
-import { IAppState } from '../../store/types';
 import { useSavedWordBookSettings } from '../../utils';
+import { IAppState } from '../../store/types';
+import useStyles from './styles';
 
 const SettingsPopover: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const [savedSettings, setSavedSettings] = useSavedWordBookSettings();
-  // const [savedShowButtons, setSavedShowButtons] = useSavedShowButtons();
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
 
   const open = Boolean(anchorEl);
