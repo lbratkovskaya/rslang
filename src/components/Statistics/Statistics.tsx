@@ -65,7 +65,7 @@ const Statistics: React.FC = () => {
       dailyLearned: resultObj.dailyLearned + stat.wordsLearned,
       wordsTotal: resultObj.wordsTotal + stat.wordsTotal,
       correctTotal: resultObj.correctTotal + stat.correctTotal,
-      correctSeries: Math.max(stat.correctSeries, resultObj.correctSeries),
+      correctSeries: Math.max(stat.correctSeries, resultObj.correctSeries || 0),
     };
     Object.assign(resultObj, res);
   };

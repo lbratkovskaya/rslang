@@ -70,7 +70,7 @@ const ControlPanel: React.FC = () => {
       addGameStatistics(
         userData,
         IGameName.MEMORY,
-        newLearned.length,
+        newLearned.length / 2,
         wordsCards.length / 2,
         correctTotal,
         maxSuccessSeries

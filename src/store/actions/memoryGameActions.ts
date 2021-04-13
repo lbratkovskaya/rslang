@@ -56,7 +56,6 @@ export const setWordsVolumeLevel = (value: number) => ({
 
 const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) => {
   let result: Array<IMemoryGameCard> = [];
-  /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
   if (words && words.length) {
     const row = words.map((element) => {
       const mapResult = [

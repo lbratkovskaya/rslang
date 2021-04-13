@@ -17,22 +17,22 @@ import { addWordsToUserDictionary } from '../../../../store/actions/dictionaryAc
 import { fetchWords } from '../../../../store/actions/wordBookActions';
 import { SPRINT, timeout } from '../../../../constants';
 import { SELECT_LEVELS, SELECT_ROUNDS } from '../../constants';
-import { IAppState, ISprintWords, IUserData, IWord } from '../../../../store/types';
+import { IAppState, ISprintWords, IWord } from '../../../../store/types';
 import useStyles, { StyledTableCell, StyledTableRow } from '../../style';
 
 const SprintGameEnd: React.FC = () => {
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const springInfo = useSelector((state: IAppState) => state.sprint);
-  const user = useSelector((state: IAppState) => state.user.data);
+  const userData = useSelector((state: IAppState) => state.user.data);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const dispatch = useDispatch();
   const randomLevel = (level: number) => dispatch(selectLevel(level));
   const randomRound = (round: number) => dispatch(selectRound(round));
   const getWords = (group: number, page: number) => dispatch(fetchWords(group, page));
   const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
-  const setWordForDictionary = (
-    wordsArray: Array<{ word: IWord; correct: boolean }>,
-    userData: IUserData
-  ) => dispatch(addWordsToUserDictionary(wordsArray, userData));
+
+  const setWordForDictionary = (wordsArray: Array<{ word: IWord; correct: boolean }>) =>
+    dispatch(addWordsToUserDictionary(wordsArray, userDictionary, userData));
   const [isRestGame, setIsRestGame] = useState(false);
 
   const group: number = Math.floor(Math.random() * SELECT_LEVELS.amount);
@@ -67,14 +67,14 @@ const SprintGameEnd: React.FC = () => {
 
   useEffect(() => {
     getWords(group, page);
-  }, []);
+  }, [group, page]);
 
   useEffect(() => {
     const arrayForDictionary = springInfo.wordsData.map((el) => ({
       word: el.word,
       correct: el.isCorrect,
     }));
-    if (user.userId) setWordForDictionary(arrayForDictionary, user);
+    if (userData.userId) setWordForDictionary(arrayForDictionary);
   }, []);
 
   const renderTable = (isAnswer: boolean) => {

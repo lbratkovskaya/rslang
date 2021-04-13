@@ -4,7 +4,7 @@ import { Favorite } from '@material-ui/icons';
 import SavannahEndGame from './SavannahEndGame';
 import { GameExitBtn } from '../../commonComponents';
 import { clickStartGame, onAnswer } from '../../../store/actions/savannahActions';
-import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
+// import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import { SAVANNAH, VOLUME_DIVIDER } from '../../../constants';
 import { KEYBOARD_CODE } from '../constants';
@@ -15,10 +15,9 @@ const SavannahGamePlay: React.FC = () => {
   const savannahData = useSelector((state: IAppState) => state?.savannah);
   const soundsVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
   const userData = useSelector((state: IAppState) => state.user?.data);
-  const userWords = useSelector((state: IAppState) => [
-    ...state.userDictionary.learningWords,
-    ...state.userDictionary.deletedWords,
-  ]);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
+  
+  const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
 
   const dispatch = useDispatch();
@@ -26,26 +25,26 @@ const SavannahGamePlay: React.FC = () => {
     dispatch(onAnswer(wordsArray, word, isAnswer));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 
+  // const saveUserWords = () => {
+  //   const wordsToSaveToDict = savannahData.wordsData.map((savWord) => ({
+  //     word: savWord.wordObj,
+  //     correct: savWord.isCorrect,
+  //   }));
+  //   dispatch(addWordsToUserDictionary(wordsToSaveToDict, userDictionary, userData));
+  // };
   const saveGameStatistics = (wordsArray: Array<ISavannahWord>, maxSuccessSeries: number) => {
     const correctTotal = wordsArray.filter((word) => word.isCorrect).length;
+    const newLearned = wordsArray.filter((word) => userWordsWords.indexOf(word.word) === -1);
     dispatch(
       addGameStatistics(
-        currentStats,
         userData,
         IGameName.SAVANNAH,
+        newLearned.length,
         wordsArray.length,
         correctTotal,
         maxSuccessSeries
       )
     );
-  };
-
-  const saveUserWords = () => {
-    const wordsToSaveToDict = savannahData.words.map((savWord) => ({
-      word: savWord.wordObj,
-      correct: savWord.isCorrect,
-    }));
-    dispatch(addWordsToUserDictionary(wordsToSaveToDict, userData));
   };
 
   const [animate, setAnimate] = useState(false);
@@ -92,7 +91,7 @@ const SavannahGamePlay: React.FC = () => {
     if (checkEndGame) {
       setIsEndGame(true);
       setAnimate(true);
-      saveUserWords();
+      // saveUserWords();
       saveGameStatistics(
         savannahData?.wordsData,
         Math.max(currentSuccessSeries, successSeriesMaxLength)
@@ -127,7 +126,7 @@ const SavannahGamePlay: React.FC = () => {
       onAudioPlay(SAVANNAH.audioIncorrect);
       answer(savannahData.wordsData, currentWord, false);
       setIsCorrectAnswer(false);
-      answer(savannahData.words, currentWord, false);
+      answer(savannahData.wordsData, currentWord, false);
       setHealth(health - 1);
       setCurrentSuccessSeries(0);
       setSuccessSeriesMaxLength(Math.max(currentSuccessSeries, successSeriesMaxLength));

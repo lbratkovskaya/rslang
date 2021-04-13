@@ -37,6 +37,10 @@ const AudioCallingStartGame: React.FC = () => {
   const audioCallingArray = useSelector((state: IAppState) => state.audioCalling.startArray);
   const soundVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
   const difficulty = useSelector((state: IAppState) => state.settings.gameMode);
+  const userWords = useSelector((state: IAppState) => [
+    ...state.userDictionary.learningWords,
+    ...state.userDictionary.deletedWords,
+  ]);
   const audio = new Audio();
   const sendCorrect = (words: IWord) => dispatch(putCorrectToStore(words));
   const sendIncorrect = (words: IWord) => dispatch(putIncorrectToStore(words));
@@ -51,9 +55,21 @@ const AudioCallingStartGame: React.FC = () => {
 
   const initArray = () => {
     if (isCameFromWordbook) {
-      setCurrentArray(audioCallingArray);
+      setCurrentArray(
+        audioCallingArray.map((word) => {
+          // eslint-disable-next-line no-underscore-dangle
+          const userWord = userWords.find((uw) => (uw.id || uw._id) === word.id);
+          return userWord || word;
+        })
+      );
     } else {
-      setCurrentArray(wordBook.words.slice(0, gameMode[difficulty]));
+      setCurrentArray(
+        wordBook.words.slice(0, gameMode[difficulty]).map((word) => {
+          // eslint-disable-next-line no-underscore-dangle
+          const userWord = userWords.find((uw) => (uw.id || uw._id) === word.id);
+          return userWord || word;
+        })
+      );
     }
   };
 

@@ -6,10 +6,11 @@ import {
   clickStartGame,
   resetWordsToStartNewGame,
 } from '../../../store/actions/audioCallingActions';
+import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import backendUrl, { playIcon } from '../../../constants';
 import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
-import { IAppState, IWord } from '../../../store/types';
 import { IAudioCallingWords } from '../../../store/reducers/audioCallingReducer/types';
+import { IAppState, IGameName, IWord, IWordWithResult } from '../../../store/types';
 import useStyles from './styles';
 
 const FinishGame: React.FC = () => {
@@ -17,11 +18,12 @@ const FinishGame: React.FC = () => {
   const styles = useStyles();
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
   const userData = useSelector((state: IAppState) => state.user.data);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
   const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
-    !!userData.userId && dispatch(addWordsToUserDictionary(array, userData));
+    dispatch(addWordsToUserDictionary(array, userDictionary, userData));
 
   const handleExitGame = () => {
     startGame(false);
@@ -32,6 +34,10 @@ const FinishGame: React.FC = () => {
   useEffect(() => {
     const copy = audioCallingData.words.map((el) => ({ word: el.word, correct: el.isCorrect }));
     sendWords(copy);
+    saveGameStatistics(
+      copy,
+      [...audioCallingData.series, audioCallingData.seriesCounter].sort((a, b) => b - a)[0]
+    );
     return () => handleExitGame();
   }, []);
 

@@ -25,13 +25,12 @@ import useStyles, { theme } from '../styles';
 const SavannahStartWindow: React.FC = () => {
   const savannahData = useSelector((state: IAppState) => state.savannah);
   const { gameWords, isLoading } = useSelector((state: IAppState) => state.games);
-  const location = useLocation();
-  const isCameFromWordbook = location.state?.fromWordbook;
   const { actualWords } = useSelector((state: IAppState) => state.games);
   const { extraWords } = useSelector((state: IAppState) => state.games);
-  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const userData = useSelector((state: IAppState) => state.user?.data);
-  const userWords = [...userDictionary?.learningWords, ...userDictionary?.deletedWords];
+
+  const location = useLocation();
+  const isCameFromWordbook = location.state?.fromWordbook;
 
   const dispatch = useDispatch();
   const setSelectLevel = (level: number) => dispatch(selectLevel(level));
@@ -39,8 +38,7 @@ const SavannahStartWindow: React.FC = () => {
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const getGameWords = (groups: number, pages: number) => dispatch(fetchGameWords(groups, pages));
   const getExtraWords = (value: number) => dispatch(fetchExtraWords(value));
-  const onReduceArrayWords = (wordsArray: Array<IWord>) =>
-    dispatch(reduceArrayWords(wordsArray, userWords));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
   const changeMode = (mode: string) => dispatch(changeGameMode(mode));
   const switchLanguage = (isLang: boolean) => dispatch(switchLang(isLang));
   const countDownStart = (isCount: boolean) => dispatch(changeCountDown(isCount));

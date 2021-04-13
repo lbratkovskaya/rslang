@@ -11,6 +11,8 @@ const initialState: IAudioCallingState = {
   roundsQuantity: 30,
   wordQuantity: 5,
   startArray: [],
+  seriesCounter: 0,
+  series: [0],
 };
 
 const audioCallingReducer = (
@@ -21,9 +23,18 @@ const audioCallingReducer = (
     case AudioCallingActionTypes.CHANGE_END_GAME:
       return { ...state, isEnd: action.isEnd };
     case AudioCallingActionTypes.PUT_INCORRECT:
-      return { ...state, words: [...state.words, action.payload] };
+      return {
+        ...state,
+        words: [...state.words, action.payload],
+        seriesCounter: 0,
+        series: state.series.concat([state.seriesCounter]),
+      };
     case AudioCallingActionTypes.PUT_CORRECT:
-      return { ...state, words: [...state.words, action.payload] };
+      return {
+        ...state,
+        words: [...state.words, action.payload],
+        seriesCounter: state.seriesCounter + 1,
+      };
     case AudioCallingActionTypes.AUDIO_CALLING_START_GAME:
       return { ...state, isStart: action.payload };
     case AudioCallingActionTypes.AUDIOCALLING_CREATE_ARR:
@@ -33,7 +44,7 @@ const audioCallingReducer = (
     case AudioCallingActionTypes.AUDIO_CALLING_SELECT_ROUNDS:
       return { ...state, round: action.round };
     case AudioCallingActionTypes.RESET:
-      return { ...state, words: action.payload };
+      return { ...state, words: action.payload, seriesCounter: 0, series: [0] };
     default:
       return state;
   }

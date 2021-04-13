@@ -66,6 +66,11 @@ export interface IWord {
   textExampleTranslate: string;
 }
 
+export interface IWordWithResult {
+  word: IWord;
+  correct: boolean;
+}
+
 export interface IWordBookState {
   isLoading: boolean;
 
