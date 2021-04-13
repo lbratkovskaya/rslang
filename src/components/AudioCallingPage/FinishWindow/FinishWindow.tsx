@@ -20,7 +20,8 @@ const FinishGame: React.FC = () => {
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
-  const sendWords = (array: IWord[]) => dispatch(addWordsToUserDictionary(array, userData));
+  const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
+    dispatch(addWordsToUserDictionary(array, userData));
 
   const handleExitGame = () => {
     startGame(false);
@@ -29,7 +30,7 @@ const FinishGame: React.FC = () => {
   };
 
   useEffect(() => {
-    const copy = audioCallingData.words.map((el) => el.word);
+    const copy = audioCallingData.words.map((el) => ({ word: el.word, correct: el.isCorrect }));
     sendWords(copy);
     return () => handleExitGame();
   }, []);

@@ -110,6 +110,15 @@ export interface IGroup {
   background: COLORS;
 }
 
+export const SPRINT = {
+  timeOutDelay: 60,
+  background: 'https://99px.ru/sstorage/53/2018/08/tmb_234204_794603.jpg',
+  sadImg: '../../../assets/sad.svg',
+  winkImg: '../../../assets/wink.svg',
+  audioTrue: '../../../assets/SprintAudio/sprint_true.mp3',
+  audioFalse: '../../../assets/SprintAudio/sprint_false.mp3',
+};
+
 export const modalTimeout = 1000;
 export const playIcon = './assets/play-button.svg';
 export const correctUrl: string = './assets/correct.wav';
@@ -195,15 +204,15 @@ export const GAMES: { [key: string]: IGame } = {
     route: ROUTES.games.sprint,
     difficulty: {
       easy: {
-        value: 0,
+        value: 60,
         label: 'Легко',
       },
       normal: {
-        value: 0,
+        value: 50,
         label: 'Нормально',
       },
       hard: {
-        value: 0,
+        value: 40,
         label: 'Сложно',
       },
     },
