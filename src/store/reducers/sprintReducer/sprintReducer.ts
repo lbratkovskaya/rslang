@@ -24,13 +24,16 @@ export default function sprintReducer(state: ISprintState = initialState, action
       return {
         ...state,
         isStartGame: action.payload.isStartGame,
-        seriesCounter: action.payload.isStartGame ? state.seriesCounter : 0,
-        series: action.payload.isStartGame ? state.series : [0],
       };
     case SprintActionTypes.SPRINT_CHANGE_TIMER:
       return { ...state, changeTimer: action.payload.changeTimer };
     case SprintActionTypes.SPRINT_REDUCE_ARR:
-      return { ...state, wordsData: action.payload };
+      return {
+        ...state,
+        wordsData: action.payload,
+        seriesCounter: 0,
+        series: [0],
+      };
     case SprintActionTypes.SPRINT_ANSWER:
       return {
         ...state,

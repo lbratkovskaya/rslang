@@ -19,7 +19,7 @@ const ControlPanel: React.FC = () => {
   const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
-  const { series, serieCounter } = useSelector((state: IAppState) => state.memoryGame);
+  const memoryGame = useSelector((state: IAppState) => state.memoryGame);
   const gameWords = useSelector((state: IAppState) => state.memoryGame.words);
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userData = useSelector((state: IAppState) => state.user.data);
@@ -89,7 +89,10 @@ const ControlPanel: React.FC = () => {
       );
 
       sendWordsToUserDictionary(filteredWords.words);
-      saveGameStatistics(filteredWords.words, [...series, serieCounter].sort((a, b) => b - a)[0]);
+      saveGameStatistics(
+        filteredWords.words,
+        [...memoryGame.series, memoryGame.serieCounter].sort((a, b) => b - a)[0]
+      );
     }
   };
 
@@ -110,7 +113,7 @@ const ControlPanel: React.FC = () => {
         handleShowModalWindow();
         playSound('./assets/audio/win-sound.mp3');
         setGameWon(true);
-        setAllCardsAreDisabled(false);
+        handleWordsAfterGame();
       }
     }
   }, [JSON.stringify(field)]);

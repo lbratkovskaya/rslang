@@ -99,15 +99,15 @@ const Statistics: React.FC = () => {
             <TableBody>
               <TableRow>
                 <TableCell>Всего изучено новых слов</TableCell>
-                <TableCell>{resultObj.dailyLearned}</TableCell>
+                <TableCell>{resultObj.dailyLearned || 0}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Процент правильных ответов</TableCell>
-                <TableCell>{resultObj.correctPercent}%</TableCell>
+                <TableCell>{resultObj.correctPercent || 0}%</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Серия правильных ответов</TableCell>
-                <TableCell>{resultObj.correctSeries}</TableCell>
+                <TableCell>{resultObj.correctSeries || 0}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -307,29 +307,33 @@ const Statistics: React.FC = () => {
         <Typography variant="h5" className={styles.title}>
           Моя статистика
         </Typography>
-        <TableContainer component={Paper} className={styles.totalWrapper}>
-          <Table size="small" key="today">
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={2} align="center">
-                  {lastDateStr}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>Всего изучено новых слов</TableCell>
-                <TableCell>{lastDayLearned}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Процент правильных ответов</TableCell>
-                <TableCell>{correctPercent}%</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className={styles.gamesWrapper}>{renderGamesTables()}</div>
-        <div className={styles.graphsWrapper}>{renderGraphs()}</div>
+        {isLoggedIn && (
+          <>
+            <TableContainer component={Paper} className={styles.totalWrapper}>
+              <Table size="small" key="today">
+                <TableHead>
+                  <TableRow>
+                    <TableCell colSpan={2} align="center">
+                      {lastDateStr}
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Всего изучено новых слов</TableCell>
+                    <TableCell>{lastDayLearned || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Процент правильных ответов</TableCell>
+                    <TableCell>{correctPercent || 0}%</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <div className={styles.gamesWrapper}>{renderGamesTables()}</div>
+            <div className={styles.graphsWrapper}>{renderGraphs()}</div>
+          </>
+        )}
       </main>
       <Footer />
     </div>
