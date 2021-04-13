@@ -20,6 +20,13 @@ export interface IAudioCallingGameAction {
   startArray: IWord[];
 }
 
+export interface IAudioCallingWords {
+  wordObj: IWord;
+  isCorrect: boolean;
+  word: string;
+  translate: string;
+}
+
 export interface IAudioCallingState {
   startArray: IWord[];
   level: number;

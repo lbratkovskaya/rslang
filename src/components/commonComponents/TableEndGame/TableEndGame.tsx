@@ -9,11 +9,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import { ISavannahWord, IAudioCallingWord } from '../../../store/types';
+import { ITableEndProps } from '../types';
 import { useStyles } from '../styles';
-
-interface ITableEndProps {
-  words: Array<ISavannahWord | IAudioCallingWord>;
-}
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
   const classes = useStyles();

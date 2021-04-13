@@ -27,7 +27,7 @@ export const putCorrectToStore = (word: IWord) => ({
 
 export const resetWordsToStartNewGame = () => ({
   type: AudioCallingActionTypes.RESET,
-  payload: { word: [] },
+  payload: { wordObj: [] },
 });
 
 export const endGame = () => ({

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import TableEndGame from '../../commonComponents/TableEndGame/TableEndGame';
+import { TableEndGame } from '../../commonComponents';
 import {
   clickStartGame,
   resetEndGame,
