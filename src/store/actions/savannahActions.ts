@@ -22,6 +22,13 @@ export function switchLang(isEng: boolean) {
   };
 }
 
+export function changeGameMode(mode: string) {
+  return {
+    type: SavannahActionTypes.SAVANNAH_GAME_MODE,
+    payload: { mode },
+  };
+}
+
 export function clickStartGame(isStart: boolean) {
   return {
     type: SavannahActionTypes.SAVANNAH_START_GAME,
@@ -51,9 +58,10 @@ export function onAnswer(wordsArray: Array<ISavannahWord>, word: string, answer:
   return {
     type: SavannahActionTypes.SAVANNAH_ANSWER,
     payload: wordsArray.map((el) => {
-      if (el.word === word || el.translate === word) {
+      if (el.word === word || el.word === word) {
         return {
           ...el,
+          word: el.word,
           isCorrect: answer,
         };
       }

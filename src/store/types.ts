@@ -97,7 +97,8 @@ export interface ISavannahState {
   round: number;
   isEng: boolean;
   isStartGame: boolean;
-  words: Array<ISavannahWord>;
+  mode: string;
+  wordsData: Array<ISavannahWord>;
 }
 
 export interface IOptions {
@@ -162,10 +163,10 @@ export interface IDictionaryAction {
 
 export interface IGamesState {
   actualWords: Array<IWord>;
-  games: {
-    // savannah: ISavannahState,
-    // audioCalling: IAudioCallingState;
-  };
+  gameWords: Array<IWord>;
+  extraWords: Array<IWord>;
+  isLoading: boolean;
+  isCountDown: boolean;
 }
 
 export interface IVolumeAction {
@@ -184,12 +185,25 @@ export enum VolumeActionTypes {
 export enum GamesActionTypes {
   ADD_WORD = 'ADD_WORD',
   DELETE_WORD = 'DELETE_WORD',
+  COUNTDOWN = 'COUNTDOWN',
+  EXTRA_WORDS = 'EXTRA_WORDS',
+  FETCH_EXTRA_START = 'FETCH_EXTRA_START',
+  FETCH_EXTRA_SUCCESS = 'FETCH_EXTRA_SUCCESS',
+  FETCH_EXTRA_ERROR = 'FETCH_EXTRA_ERROR',
+  FETCH_GAME_WORDS_START = 'FETCH_GAME_WORDS_START',
+  FETCH_GAME_WORDS_SUCCESS = 'FETCH_GAME_WORDS_SUCCESS',
+  FETCH_GAME_WORDS_ERROR = 'FETCH_GAME_WORDS_ERROR',
 }
 
 export interface IGamesAction {
   type: GamesActionTypes;
   payload: {
     actualWords: Array<IWord>;
+    gameWords: Array<IWord>;
+    extraWords: Array<IWord>;
+    isCountDown: boolean;
+    isLoading: boolean;
+    error: Error;
   };
 }
 

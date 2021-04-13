@@ -1,4 +1,4 @@
-const backendUrl = 'https://rslang-server.herokuapp.com';
+export const backendUrl = 'https://rslang-server.herokuapp.com';
 
 export const ROUTES = {
   root: '/',
@@ -87,10 +87,12 @@ export const SAVANNAH = {
   health: 5,
   timeOutDelay: 500,
   background: '../../../assets/savannah-bg.jpg',
-  sadImg: '../../../assets/sad.svg',
-  winkImg: '../../../assets/wink.svg',
+  sadImg: '../../../assets/sad.png',
+  winkImg: '../../../assets/wink.png',
   audioCorrect: '../../../assets/audio/savannah-true.mp3',
   audioIncorrect: '../../../assets/audio/savannah-false.mp3',
+  finishAudioWin: '../../../assets/audio/win-sound.mp3',
+  finishAudioFail: '../../../assets/audio/fail-sound.mp3',
 };
 
 export const MEMORY = {
@@ -101,6 +103,32 @@ export const MEMORY = {
   gameWordsMinimalVolumeLevel: 10,
   gameWordsDefaultVolumeLevel: 60,
   gameWordsMaxVolumeLevel: 100,
+  sizes: [
+    {
+      label: '',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Легко',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Нормально',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+    {
+      label: 'Сложно',
+      linkAddress: '',
+      color: COLORS.RED,
+      background: COLORS.BG_RED,
+    },
+  ],
 };
 
 export interface IGroup {
@@ -147,6 +175,14 @@ export const VOLUME_DIVIDER = 100;
 
 export const MAX_VOLUME = 100;
 export const MIN_VOLUME = 0;
+export const EXTRA_WORDS_FOR_GAMES = 50;
+
+export const COUNTDOWN = {
+  delay: 3,
+  percentage: 100,
+  timeOutPetcent: 25,
+};
+
 interface IgameDifficulty {
   value: number;
   label: string;
@@ -162,19 +198,19 @@ export interface IGame {
 export const GAMES: { [key: string]: IGame } = {
   savannah: {
     title: 'Саванна',
-    background: 'url(../../assets/savannah-bg.jpg) center no-repeat',
+    background: 'url(../../assets/savannah-bg.jpg) #858181 center no-repeat',
     route: ROUTES.games.savannah,
     difficulty: {
       easy: {
-        value: 0,
+        value: 10,
         label: 'Легко',
       },
       normal: {
-        value: 0,
+        value: 20,
         label: 'Нормально',
       },
       hard: {
-        value: 0,
+        value: 30,
         label: 'Сложно',
       },
     },

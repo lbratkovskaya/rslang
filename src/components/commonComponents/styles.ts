@@ -1,6 +1,8 @@
-import { createStyles, makeStyles } from '@material-ui/core';
+import { createMuiTheme, createStyles, makeStyles } from '@material-ui/core';
+import { purple, green, red } from '@material-ui/core/colors';
+import { buildStyles } from 'react-circular-progressbar';
 
-const useStyles = makeStyles((theme) =>
+export const useStyles = makeStyles((theme) =>
   createStyles({
     fullScreenBtn: {
       position: 'absolute',
@@ -75,7 +77,102 @@ const useStyles = makeStyles((theme) =>
         opacity: 0.7,
       },
     },
+    countDown: {
+      width: '60px',
+      height: '60px',
+      margin: 'auto',
+    },
+    tableContainer: {
+      maxWidth: '80%',
+      height: 350,
+      margin: '10px auto',
+      background: 'scroll !important',
+      '&::-webkit-scrollbar': {
+        width: '8px',
+        height: '8px',
+        backgroundColor: '#43444496',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#20208596',
+        borderRadius: '9em',
+        boxShadow: ' inset 1px 1px 10px #f3faf7',
+      },
+    },
+    table: {
+      borderCollapse: 'collapse',
+    },
+    incorrectAnswer: {
+      color: '#d41212',
+    },
+    correctAnswer: {
+      color: '#3cac26',
+    },
+    tableWordStyle: {
+      textTransform: 'capitalize',
+      color: '#FFFFFF !important',
+    },
+    tableHeadCorrect: {
+      background: '#3cac26 !important',
+    },
+    tableHeadInCorrect: {
+      background: '#d41212 !important',
+    },
+    tableHeadUnUsed: {
+      background: '#1f12d4 !important',
+    },
+    tableHeadDefault: {
+      background: '#000000 !important',
+      '& th': {
+        backgroundColor: '#000000 !important',
+      },
+    },
+    gameModeWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    gameModeTitle: {
+      color: '#ffffff',
+      width: '100%',
+      padding: '0.5rem 0.5rem',
+      textAlign: 'left',
+    },
+    modeBtnStyle: {
+      color: '#ffffff',
+      margin: '0 5px',
+      '&[disabled]': {
+        color: '#ffffff',
+      },
+    },
+    easyMode: {
+      background: '#000000',
+    },
+    normalMode: {
+      background: '#000000',
+    },
+    hardMode: {
+      background: '#000000',
+    },
   })
 );
 
-export default useStyles;
+export const themeModeBtn = createMuiTheme({
+  palette: {
+    primary: {
+      main: purple[500],
+    },
+    secondary: {
+      main: green[500],
+    },
+    error: {
+      main: red[500],
+    },
+  },
+});
+
+export const circularStyle = buildStyles({
+  strokeLinecap: 'butt',
+  trailColor: 'transparent',
+  pathColor: '#52cc00',
+  textColor: '#FFFFFF',
+  textSize: '50px',
+});

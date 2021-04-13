@@ -6,7 +6,8 @@ const initialState: ISavannahState = {
   round: 0,
   isEng: true,
   isStartGame: false,
-  words: [],
+  mode: 'easy',
+  wordsData: [],
 };
 
 export default function savannahReducer(
@@ -22,10 +23,12 @@ export default function savannahReducer(
       return { ...state, isEng: action.payload.isEng };
     case SavannahActionTypes.SAVANNAH_START_GAME:
       return { ...state, isStartGame: action.payload };
+    case SavannahActionTypes.SAVANNAH_GAME_MODE:
+      return { ...state, mode: action.payload.mode };
     case SavannahActionTypes.SAVANNAH_REDUCE_ARR:
-      return { ...state, words: action.payload };
+      return { ...state, wordsData: action.payload };
     case SavannahActionTypes.SAVANNAH_ANSWER:
-      return { ...state, words: action.payload };
+      return { ...state, wordsData: action.payload };
     default:
       return state;
   }

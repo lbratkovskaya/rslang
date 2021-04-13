@@ -56,6 +56,7 @@ const fetchDictSuccess = (words: { paginatedResults: Array<IUserWord> }[]) => ({
 const setEmptyDictionary = () => ({
   type: DictionaryActionTypes.FETCH_SUCCESS,
   payload: {
+    learningWords: [] as Array<IUserWord>,
     easyWords: [] as Array<IUserWord>,
     difficultWords: [] as Array<IUserWord>,
     deletedWords: [] as Array<IUserWord>,

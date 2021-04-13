@@ -1,7 +1,7 @@
 import React from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { ITimerProps, IRenderTimeProps } from '../types';
-import useStyles from '../styles';
+import { useStyles } from '../styles';
 
 const Timer: React.FC<ITimerProps> = (props: ITimerProps) => {
   const styles = useStyles();

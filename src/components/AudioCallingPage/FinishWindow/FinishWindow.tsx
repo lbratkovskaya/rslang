@@ -21,7 +21,7 @@ const FinishGame: React.FC = () => {
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
   const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
-    dispatch(addWordsToUserDictionary(array, userData));
+    !!userData.userId && dispatch(addWordsToUserDictionary(array, userData));
 
   const handleExitGame = () => {
     startGame(false);
