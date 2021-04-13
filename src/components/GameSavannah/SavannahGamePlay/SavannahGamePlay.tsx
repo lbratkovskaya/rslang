@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Favorite } from '@material-ui/icons';
 import SavannahEndGame from './SavannahEndGame';
 import { GameExitBtn } from '../../commonComponents';
+import GameTracker from '../../commonComponents/GameTracker';
 import { clickStartGame, onAnswer } from '../../../store/actions/savannahActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import { SAVANNAH, VOLUME_DIVIDER } from '../../../constants';
 import { KEYBOARD_CODE } from '../constants';
 import { IAppState, IGameName, ISavannahWord } from '../../../store/types';
 import useStyles from '../styles';
-import GameTracker from '../../commonComponents/GameTracker';
 
 const SavannahGamePlay: React.FC = () => {
   const savannahData = useSelector((state: IAppState) => state?.savannah);

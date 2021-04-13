@@ -40,12 +40,14 @@ const SavannahEndGame: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const arrayForUserDictionary = savannahData.wordsData.map((el) => {
-      return {
-        word: el.wordObj,
-        correct: el.isCorrect,
-      };
-    });
+    const arrayForUserDictionary = savannahData.wordsData
+      .filter((el) => el.isCorrect !== undefined)
+      .map((el) => {
+        return {
+          word: el.wordObj,
+          correct: el.isCorrect,
+        };
+      });
     if (userData.userId) sendWordsToUserDictionary(arrayForUserDictionary);
   }, []);
 

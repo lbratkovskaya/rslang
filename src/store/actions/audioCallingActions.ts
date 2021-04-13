@@ -17,12 +17,12 @@ export function selectRound(value: number) {
 
 export const putIncorrectToStore = (word: IWord) => ({
   type: AudioCallingActionTypes.PUT_INCORRECT,
-  payload: { wordObj: word, isCorrect: false, translate: word.wordTranslate, word: word.word },
+  payload: { wordObj: word, isCorrect: false, word: word.word, translate: word.wordTranslate },
 });
 
 export const putCorrectToStore = (word: IWord) => ({
   type: AudioCallingActionTypes.PUT_CORRECT,
-  payload: { wordObj: word, isCorrect: true, translate: word.wordTranslate, word: word.word },
+  payload: { wordObj: word, isCorrect: true, word: word.word, translate: word.wordTranslate },
 });
 
 export const resetWordsToStartNewGame = () => ({
