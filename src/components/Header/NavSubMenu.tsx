@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Divider, Menu, MenuItem } from '@material-ui/core';
 import { BookmarksRounded } from '@material-ui/icons';
+import { ROUTES } from '../../constants';
 import { NavSubMenuProps } from './types';
 import useStyles, { dictionatyIcon } from './styles';
 
@@ -17,7 +18,9 @@ const NavSubMenu: React.FC<NavSubMenuProps> = (props: NavSubMenuProps) => {
         <MenuItem className={subMenuClasses.navSubMenuItem} onClick={onMenuClose}>
           {item.withLink ? (
             <Link to={item.linkAddress}>
-              {item.important && <BookmarksRounded style={dictionatyIcon} />}
+              {item.important && item.linkAddress === ROUTES.dictionary && (
+                <BookmarksRounded style={dictionatyIcon} />
+              )}
               {item.label}
             </Link>
           ) : (

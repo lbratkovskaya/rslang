@@ -10,11 +10,19 @@ export const logoPath = '../../assets/favicon.svg';
 
 const gamesTitles = Array.from(Object.keys(GAMES));
 
-export const gamesItems: Array<ISubMenuItem> = gamesTitles.map((game) => ({
-  label: GAMES[game].title,
-  withLink: true,
-  linkAddress: GAMES[game].route,
-}));
+export const gamesItems: Array<ISubMenuItem> = gamesTitles
+  .map((game) => ({
+    label: GAMES[game].title,
+    withLink: true,
+    linkAddress: GAMES[game].route,
+    important: false,
+  }))
+  .concat({
+    label: 'Настройки',
+    withLink: true,
+    linkAddress: ROUTES.settings,
+    important: true,
+  });
 
 export const sectionsItems: Array<ISubMenuItem> = new Array(NUM_OF_SECTIONS)
   .fill(null)
@@ -61,12 +69,6 @@ export const menuItems: Array<IMenuItem> = [
     id: 'statistics',
     linkAddress: ROUTES.statistics,
     label: 'Статистика',
-    withSubMenu: false,
-  },
-  {
-    id: 'settings',
-    linkAddress: ROUTES.settings,
-    label: 'Настройки',
     withSubMenu: false,
   },
 ];

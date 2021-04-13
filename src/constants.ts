@@ -140,7 +140,7 @@ export interface IGroup {
 
 export const SPRINT = {
   timeOutDelay: 60,
-  background: 'https://99px.ru/sstorage/53/2018/08/tmb_234204_794603.jpg',
+  background: '../../../assets/sprint-bg.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
   audioTrue: '../../../assets/SprintAudio/sprint_true.mp3',
@@ -198,7 +198,7 @@ export interface IGame {
 export const GAMES: { [key: string]: IGame } = {
   savannah: {
     title: 'Саванна',
-    background: 'url(../../assets/savannah-bg.jpg) #858181 center no-repeat',
+    background: `url(${SAVANNAH.background}) #858181 center no-repeat`,
     route: ROUTES.games.savannah,
     difficulty: {
       easy: {
@@ -217,7 +217,7 @@ export const GAMES: { [key: string]: IGame } = {
   },
   audio: {
     title: 'Аудиовызов',
-    background: 'linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d)',
+    background: 'url(assets/audio_calling_bg.jpg) center no-repeat',
     route: ROUTES.games.audio,
     difficulty: {
       easy: {
@@ -236,7 +236,7 @@ export const GAMES: { [key: string]: IGame } = {
   },
   sprint: {
     title: 'Спринт',
-    background: '',
+    background: `url(${SPRINT.background}) center no-repeat`,
     route: ROUTES.games.sprint,
     difficulty: {
       easy: {
@@ -255,7 +255,7 @@ export const GAMES: { [key: string]: IGame } = {
   },
   memory: {
     title: 'Найди пару',
-    background: '',
+    background: `url(${MEMORY.background}) center no-repeat`,
     route: ROUTES.games.memory,
     difficulty: {
       easy: {
