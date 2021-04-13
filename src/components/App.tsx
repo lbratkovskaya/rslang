@@ -13,10 +13,10 @@ import RandomPage from './RandomPage';
 import Settings from './Settings';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
+import Statistics from './Statistics/Statistics';
 import UserDictionary from './UserDictionary';
 import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';
-import Statistics from './Statistics/Statistics';
 
 const App: React.FC = () => {
   const timeout = { enter: enterTimeout, exit: exitTimeout };

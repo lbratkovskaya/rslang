@@ -16,8 +16,8 @@ import {
 import Header from '../Header';
 import Footer from '../Footer';
 import { fetchStatistics } from '../../store/actions/statisticsActions';
-import { IAppState, IGameName, IGameStatistics } from '../../store/types';
 import { GAMES } from '../../constants';
+import { IAppState, IGameName, IGameStatistics } from '../../store/types';
 import useStyles from './styles';
 
 interface IStatsGameResult {

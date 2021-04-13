@@ -29,9 +29,10 @@ const AudioCallingStartGame: React.FC = () => {
   const [currentFive, setCurrentFive] = useState<IWord[]>([]);
   const [currentIncorrect, setCurrentIncorrect] = useState('');
   const [animate, setAnimate] = useState(false);
+
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
-  const dispatch = useDispatch();
+
   const wordBook = useSelector((state: IAppState) => state.wordBook);
   const volume = useSelector((state: IAppState) => state.volumeHandler.volume);
   const audioCallingArray = useSelector((state: IAppState) => state.audioCalling.startArray);
@@ -41,14 +42,19 @@ const AudioCallingStartGame: React.FC = () => {
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
   ]);
+
   const audio = new Audio();
+  const sound = new Audio();
+
+  const dispatch = useDispatch();
   const sendCorrect = (words: IWord) => dispatch(putCorrectToStore(words));
   const sendIncorrect = (words: IWord) => dispatch(putIncorrectToStore(words));
   const toggleEndGame = () => dispatch(endGame());
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
-  const sound = new Audio();
+
   const styles = useStyles();
+
   const callFinish = () => {
     toggleEndGame();
   };
@@ -57,16 +63,14 @@ const AudioCallingStartGame: React.FC = () => {
     if (isCameFromWordbook) {
       setCurrentArray(
         audioCallingArray.map((word) => {
-          // eslint-disable-next-line no-underscore-dangle
-          const userWord = userWords.find((uw) => (uw.id || uw._id) === word.id);
+          const userWord = userWords.find((uw) => uw.id === word.id);
           return userWord || word;
         })
       );
     } else {
       setCurrentArray(
         wordBook.words.slice(0, gameMode[difficulty]).map((word) => {
-          // eslint-disable-next-line no-underscore-dangle
-          const userWord = userWords.find((uw) => (uw.id || uw._id) === word.id);
+          const userWord = userWords.find((uw) => uw.id === word.id);
           return userWord || word;
         })
       );

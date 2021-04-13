@@ -6,9 +6,9 @@ import {
   clickStartGame,
   resetWordsToStartNewGame,
 } from '../../../store/actions/audioCallingActions';
+import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import backendUrl, { playIcon } from '../../../constants';
-import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { IAudioCallingWords } from '../../../store/reducers/audioCallingReducer/types';
 import { IAppState, IGameName, IWord, IWordWithResult } from '../../../store/types';
 import useStyles from './styles';

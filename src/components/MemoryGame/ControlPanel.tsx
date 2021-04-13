@@ -25,11 +25,9 @@ const ControlPanel: React.FC = () => {
   const userData = useSelector((state: IAppState) => state.user.data);
   const volume = useSelector((state: IAppState) => state.settings.soundsVolume);
   const userDictionary = useSelector((state: IAppState) => state.userDictionary);
-
-  const field = useSelector((state: IAppState) => state.memoryGame.field);
-
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
+  const field = useSelector((state: IAppState) => state.memoryGame.field);
 
   const [allCardsAreDisabled, setAllCardsAreDisabled] = useState(false);
   const [isGameWon, setGameWon] = useState(false);
