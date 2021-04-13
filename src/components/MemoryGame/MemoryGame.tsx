@@ -12,6 +12,7 @@ import {
   disableClickedCards,
   hideClickedCards,
 } from '../../store/actions/memoryGameActions';
+import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import useStyles from './styles';
 import { MEMORY } from '../../constants';
@@ -25,6 +26,8 @@ const MemoryGame: React.FC = () => {
   const handleFullScreenWrapper = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
+  const userData = useSelector((state: IAppState) => state.user?.data);
+  const getUserDictionary = () => dispatch(fetchDictionary(userData));
 
   const handleFullSizeMemoryGame = () => {
     setFullSize(!fullSize);
@@ -45,6 +48,10 @@ const MemoryGame: React.FC = () => {
       }
     }
   }, [JSON.stringify(field)]);
+
+  useEffect(() => {
+    getUserDictionary();
+  }, []);
 
   const gameComponent = (
     <>

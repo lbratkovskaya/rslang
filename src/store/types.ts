@@ -268,6 +268,8 @@ export interface ISprintState {
   isStartGame: boolean;
   changeTimer: number;
   wordsData: Array<ISprintWords>;
+  seriesCounter: number;
+  series: number[];
 }
 
 export interface ISprintWords {

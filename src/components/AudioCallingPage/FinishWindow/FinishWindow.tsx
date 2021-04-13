@@ -40,7 +40,7 @@ const FinishGame: React.FC = () => {
     dispatch(
       addGameStatistics(
         userData,
-        IGameName.SAVANNAH,
+        IGameName.AUDIO,
         newLearned.length,
         wordsArray.length,
         correctTotal,
@@ -50,7 +50,10 @@ const FinishGame: React.FC = () => {
   };
 
   useEffect(() => {
-    const copy = audioCallingData.words.map((el) => ({ word: el.word, correct: el.isCorrect }));
+    const copy = audioCallingData.words.map((el: IAudioCallingWords) => ({
+      word: el.word,
+      correct: el.isCorrect,
+    }));
     sendWords(copy);
     saveGameStatistics(
       copy,

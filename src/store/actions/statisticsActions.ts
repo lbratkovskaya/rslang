@@ -47,7 +47,12 @@ export const fetchStatistics = (userData: IUserData) => (dispatch: Dispatch) => 
         Accept: 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          return { optional: {} };
+        }
+        return res.json();
+      })
       .then((stats) => dispatch(fetchStatsSuccess(stats.optional)))
       .catch((error) => dispatch(fetchStatsError(error)));
   } catch (e) {
@@ -112,7 +117,12 @@ export const addGameStatistics = (
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          return { optional: {} };
+        }
+        return res.json();
+      })
       .then((data) => data.optional.stats || data.optional)
       .then((stats: IStatistics) => {
         const newDate = Date.now();

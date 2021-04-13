@@ -1,6 +1,13 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../constants';
-import { DictionaryActionTypes, IDictionaryState, IUserData, IUserWord, IWord } from '../types';
+import {
+  DictionaryActionTypes,
+  IDictionaryState,
+  IUserData,
+  IUserWord,
+  IWord,
+  IWordWithResult,
+} from '../types';
 
 const splitDictionaryWords = (loadedWords: { paginatedResults: Array<IUserWord> }[]) => {
   const acc = {
@@ -38,11 +45,6 @@ const getErrorHeats = (word: IWord): number => {
 const getDifficulty = (word: IWord): string => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.difficulty) || 'easy';
 };
-
-// export const sendWordsToLearning = (words: IWord[]) => ({
-//   type: DictionaryActionTypes.SEND_WORDS,
-//   payload: { learningWords: words },
-// });
 
 const getDeleted = (word: IWord): boolean => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.deleted) || false;
@@ -168,7 +170,6 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
 };
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
-  // const deleted = getDeleted(word);
   if ((<IUserWord>word).userWord === undefined) {
     await saveUserWord(word, userData, 'hard', false, 0, 0)(dispatch);
   } else {
@@ -191,7 +192,7 @@ export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: bo
 };
 
 export const addWordsToUserDictionary = (
-  words: Array<{ word: IWord; correct: boolean }>,
+  words: Array<IWordWithResult>,
   userDictionary: IDictionaryState,
   userData: IUserData
 ) => async (dispatch: Dispatch) => {
@@ -199,12 +200,13 @@ export const addWordsToUserDictionary = (
   await words.forEach((word) => {
     const success = word.correct ? 1 : 0;
     const fail = word.correct ? 0 : 1;
-    if (userWords.find((uw) => uw.id === word.word.id)) {
+    const uWord = userWords.find((uw) => uw.id === word.word?.id);
+    if (uWord) {
       setUserWordData(
-        word.word,
+        uWord,
         userData,
-        getDifficulty(word.word),
-        getDeleted(word.word),
+        getDifficulty(uWord),
+        getDeleted(uWord),
         success,
         fail
       )(dispatch);

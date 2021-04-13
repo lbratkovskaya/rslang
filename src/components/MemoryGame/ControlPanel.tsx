@@ -7,9 +7,10 @@ import ModalWindow from '../ModalWindow';
 import ResultTable from './ResultTable';
 import SideMenu from './SideMenu';
 import { gameFailed, startGame, stopGame } from '../../store/actions/memoryGameActions';
+import { addWordsToUserDictionary } from '../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../store/actions/statisticsActions';
 import { MEMORY } from '../../constants';
-import { IAppState, IGameName } from '../../store/types';
+import { IAppState, IGameName, IWordWithResult } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import useStyles from './styles';
 
@@ -19,16 +20,15 @@ const ControlPanel: React.FC = () => {
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
   const series = useSelector((state: IAppState) => state.memoryGame.series);
+  const gameWords = useSelector((state: IAppState) => state.memoryGame.words);
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userData = useSelector((state: IAppState) => state.user.data);
   const volume = useSelector((state: IAppState) => state.settings.soundsVolume);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
 
   const field = useSelector((state: IAppState) => state.memoryGame.field);
 
-  const userWords = useSelector((state: IAppState) => [
-    ...state.userDictionary.learningWords,
-    ...state.userDictionary.deletedWords,
-  ]);
+  const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
 
   const [allCardsAreDisabled, setAllCardsAreDisabled] = React.useState(false);
@@ -49,19 +49,8 @@ const ControlPanel: React.FC = () => {
     setOpen(false);
   };
 
-  function playSound(audio: string) {
-    const player = new Audio(audio);
-    player.volume = volume / 100;
-    player.play();
-  }
-
-  const handleGameOver = () => {
-    if (isGameStarted) {
-      dispatch(gameFailed());
-      handleShowModalWindow();
-      playSound('./assets/audio/fail-sound.mp3');
-    }
-  };
+  const sendWordsToUserDictionary = (words: Array<IWordWithResult>) =>
+    dispatch(addWordsToUserDictionary(words, userDictionary, userData));
 
   const saveGameStatistics = (wordsCards: Array<IMemoryGameCard>, maxSuccessSeries: number) => {
     const correctTotal = wordsCards.filter((card) => card.disabled).length / 2;
@@ -78,6 +67,39 @@ const ControlPanel: React.FC = () => {
     );
   };
 
+  function playSound(audio: string) {
+    const player = new Audio(audio);
+    player.volume = volume / 100;
+    player.play();
+  }
+
+  const handleWordsAfterGame = () => {
+    if (isLoggedIn) {
+      const filteredWords = field.reduce(
+        (acc, card) => {
+          const word = gameWords.find((gw) => gw.id === card.id);
+          if (word) {
+            acc.words.push({ word, correct: card.disabled });
+          }
+          return acc;
+        },
+        { words: [] as Array<IWordWithResult> }
+      );
+
+      sendWordsToUserDictionary(filteredWords.words);
+      saveGameStatistics(field, series.sort((a, b) => b - a)[0]);
+    }
+  };
+
+  const handleGameOver = () => {
+    handleWordsAfterGame();
+    if (isGameStarted) {
+      dispatch(gameFailed());
+      handleShowModalWindow();
+      playSound('./assets/audio/fail-sound.mp3');
+    }
+  };
+
   useEffect(() => {
     if (field && field.length && isGameStarted) {
       const cardsAreDisabled = field.every((card: IMemoryGameCard) => card.disabled === true);
@@ -85,9 +107,6 @@ const ControlPanel: React.FC = () => {
       if (cardsAreDisabled === true) {
         handleShowModalWindow();
         playSound('./assets/audio/win-sound.mp3');
-        if (isLoggedIn) {
-          saveGameStatistics(field, series.sort((a, b) => b - a)[0]);
-        }
         setAllCardsAreDisabled(false);
       }
     }
@@ -96,7 +115,7 @@ const ControlPanel: React.FC = () => {
   useEffect(() => {
     return () => {
       setAllCardsAreDisabled(false);
-      dispatch(stopGame());
+      handleStopGame();
     };
   }, []);
 

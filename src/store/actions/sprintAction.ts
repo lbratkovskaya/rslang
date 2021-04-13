@@ -53,14 +53,17 @@ export function reduceArrayWords(wordsArray: IWord[]) {
 export function onAnswer(wordsArray: ISprintWords[], word: string, answer: boolean) {
   return {
     type: SprintActionTypes.SPRINT_ANSWER,
-    payload: wordsArray.map((el) => {
-      if (el.word.word === word || el.word.wordTranslate === word) {
-        return {
-          isCorrect: answer,
-          word: el.word,
-        };
-      }
-      return el;
-    }),
+    payload: {
+      wordData: wordsArray.map((el) => {
+        if (el.word.word === word || el.word.wordTranslate === word) {
+          return {
+            isCorrect: answer,
+            word: el.word,
+          };
+        }
+        return el;
+      }),
+      correct: answer,
+    },
   };
 }

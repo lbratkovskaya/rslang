@@ -12,7 +12,7 @@ import {
 import { addWordsToUserDictionary } from '../../../../store/actions/dictionaryActions';
 import { fetchGameWords } from '../../../../store/actions/gamesActions';
 import { SELECT_LEVELS, SELECT_ROUNDS } from '../../constants';
-import { IAppState, IWord } from '../../../../store/types';
+import { IAppState, IWord, IWordWithResult } from '../../../../store/types';
 import useStyles from '../../styles';
 
 const SavannahEndGame: React.FC = () => {
@@ -27,7 +27,7 @@ const SavannahEndGame: React.FC = () => {
   const getGameWords = (groups: number, pages: number) => dispatch(fetchGameWords(groups, pages));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
-  const sendWordsToUserDictionary = (words: Array<{ word: IWord; correct: boolean }>) =>
+  const sendWordsToUserDictionary = (words: Array<IWordWithResult>) =>
     dispatch(addWordsToUserDictionary(words, userDictionary, userData));
 
   const [isRestart, setIsRestart] = useState(false);
@@ -46,9 +46,7 @@ const SavannahEndGame: React.FC = () => {
         correct: el.isCorrect,
       };
     });
-    return () => {
-      if (userData.userId) sendWordsToUserDictionary(arrayForUserDictionary);
-    };
+    if (userData.userId) sendWordsToUserDictionary(arrayForUserDictionary);
   }, []);
 
   const handleNewGame = () => {

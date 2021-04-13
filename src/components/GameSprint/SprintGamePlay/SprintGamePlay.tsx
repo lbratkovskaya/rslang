@@ -53,13 +53,13 @@ const SprintGamePlay: React.FC = () => {
     if (timer === 0) {
       setIsEndGame(true);
     }
-    const timeout = setTimeout(() => setTimer(timer - 1), modalTimeout);
-    return () => clearTimeout(timeout);
   }, [timer]);
 
   useEffect(() => {
+    const timeout = setTimeout(() => setTimer(timer - 1), modalTimeout);
     return () => {
       startGame(false);
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -79,6 +79,7 @@ const SprintGamePlay: React.FC = () => {
     } else {
       onAudioPlay(SPRINT.audioFalse);
       setClassAnswer(classes.answerWrong);
+      answer(sprintInfo.wordsData, translateWord, false);
     }
     setIsDisabled(true);
     setSelectWord(selectWord + 1);
@@ -94,7 +95,7 @@ const SprintGamePlay: React.FC = () => {
   };
 
   const handleEndGame = (): void => {
-    if (timer === 0) setIsEndGame(true);
+    setIsEndGame(true);
   };
 
   const handleKeyboardAnswer = (e: KeyboardEvent) => {
@@ -126,33 +127,36 @@ const SprintGamePlay: React.FC = () => {
     );
   };
 
-  if (!isEndGame) {
-    return (
-      <>
-        <div>
-          <div className={classes.sprintHeader}>
-            <Timer gameTime={timer} handleOnComplite={handleEndGame} size={60} />
-            <GameExitBtn clickBtn={handleExitGame} />
-          </div>
-          <Card className={classAnswer}>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom className={classes.sprintSpan}>
-                {currentWord}
-              </Typography>
-              <Typography color="textSecondary" className={classes.sprintSpan}>
-                {randomWord}
-              </Typography>
-            </CardContent>
-          </Card>
-          <div className={classes.sprintChooseWrapper}>
-            {btnComponent('true')}
-            {btnComponent('false')}
-          </div>
+  return (
+    <>
+      <div>
+        <div className={classes.sprintHeader}>
+          <Timer gameTime={timer} handleOnComplite={handleEndGame} size={60} />
+          <GameExitBtn clickBtn={handleExitGame} />
         </div>
-      </>
-    );
-  }
-  return <SprintGameEnd />;
+        {!isEndGame ? (
+          <>
+            <Card className={classAnswer}>
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom className={classes.sprintSpan}>
+                  {currentWord}
+                </Typography>
+                <Typography color="textSecondary" className={classes.sprintSpan}>
+                  {randomWord}
+                </Typography>
+              </CardContent>
+            </Card>
+            <div className={classes.sprintChooseWrapper}>
+              {btnComponent('true')}
+              {btnComponent('false')}
+            </div>
+          </>
+        ) : (
+          <SprintGameEnd />
+        )}
+      </div>
+    </>
+  );
 };
 
 export default SprintGamePlay;
