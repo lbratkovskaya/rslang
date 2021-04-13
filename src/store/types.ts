@@ -12,6 +12,7 @@ export interface IAppState {
   settings: ISettingsState;
   memoryGame: IMemoryGameState;
   sprint: ISprintState;
+  statistics: IStatisticsState;
 }
 
 export interface IUserData {

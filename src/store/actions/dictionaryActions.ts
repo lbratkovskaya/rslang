@@ -163,7 +163,7 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
   }
 };
 
-export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
+export const setUserWordHard = (word: IWord, userData: IUserData) => (dispatch: Dispatch) => {
   // const deleted = getDeleted(word);
   if ((<IUserWord>word).userWord === undefined) {
     await saveUserWord(word, userData, 'hard', false, 0, 0)(dispatch);
@@ -173,7 +173,7 @@ export const setUserWordHard = (word: IWord, userData: IUserData) => async (disp
   fetchDictionary(userData)(dispatch);
 };
 
-export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: boolean) => async (
+export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: boolean) => (
   dispatch: Dispatch
 ) => {
   const difficulty = getDifficulty(word);

@@ -20,32 +20,33 @@ const SavannahGamePlay: React.FC = () => {
     ...state.userDictionary.deletedWords,
   ]);
   const userWordsWords = userWords.map((uw) => uw.word);
+  const currentStats = useSelector((state: IAppState) => state.statistics?.statistics);
 
   const dispatch = useDispatch();
   const answer = (wordsArray: Array<ISavannahWord>, word: string, isAnswer: boolean) =>
     dispatch(onAnswer(wordsArray, word, isAnswer));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 
-  const saveUserWords = () => {
-    const wordsToSaveToDict = savannahData.wordsData.map((savWord) => ({
-      word: savWord.wordObj,
-      correct: savWord.isCorrect,
-    }));
-    dispatch(addWordsToUserDictionary(wordsToSaveToDict, userData));
-  };
   const saveGameStatistics = (wordsArray: Array<ISavannahWord>, maxSuccessSeries: number) => {
     const correctTotal = wordsArray.filter((word) => word.isCorrect).length;
-    const newLearned = wordsArray.filter((word) => userWordsWords.indexOf(word.word) === -1);
     dispatch(
       addGameStatistics(
+        currentStats,
         userData,
         IGameName.SAVANNAH,
-        newLearned.length,
         wordsArray.length,
         correctTotal,
         maxSuccessSeries
       )
     );
+  };
+
+  const saveUserWords = () => {
+    const wordsToSaveToDict = savannahData.words.map((savWord) => ({
+      word: savWord.wordObj,
+      correct: savWord.isCorrect,
+    }));
+    dispatch(addWordsToUserDictionary(wordsToSaveToDict, userData));
   };
 
   const [animate, setAnimate] = useState(false);
@@ -127,6 +128,7 @@ const SavannahGamePlay: React.FC = () => {
       onAudioPlay(SAVANNAH.audioIncorrect);
       answer(savannahData.wordsData, currentWord, false);
       setIsCorrectAnswer(false);
+      answer(savannahData.words, currentWord, false);
       setHealth(health - 1);
       setCurrentSuccessSeries(0);
       setSuccessSeriesMaxLength(Math.max(currentSuccessSeries, successSeriesMaxLength));
