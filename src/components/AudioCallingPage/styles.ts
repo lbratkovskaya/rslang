@@ -7,8 +7,7 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-around',
-      background:
-        'url(https://images3.alphacoders.com/276/276105.jpg) rgb(133, 129, 129) no-repeat',
+      background: 'url(assets/audio_calling_bg.jpg) rgb(133, 129, 129) no-repeat',
       backgroundBlendMode: 'multiply',
       backgroundSize: 'cover',
     },
