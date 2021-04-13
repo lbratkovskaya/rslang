@@ -1,9 +1,9 @@
 import { Button, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GAMES, IGame } from '../../constants';
 import Footer from '../Footer';
 import Header from '../Header';
+import { GAMES, IGame } from '../../constants';
 import useStyles from './styles';
 
 const GamesPage: React.FC = () => {
