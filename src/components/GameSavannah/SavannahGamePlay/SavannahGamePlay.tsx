@@ -20,7 +20,6 @@ const SavannahGamePlay: React.FC = () => {
     ...state.userDictionary.deletedWords,
   ]);
   const userWordsWords = userWords.map((uw) => uw.word);
-  const currentStats = useSelector((state: IAppState) => state.statistics?.statistics);
 
   const dispatch = useDispatch();
   const answer = (wordsArray: Array<ISavannahWord>, word: string, isAnswer: boolean) =>

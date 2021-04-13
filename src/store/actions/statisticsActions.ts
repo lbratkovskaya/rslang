@@ -55,38 +55,6 @@ export const fetchStatistics = (userData: IUserData) => (dispatch: Dispatch) => 
   }
 };
 
-export const putGameStatistics = (
-  stats: IStatistics,
-  totallyLearned: number,
-  userData: IUserData
-) => (dispatch: Dispatch) => {
-  const fetchUserId = userData.userId;
-  const userToken = userData.token;
-  const url = `${backendUrl}/users/${fetchUserId}/statistics`;
-  if (!userToken) {
-    return;
-  }
-  try {
-    fetch(url, {
-      method: 'PUT',
-      credentials: 'omit',
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        learnedWords: totallyLearned,
-        optional: { ...stats },
-      }),
-    })
-      .then(() => fetchStatsSuccess(stats))
-      .catch((error) => dispatch(fetchStatsError(error)));
-  } catch (e) {
-    dispatch(fetchStatsError(e));
-  }
-};
-
 export const addGameStatistics = (
   userData: IUserData,
   gameName: IGameName,
