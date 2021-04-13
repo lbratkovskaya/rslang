@@ -39,7 +39,6 @@ const Settings: React.FC = () => {
   const classes = useStyles();
   return (
     <div>
-      {/* <div className={classes.settingsWrapper}> */}
       <Header />
       <main className={classes.settings}>
         <Typography variant="h5" className={classes.title}>
@@ -84,7 +83,6 @@ const Settings: React.FC = () => {
         </div>
       </main>
       <Footer />
-      {/* </div> */}
     </div>
   );
 };

@@ -334,7 +334,7 @@ const Statistics: React.FC = () => {
             <div className={styles.graphsWrapper}>{renderGraphs()}</div>
           </>
         ) : (
-          <span className={styles.warning}>Авторизуйтесь для просмотра изучаемых Вами слов</span>
+          <span className={styles.warning}>Авторизуйтесь для просмотра статистики</span>
         )}
       </main>
       <Footer />
