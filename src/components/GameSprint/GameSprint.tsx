@@ -39,10 +39,10 @@ const GameSprint: React.FC = () => {
   );
 
   return (
-    <>
+    <div>
       <Header />
       <FullScreenWrapper component={startComponent} handle={handleFullScreenMode} />
-    </>
+    </div>
   );
 };
 
