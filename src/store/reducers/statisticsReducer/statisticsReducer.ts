@@ -16,6 +16,7 @@ export default function statisticsReducer(
       return {
         ...state,
         isLoading: false,
+        statistics: action.payload.statistics,
       };
     case StatisticsActionTypes.STATS_FETCH_ERROR:
       return { ...state, isLoading: false, error: action.payload.error };

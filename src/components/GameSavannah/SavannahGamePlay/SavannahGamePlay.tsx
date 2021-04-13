@@ -16,7 +16,7 @@ const SavannahGamePlay: React.FC = () => {
   const soundsVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
   const userData = useSelector((state: IAppState) => state.user?.data);
   const userDictionary = useSelector((state: IAppState) => state.userDictionary);
-  
+
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
 

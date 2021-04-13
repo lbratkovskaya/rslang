@@ -258,10 +258,7 @@ export interface IStatisticsAction {
   type: StatisticsActionTypes;
   payload: {
     error?: Error;
-    gameName?: string;
-    wordsLearned?: number;
-    correctTotal?: number;
-    correctSeries?: number;
+    statistics: IStatistics;
   };
 }
 export interface ISprintState {

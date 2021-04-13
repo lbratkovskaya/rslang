@@ -48,7 +48,7 @@ export const fetchStatistics = (userData: IUserData) => (dispatch: Dispatch) => 
       },
     })
       .then((res) => res.json())
-      .then((stats) => fetchStatsSuccess(stats))
+      .then((stats) => dispatch(fetchStatsSuccess(stats.optional)))
       .catch((error) => dispatch(fetchStatsError(error)));
   } catch (e) {
     dispatch(fetchStatsError(e));
@@ -80,7 +80,7 @@ export const putGameStatistics = (
         optional: { ...stats },
       }),
     })
-      .then(() => fetchStatsSuccess(stats))
+      .then(() => dispatch(fetchStatsSuccess(stats)))
       .catch((error) => dispatch(fetchStatsError(error)));
   } catch (e) {
     dispatch(fetchStatsError(e));

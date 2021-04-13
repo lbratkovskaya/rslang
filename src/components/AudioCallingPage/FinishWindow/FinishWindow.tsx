@@ -19,6 +19,9 @@ const FinishGame: React.FC = () => {
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
   const userData = useSelector((state: IAppState) => state.user.data);
   const userDictionary = useSelector((state: IAppState) => state.userDictionary);
+  const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
+  const userWordsWords = userWords.map((uw) => uw.word);
+
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
@@ -29,6 +32,21 @@ const FinishGame: React.FC = () => {
     startGame(false);
     toggleResetEndGame();
     reset();
+  };
+
+  const saveGameStatistics = (wordsArray: Array<IWordWithResult>, maxSuccessSeries: number) => {
+    const correctTotal = wordsArray.filter((word) => word.correct).length;
+    const newLearned = wordsArray.filter((word) => userWordsWords.indexOf(word.word.word) === -1);
+    dispatch(
+      addGameStatistics(
+        userData,
+        IGameName.SAVANNAH,
+        newLearned.length,
+        wordsArray.length,
+        correctTotal,
+        maxSuccessSeries
+      )
+    );
   };
 
   useEffect(() => {

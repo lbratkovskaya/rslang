@@ -16,6 +16,7 @@ import SignUpPage from './SignUpPage';
 import UserDictionary from './UserDictionary';
 import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';
+import Statistics from './Statistics/Statistics';
 
 const App: React.FC = () => {
   const timeout = { enter: enterTimeout, exit: exitTimeout };
@@ -44,6 +45,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.games.sprint} component={GameSprint} />
                 <Route path={ROUTES.signIn} component={SignInPage} />
                 <Route path={ROUTES.signUp} component={SignUpPage} />
+                <Route path={ROUTES.statistics} component={Statistics} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
