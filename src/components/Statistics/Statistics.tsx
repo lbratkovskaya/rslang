@@ -300,12 +300,12 @@ const Statistics: React.FC = () => {
   }, [statistics]);
 
   return (
-    <>
+    <div>
       <Header />
-      <div className={styles.statsWrapper}>
-        <Paper style={{ textTransform: 'uppercase' }}>
-          <Typography variant="h5">Моя статистика</Typography>
-        </Paper>
+      <main className={styles.statsWrapper}>
+        <Typography variant="h5" className={styles.title}>
+          Моя статистика
+        </Typography>
         <TableContainer component={Paper} className={styles.totalWrapper}>
           <Table size="small" key="today">
             <TableHead>
@@ -329,9 +329,9 @@ const Statistics: React.FC = () => {
         </TableContainer>
         <div className={styles.gamesWrapper}>{renderGamesTables()}</div>
         <div className={styles.graphsWrapper}>{renderGraphs()}</div>
-      </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

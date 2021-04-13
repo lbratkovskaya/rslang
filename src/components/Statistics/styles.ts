@@ -1,17 +1,47 @@
 import { makeStyles } from '@material-ui/core';
-import { STATS } from '../../constants';
+import { HEADER_HEIGHT, STATS } from '../../constants';
+
+const defaultBG = {
+  background: 'rgba(255, 255, 255, 0.75)',
+  transition: 'background 0.25s',
+  '&:hover': {
+    background: 'rgba(255, 255, 255, 0.95)',
+  },
+};
 
 const useStyles = makeStyles(() => ({
   statsWrapper: {
-    background: STATS.background,
+    padding: '1rem 0',
+    boxSizing: 'border-box',
     backgroundSize: 'cover',
     width: '100%',
-    minHeight: '100vh',
+    minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+    position: 'relative',
+    userSelect: 'none',
+    '&::before': {
+      background: STATS.background,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      filter: 'brightness(0.7)',
+      content: "''",
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: -1,
+    },
+  },
+  title: {
+    textTransform: 'uppercase',
+    letterSpacing: '2px',
+    color: '#fafafa',
   },
   totalWrapper: {
     width: '400px',
     margin: 'auto',
     marginTop: '20px',
+    ...defaultBG,
   },
   gamesWrapper: {
     display: 'grid',
@@ -23,6 +53,7 @@ const useStyles = makeStyles(() => ({
   },
   gameTable: {
     width: '260px',
+    ...defaultBG,
   },
   graphsWrapper: {
     display: 'flex',
@@ -36,7 +67,8 @@ const useStyles = makeStyles(() => ({
     width: '460px',
     boxSizing: 'border-box',
     padding: '10px',
-    backgroundColor: '#ffffff',
+    borderRadius: '4px',
+    ...defaultBG,
   },
 
   '@media (max-width: 680px)': {
