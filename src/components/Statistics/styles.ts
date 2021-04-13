@@ -11,7 +11,7 @@ const defaultBG = {
 
 const useStyles = makeStyles(() => ({
   statsWrapper: {
-    padding: '1rem 0',
+    padding: '1rem 0 0',
     boxSizing: 'border-box',
     backgroundSize: 'cover',
     width: '100%',
@@ -62,7 +62,7 @@ const useStyles = makeStyles(() => ({
     gap: '20px',
     justifyContent: 'space-around',
     paddingTop: '30px',
-    paddingBottom: '30px',
+    paddingBottom: '50px',
     flexWrap: 'wrap',
   },
   graphWrapper: {
@@ -71,6 +71,10 @@ const useStyles = makeStyles(() => ({
     padding: '10px',
     borderRadius: '4px',
     ...defaultBG,
+  },
+  warning: {
+    margin: 'auto',
+    color: '#fafafa',
   },
 
   '@media (max-width: 680px)': {

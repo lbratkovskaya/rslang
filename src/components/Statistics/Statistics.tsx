@@ -307,7 +307,7 @@ const Statistics: React.FC = () => {
         <Typography variant="h5" className={styles.title}>
           Моя статистика
         </Typography>
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <>
             <TableContainer component={Paper} className={styles.totalWrapper}>
               <Table size="small" key="today">
@@ -333,6 +333,8 @@ const Statistics: React.FC = () => {
             <div className={styles.gamesWrapper}>{renderGamesTables()}</div>
             <div className={styles.graphsWrapper}>{renderGraphs()}</div>
           </>
+        ) : (
+          <span className={styles.warning}>Авторизуйтесь для просмотра изучаемых Вами слов</span>
         )}
       </main>
       <Footer />
