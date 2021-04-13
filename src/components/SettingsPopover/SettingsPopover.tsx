@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Popover, Typography, Tooltip, Checkbox } from '@material-ui/core';
 import { TuneRounded } from '@material-ui/icons';
 import { setShowButtons, setShowTranslate } from '../../store/actions/wordBookActions';
+import { useSavedWordBookSettings } from '../../utils';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
 
@@ -10,6 +11,7 @@ const SettingsPopover: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const [savedSettings, setSavedSettings] = useSavedWordBookSettings();
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
 
   const open = Boolean(anchorEl);
@@ -24,12 +26,19 @@ const SettingsPopover: React.FC = () => {
   };
 
   const handleShowTranslateChange = () => {
+    setSavedSettings({ ...savedSettings, showTranslate: !showTranslate });
     dispatch(setShowTranslate(!showTranslate));
   };
 
   const handleShowButtonsChange = () => {
+    setSavedSettings({ ...savedSettings, showButtons: !showButtons });
     dispatch(setShowButtons(!showButtons));
   };
+
+  useEffect(() => {
+    dispatch(setShowTranslate(savedSettings.showTranslate));
+    dispatch(setShowButtons(savedSettings.showButtons));
+  }, []);
 
   return (
     <>
