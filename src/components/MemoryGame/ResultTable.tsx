@@ -24,9 +24,9 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
   const userName = useSelector((state: IAppState) => state.user.data.name);
   const isFail = props.isFail ? 'Сожалеем, вы проиграли...' : 'Поздравляем, вы выиграли!!!';
 
-  const renderAnswers = (element: IMemoryGameCard, i: number) => {
+  const renderAnswers = (element: IMemoryGameCard) => {
     return (
-      <TableRow key={i}>
+      <TableRow key={element.id}>
         <TableCell>
           {element.isClicked && (
             <Typography variant="subtitle1" gutterBottom>
@@ -49,7 +49,7 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
   };
 
   const getWordsFromGameField = (currentField: Array<IMemoryGameCard>) => {
-    return updateClickedWords(currentField).map((card, index) => renderAnswers(card, index));
+    return updateClickedWords(currentField).map((card) => renderAnswers(card));
   };
 
   return (

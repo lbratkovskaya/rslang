@@ -6,14 +6,10 @@ import Timer from '../commonComponents/Timer';
 import ModalWindow from '../ModalWindow';
 import ResultTable from './ResultTable';
 import SideMenu from './SideMenu';
-import {
-  gameFailed,
-  sendGameStatistic,
-  startGame,
-  stopGame,
-} from '../../store/actions/memoryGameActions';
+import { gameFailed, startGame, stopGame } from '../../store/actions/memoryGameActions';
+import { addGameStatistics } from '../../store/actions/statisticsActions';
 import { MEMORY } from '../../constants';
-import { IAppState } from '../../store/types';
+import { IAppState, IGameName } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
 import useStyles from './styles';
 
@@ -28,6 +24,12 @@ const ControlPanel: React.FC = () => {
   const volume = useSelector((state: IAppState) => state.settings.soundsVolume);
 
   const field = useSelector((state: IAppState) => state.memoryGame.field);
+
+  const userWords = useSelector((state: IAppState) => [
+    ...state.userDictionary.learningWords,
+    ...state.userDictionary.deletedWords,
+  ]);
+  const userWordsWords = userWords.map((uw) => uw.word);
 
   const [allCardsAreDisabled, setAllCardsAreDisabled] = React.useState(false);
 
@@ -61,6 +63,21 @@ const ControlPanel: React.FC = () => {
     }
   };
 
+  const saveGameStatistics = (wordsCards: Array<IMemoryGameCard>, maxSuccessSeries: number) => {
+    const correctTotal = wordsCards.filter((card) => card.disabled).length / 2;
+    const newLearned = wordsCards.filter((card) => userWordsWords.indexOf(card.value) === -1);
+    dispatch(
+      addGameStatistics(
+        userData,
+        IGameName.MEMORY,
+        newLearned.length,
+        wordsCards.length / 2,
+        correctTotal,
+        maxSuccessSeries
+      )
+    );
+  };
+
   useEffect(() => {
     if (field && field.length && isGameStarted) {
       const cardsAreDisabled = field.every((card: IMemoryGameCard) => card.disabled === true);
@@ -69,7 +86,7 @@ const ControlPanel: React.FC = () => {
         handleShowModalWindow();
         playSound('./assets/audio/win-sound.mp3');
         if (isLoggedIn) {
-          sendGameStatistic(field, series, userData.token, userData.userId);
+          saveGameStatistics(field, series.sort((a, b) => b - a)[0]);
         }
         setAllCardsAreDisabled(false);
       }
