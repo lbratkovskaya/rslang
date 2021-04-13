@@ -74,7 +74,7 @@ const ResultTable: React.FC<IResultTableProps> = (props: IResultTableProps) => {
             </Typography>
             {getClickedWordsAsArray(field).map((word) => {
               return (
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography key={word} variant="subtitle1" gutterBottom>
                   {word}
                 </Typography>
               );

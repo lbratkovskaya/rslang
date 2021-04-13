@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
 import GameExitBtn from '../commonComponents/GameExitBtn';
@@ -19,7 +19,7 @@ const ControlPanel: React.FC = () => {
   const dispatch = useDispatch();
   const isGameStarted = useSelector((state: IAppState) => state.memoryGame.isStarted);
   const isLoading = useSelector((state: IAppState) => state.memoryGame.isLoading);
-  const series = useSelector((state: IAppState) => state.memoryGame.series);
+  const { series, serieCounter } = useSelector((state: IAppState) => state.memoryGame);
   const gameWords = useSelector((state: IAppState) => state.memoryGame.words);
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userData = useSelector((state: IAppState) => state.user.data);
@@ -31,7 +31,8 @@ const ControlPanel: React.FC = () => {
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
 
-  const [allCardsAreDisabled, setAllCardsAreDisabled] = React.useState(false);
+  const [allCardsAreDisabled, setAllCardsAreDisabled] = useState(false);
+  const [isGameWon, setGameWon] = useState(false);
 
   const handleStartGame = () => {
     dispatch(startGame());
@@ -52,15 +53,15 @@ const ControlPanel: React.FC = () => {
   const sendWordsToUserDictionary = (words: Array<IWordWithResult>) =>
     dispatch(addWordsToUserDictionary(words, userDictionary, userData));
 
-  const saveGameStatistics = (wordsCards: Array<IMemoryGameCard>, maxSuccessSeries: number) => {
-    const correctTotal = wordsCards.filter((card) => card.disabled).length / 2;
-    const newLearned = wordsCards.filter((card) => userWordsWords.indexOf(card.value) === -1);
+  const saveGameStatistics = (wordsCards: Array<IWordWithResult>, maxSuccessSeries: number) => {
+    const correctTotal = wordsCards.filter((card) => card.correct).length;
+    const newLearned = wordsCards.filter((card) => userWordsWords.indexOf(card.word.word) === -1);
     dispatch(
       addGameStatistics(
         userData,
         IGameName.MEMORY,
-        newLearned.length / 2,
-        wordsCards.length / 2,
+        newLearned.length,
+        wordsCards.length,
         correctTotal,
         maxSuccessSeries
       )
@@ -78,7 +79,8 @@ const ControlPanel: React.FC = () => {
       const filteredWords = field.reduce(
         (acc, card) => {
           const word = gameWords.find((gw) => gw.id === card.id);
-          if (word) {
+          const existingWord = acc.words.find((gw) => gw.word.id === card.id);
+          if (word && !existingWord) {
             acc.words.push({ word, correct: card.disabled });
           }
           return acc;
@@ -87,13 +89,13 @@ const ControlPanel: React.FC = () => {
       );
 
       sendWordsToUserDictionary(filteredWords.words);
-      saveGameStatistics(field, series.sort((a, b) => b - a)[0]);
+      saveGameStatistics(filteredWords.words, [...series, serieCounter].sort((a, b) => b - a)[0]);
     }
   };
 
   const handleGameOver = () => {
     handleWordsAfterGame();
-    if (isGameStarted) {
+    if (isGameStarted && !isGameWon) {
       dispatch(gameFailed());
       handleShowModalWindow();
       playSound('./assets/audio/fail-sound.mp3');
@@ -107,6 +109,7 @@ const ControlPanel: React.FC = () => {
       if (cardsAreDisabled === true) {
         handleShowModalWindow();
         playSound('./assets/audio/win-sound.mp3');
+        setGameWon(true);
         setAllCardsAreDisabled(false);
       }
     }

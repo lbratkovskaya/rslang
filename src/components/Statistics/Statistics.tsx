@@ -45,6 +45,7 @@ interface IStatsDailyResult {
 const Statistics: React.FC = () => {
   const statistics = useSelector((state: IAppState) => state.statistics.statistics);
   const userData = useSelector((state: IAppState) => state.user.data);
+  const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
 
   const [lastDayLearned, setLastDayLearned] = useState(0);
   const [correctPercent, setCorrectPercent] = useState(0);
