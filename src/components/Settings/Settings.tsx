@@ -39,50 +39,52 @@ const Settings: React.FC = () => {
   const classes = useStyles();
   return (
     <div>
-      <div className={classes.settingsWrapper}>
-        <Header />
-        <div className={classes.settings}>
-          <Typography variant="h2">Настройки</Typography>
-          <div className={classes.volumeSettings}>
-            <Typography id="continuous-slider" gutterBottom>
-              Звуки игр
-            </Typography>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <IconButton name="volumeOff" onClick={handleVolumeUp}>
-                  <VolumeOff />
-                </IconButton>
-              </Grid>
-              <Grid item xs>
-                <Slider
-                  value={settingsState.soundsVolume}
-                  onChange={handleChange}
-                  aria-labelledby="continuous-slider"
-                />
-              </Grid>
-              <Grid item>
-                <IconButton name="volumeUp" onClick={handleVolumeUp}>
-                  <VolumeUp />
-                </IconButton>
-              </Grid>
+      {/* <div className={classes.settingsWrapper}> */}
+      <Header />
+      <main className={classes.settings}>
+        <Typography variant="h5" className={classes.title}>
+          Настройки
+        </Typography>
+        <div className={classes.volumeSettings}>
+          <Typography id="continuous-slider" gutterBottom>
+            Звуки игр
+          </Typography>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <IconButton name="volumeOff" onClick={handleVolumeUp}>
+                <VolumeOff />
+              </IconButton>
             </Grid>
-          </div>
-          <div>
-            <Typography>Уровень сложности игр</Typography>
-            <RadioGroup
-              aria-label="gender"
-              name="gender1"
-              className={classes.gameModeWrapper}
-              value={gameMode}
-              onChange={handleChangeGameMode}>
-              <FormControlLabel value="easy" control={<Radio />} label="Легкий" />
-              <FormControlLabel value="normal" control={<Radio />} label="Средний" />
-              <FormControlLabel value="hard" control={<Radio />} label="Сложный" />
-            </RadioGroup>
-          </div>
+            <Grid item xs>
+              <Slider
+                value={settingsState.soundsVolume}
+                onChange={handleChange}
+                aria-labelledby="continuous-slider"
+              />
+            </Grid>
+            <Grid item>
+              <IconButton name="volumeUp" onClick={handleVolumeUp}>
+                <VolumeUp />
+              </IconButton>
+            </Grid>
+          </Grid>
         </div>
-        <Footer />
-      </div>
+        <div>
+          <Typography>Уровень сложности игр</Typography>
+          <RadioGroup
+            aria-label="gender"
+            name="gender1"
+            className={classes.gameModeWrapper}
+            value={gameMode}
+            onChange={handleChangeGameMode}>
+            <FormControlLabel value="easy" control={<Radio />} label="Легкий" />
+            <FormControlLabel value="normal" control={<Radio />} label="Средний" />
+            <FormControlLabel value="hard" control={<Radio />} label="Сложный" />
+          </RadioGroup>
+        </div>
+      </main>
+      <Footer />
+      {/* </div> */}
     </div>
   );
 };

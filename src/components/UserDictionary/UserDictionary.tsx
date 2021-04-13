@@ -47,7 +47,9 @@ const UserDictionary: React.FC = () => {
     <>
       <Header />
       <main>
-        <Typography variant="h4">Мой словарь</Typography>
+        <Typography variant="h5" className={classes.title}>
+          Мой словарь
+        </Typography>
         {userData.userId ? (
           <div className={classes.root}>
             <AppBar position="static" color="default">

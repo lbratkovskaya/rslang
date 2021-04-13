@@ -18,6 +18,9 @@ const useStyles = makeStyles(() => ({
     minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
     position: 'relative',
     userSelect: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     '&::before': {
       background: STATS.background,
       backgroundPosition: 'center',
@@ -39,7 +42,6 @@ const useStyles = makeStyles(() => ({
   },
   totalWrapper: {
     width: '400px',
-    margin: 'auto',
     marginTop: '20px',
     ...defaultBG,
   },

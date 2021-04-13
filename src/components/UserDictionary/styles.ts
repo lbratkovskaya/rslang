@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme: Theme) => {
       backgroundColor: theme.palette.background.paper,
       width: '100%',
     },
+    title: {
+      margin: '1rem 0',
+      textTransform: 'uppercase',
+      fontWeight: 500,
+    },
     dictionary: {
       display: 'flex',
       justifyContent: 'center',
