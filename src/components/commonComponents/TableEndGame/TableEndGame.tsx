@@ -17,7 +17,6 @@ interface ITableEndProps {
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
   const classes = useStyles();
-  console.log(words);
   const chooseTableHeadStyle = (value: boolean | undefined | string) => {
     switch (value) {
       case true:
