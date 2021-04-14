@@ -7,7 +7,6 @@ const sectionsId = 'wordBook';
 export const mobileMenuId = 'mobileMenu';
 export const logoPath = '../../assets/favicon.svg';
 
-
 const gamesTitles = Array.from(Object.keys(GAMES));
 
 export const gamesItems: Array<ISubMenuItem> = gamesTitles
