@@ -50,7 +50,7 @@ const MainPage: React.FC = () => {
           playing={false}
           width="100%"
           height="500px"
-          url="https://www.youtube.com/watch?v=pCjBetzC8ME"
+          url="https://www.youtube.com/watch?v=48zbCLQa5MA"
           controls
           className={classes.video}
         />
