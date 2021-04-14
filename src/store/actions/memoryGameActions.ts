@@ -25,9 +25,10 @@ export const setIsLoading = (isLoading: boolean) => ({
   isLoading,
 });
 
-export const setGameField = (field: Array<IMemoryGameCard>) => ({
+export const setGameField = (field: Array<IMemoryGameCard>, words: Array<IWord>) => ({
   type: MemoryGameTypes.SET_GAME_FIELD,
   field,
+  words,
 });
 
 export const showGameCard = (newCard: IMemoryGameCard) => ({
@@ -56,7 +57,6 @@ export const setWordsVolumeLevel = (value: number) => ({
 
 const createCards = (words: Array<IWord>, gameMode: string, gameSize: number) => {
   let result: Array<IMemoryGameCard> = [];
-  /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
   if (words && words.length) {
     const row = words.map((element) => {
       const mapResult = [
@@ -116,15 +116,8 @@ export const initiateGameField = (
       try {
         if (res.status === 200) {
           res.json().then((body) => {
-            dispatch(
-              setGameField(
-                createCards(
-                  body.sort(() => Math.random() - 0.5).slice(-gameSize),
-                  gameMode,
-                  gameSize
-                )
-              )
-            );
+            const fetchedWords = body.sort(() => Math.random() - 0.5).slice(-gameSize);
+            dispatch(setGameField(createCards(fetchedWords, gameMode, gameSize), fetchedWords));
           });
         }
         dispatch(setIsLoading(false));
@@ -139,7 +132,7 @@ export const initiateGameField = (
       .slice(-20)
       .sort(() => Math.random() - 0.5)
       .slice(-gameSize);
-    dispatch(setGameField(createCards(gameWords, gameMode, gameSize)));
+    dispatch(setGameField(createCards(gameWords, gameMode, gameSize), gameWords));
   }
 };
 

@@ -44,10 +44,12 @@ const UserDictionary: React.FC = () => {
   }, [currentUser]);
 
   return (
-    <>
+    <div>
       <Header />
-      <main>
-        <Typography variant="h4">Мой словарь</Typography>
+      <main className={classes.main}>
+        <Typography variant="h5" className={classes.title}>
+          Мой словарь
+        </Typography>
         {userData.userId ? (
           <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -89,11 +91,11 @@ const UserDictionary: React.FC = () => {
             </TabPanel>
           </div>
         ) : (
-          <span>Авторизуйтесь для просмотра изучаемых Вами слов</span>
+          <span className={classes.warning}>Авторизуйтесь для просмотра изучаемых Вами слов</span>
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

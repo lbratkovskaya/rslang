@@ -283,4 +283,8 @@ export const REGFORMS = {
   },
 };
 
+export const STATS = {
+  background: 'url(../../assets/trash_bg.jpg) center no-repeat',
+};
+
 export default backendUrl;

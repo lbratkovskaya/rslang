@@ -8,6 +8,8 @@ const initialState: ISprintState = {
   isStartGame: false,
   changeTimer: 0,
   wordsData: [],
+  seriesCounter: 0,
+  series: [0],
 };
 
 export default function sprintReducer(state: ISprintState = initialState, action: ISprintActions) {
@@ -19,13 +21,26 @@ export default function sprintReducer(state: ISprintState = initialState, action
     case SprintActionTypes.SPRINT_SWITCH_LANG:
       return { ...state, isEng: action.payload.isEng };
     case SprintActionTypes.SPRINT_START_GAME:
-      return { ...state, isStartGame: action.payload.isStartGame };
+      return {
+        ...state,
+        isStartGame: action.payload.isStartGame,
+      };
     case SprintActionTypes.SPRINT_CHANGE_TIMER:
       return { ...state, changeTimer: action.payload.changeTimer };
     case SprintActionTypes.SPRINT_REDUCE_ARR:
-      return { ...state, wordsData: action.payload };
+      return {
+        ...state,
+        wordsData: action.payload,
+        seriesCounter: 0,
+        series: [0],
+      };
     case SprintActionTypes.SPRINT_ANSWER:
-      return { ...state, wordsData: action.payload };
+      return {
+        ...state,
+        wordsData: action.payload.wordData,
+        seriesCounter: action.payload.correct ? state.seriesCounter + 1 : 0,
+        series: action.payload.correct ? state.series : state.series.concat([state.seriesCounter]),
+      };
     default:
       return state;
   }

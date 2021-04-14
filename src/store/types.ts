@@ -12,6 +12,7 @@ export interface IAppState {
   settings: ISettingsState;
   memoryGame: IMemoryGameState;
   sprint: ISprintState;
+  statistics: IStatisticsState;
 }
 
 export interface IUserData {
@@ -63,6 +64,11 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+}
+
+export interface IWordWithResult {
+  word: IWord;
+  correct: boolean;
 }
 
 export interface IWordBookState {
@@ -252,10 +258,7 @@ export interface IStatisticsAction {
   type: StatisticsActionTypes;
   payload: {
     error?: Error;
-    gameName?: string;
-    wordsLearned?: number;
-    correctTotal?: number;
-    correctSeries?: number;
+    statistics: IStatistics;
   };
 }
 export interface ISprintState {
@@ -265,6 +268,8 @@ export interface ISprintState {
   isStartGame: boolean;
   changeTimer: number;
   wordsData: Array<ISprintWords>;
+  seriesCounter: number;
+  series: number[];
 }
 
 export interface ISprintWords {

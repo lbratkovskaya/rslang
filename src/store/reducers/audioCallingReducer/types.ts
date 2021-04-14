@@ -36,4 +36,6 @@ export interface IAudioCallingState {
   levelsQuantity: number;
   roundsQuantity: number;
   wordQuantity: number;
+  seriesCounter: number;
+  series: number[];
 }

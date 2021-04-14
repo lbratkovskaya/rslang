@@ -114,7 +114,7 @@ export default function memoryGameReducer(
         unExploredWords: getUnexploredWords(state.field),
       };
     case MemoryGameTypes.SET_GAME_FIELD:
-      return { ...state, field: action.field };
+      return { ...state, field: action.field, words: action.words };
     case MemoryGameTypes.UPDATE_GAME_CARD:
       return {
         ...state,

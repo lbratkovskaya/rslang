@@ -1,6 +1,13 @@
 import { Dispatch } from 'redux';
 import backendUrl from '../../constants';
-import { DictionaryActionTypes, IUserData, IUserWord, IWord } from '../types';
+import {
+  DictionaryActionTypes,
+  IDictionaryState,
+  IUserData,
+  IUserWord,
+  IWord,
+  IWordWithResult,
+} from '../types';
 
 const splitDictionaryWords = (loadedWords: { paginatedResults: Array<IUserWord> }[]) => {
   const acc = {
@@ -9,13 +16,18 @@ const splitDictionaryWords = (loadedWords: { paginatedResults: Array<IUserWord> 
     deletedWords: [] as Array<IUserWord>,
   };
   loadedWords[0].paginatedResults.reduce((accum, word) => {
-    if (word.userWord?.optional.deleted) {
-      accum.deletedWords.push(word);
+    const uWord = { ...word };
+    if (!uWord.id) {
+      // eslint-disable-next-line no-underscore-dangle
+      Object.assign(uWord, { id: uWord._id });
+    }
+    if (uWord.userWord?.optional.deleted) {
+      accum.deletedWords.push(uWord);
     } else {
-      if (word.userWord?.difficulty === 'hard') {
-        accum.difficultWords.push(word);
+      if (uWord.userWord?.difficulty === 'hard') {
+        accum.difficultWords.push(uWord);
       }
-      accum.learningWords.push(word);
+      accum.learningWords.push(uWord);
     }
     return accum;
   }, acc);
@@ -37,11 +49,6 @@ const getDifficulty = (word: IWord): string => {
 const getDeleted = (word: IWord): boolean => {
   return ((<IUserWord>word).userWord && (<IUserWord>word).userWord?.optional.deleted) || false;
 };
-
-export const sendWordsToLearning = (words: IWord[]) => ({
-  type: DictionaryActionTypes.SEND_WORDS,
-  payload: { learningWords: words },
-});
 
 const startDictLoading = () => ({
   type: DictionaryActionTypes.DICT_IS_LOADING,
@@ -107,8 +114,7 @@ const sendUserWord = (
 ) => async (dispatch: Dispatch) => {
   const fetchUserId = userData.userId;
   const userToken = userData.token;
-  // eslint-disable-next-line no-underscore-dangle
-  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word)._id}`;
+  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id}`;
   const method = isNew ? 'POST' : 'PUT';
 
   const successHeats = getSuccessHeats(word) + addSuccess;
@@ -164,7 +170,6 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
 };
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {
-  // const deleted = getDeleted(word);
   if ((<IUserWord>word).userWord === undefined) {
     await saveUserWord(word, userData, 'hard', false, 0, 0)(dispatch);
   } else {
@@ -187,23 +192,26 @@ export const setUserWordDeleted = (word: IWord, userData: IUserData, deleted: bo
 };
 
 export const addWordsToUserDictionary = (
-  words: Array<{ word: IWord; correct: boolean }>,
+  words: Array<IWordWithResult>,
+  userDictionary: IDictionaryState,
   userData: IUserData
 ) => async (dispatch: Dispatch) => {
+  const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   await words.forEach((word) => {
     const success = word.correct ? 1 : 0;
     const fail = word.correct ? 0 : 1;
-    if ((<IUserWord>word.word).userWord === undefined) {
-      saveUserWord(word.word, userData, 'easy', false, success, fail)(dispatch);
-    } else {
+    const uWord = userWords.find((uw) => uw.id === word.word?.id);
+    if (uWord) {
       setUserWordData(
-        word.word,
+        uWord,
         userData,
-        getDifficulty(word.word),
-        getDeleted(word.word),
+        getDifficulty(uWord),
+        getDeleted(uWord),
         success,
         fail
       )(dispatch);
+    } else {
+      saveUserWord(word.word, userData, 'easy', false, success, fail)(dispatch);
     }
   });
   fetchDictionary(userData)(dispatch);
@@ -214,8 +222,7 @@ export const deleteUserWord = (word: IUserWord, userData: IUserData) => async (
 ) => {
   const fetchUserId = userData.userId;
   const userToken = userData.token;
-  // eslint-disable-next-line no-underscore-dangle
-  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id || (<IUserWord>word)._id}`;
+  const url = `${backendUrl}/users/${fetchUserId}/words/${word.id}`;
   dispatch(startDictLoading());
   try {
     fetch(url, {

@@ -9,6 +9,7 @@ import {
   createArrayWords,
 } from '../../../store/actions/audioCallingActions';
 import { fetchWords, setGroup, setPage } from '../../../store/actions/wordBookActions';
+import { fetchDictionary } from '../../../store/actions/dictionaryActions';
 import GameSelect from '../../commonComponents/GameSelect/GameSelect';
 import { MAX_LENGTH_GAME_ARR, SELECT_ROUNDS } from '../constants';
 import { WORDBOOK_GROUPS } from '../../../constants';
@@ -29,6 +30,7 @@ const AudioCallingStartGame: React.FC = () => {
   const wbPage = useSelector((state: IAppState) => state.wordBook.activePage);
   const difficulty = useSelector((state: IAppState) => state.settings.gameMode);
   const { actualWords } = useSelector((state: IAppState) => state.games);
+  const userData = useSelector((state: IAppState) => state.user?.data);
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
   const styles = useStyles();
@@ -38,6 +40,7 @@ const AudioCallingStartGame: React.FC = () => {
   const getWords = (grp: number, pg: number) => {
     dispatch(fetchWords(grp, pg));
   };
+  const getDictionaryWords = () => dispatch(fetchDictionary(userData));
 
   const handleChange = (value: string | number): void => {
     setSelectLevel(Number(value));
@@ -74,6 +77,10 @@ const AudioCallingStartGame: React.FC = () => {
     }
     getWords(group, page);
   }, [group, page]);
+
+  useEffect(() => {
+    getDictionaryWords();
+  }, []);
 
   return (
     <div className={styles.wrapper}>

@@ -13,6 +13,7 @@ import RandomPage from './RandomPage';
 import Settings from './Settings';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
+import Statistics from './Statistics/Statistics';
 import UserDictionary from './UserDictionary';
 import { enterTimeout, exitTimeout, ROUTES } from '../constants';
 import './App.scss';
@@ -44,6 +45,7 @@ const App: React.FC = () => {
                 <Route path={ROUTES.games.sprint} component={GameSprint} />
                 <Route path={ROUTES.signIn} component={SignInPage} />
                 <Route path={ROUTES.signUp} component={SignUpPage} />
+                <Route path={ROUTES.statistics} component={Statistics} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

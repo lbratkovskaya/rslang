@@ -57,10 +57,10 @@ const AudioCallingPage: React.FC = () => {
   );
 
   return (
-    <>
+    <div>
       <Header />
       <FullScreenWrapper component={gameComponent} handle={handle} />
-    </>
+    </div>
   );
 };
 

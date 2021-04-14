@@ -29,6 +29,13 @@ const fetchStatsError = (error: Error) => ({
   payload: { error, isLoading: false },
 });
 
+const handle404Error = (res: Response) => {
+  if (res.status === 404) {
+    return { optional: {} };
+  }
+  return res.json();
+};
+
 export const fetchStatistics = (userData: IUserData) => (dispatch: Dispatch) => {
   const fetchUserId = userData.userId;
   const url = `${backendUrl}/users/${fetchUserId}/statistics`;
@@ -47,8 +54,8 @@ export const fetchStatistics = (userData: IUserData) => (dispatch: Dispatch) => 
         Accept: 'application/json',
       },
     })
-      .then((res) => res.json())
-      .then((stats) => fetchStatsSuccess(stats))
+      .then((res) => handle404Error(res))
+      .then((stats) => dispatch(fetchStatsSuccess(stats.optional)))
       .catch((error) => dispatch(fetchStatsError(error)));
   } catch (e) {
     dispatch(fetchStatsError(e));
@@ -80,7 +87,7 @@ export const putGameStatistics = (
         optional: { ...stats },
       }),
     })
-      .then(() => fetchStatsSuccess(stats))
+      .then(() => dispatch(fetchStatsSuccess(stats)))
       .catch((error) => dispatch(fetchStatsError(error)));
   } catch (e) {
     dispatch(fetchStatsError(e));
@@ -112,7 +119,7 @@ export const addGameStatistics = (
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => handle404Error(res))
       .then((data) => data.optional.stats || data.optional)
       .then((stats: IStatistics) => {
         const newDate = Date.now();

@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
       display: 'flex',
       flexDirection: 'column',
+      boxSizing: 'border-box',
     },
     title: {
       margin: '1rem 0',

@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, StyleRules, Theme } from '@material-ui/core';
-import { APPEAR_DURATION } from '../../constants';
+import { APPEAR_DURATION, HEADER_HEIGHT } from '../../constants';
 import { wordBookStyles } from '../WordBook/styles';
 import { wordCardStyles } from '../WordCard/styles';
 
@@ -12,9 +12,18 @@ export const a11yProps = (index: any) => {
 
 const useStyles = makeStyles((theme: Theme) => {
   const styles = {
+    main: {
+      minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+    },
     root: {
       backgroundColor: theme.palette.background.paper,
       width: '100%',
+      height: '100%',
+    },
+    title: {
+      margin: '1rem 0',
+      textTransform: 'uppercase',
+      fontWeight: 500,
     },
     dictionary: {
       display: 'flex',
@@ -54,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) => {
       gap: '10px',
       padding: '15px 30px',
       left: '16px',
+    },
+    warning: {
+      margin: 'auto',
     },
   } as StyleRules;
 

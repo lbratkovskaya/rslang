@@ -12,28 +12,23 @@ import {
 import { addWordsToUserDictionary } from '../../../../store/actions/dictionaryActions';
 import { fetchGameWords } from '../../../../store/actions/gamesActions';
 import { SELECT_LEVELS, SELECT_ROUNDS } from '../../constants';
-import { IAppState, IUserData, IWord } from '../../../../store/types';
+import { IAppState, IWord, IWordWithResult } from '../../../../store/types';
 import useStyles from '../../styles';
 
 const SavannahEndGame: React.FC = () => {
   const dispatch = useDispatch();
   const savannahData = useSelector((state: IAppState) => state.savannah);
-  const userWords = useSelector((state: IAppState) => [
-    ...state.userDictionary.learningWords,
-    ...state.userDictionary.deletedWords,
-  ]);
-  const onReduceArrayWords = (wordsArray: Array<IWord>) =>
-    dispatch(reduceArrayWords(wordsArray, userWords));
-  const user = useSelector((state: IAppState) => state.user.data);
+  const userDictionary = useSelector((state: IAppState) => state.userDictionary);
+  const userData = useSelector((state: IAppState) => state.user.data);
   const { gameWords } = useSelector((state: IAppState) => state.games);
+
   const onRandomLevel = (level: number) => dispatch(selectLevel(level));
   const onRandomRound = (round: number) => dispatch(selectRound(round));
   const getGameWords = (groups: number, pages: number) => dispatch(fetchGameWords(groups, pages));
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
-  const sendWordsToUserDictionary = (
-    words: Array<{ word: IWord; correct: boolean }>,
-    userData: IUserData
-  ) => dispatch(addWordsToUserDictionary(words, userData));
+  const onReduceArrayWords = (wordsArray: Array<IWord>) => dispatch(reduceArrayWords(wordsArray));
+  const sendWordsToUserDictionary = (words: Array<IWordWithResult>) =>
+    dispatch(addWordsToUserDictionary(words, userDictionary, userData));
 
   const [isRestart, setIsRestart] = useState(false);
 
@@ -51,9 +46,7 @@ const SavannahEndGame: React.FC = () => {
         correct: el.isCorrect,
       };
     });
-    return () => {
-      if (user.userId) sendWordsToUserDictionary(arrayForUserDictionary, user);
-    };
+    if (userData.userId) sendWordsToUserDictionary(arrayForUserDictionary);
   }, []);
 
   const handleNewGame = () => {

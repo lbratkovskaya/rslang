@@ -19,5 +19,9 @@ export interface ISprintActions {
     isStartGame?: boolean;
     changeTimer?: number;
     words?: Array<ISprintWords>;
+    wordData?: Array<ISprintWords>;
+    seriesCounter: number;
+    series: number[];
+    correct: boolean;
   };
 }
