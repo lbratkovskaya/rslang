@@ -8,11 +8,11 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-import { ISavannahWord } from '../../../store/types';
+import { ISavannahWord, IAudioCallingWord } from '../../../store/types';
 import { useStyles } from '../styles';
 
 interface ITableEndProps {
-  words: Array<ISavannahWord>;
+  words: Array<ISavannahWord | IAudioCallingWord>;
 }
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
@@ -43,13 +43,27 @@ const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
         </TableBody>
         <TableBody>
           {words
-            .filter((el) => el.isCorrect === condition)
-            .map((el) => {
+            .filter((el: ISavannahWord | IAudioCallingWord) => el.isCorrect === condition)
+            .map((el: ISavannahWord | IAudioCallingWord) => {
+              let item;
+              let word;
+              let translate;
+              if (typeof el.word === 'string') {
+                item = el as ISavannahWord;
+                word = item.word;
+                translate = item.translate;
+              } else {
+                item = el as IAudioCallingWord;
+                word = item.word.word;
+                translate = item.word.wordTranslate;
+              }
               return (
-                <TableRow key={el.word}>
-                  <TableCell className={classes.tableWordStyle}>{el.word}</TableCell>
+                <TableRow key={word}>
+                  <TableCell className={classes.tableWordStyle}>
+                    {word}
+                  </TableCell>
                   <TableCell className={classes.tableWordStyle} align="right">
-                    {el.translate}
+                    {translate}
                   </TableCell>
                 </TableRow>
               );

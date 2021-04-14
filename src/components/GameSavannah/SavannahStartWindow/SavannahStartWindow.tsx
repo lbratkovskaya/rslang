@@ -70,7 +70,6 @@ const SavannahStartWindow: React.FC = () => {
     }
     if (isCameFromWordbook) {
       const cutActualWords = extraWords.concat(actualWords)?.slice(-wordCount);
-
       onReduceArrayWords(cutActualWords);
     } else {
       const randomPage = Math.floor(Math.random() * SELECT_ROUNDS.amount) % SELECT_ROUNDS.amount;

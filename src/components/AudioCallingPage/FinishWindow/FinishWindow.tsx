@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ListItem, List, ListSubheader } from '@material-ui/core';
+import TableEndGame from '../../commonComponents/TableEndGame/TableEndGame';
 import {
   resetEndGame,
   clickStartGame,
@@ -8,9 +8,14 @@ import {
 } from '../../../store/actions/audioCallingActions';
 import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
-import backendUrl, { playIcon } from '../../../constants';
-import { IAudioCallingWords } from '../../../store/reducers/audioCallingReducer/types';
-import { IAppState, IGameName, IWord, IWordWithResult } from '../../../store/types';
+// import { IAudioCallingWords } from '../../../store/reducers/audioCallingReducer/types';
+import {
+  IAppState,
+  IGameName,
+  IWord,
+  IWordWithResult,
+  IAudioCallingWord,
+} from '../../../store/types';
 import useStyles from './styles';
 
 const FinishGame: React.FC = () => {
@@ -70,7 +75,7 @@ const FinishGame: React.FC = () => {
       audio.src = '../../../assets/audio/win-sound.mp3';
     }
     audio.play();
-    const copy = audioCallingData.words.map((el: IAudioCallingWords) => ({
+    const copy = audioCallingData.words.map((el: IAudioCallingWord) => ({
       word: el.wordObj,
       correct: el.isCorrect,
     }));
@@ -83,44 +88,12 @@ const FinishGame: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <h2 className={styles.title}>Статистика</h2>
-      <List className={styles.root} subheader={<li />}>
-        <ListSubheader>Я знаю:</ListSubheader>
-        {audioCallingData.words
-          .filter((el: IAudioCallingWords) => el.isCorrect === true)
-          .map((el: IAudioCallingWords) => (
-            <ListItem key={el.word.id} className={styles.li}>
-              <button
-                className={styles.play}
-                type="button"
-                onClick={() => new Audio(`${backendUrl}/${el.word.audio}`).play()}>
-                <img className={styles.playIcon} src={playIcon} alt={el.word.word} />
-              </button>
-              {`${el.word.word} - ${el.word.wordTranslate}`}
-            </ListItem>
-          ))}
-      </List>
-      <List className={styles.root} subheader={<li />}>
-        <ListSubheader>Я не знаю:</ListSubheader>
-        {audioCallingData.words
-          .filter((el: IAudioCallingWords) => el.isCorrect === false)
-          .map((el: IAudioCallingWords) => (
-            <ListItem className={styles.li} key={el.word.id}>
-              <button
-                className={styles.play}
-                type="button"
-                onClick={() => new Audio(`${backendUrl}/${el.word.audio}`).play()}>
-                <img className={styles.playIcon} src={playIcon} alt={el.word.word} />
-              </button>
-              {` ${el.word.word} - ${el.word.wordTranslate}`}
-            </ListItem>
-          ))}
-      </List>
+    <>
+      <TableEndGame words={audioCallingData.words} />
       <button type="button" className={styles.newGame} onClick={handleExitGame}>
         НОВАЯ ИГРА
       </button>
-    </div>
+    </>
   );
 };
 

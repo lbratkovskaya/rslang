@@ -20,6 +20,9 @@ const useStyles = makeStyles(() =>
       width: '50%',
       fontSize: '24px',
       marginLeft: '10px',
+      root: {
+        padding: '0px',
+      },
     },
   })
 );

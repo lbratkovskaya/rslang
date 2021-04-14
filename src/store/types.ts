@@ -276,3 +276,8 @@ export interface ISprintWords {
   isCorrect: boolean;
   word: IWord;
 }
+
+export interface IAudioCallingWord {
+  word: IWord;
+  isCorrect: boolean;
+}
