@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) => {
       margin: '1rem 0',
       textTransform: 'uppercase',
       fontWeight: 500,
+      position: 'relative',
     },
     dictionary: {
       display: 'flex',
