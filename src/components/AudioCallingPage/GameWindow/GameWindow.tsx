@@ -27,9 +27,8 @@ const AudioCallingStartGame: React.FC = () => {
   const [currentFive, setCurrentFive] = useState<IWord[]>([]);
   const [currentIncorrect, setCurrentIncorrect] = useState('');
   const [animate, setAnimate] = useState(false);
-  const volume = useSelector((state: IAppState) => state.volumeHandler.volume);
   const audioCallingArray = useSelector((state: IAppState) => state.audioCalling.startArray);
-  const soundVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
+  const { soundsVolume } = useSelector((state: IAppState) => state.settings);
   const userWords = useSelector((state: IAppState) => [
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
@@ -73,7 +72,7 @@ const AudioCallingStartGame: React.FC = () => {
 
   const playClickEffect = (url: string) => {
     sound.src = url;
-    sound.volume = soundVolume / MAX_VOLUME;
+    sound.volume = soundsVolume / MAX_VOLUME;
     sound.play();
   };
 
@@ -131,7 +130,7 @@ const AudioCallingStartGame: React.FC = () => {
     if (wordIndex !== currentArray.length) {
       audio.src = `${backendURL}/${currentArray[wordIndex].audio}`;
     }
-    audio.volume = parseFloat(String(volume));
+    audio.volume = soundsVolume / MAX_VOLUME;
     audio.play();
   };
 
