@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFullScreenHandle } from 'react-full-screen';
-import { FullScreenBtn, FullScreenWrapper } from '../commonComponents';
+import { Countdown, FullScreenBtn, FullScreenWrapper } from '../commonComponents';
 import Header from '../Header';
 import SprintGamePlay from './SprintGamePlay';
 import StartGameSprint from './StartGameSprint';
@@ -12,6 +12,7 @@ import useStyles from './style';
 const GameSprint: React.FC = () => {
   const classes = useStyles();
   const sprintInfo = useSelector((state: IAppState) => state.sprint);
+  const { isCountDown } = useSelector((state: IAppState) => state.games);
   const [fullSize, setFullSize] = useState(false);
   const [style, setStyle] = useState({});
   const handleFullScreenMode = useFullScreenHandle();
@@ -27,15 +28,22 @@ const GameSprint: React.FC = () => {
     bg.src = SPRINT.background;
   }, []);
 
+  const renderComponent = () => {
+    if (!isCountDown) {
+      return !sprintInfo.isStartGame ? <StartGameSprint /> : <SprintGamePlay />;
+    }
+    return <Countdown />;
+  };
+
   const fullScreenClass = fullSize ? ` ${classes.wrapperFull}` : ` ${classes.wrapperNotFull}`;
 
   const startComponent = (
-    <>
+    <div>
       <div className={`${classes.sprintWrapper}${fullScreenClass}`} style={style}>
-        {!sprintInfo.isStartGame ? <StartGameSprint /> : <SprintGamePlay />}
+        {renderComponent()}
       </div>
       <FullScreenBtn changeScreen={handleFullSize} />
-    </>
+    </div>
   );
 
   return (

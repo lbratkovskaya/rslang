@@ -167,6 +167,7 @@ export const setUserWordEasy = (word: IWord, userData: IUserData) => async (disp
   } else {
     await setUserWordData(word, userData, 'easy', false, 0, 0)(dispatch);
   }
+  fetchDictionary(userData)(dispatch);
 };
 
 export const setUserWordHard = (word: IWord, userData: IUserData) => async (dispatch: Dispatch) => {

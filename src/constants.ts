@@ -143,8 +143,10 @@ export const SPRINT = {
   background: '../../../assets/sprint-bg.jpg',
   sadImg: '../../../assets/sad.svg',
   winkImg: '../../../assets/wink.svg',
-  audioTrue: '../../../assets/SprintAudio/sprint_true.mp3',
-  audioFalse: '../../../assets/SprintAudio/sprint_false.mp3',
+  audioTrue: '../../../assets/audio/savannah-true.mp3',
+  audioFalse: '../../../assets/audio/savannah-false.mp3',
+  audioWin: '../../../assets/audio/win-sound.mp3',
+  audioFail: '../../../assets/audio/fail-sound.mp3',
 };
 
 export const modalTimeout = 1000;

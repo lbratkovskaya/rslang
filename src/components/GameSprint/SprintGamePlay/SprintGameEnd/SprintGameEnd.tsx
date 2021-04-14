@@ -80,9 +80,9 @@ const SprintGameEnd: React.FC = () => {
     const checkCorrectArray = springInfo.wordsData.filter((el: ISprintWords) => !el.isCorrect);
     setTimeout(() => {
       if (checkCorrectArray.length) {
-        onAudioPlay(SPRINT.audioFalse);
+        onAudioPlay(SPRINT.audioFail);
       } else {
-        onAudioPlay(SPRINT.audioTrue);
+        onAudioPlay(SPRINT.audioWin);
       }
     }, timeout);
   }, []);

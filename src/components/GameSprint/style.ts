@@ -102,14 +102,12 @@ const useStyles = makeStyles(() =>
       margin: '3rem auto',
       background: 'scroll',
       '&::-webkit-scrollbar': {
-        width: '24px',
+        width: '8px',
         height: '8px',
-        backgroundColor: '#143861',
       },
       '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#843465',
+        backgroundColor: '#000',
         borderRadius: '9em',
-        boxShadow: 'inset 1px 1px 10px #f3faf7',
       },
     },
     tableSpanCorrectly: {

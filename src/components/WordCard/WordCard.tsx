@@ -17,7 +17,7 @@ import backendUrl, {
   WORDBOOK_GROUPS,
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
-import { IAppState, IUserWord, IWord } from '../../store/types';
+import { IAppState, IUserWord } from '../../store/types';
 import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
@@ -36,9 +36,12 @@ const WordCard: React.FC<IWordCardProps> = ({
   const userDifficultWords = useSelector((state: IAppState) =>
     state.userDictionary.difficultWords.map((el) => el.word)
   );
+  const isInDifficultWords = userDifficultWords.includes(word.word);
   const userDeletedWords = useSelector((state: IAppState) =>
     state.userDictionary.deletedWords.map((el) => el.word)
   );
+  const isInDeletedWords = userDeletedWords.includes(word.word);
+
   const userWords =
     useSelector((state: IAppState) =>
       state.userDictionary.learningWords?.reduce((acc, el) => {
@@ -46,6 +49,8 @@ const WordCard: React.FC<IWordCardProps> = ({
         return acc;
       }, {} as { [key: string]: IUserWord })
     ) || {};
+  const userWord = userWords[word.word] || word;
+
   const { showTranslate, showButtons } = useSelector((state: IAppState) => state.wordBook);
   const [isImageReady, setImageIsReady] = useState(false);
   const audio = useMemo(() => new Audio(), []);
@@ -59,9 +64,6 @@ const WordCard: React.FC<IWordCardProps> = ({
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
   const dispatch = useDispatch();
-
-  const { deletedWords } = useSelector((state: IAppState) => state.userDictionary);
-  const isInDeletedWords = deletedWords.map((el: IWord) => el.word).includes(word.word);
 
   const textStyle = {
     word: playingAudioIndex === 0 ? highlightStyle : {},
@@ -138,10 +140,10 @@ const WordCard: React.FC<IWordCardProps> = ({
 
   const handleAddToDifficult = (): void => {
     if (isDifficult) {
-      dispatch(setUserWordEasy(word, userData));
+      dispatch(setUserWordEasy(userWord, userData));
       setIsDifficult(false);
     } else {
-      dispatch(setUserWordHard(word, userData));
+      dispatch(setUserWordHard(userWord, userData));
       setIsDifficult(true);
     }
     if (removeOnDifficultyChange) {
@@ -153,8 +155,8 @@ const WordCard: React.FC<IWordCardProps> = ({
     if (isDeleted) {
       return;
     }
-    dispatch(setUserWordDeleted(word, userData, !isDeleted));
-    dispatch(deleteWordFromGamesStore(word));
+    dispatch(setUserWordDeleted(userWord, userData, !isDeleted));
+    dispatch(deleteWordFromGamesStore(userWord));
     setIsMounted(false);
     setTimeout(() => {
       setIsDeleted(true);
@@ -171,7 +173,7 @@ const WordCard: React.FC<IWordCardProps> = ({
 
   const handleKeepInDictionary = (): void => {
     handleRestoreClose();
-    dispatch(setUserWordDeleted(word, userData, !isDeleted));
+    dispatch(setUserWordDeleted(userWord, userData, !isDeleted));
     setIsMounted(false);
     setTimeout(() => {
       setIsDeleted(true);
@@ -180,7 +182,7 @@ const WordCard: React.FC<IWordCardProps> = ({
 
   const handleRemoveFromDictionary = (): void => {
     handleRestoreClose();
-    dispatch(deleteUserWord(word, userData));
+    dispatch(deleteUserWord(userWord, userData));
     setIsMounted(false);
     setTimeout(() => {
       setIsDeleted(true);
@@ -217,6 +219,10 @@ const WordCard: React.FC<IWordCardProps> = ({
       handleStopClick();
     };
   }, []);
+
+  useEffect(() => {
+    setIsDifficult(isInDifficultWords);
+  }, [isInDifficultWords]);
 
   useEffect(() => {
     setIsDeleted(isInDeletedWords);
