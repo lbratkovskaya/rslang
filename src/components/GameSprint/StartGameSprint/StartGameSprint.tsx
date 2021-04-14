@@ -13,6 +13,7 @@ import {
 } from '../../../store/actions/sprintAction';
 import { fetchDictionary } from '../../../store/actions/dictionaryActions';
 import { fetchWords } from '../../../store/actions/wordBookActions';
+import { changeCountDown } from '../../../store/actions/gamesActions';
 import { MAX_LENGTH_GAME_ARR, SELECT_ROUNDS } from '../constants';
 import { GAMES, WORDBOOK_GROUPS } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
@@ -34,6 +35,7 @@ const StartGameSprint: React.FC = () => {
   const onReduceArrayWords = (wordsArray: IWord[]) => dispatch(reduceArrayWords(wordsArray));
   const switchLanguage = (isEng: boolean) => dispatch(switchLang(isEng));
   const getDictionaryWords = () => dispatch(fetchDictionary(userData));
+  const countDownStart = (isCount: boolean) => dispatch(changeCountDown(isCount));
 
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
@@ -75,6 +77,7 @@ const StartGameSprint: React.FC = () => {
       setRound(randomPage);
       onReduceArrayWords(wordBook?.words);
     }
+    countDownStart(true);
     onClickStartGame(true);
   };
 
