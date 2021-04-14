@@ -5,12 +5,18 @@ const useStyles = makeStyles(() =>
     root: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-start',
+      alignItems: 'center',
       justifyContent: 'flex-start',
-      margin: '5vh 5vw',
+      padding: '1rem 1rem 3rem',
+      boxSizing: 'border-box',
+      width: '100%',
+    },
+    brief: {
+      maxWidth: 900,
     },
     video: {
-      marginBottom: '5vh',
+      margin: '2rem 0 4rem',
+      maxWidth: 900,
     },
     details: {
       display: 'flex',
@@ -27,49 +33,51 @@ const useStyles = makeStyles(() =>
       marginRight: '1vw',
     },
     title: {
-      marginBottom: '2vw',
+      marginBottom: '1rem',
+      fontWeight: 500,
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
     },
     cardsWrapper: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
+      maxWidth: 900,
     },
     card: {
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      width: '90vw',
       maxHeight: 250,
       minHeight: 250,
-      marginBottom: '5vh',
-      boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+      margin: '1rem 0',
+      boxShadow: '0 6px 14px rgba(0, 0, 0, 0.25)',
     },
     info: {
       marginBottom: '5px',
+      lineHeight: 1.5,
     },
     name: {
       fontSize: '34px',
     },
     contribution: {
-      fontSize: '28px',
+      marginTop: '1rem',
+      fontSize: '1rem',
     },
     contributionInfo: {
-      fontSize: '16px',
+      fontSize: '1rem',
     },
 
     '@media (max-width: 800px)': {
       name: {
         fontSize: '24px !important',
       },
-      contribution: {
-        fontSize: '20px !important',
-      },
       cover: {
         minWidth: 100,
         maxWidth: 100,
         maxHeight: 122,
         minHeight: 122,
-        marginRight: '1vw',
+        margin: '0 0.25rem 0 0.75rem',
       },
       info: {
         fontSize: '14px',

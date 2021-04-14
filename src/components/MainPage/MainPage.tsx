@@ -17,12 +17,12 @@ const MainPage: React.FC = () => {
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography variant="h4" align="left" className={classes.name}>
-              {`${personInfo.name}:`}
+              {`${personInfo.name}`}
             </Typography>
             <Typography variant="subtitle1" align="left" color="inherit" className={classes.info}>
               {personInfo.about}
             </Typography>
-            <Typography variant="h5" align="left" className={classes.contribution}>
+            <Typography variant="h6" align="left" className={classes.contribution}>
               Вклад в общее дело:
             </Typography>
             <Typography variant="subtitle1" align="left" color="inherit" className={classes.info}>
@@ -37,9 +37,14 @@ const MainPage: React.FC = () => {
   return (
     <div>
       <Header />
-      <div className={classes.root}>
-        <Typography variant="h3" component="div" className={classes.title}>
-          О проекте:
+      <main className={classes.root}>
+        <Typography variant="h5" component="div" className={classes.title}>
+          О проекте
+        </Typography>
+        <Typography className={classes.brief}>
+          RSCoon English – приложение для изучения иностранных слов, включающее электронный учебник
+          с базой слов для изучения, мини-игры для их повторения, страницу статистики для
+          отслеживания индивидуального прогресса.
         </Typography>
         <ReactPlayer
           playing={false}
@@ -49,13 +54,13 @@ const MainPage: React.FC = () => {
           controls
           className={classes.video}
         />
-        <Typography variant="h3" component="div" className={classes.title}>
-          Команда:
+        <Typography variant="h5" component="div" className={classes.title}>
+          наша команда
         </Typography>
         <div className={classes.cardsWrapper}>
           {PERSONS_INFO.map((personInfo) => renderCard(personInfo))}
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

@@ -12,6 +12,7 @@ $size-footer-text: 14px;
   padding: 1.5rem 0 1rem;
   bottom: 0;
   left: 0;
+  position: sticky;
   display: grid;
   place-items: center;
   background: $color-footer-bg;
