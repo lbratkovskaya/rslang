@@ -16,7 +16,9 @@ import useStyles from './styles';
 const FinishGame: React.FC = () => {
   const dispatch = useDispatch();
   const styles = useStyles();
+  const audio = new Audio();
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
+  const falsePart = audioCallingData.words.filter((el) => !el.isCorrect);
   const userData = useSelector((state: IAppState) => state.user.data);
   const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
@@ -25,11 +27,23 @@ const FinishGame: React.FC = () => {
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
+
   const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
     dispatch(addWordsToUserDictionary(array, userDictionary, userData));
 
+  const unmountSound = () => {
+    const audioPromise = audio.play();
+    if (audioPromise !== undefined) {
+      audioPromise.then(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    }
+  };
+
   const handleExitGame = () => {
     startGame(false);
+    unmountSound();
     toggleResetEndGame();
     reset();
   };
@@ -50,8 +64,15 @@ const FinishGame: React.FC = () => {
   };
 
   useEffect(() => {
+ 
+    if (falsePart.length > 0) {
+      audio.src = '../../../assets/audio/fail-sound.mp3';
+    } else {
+      audio.src = '../../../assets/audio/win-sound.mp3';
+    }
+    audio.play();
     const copy = audioCallingData.words.map((el: IAudioCallingWords) => ({
-      word: el.word,
+      word: el.wordObj,
       correct: el.isCorrect,
     }));
     sendWords(copy);
