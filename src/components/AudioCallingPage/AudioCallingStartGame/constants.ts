@@ -3,9 +3,11 @@ interface IGameMode {
 }
 
 const gameMode: IGameMode = {
-  easy: 6,
-  normal: 10,
-  hard: 20,
+  easy: 10,
+  normal: 20,
+  hard: 30,
 };
+
+export const WORDS_QUANTITY = 50;
 
 export default gameMode;

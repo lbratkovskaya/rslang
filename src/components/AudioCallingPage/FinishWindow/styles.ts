@@ -10,46 +10,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       overflow: 'auto',
     },
-    wrapper: {
-      height: '70vh',
-      '&:nth-child(1)': {
-        borderRadius: '5px',
-      },
-    },
-    title: {
-      margin: '10px auto',
-      color: 'white',
-    },
-    listSection: {
-      backgroundColor: 'inherit',
-    },
-    ul: {
-      backgroundColor: 'inherit',
-      padding: 0,
-    },
-    li: {
-      fontSize: '1rem',
-    },
-    play: {
-      width: '20px',
-      height: '20px',
-      borderRadius: '50%',
-      outline: 'none',
-      padding: '0',
-      border: 'none',
-      cursor: 'pointer',
-      marginRight: '10px',
-    },
-    playIcon: {
-      width: '20px',
-      height: '20px',
-      borderRadius: '50%',
-      '&:hover': {
-        transform: 'scale(1.1)',
-        transition: 'all .3s ease-in-out',
-        backgroundColor: 'green',
-      },
-    },
     newGame: {
       cursor: 'pointer',
       outline: 'none',

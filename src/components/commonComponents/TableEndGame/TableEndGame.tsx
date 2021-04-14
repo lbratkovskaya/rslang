@@ -8,16 +8,15 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-import { ISavannahWord } from '../../../store/types';
+import { ISavannahWord, IAudioCallingWord } from '../../../store/types';
 import { useStyles } from '../styles';
 
 interface ITableEndProps {
-  words: Array<ISavannahWord>;
+  words: Array<ISavannahWord | IAudioCallingWord>;
 }
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
   const classes = useStyles();
-
   const chooseTableHeadStyle = (value: boolean | undefined | string) => {
     switch (value) {
       case true:
@@ -43,8 +42,8 @@ const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
         </TableBody>
         <TableBody>
           {words
-            .filter((el) => el.isCorrect === condition)
-            .map((el) => {
+            .filter((el: ISavannahWord | IAudioCallingWord) => el.isCorrect === condition)
+            .map((el: ISavannahWord | IAudioCallingWord) => {
               return (
                 <TableRow key={el.word}>
                   <TableCell className={classes.tableWordStyle}>{el.word}</TableCell>

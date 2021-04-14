@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import GameAnswer from './GameAnswer';
 import GameExitBtn from '../../commonComponents/GameExitBtn/GameExitBtn';
 import GameQuestion from './GameQuestion';
 import GameTracker from '../../commonComponents/GameTracker/GameTracker';
 import VolumeRange from '../../commonComponents/VolumeRange/VolumeRange';
-import backendURL, { correctUrl, skipUrl, incorrectUrl, MAX_VOLUME } from '../../../constants';
 import {
   putIncorrectToStore,
   putCorrectToStore,
@@ -15,8 +13,8 @@ import {
   resetEndGame,
   clickStartGame,
 } from '../../../store/actions/audioCallingActions';
-import gameMode from '../AudioCallingStartGame/constants';
 import { ANIMATION_DURATION } from '../constants';
+import backendURL, { correctUrl, incorrectUrl, MAX_VOLUME, skipUrl } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles from './styles';
 
@@ -29,19 +27,13 @@ const AudioCallingStartGame: React.FC = () => {
   const [currentFive, setCurrentFive] = useState<IWord[]>([]);
   const [currentIncorrect, setCurrentIncorrect] = useState('');
   const [animate, setAnimate] = useState(false);
-
-  const location = useLocation();
-  const isCameFromWordbook = location.state?.fromWordbook;
-
-  const wordBook = useSelector((state: IAppState) => state.wordBook);
-  const volume = useSelector((state: IAppState) => state.volumeHandler.volume);
   const audioCallingArray = useSelector((state: IAppState) => state.audioCalling.startArray);
-  const soundVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
-  const difficulty = useSelector((state: IAppState) => state.settings.gameMode);
+  const { soundsVolume } = useSelector((state: IAppState) => state.settings);
   const userWords = useSelector((state: IAppState) => [
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
   ]);
+  const styles = useStyles();
 
   const audio = new Audio();
   const sound = new Audio();
@@ -53,28 +45,19 @@ const AudioCallingStartGame: React.FC = () => {
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 
-  const styles = useStyles();
-
   const callFinish = () => {
     toggleEndGame();
   };
 
   const initArray = () => {
-    if (isCameFromWordbook) {
-      setCurrentArray(
-        audioCallingArray.map((word) => {
+    setCurrentArray(
+      audioCallingArray
+        .map((word) => {
           const userWord = userWords.find((uw) => uw.id === word.id);
           return userWord || word;
         })
-      );
-    } else {
-      setCurrentArray(
-        wordBook.words.slice(0, gameMode[difficulty]).map((word) => {
-          const userWord = userWords.find((uw) => uw.id === word.id);
-          return userWord || word;
-        })
-      );
-    }
+        .sort(() => Math.random() - 0.5)
+    );
   };
 
   const handleExitGame = () => {
@@ -89,7 +72,7 @@ const AudioCallingStartGame: React.FC = () => {
 
   const playClickEffect = (url: string) => {
     sound.src = url;
-    sound.volume = soundVolume / MAX_VOLUME;
+    sound.volume = soundsVolume / MAX_VOLUME;
     sound.play();
   };
 
@@ -147,7 +130,7 @@ const AudioCallingStartGame: React.FC = () => {
     if (wordIndex !== currentArray.length) {
       audio.src = `${backendURL}/${currentArray[wordIndex].audio}`;
     }
-    audio.volume = parseFloat(String(volume));
+    audio.volume = soundsVolume / MAX_VOLUME;
     audio.play();
   };
 
@@ -233,13 +216,15 @@ const AudioCallingStartGame: React.FC = () => {
             </button>
           ))}
         </div>
-        <Button
-          className={styles.MuiSkip}
-          variant="contained"
-          color="secondary"
-          onClick={clickDontKnow}>
-          Не знаю
-        </Button>
+        {!isAnswer && (
+          <Button
+            className={styles.MuiSkip}
+            variant="contained"
+            color="secondary"
+            onClick={clickDontKnow}>
+            Не знаю
+          </Button>
+        )}
       </div>
     </>
   );

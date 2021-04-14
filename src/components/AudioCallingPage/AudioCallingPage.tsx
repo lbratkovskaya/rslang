@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useFullScreenHandle } from 'react-full-screen';
 import AudioCallingStartGame from './AudioCallingStartGame';
+import Countdown from '../commonComponents/Countdown/Countdown';
 import FinishWindow from './FinishWindow';
 import { FullScreenWrapper, FullScreenBtn } from '../commonComponents';
 import GameWindow from './GameWindow';
@@ -13,13 +14,15 @@ import useStyles from './styles';
 
 const AudioCallingPage: React.FC = () => {
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
+  const isCountdown = useSelector((state: IAppState) => state.games.isCountDown);
   const location = useLocation();
-  const dispatch = useDispatch();
   const styles = useStyles();
   const handle = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
   const isCameFromWordbook = location.state?.fromWordbook;
   const fullScreenClass = fullSize ? ` ${styles.wrapperFull}` : ` ${styles.wrapperNotFull}`;
+
+  const dispatch = useDispatch();
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 
@@ -34,6 +37,9 @@ const AudioCallingPage: React.FC = () => {
   };
 
   const renderFields = useCallback(() => {
+    if (isCountdown) {
+      return <Countdown />;
+    }
     if (audioCallingData.isEnd) {
       return <FinishWindow />;
     }
@@ -41,7 +47,7 @@ const AudioCallingPage: React.FC = () => {
       return <GameWindow />;
     }
     return <AudioCallingStartGame />;
-  }, [audioCallingData.isStart, audioCallingData.isEnd]);
+  }, [audioCallingData.isStart, audioCallingData.isEnd, isCountdown]);
 
   useEffect(() => {
     if (!isCameFromWordbook) {

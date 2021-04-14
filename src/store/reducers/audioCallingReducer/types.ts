@@ -1,4 +1,4 @@
-import { IWord } from '../../types';
+import { IWord, IAudioCallingWord } from '../../types';
 
 export enum AudioCallingActionTypes {
   CHANGE_END_GAME = 'CHANGE_END_GAME',
@@ -20,17 +20,12 @@ export interface IAudioCallingGameAction {
   startArray: IWord[];
 }
 
-export interface IAudioCallingWords {
-  word: IWord;
-  isCorrect: boolean;
-}
-
 export interface IAudioCallingState {
   startArray: IWord[];
   level: number;
   round: number;
   lang: string;
-  words: IAudioCallingWords[];
+  words: IAudioCallingWord[];
   isStart: boolean;
   isEnd: boolean;
   levelsQuantity: number;

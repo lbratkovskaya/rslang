@@ -68,10 +68,7 @@ const useStyles = makeStyles(() =>
     },
     gameField: {
       position: 'relative',
-      padding: '2%',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-around',
+      paddingTop: '5%',
       height: '89vh',
     },
     exit: {
