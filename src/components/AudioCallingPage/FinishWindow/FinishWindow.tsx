@@ -64,7 +64,6 @@ const FinishGame: React.FC = () => {
   };
 
   useEffect(() => {
- 
     if (falsePart.length > 0) {
       audio.src = '../../../assets/audio/fail-sound.mp3';
     } else {
