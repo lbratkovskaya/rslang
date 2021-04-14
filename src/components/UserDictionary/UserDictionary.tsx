@@ -5,6 +5,7 @@ import { AppBar, Tab, Tabs, Typography, useTheme } from '@material-ui/core';
 import UserDictionarySection from './UserDictionarySection';
 import Header from '../Header';
 import Footer from '../Footer';
+import SettingsPopover from '../SettingsPopover';
 import { fetchDictionary } from '../../store/actions/dictionaryActions';
 import { IAppState } from '../../store/types';
 import { TabPanelProps } from './types';
@@ -48,7 +49,7 @@ const UserDictionary: React.FC = () => {
       <Header />
       <main className={classes.main}>
         <Typography variant="h5" className={classes.title}>
-          Мой словарь
+          Мой словарь <SettingsPopover />
         </Typography>
         {userData.userId ? (
           <div className={classes.root}>

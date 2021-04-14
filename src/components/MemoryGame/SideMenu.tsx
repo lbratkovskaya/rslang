@@ -15,11 +15,12 @@ import {
   Typography,
 } from '@material-ui/core';
 import { VolumeUp, Settings } from '@material-ui/icons';
-import { initiateGameField, setWordsVolumeLevel } from '../../store/actions/memoryGameActions';
+import { initiateGameField } from '../../store/actions/memoryGameActions';
 import { WORDBOOK_GROUPS, GAMES, MEMORY } from '../../constants';
 import { SELECT_ROUNDS } from '../GameSavannah/constants';
 import { IAppState } from '../../store/types';
 import useStyles from './styles';
+import { changeVolumeSounds } from '../../store/actions/settingsActions';
 
 type Anchor = 'left';
 
@@ -51,7 +52,7 @@ const SideMenu: React.FC = () => {
     GAMES.memory.difficulty[gameLevelFromSettings].label
   );
 
-  const wordsVolumeLevel = useSelector((state: IAppState) => state.memoryGame.wordsVolume);
+  const { soundsVolume } = useSelector((state: IAppState) => state.settings);
 
   const handleChangeGameMode = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMode(event.target.checked ? 'image' : 'translation');
@@ -95,11 +96,11 @@ const SideMenu: React.FC = () => {
   };
 
   const handleVolumeLevelChange = (event: React.ChangeEvent<{}>, value: Number | Array<Number>) => {
-    dispatch(setWordsVolumeLevel(Number(value)));
+    dispatch(changeVolumeSounds(Number(value)));
   };
 
   const handleMaxVolume = () => {
-    dispatch(setWordsVolumeLevel(MEMORY.gameWordsMaxVolumeLevel));
+    dispatch(changeVolumeSounds(MEMORY.gameWordsMaxVolumeLevel));
   };
 
   useEffect(() => {
@@ -152,7 +153,7 @@ const SideMenu: React.FC = () => {
                 <Slider
                   min={MEMORY.gameWordsMinimalVolumeLevel}
                   max={MEMORY.gameWordsMaxVolumeLevel}
-                  value={wordsVolumeLevel}
+                  value={soundsVolume}
                   onChange={handleVolumeLevelChange}
                   aria-labelledby="continuous-slider"
                 />

@@ -17,7 +17,7 @@ import backendUrl, {
   WORDBOOK_GROUPS,
   WORDCARD_APPEAR_GAP,
 } from '../../constants';
-import { IAppState, IUserWord } from '../../store/types';
+import { IAppState, IUserWord, IWord } from '../../store/types';
 import { IWordCardButton, IWordCardProps } from './types';
 import useStyles, { defaultImageSize, transitionStyles } from './styles';
 
@@ -59,6 +59,9 @@ const WordCard: React.FC<IWordCardProps> = ({
   const theme = useTheme();
   const colorOfDifficult = theme.palette.secondary.main;
   const dispatch = useDispatch();
+
+  const { deletedWords } = useSelector((state: IAppState) => state.userDictionary);
+  const isInDeletedWords = deletedWords.map((el: IWord) => el.word).includes(word.word);
 
   const textStyle = {
     word: playingAudioIndex === 0 ? highlightStyle : {},
@@ -214,6 +217,10 @@ const WordCard: React.FC<IWordCardProps> = ({
       handleStopClick();
     };
   }, []);
+
+  useEffect(() => {
+    setIsDeleted(isInDeletedWords);
+  }, [isInDeletedWords]);
 
   return (
     <Transition in={isMounted && !isLoading} timeout={APPEAR_DURATION} unmountOnExit>

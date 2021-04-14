@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
 import { Card, Typography } from '@material-ui/core';
 import { showGameCard } from '../../store/actions/memoryGameActions';
-import backendUrl, { GAMES, MEMORY } from '../../constants';
+import backendUrl, { GAMES } from '../../constants';
 import { ICardProps } from './types';
 import { IAppState } from '../../store/types';
 import { IMemoryGameCard } from '../../store/reducers/memoryGameReducer/types';
@@ -13,7 +13,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isGameStared = useSelector((state: IAppState) => state.memoryGame.isStarted);
-  const volume = useSelector((state: IAppState) => state.memoryGame.wordsVolume);
+  const soundsVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
 
   const handleGameMove = (event: React.SyntheticEvent) => {
     if (!props.disabled && isGameStared) {
@@ -35,7 +35,7 @@ const GameCard: React.FC<ICardProps> = (props: ICardProps) => {
 
   function handleAutoplay(audio: string) {
     const player = new Audio(audio);
-    player.volume = volume / MEMORY.gameWordsMaxVolumeLevel;
+    player.volume = soundsVolume / 100;
     player.play();
   }
 
