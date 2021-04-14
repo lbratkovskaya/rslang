@@ -29,12 +29,22 @@ const SprintGamePlay: React.FC = () => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const timeDaleyWord = (): void => {
-    setCurrentWord(sprintInfo?.wordsData?.[selectWord]?.word.word);
-    setTranslateWord(sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate);
+    const currentWordDependingOnLang = sprintInfo.isEng
+      ? sprintInfo?.wordsData?.[selectWord]?.word.word
+      : sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate;
+    const currentTranslateDependingOnLang = sprintInfo.isEng
+      ? sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate
+      : sprintInfo?.wordsData?.[selectWord]?.word.word;
+    setCurrentWord(currentWordDependingOnLang);
+    setTranslateWord(currentTranslateDependingOnLang);
     setClassAnswer(classes.answerDefault);
     const randomIndex: number = Math.floor(Math.random() * sprintInfo.wordsData.length);
-    const getRandomTranslate: string = sprintInfo?.wordsData?.[randomIndex]?.word.wordTranslate;
-    const getCurrentWordTranslate: string = sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate;
+    const getRandomTranslate: string = sprintInfo.isEng
+      ? sprintInfo?.wordsData?.[randomIndex]?.word.wordTranslate
+      : sprintInfo?.wordsData?.[randomIndex]?.word.word;
+    const getCurrentWordTranslate: string = sprintInfo.isEng
+      ? sprintInfo?.wordsData?.[selectWord]?.word.wordTranslate
+      : sprintInfo?.wordsData?.[randomIndex]?.word.word;
     const getRandomArray: Array<string> = [getRandomTranslate, getCurrentWordTranslate];
     const getRandomWord = getRandomArray[Math.floor(Math.random() * getRandomArray.length)];
     setRandomWord(getRandomWord);
@@ -117,7 +127,7 @@ const SprintGamePlay: React.FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyboardAnswer);
     };
-  }, [isDisabled]);
+  }, [timer]);
 
   const btnComponent = (selectName: string) => {
     return (

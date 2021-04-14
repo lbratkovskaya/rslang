@@ -8,5 +8,5 @@ export const SELECT_ROUNDS: any = {
   amount: 30,
 };
 
-export const TIME_OUT_DELAY: number = 500;
+export const TIME_OUT_DELAY: number = 800;
 export const MAX_LENGTH_GAME_ARR: number = 20;
