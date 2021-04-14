@@ -23,7 +23,7 @@ const ControlPanel: React.FC = () => {
   const gameWords = useSelector((state: IAppState) => state.memoryGame.words);
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const userData = useSelector((state: IAppState) => state.user.data);
-  const volume = useSelector((state: IAppState) => state.settings.soundsVolume);
+  const { soundsVolume } = useSelector((state: IAppState) => state.settings);
   const userDictionary = useSelector((state: IAppState) => state.userDictionary);
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
@@ -68,7 +68,7 @@ const ControlPanel: React.FC = () => {
 
   function playSound(audio: string) {
     const player = new Audio(audio);
-    player.volume = volume / 100;
+    player.volume = soundsVolume / 100;
     player.play();
   }
 
