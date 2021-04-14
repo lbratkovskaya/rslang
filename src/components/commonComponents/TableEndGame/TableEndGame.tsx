@@ -17,7 +17,7 @@ interface ITableEndProps {
 
 const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
   const classes = useStyles();
-
+  console.log(words);
   const chooseTableHeadStyle = (value: boolean | undefined | string) => {
     switch (value) {
       case true:
@@ -45,25 +45,11 @@ const TableEndGame: React.FC<ITableEndProps> = ({ words }: ITableEndProps) => {
           {words
             .filter((el: ISavannahWord | IAudioCallingWord) => el.isCorrect === condition)
             .map((el: ISavannahWord | IAudioCallingWord) => {
-              let item;
-              let word;
-              let translate;
-              if (typeof el.word === 'string') {
-                item = el as ISavannahWord;
-                word = item.word;
-                translate = item.translate;
-              } else {
-                item = el as IAudioCallingWord;
-                word = item.word.word;
-                translate = item.word.wordTranslate;
-              }
               return (
-                <TableRow key={word}>
-                  <TableCell className={classes.tableWordStyle}>
-                    {word}
-                  </TableCell>
+                <TableRow key={el.word}>
+                  <TableCell className={classes.tableWordStyle}>{el.word}</TableCell>
                   <TableCell className={classes.tableWordStyle} align="right">
-                    {translate}
+                    {el.translate}
                   </TableCell>
                 </TableRow>
               );

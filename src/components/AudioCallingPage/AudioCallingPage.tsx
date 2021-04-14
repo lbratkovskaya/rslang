@@ -37,7 +37,7 @@ const AudioCallingPage: React.FC = () => {
 
   const renderFields = useCallback(() => {
     if (isCountdown) {
-      return <Countdown />
+      return <Countdown />;
     }
     if (audioCallingData.isEnd) {
       return <FinishWindow />;

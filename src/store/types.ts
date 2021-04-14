@@ -278,6 +278,8 @@ export interface ISprintWords {
 }
 
 export interface IAudioCallingWord {
-  word: IWord;
+  word: string;
+  wordObj: IWord;
+  translate: string;
   isCorrect: boolean;
 }

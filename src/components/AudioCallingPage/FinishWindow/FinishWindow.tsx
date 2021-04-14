@@ -8,7 +8,6 @@ import {
 } from '../../../store/actions/audioCallingActions';
 import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
-// import { IAudioCallingWords } from '../../../store/reducers/audioCallingReducer/types';
 import {
   IAppState,
   IGameName,
@@ -79,11 +78,13 @@ const FinishGame: React.FC = () => {
       word: el.wordObj,
       correct: el.isCorrect,
     }));
-    sendWords(copy);
-    saveGameStatistics(
-      copy,
-      [...audioCallingData.series, audioCallingData.seriesCounter].sort((a, b) => b - a)[0]
-    );
+    if (userData.userId) {
+      sendWords(copy);
+      saveGameStatistics(
+        copy,
+        [...audioCallingData.series, audioCallingData.seriesCounter].sort((a, b) => b - a)[0]
+      );
+    }
     return () => handleExitGame();
   }, []);
 
