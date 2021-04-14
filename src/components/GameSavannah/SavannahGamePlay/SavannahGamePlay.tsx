@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Favorite } from '@material-ui/icons';
 import SavannahEndGame from './SavannahEndGame';
 import { GameExitBtn } from '../../commonComponents';
+import GameTracker from '../../commonComponents/GameTracker';
 import { clickStartGame, onAnswer } from '../../../store/actions/savannahActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import { SAVANNAH, VOLUME_DIVIDER } from '../../../constants';
@@ -47,6 +48,7 @@ const SavannahGamePlay: React.FC = () => {
   const currentWord = savannahData.isEng
     ? savannahData?.wordsData?.[startWord]?.word
     : savannahData?.wordsData?.[startWord]?.translate;
+  const isAudioAnswer = startWord >= savannahData?.wordsData.length - 1 || health === 1;
 
   const classes = useStyles();
 
@@ -92,6 +94,12 @@ const SavannahGamePlay: React.FC = () => {
       setIsEndGame(true);
       setAnimate(true);
     }
+    if (health === 0) {
+      onAudioPlay(SAVANNAH.finishAudioFail);
+    }
+    if (health > 0 && isEndGame) {
+      onAudioPlay(SAVANNAH.finishAudioWin);
+    }
     const timeout = setTimeout(() => timeOutFunc(), SAVANNAH.timeOutDelay);
     return () => {
       clearTimeout(timeout);
@@ -113,12 +121,12 @@ const SavannahGamePlay: React.FC = () => {
   const checkAnswer = (word: string) => {
     const matchCheck = currentWord.toLocaleLowerCase() === word.toLocaleLowerCase();
     if (matchCheck) {
-      onAudioPlay(SAVANNAH.audioCorrect);
+      if (!isAudioAnswer) onAudioPlay(SAVANNAH.audioCorrect);
       setIsCorrectAnswer(true);
       answer(savannahData.wordsData, currentWord, true);
       setCurrentSuccessSeries(currentSuccessSeries + 1);
     } else {
-      onAudioPlay(SAVANNAH.audioIncorrect);
+      if (!isAudioAnswer) onAudioPlay(SAVANNAH.audioIncorrect);
       answer(savannahData.wordsData, currentWord, false);
       setIsCorrectAnswer(false);
       answer(savannahData.wordsData, currentWord, false);
@@ -214,6 +222,7 @@ const SavannahGamePlay: React.FC = () => {
         {isRenderingFallingWords && renderFallingWords()}
         {renderChooseWord()}
         <div className={classes.savannahFooter}>
+          <GameTracker index={startWord + 1} end={savannahData.wordsData.length} />
           {startWord > 0 && (
             <img
               className={`${classes.footerImg}${isFooterImgAnimation}`}

@@ -46,7 +46,7 @@ export function reduceArrayWords(wordsArray: Array<IWord>) {
           word: el.word,
           wordObj: el,
           translate: el.wordTranslate,
-          isCorrect: false,
+          isCorrect: undefined,
         };
       }),
   };

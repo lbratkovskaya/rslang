@@ -1,5 +1,7 @@
 import { FullScreenHandle } from 'react-full-screen';
 import { IGroup } from '../../constants';
+import { IAudioCallingWords } from '../../store/reducers/audioCallingReducer/types';
+import { ISavannahWord } from '../../store/types';
 
 export interface IGameSelectProps {
   changeSelectFc: (item: string | number) => void;
@@ -39,4 +41,8 @@ export interface ITimerProps {
 
 export interface IGameModeProps {
   changeModeFc: (mode: string) => void;
+}
+
+export interface ITableEndProps {
+  words: Array<ISavannahWord | IAudioCallingWords>;
 }

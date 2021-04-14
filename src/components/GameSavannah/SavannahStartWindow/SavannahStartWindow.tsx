@@ -76,7 +76,7 @@ const SavannahStartWindow: React.FC = () => {
       const wordsForGame =
         currentMode === 'hard'
           ? extraWords.concat(gameWords)?.slice(-wordCount)
-          : gameWords.slice(wordCount);
+          : gameWords.slice(-wordCount);
 
       setSelectRound(randomPage);
       onReduceArrayWords(wordsForGame);
@@ -91,11 +91,11 @@ const SavannahStartWindow: React.FC = () => {
 
   useEffect(() => {
     getGameWords(group, page);
-  }, [group, page]);
+  }, [group, page, savannahData.mode]);
 
   useEffect(() => {
     getExtraWords(extraWordsValue);
-  }, [extraWordsValue]);
+  }, [extraWordsValue, savannahData.mode]);
 
   useEffect(() => {
     getUserDictionary();

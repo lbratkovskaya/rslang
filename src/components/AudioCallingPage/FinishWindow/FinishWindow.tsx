@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import TableEndGame from '../../commonComponents/TableEndGame/TableEndGame';
+import { TableEndGame } from '../../commonComponents';
 import {
   clickStartGame,
   resetEndGame,
@@ -8,13 +8,7 @@ import {
 } from '../../../store/actions/audioCallingActions';
 import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
-import {
-  IAppState,
-  IAudioCallingWord,
-  IGameName,
-  IWord,
-  IWordWithResult,
-} from '../../../store/types';
+import { IAppState, IAudioCallingWord, IGameName, IWordWithResult } from '../../../store/types';
 import useStyles from './styles';
 
 const FinishGame: React.FC = () => {
@@ -31,7 +25,7 @@ const FinishGame: React.FC = () => {
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
-  const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
+  const sendWords = (array: Array<IWordWithResult>) =>
     dispatch(addWordsToUserDictionary(array, userDictionary, userData));
 
   const handleExitGame = () => {

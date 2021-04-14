@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) =>
 
     footerImg: {
       position: 'absolute',
-      left: '50%',
+      left: '45%',
       top: '-50%',
       width: '80px',
     },
