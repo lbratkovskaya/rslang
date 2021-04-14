@@ -2,23 +2,22 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TableEndGame from '../../commonComponents/TableEndGame/TableEndGame';
 import {
-  resetEndGame,
   clickStartGame,
+  resetEndGame,
   resetWordsToStartNewGame,
 } from '../../../store/actions/audioCallingActions';
 import { addWordsToUserDictionary } from '../../../store/actions/dictionaryActions';
 import { addGameStatistics } from '../../../store/actions/statisticsActions';
 import {
   IAppState,
+  IAudioCallingWord,
   IGameName,
   IWord,
   IWordWithResult,
-  IAudioCallingWord,
 } from '../../../store/types';
 import useStyles from './styles';
 
 const FinishGame: React.FC = () => {
-  const dispatch = useDispatch();
   const styles = useStyles();
   const audio = new Audio();
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
@@ -28,10 +27,10 @@ const FinishGame: React.FC = () => {
   const userWords = [...userDictionary.learningWords, ...userDictionary.deletedWords];
   const userWordsWords = userWords.map((uw) => uw.word);
 
+  const dispatch = useDispatch();
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const reset = () => dispatch(resetWordsToStartNewGame());
-
   const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
     dispatch(addWordsToUserDictionary(array, userDictionary, userData));
 
@@ -46,8 +45,8 @@ const FinishGame: React.FC = () => {
   };
 
   const handleExitGame = () => {
-    startGame(false);
     unmountSound();
+    startGame(false);
     toggleResetEndGame();
     reset();
   };

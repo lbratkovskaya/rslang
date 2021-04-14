@@ -134,7 +134,7 @@ export const addGameStatistics = (
         const totallyLearned =
           Object.values(stats).reduce(
             (acc, val) => {
-              acc.sum += val.wordsLearned;
+              acc.sum += val.wordsLearned || 0;
               return acc;
             },
             { sum: 0 }

@@ -16,12 +16,13 @@ const AudioCallingPage: React.FC = () => {
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
   const isCountdown = useSelector((state: IAppState) => state.games.isCountDown);
   const location = useLocation();
-  const dispatch = useDispatch();
   const styles = useStyles();
   const handle = useFullScreenHandle();
   const [fullSize, setFullSize] = useState(false);
   const isCameFromWordbook = location.state?.fromWordbook;
   const fullScreenClass = fullSize ? ` ${styles.wrapperFull}` : ` ${styles.wrapperNotFull}`;
+
+  const dispatch = useDispatch();
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
 

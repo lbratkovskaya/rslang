@@ -5,34 +5,29 @@ import { Button } from '@material-ui/core';
 import Countdown from '../../commonComponents/Countdown/Countdown';
 import {
   clickStartGame,
+  createArrayWords,
   selectLevel,
   selectRound,
-  createArrayWords,
 } from '../../../store/actions/audioCallingActions';
-import {
-  fetchGameWords,
-  fetchExtraWords,
-  changeCountDown,
-} from '../../../store/actions/gamesActions';
 import { fetchDictionary } from '../../../store/actions/dictionaryActions';
+import {
+  changeCountDown,
+  fetchExtraWords,
+  fetchGameWords,
+} from '../../../store/actions/gamesActions';
 import GameSelect from '../../commonComponents/GameSelect/GameSelect';
+import gameMode, { WORDS_QUANTITY } from './constants';
 import { SELECT_ROUNDS } from '../constants';
 import { WORDBOOK_GROUPS } from '../../../constants';
-import gameMode, { WORDS_QUANTITY } from './constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles from './styles';
 
 const AudioCallingStartGame: React.FC = () => {
-  const dispatch = useDispatch();
-  const createStartArray = (wordsArray: Array<IWord>) => dispatch(createArrayWords(wordsArray));
   const audioCallingData = useSelector((state: IAppState) => state.audioCalling);
-  const setSelectRound = (round: number) => dispatch(selectRound(round));
-  const setSelectLevel = (level: number) => dispatch(selectLevel(level));
   const { gameWords } = useSelector((state: IAppState) => state.games);
   const page = audioCallingData.round;
   const group = audioCallingData.level;
   const isCountdown = useSelector((state: IAppState) => state.games.isCountDown);
-  const countDown = (isCountEnd: boolean) => dispatch(changeCountDown(isCountEnd));
   const difficulty = useSelector((state: IAppState) => state.settings.gameMode);
   const wordBookCurGroup = useSelector((state: IAppState) => state.wordBook.activeGroup);
   const array = useSelector((state: IAppState) => state.audioCalling.startArray);
@@ -41,6 +36,12 @@ const AudioCallingStartGame: React.FC = () => {
   const location = useLocation();
   const isCameFromWordbook = location.state?.fromWordbook;
   const styles = useStyles();
+
+  const dispatch = useDispatch();
+  const createStartArray = (wordsArray: Array<IWord>) => dispatch(createArrayWords(wordsArray));
+  const setSelectRound = (round: number) => dispatch(selectRound(round));
+  const setSelectLevel = (level: number) => dispatch(selectLevel(level));
+  const countDown = (isCountEnd: boolean) => dispatch(changeCountDown(isCountEnd));
   const onClickStartGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
   const getUserDictionary = () => dispatch(fetchDictionary(userData));
   const getWords = (grp: number, pg: number) => {

@@ -6,7 +6,7 @@ import GameExitBtn from '../../commonComponents/GameExitBtn/GameExitBtn';
 import GameQuestion from './GameQuestion';
 import GameTracker from '../../commonComponents/GameTracker/GameTracker';
 import VolumeRange from '../../commonComponents/VolumeRange/VolumeRange';
-import backendURL, { correctUrl, skipUrl, incorrectUrl, MAX_VOLUME } from '../../../constants';
+import backendURL, { correctUrl, incorrectUrl, MAX_VOLUME, skipUrl } from '../../../constants';
 import {
   putIncorrectToStore,
   putCorrectToStore,
@@ -27,7 +27,6 @@ const AudioCallingStartGame: React.FC = () => {
   const [currentFive, setCurrentFive] = useState<IWord[]>([]);
   const [currentIncorrect, setCurrentIncorrect] = useState('');
   const [animate, setAnimate] = useState(false);
-
   const volume = useSelector((state: IAppState) => state.volumeHandler.volume);
   const audioCallingArray = useSelector((state: IAppState) => state.audioCalling.startArray);
   const soundVolume = useSelector((state: IAppState) => state.settings.soundsVolume);
@@ -35,6 +34,7 @@ const AudioCallingStartGame: React.FC = () => {
     ...state.userDictionary.learningWords,
     ...state.userDictionary.deletedWords,
   ]);
+  const styles = useStyles();
 
   const audio = new Audio();
   const sound = new Audio();
@@ -45,8 +45,6 @@ const AudioCallingStartGame: React.FC = () => {
   const toggleEndGame = () => dispatch(endGame());
   const toggleResetEndGame = () => dispatch(resetEndGame());
   const startGame = (isStart: boolean) => dispatch(clickStartGame(isStart));
-
-  const styles = useStyles();
 
   const callFinish = () => {
     toggleEndGame();
