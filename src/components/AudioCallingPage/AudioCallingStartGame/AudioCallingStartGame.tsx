@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import Countdown from '../../commonComponents/Countdown/Countdown';
+import GameSelect from '../../commonComponents/GameSelect/GameSelect';
 import {
   clickStartGame,
   createArrayWords,
@@ -15,7 +16,6 @@ import {
   fetchExtraWords,
   fetchGameWords,
 } from '../../../store/actions/gamesActions';
-import GameSelect from '../../commonComponents/GameSelect/GameSelect';
 import gameMode, { WORDS_QUANTITY } from './constants';
 import { SELECT_ROUNDS } from '../constants';
 import { WORDBOOK_GROUPS } from '../../../constants';

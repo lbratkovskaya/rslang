@@ -6,7 +6,6 @@ import GameExitBtn from '../../commonComponents/GameExitBtn/GameExitBtn';
 import GameQuestion from './GameQuestion';
 import GameTracker from '../../commonComponents/GameTracker/GameTracker';
 import VolumeRange from '../../commonComponents/VolumeRange/VolumeRange';
-import backendURL, { correctUrl, incorrectUrl, MAX_VOLUME, skipUrl } from '../../../constants';
 import {
   putIncorrectToStore,
   putCorrectToStore,
@@ -15,6 +14,7 @@ import {
   clickStartGame,
 } from '../../../store/actions/audioCallingActions';
 import { ANIMATION_DURATION } from '../constants';
+import backendURL, { correctUrl, incorrectUrl, MAX_VOLUME, skipUrl } from '../../../constants';
 import { IAppState, IWord } from '../../../store/types';
 import useStyles from './styles';
 

@@ -34,18 +34,7 @@ const FinishGame: React.FC = () => {
   const sendWords = (array: Array<{ word: IWord; correct: boolean }>) =>
     dispatch(addWordsToUserDictionary(array, userDictionary, userData));
 
-  const unmountSound = () => {
-    const audioPromise = audio.play();
-    if (audioPromise !== undefined) {
-      audioPromise.then(() => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
-    }
-  };
-
   const handleExitGame = () => {
-    unmountSound();
     startGame(false);
     toggleResetEndGame();
     reset();

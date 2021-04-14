@@ -43,7 +43,7 @@ const AudioCallingPage: React.FC = () => {
     if (audioCallingData.isEnd) {
       return <FinishWindow />;
     }
-    if (!isCountdown && audioCallingData.isStart && !audioCallingData.isEnd) {
+    if (audioCallingData.isStart && !audioCallingData.isEnd) {
       return <GameWindow />;
     }
     return <AudioCallingStartGame />;
