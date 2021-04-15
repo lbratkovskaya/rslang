@@ -119,6 +119,7 @@ const SavannahGamePlay: React.FC = () => {
   };
 
   const checkAnswer = (word: string) => {
+    if (!currentWord) return;
     const matchCheck = currentWord.toLocaleLowerCase() === word.toLocaleLowerCase();
     if (matchCheck) {
       if (!isAudioAnswer) onAudioPlay(SAVANNAH.audioCorrect);
