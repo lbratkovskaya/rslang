@@ -1,0 +1,10 @@
+# Build
+build/
+
+# IntellijIdea files
+.idea/
+
+# Dependency directories
+node_modules/
+
+.vscode/

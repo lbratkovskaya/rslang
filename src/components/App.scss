@@ -1,0 +1,27 @@
+
+$color-main-bg: #fafafa;
+$color-main-shadow: #16181b;
+
+main {
+  //min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  background: $color-main-bg;
+  box-shadow: 0 16px 12px $color-main-shadow;
+}
+
+.page-exit {
+  display: none;
+}
+
+.page-enter {
+  opacity: 0.2;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: all 600ms ease-out;
+}

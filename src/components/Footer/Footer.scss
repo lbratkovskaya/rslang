@@ -1,0 +1,81 @@
+$color-footer-bg: #212229;
+$color-footer-text: #f2f2f2;
+$size-footer-text: 14px;
+
+@mixin screen_max($value) {
+  @media (max-width: $value) {
+    @content;
+  }
+}
+
+.footer {
+  padding: 1.5rem 0 1rem;
+  bottom: 0;
+  left: 0;
+  position: sticky;
+  display: grid;
+  place-items: center;
+  background: $color-footer-bg;
+  color: $color-footer-text;
+}
+
+div.authors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+  @include screen_max(600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include screen_max(400px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+p.copy {
+  margin: 1rem 0 0;
+  font-size: $size-footer-text;
+}
+
+a.github-link {
+  margin: 0 1rem;
+  position: relative;
+  font-size: $size-footer-text;
+  color: $color-footer-text;
+  line-height: 2;
+  white-space: nowrap;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  &::after {
+    position: absolute;
+    right: -1.35rem;
+    bottom: 2px;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: url(../../assets/github.png) center no-repeat;
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+}
+
+a.rsschool {
+  margin: 0 0 1rem;
+  width: 110px;
+  height: 40px;
+  display: flex;
+  background: url(../../assets/rs_school.svg) center no-repeat;
+  background-size: contain;
+  filter: invert(1);
+}
