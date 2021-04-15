@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   TextField,
@@ -20,6 +20,7 @@ const SignInPage: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -32,10 +33,10 @@ const SignInPage: React.FC = () => {
   const handleClose = () => {
     setPasswordEmpty(false);
     setFailedAttempt(false);
-    if (history.action === 'POP') {
-      history.push(ROUTES.dictionary);
+    if (location.state?.backUrl) {
+      history.push(location.state.backUrl);
     } else {
-      history.go(-1);
+      history.push(ROUTES.dictionary);
     }
   };
 

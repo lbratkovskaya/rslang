@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@material-ui/core';
 import { setIsLoggedIn } from '../../store/actions/userAuthActions';
+import { ROUTES } from '../../constants';
 import { IAppState } from '../../store/types';
 import { CurrentUserSubMenuProps } from './types';
 import useStyles from './styles';
@@ -11,6 +12,8 @@ const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUse
   const { anchor, isOpen, menuId, handleMenuClose } = props;
   const isLoggedIn = useSelector((state: IAppState) => state.user.isLoggedIn);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const backUrl = location.pathname === ROUTES.signUp ? null : location.pathname;
 
   const authClasses = useStyles();
 
@@ -32,7 +35,7 @@ const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUse
       onClick={() => {
         handleMenuClose();
       }}>
-      <Link to="/sign-in">Вход</Link>
+      <Link to={{ pathname: ROUTES.signIn, state: { backUrl } }}>Вход</Link>
     </MenuItem>,
     <MenuItem
       key="signUp"
@@ -40,7 +43,7 @@ const CurrentUserSubMenu: React.FC<CurrentUserSubMenuProps> = (props: CurrentUse
       onClick={() => {
         handleMenuClose();
       }}>
-      <Link to="/sign-up">Регистрация</Link>
+      <Link to={ROUTES.signUp}>Регистрация</Link>
     </MenuItem>
   );
 
